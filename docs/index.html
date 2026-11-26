@@ -5,244 +5,808 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FKM Research Analytics</title>
 <style>
-  :root{
-    color-scheme:light;
-    --bg:#f4f6f9;--surface:#fff;--surface2:#f8fafc;--border:#d8dee6;--control:#6b7787;
-    --brand:#1e3a5f;--brand-ink:#fff;--brand-ink2:#c9d6e8;
-    --accent:#1d4ed8;--accent-ink:#fff;--accent-soft:#eef3fb;
-    --text:#1b2533;--text2:#4a5566;
-    --series:#257de0;--series2:#f47230;--series-muted:#d3e4f8;--grid:#e7e7e7;--axis:#4a5566;
-    --ok-bg:#dcfce7;--ok-ink:#166534;--neutral-bg:#e2e8f0;--neutral-ink:#334155;
-    --focus:#1d4ed8;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  [hidden]{display:none!important}
-  body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.4}
-  button,a[href],select{cursor:pointer}
-  button,input,select{font:inherit;color:inherit}
-  :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .num{font-variant-numeric:tabular-nums}
+/* ── Design tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg:          #f0f2f5;
+  --surface:     #ffffff;
+  --surface2:    #f8f9fb;
+  --border:      #e2e6ed;
+  --shadow:      0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
+  --shadow-lg:   0 4px 24px rgba(0,0,0,.12);
 
-  /* HEADER */
-  .topbar{background:var(--brand);color:var(--brand-ink);padding:10px 24px;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-  .topbar h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
-  .topbar-sub{font-size:12px;color:var(--brand-ink2);margin-top:1px}
-  .last-updated{font-size:12px;color:var(--brand-ink2)}
+  --brand:       #1e3a5f;
+  --brand-dark:  #152c48;
+  --brand-light: #2a4f80;
+  --brand-ink:   #ffffff;
+  --brand-ink2:  #a8bdd6;
+  --brand-accent:#4a9eff;
 
-  /* TABS */
-  .tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:4px;overflow-x:auto}
-  .tab{background:none;border:0;border-bottom:3px solid transparent;min-height:46px;padding:12px 16px;font-size:14px;font-weight:600;color:var(--text2);white-space:nowrap;transition:color .15s}
-  .tab:hover{color:var(--text)}
-  .tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  --accent:      #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-ink:  #ffffff;
 
-  /* PAGE */
-  .content{padding:24px;max-width:1400px;margin:0 auto}
-  .panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px;min-width:0;scroll-margin-top:80px}
-  .panel-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px}
+  --text:        #111827;
+  --text2:       #4b5563;
+  --text3:       #9ca3af;
 
-  /* KPI */
-  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px}
-  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
-  .kpi-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
-  .kpi-value{font-size:28px;font-weight:800;color:var(--text);line-height:1.1}
-  .kpi-sub{font-size:13px;color:var(--text2);margin-top:6px}
-  @media (min-width:760px){.kpi-row.five{grid-template-columns:repeat(5,1fr)}}
+  --ok:          #16a34a;
+  --ok-bg:       #dcfce7;
+  --ok-ink:      #14532d;
+  --warn-bg:     #fef9c3;
+  --warn-ink:    #713f12;
+  --neutral-bg:  #f1f5f9;
+  --neutral-ink: #475569;
 
-  /* CHARTS */
-  .chart-grid{display:grid;gap:16px;margin-bottom:16px;grid-template-columns:1fr}
-  @media (min-width:900px){.chart-grid.two{grid-template-columns:1fr 1fr}}
-  @media (min-width:900px){.chart-grid.three{grid-template-columns:1fr 1fr 1fr}}
-  .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;min-width:0}
-  .chart-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
-  .chart-desc{font-size:13px;color:var(--text2);margin-bottom:12px}
-  .chart-wrap{position:relative;height:230px}
-  .chart-wrap.tall{height:290px}
-  .chart-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2)}
+  --series1:     #2563eb;
+  --series2:     #f59e0b;
+  --series3:     #10b981;
+  --series4:     #ef4444;
+  --grid:        #e5e7eb;
+  --axis:        #6b7280;
 
-  /* TOOLBAR */
-  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-  .search-box{flex:1;min-width:200px;max-width:360px;position:relative}
-  .search-box input{width:100%;min-height:36px;padding:6px 10px 6px 34px;border:1px solid var(--control);border-radius:6px;background:var(--surface);font-size:14px;color:var(--text)}
-  .search-box::before{content:"⌕";position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--control);font-size:17px;pointer-events:none}
-  .filter-select{min-height:36px;padding:6px 8px;border:1px solid var(--control);border-radius:6px;background:var(--surface);font-size:14px;color:var(--text)}
-  .filter-select.on{border-color:var(--accent);font-weight:600}
-  .count-text{font-size:13px;color:var(--text2);margin-left:auto}
+  --sidebar-w:   240px;
+  --topbar-h:    56px;
+  --radius:      10px;
+  --radius-sm:   6px;
+  --focus:       #2563eb;
+}
 
-  /* TABLE */
-  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th{background:var(--surface2);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text2);padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;position:sticky;top:0}
-  td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text)}
-  tr:last-child td{border-bottom:0}
-  tr:hover td{background:var(--surface2)}
-  .r{text-align:right}
-  .c{text-align:center}
-  .muted{color:var(--text2)}
-  .clip{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .clip.wide{max-width:480px}
-  td.empty{color:var(--text2);font-style:italic;padding:24px 10px;text-align:center}
-  th.sortable{cursor:pointer;user-select:none}
-  th.sortable:hover{color:var(--accent)}
-  th.sortable .arrow{margin-left:4px;opacity:.4}
-  th.sortable[aria-sort] .arrow{opacity:1;color:var(--accent)}
-  th[aria-sort="ascending"] .arrow::after{content:"↑"}
-  th[aria-sort="descending"] .arrow::after{content:"↓"}
-  th:not([aria-sort]) .arrow::after{content:"↕"}
+/* ── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  font-size: 14px;
+}
+button, input, select { font: inherit; color: inherit; }
+button, a[href], select { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap; }
+.num { font-variant-numeric: tabular-nums; }
 
-  /* PAGINATION */
-  .pagination{display:flex;align-items:center;gap:6px;margin-top:14px;flex-wrap:wrap}
-  .pagination span{font-size:13px;color:var(--text2);margin-right:4px}
-  .page-btn{min-height:32px;min-width:32px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:13px;color:var(--text)}
-  .page-btn:hover{border-color:var(--accent);color:var(--accent)}
-  .page-btn[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+/* ── App shell ─────────────────────────────────────────────────────── */
+.app { display: flex; min-height: 100vh; }
 
-  /* STATUS BADGES */
-  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600;white-space:nowrap}
-  .badge-active{background:var(--ok-bg);color:var(--ok-ink)}
-  .badge-done{background:var(--neutral-bg);color:var(--neutral-ink)}
-  .badge-indexed{background:#eff6ff;color:#1e40af}
-  .badge-other{background:#f0fdf4;color:#166534}
-  .badge-intl{background:#fdf4ff;color:#7e22ce}
-  .badge-natl{background:#fff7ed;color:#c2410c}
+/* ── SIDEBAR ───────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--brand);
+  color: var(--brand-ink);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 200;
+  transition: transform .25s ease;
+}
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.sidebar-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--brand-accent);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+  margin-bottom: 10px;
+}
+.sidebar-logo h1 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--brand-ink);
+  line-height: 1.2;
+}
+.sidebar-logo p {
+  font-size: 11px;
+  color: var(--brand-ink2);
+  margin-top: 2px;
+  line-height: 1.4;
+}
 
-  /* STAFF PROFILE DRAWER */
-  .profile-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
-  .profile-header{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
-  .profile-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;background:var(--surface2)}
-  .profile-avatar-placeholder{width:80px;height:80px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;flex-shrink:0}
-  .profile-panel h2{font-size:18px;font-weight:800;color:var(--text);margin-bottom:2px}
-  .profile-meta{font-size:13px;color:var(--text2);margin-bottom:14px}
-  .profile-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
-  .profile-kpi{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
-  .profile-kpi .label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px}
-  .profile-kpi .val{font-size:22px;font-weight:800;color:var(--text);line-height:1.1}
-  .profile-kpi .sub{font-size:12px;color:var(--text2);margin-top:3px}
-  .profile-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-  .profile-link{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface)}
-  .profile-link:hover{background:var(--accent-soft);border-color:var(--accent)}
-  .profile-close{float:right;background:none;border:0;font-size:20px;color:var(--text2);line-height:1;padding:0 4px}
-  .profile-close:hover{color:var(--text)}
-  .sub-title{font-size:14px;font-weight:700;color:var(--text);margin:14px 0 8px}
+.nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+.nav-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--brand-ink2);
+  padding: 8px 10px 4px;
+  margin-top: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--brand-ink2);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  transition: background .15s, color .15s;
+  cursor: pointer;
+}
+.nav-item:hover { background: rgba(255,255,255,.08); color: var(--brand-ink); }
+.nav-item.active {
+  background: rgba(255,255,255,.14);
+  color: var(--brand-ink);
+  font-weight: 700;
+}
+.nav-item.active .nav-icon { color: var(--brand-accent); }
+.nav-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  opacity: .8;
+}
+.nav-item.active .nav-icon { opacity: 1; }
 
-  /* NAME BUTTON */
-  .name-btn{background:none;border:0;color:var(--accent);font-size:14px;font-weight:600;text-align:left;text-decoration:underline;padding:0;cursor:pointer}
-  .name-btn:hover{text-decoration-thickness:2px}
+.sidebar-footer {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: 11px;
+  color: var(--brand-ink2);
+  line-height: 1.6;
+}
+.sidebar-footer strong { color: var(--brand-ink); font-size: 12px; }
 
-  /* LOADING */
-  .loading{display:flex;align-items:center;justify-content:center;min-height:200px;font-size:15px;color:var(--text2)}
+/* hamburger (mobile) */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 300;
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: var(--shadow);
+}
+.hamburger span {
+  display: block;
+  width: 18px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: .2s;
+}
+.overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 199;
+}
 
-  /* SECTION HEADER */
-  .section-h{margin-bottom:16px}
-  .section-h h2{font-size:20px;font-weight:700}
-  .section-h p{font-size:14px;color:var(--text2);margin-top:3px}
+/* ── MAIN ──────────────────────────────────────────────────────────── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ── PAGE TOPBAR ───────────────────────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  min-height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 12px;
+  box-shadow: 0 1px 0 var(--border), var(--shadow);
+}
+.topbar-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.topbar-sub { font-size: 12px; color: var(--text3); margin-left: 2px; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.data-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+.data-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+/* ── CONTENT ───────────────────────────────────────────────────────── */
+.content { padding: 28px; flex: 1; }
+.page-header { margin-bottom: 24px; }
+.page-header h2 { font-size: 22px; font-weight: 800; color: var(--text); }
+.page-header p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* ── CARDS ─────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ── KPI ROW ───────────────────────────────────────────────────────── */
+.kpi-row { display: grid; gap: 16px; margin-bottom: 20px; }
+.kpi-row.cols-5 { grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); }
+@media (min-width: 900px) { .kpi-row.cols-5 { grid-template-columns: repeat(5, 1fr); } }
+
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--kpi-color, var(--accent));
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.kpi-icon {
+  font-size: 20px;
+  margin-bottom: 8px;
+  display: block;
+}
+.kpi-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -.5px;
+}
+.kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-top: 5px;
+}
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 3px;
+}
+
+/* ── SECTION HEADING inside content ───────────────────────────────── */
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin: 24px 0 12px;
+}
+
+/* ── CHART GRID ────────────────────────────────────────────────────── */
+.chart-grid { display: grid; gap: 16px; margin-bottom: 20px; }
+.chart-grid.two   { grid-template-columns: 1fr; }
+@media (min-width: 860px) { .chart-grid.two { grid-template-columns: 1fr 1fr; } }
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+.chart-card-header { margin-bottom: 14px; }
+.chart-card h3 { font-size: 14px; font-weight: 700; color: var(--text); }
+.chart-card p  { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.chart-wrap { position: relative; height: 220px; }
+.chart-wrap.tall { height: 300px; }
+
+/* ── TOOLBAR ───────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
+.search-wrap svg {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  pointer-events: none;
+}
+.search-wrap input {
+  width: 100%;
+  padding: 7px 10px 7px 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+}
+.search-wrap input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+  outline: none;
+}
+.filter-select {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text);
+  min-height: 36px;
+  transition: border-color .15s;
+}
+.filter-select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+.filter-select.active { border-color: var(--accent); font-weight: 600; }
+.count-badge {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text3);
+  white-space: nowrap;
+}
+
+/* ── TABLE ─────────────────────────────────────────────────────────── */
+.tbl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  background: var(--surface2);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text2);
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  user-select: none;
+}
+thead th.r { text-align: right; }
+thead th.c { text-align: center; }
+tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  font-size: 13px;
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: #f8faff; }
+td.r { text-align: right; }
+td.c { text-align: center; }
+td.muted { color: var(--text3); }
+td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: italic; }
+.clip { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.clip.wide { max-width: 480px; }
+
+/* ── PAGINATION ────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.pagination .pg-info { font-size: 12px; color: var(--text3); margin-right: 8px; }
+.page-btn {
+  min-height: 30px;
+  min-width: 30px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--text2);
+  transition: all .15s;
+}
+.page-btn:hover { border-color: var(--accent); color: var(--accent); }
+.page-btn[aria-current="page"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── BADGES ────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: .2px;
+}
+.badge-active   { background: var(--ok-bg);      color: var(--ok-ink); }
+.badge-done     { background: var(--neutral-bg);  color: var(--neutral-ink); }
+.badge-indexed  { background: #eff6ff;             color: #1d4ed8; }
+.badge-other    { background: #f0fdf4;             color: #15803d; }
+.badge-intl     { background: #faf5ff;             color: #7c3aed; }
+.badge-natl     { background: #fff7ed;             color: #c2410c; }
+
+/* ── NAME BUTTON ───────────────────────────────────────────────────── */
+.name-btn {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .15s;
+}
+.name-btn:hover { color: #1d40b0; text-decoration: underline; }
+
+/* ── STAFF AVATAR (table row thumbnail) ────────────────────────────── */
+.row-thumb {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 9px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  flex-shrink: 0;
+}
+.row-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--brand-light);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-right: 9px;
+  flex-shrink: 0;
+}
+.name-cell { display: flex; align-items: center; white-space: nowrap; }
+
+/* ── PROFILE DRAWER ────────────────────────────────────────────────── */
+.profile-drawer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.profile-banner {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+  padding: 24px 24px 20px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+  position: relative;
+}
+.profile-banner-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(255,255,255,.15);
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  width: 32px; height: 32px;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s;
+}
+.profile-banner-close:hover { background: rgba(255,255,255,.28); }
+.profile-photo {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,.5);
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  flex-shrink: 0;
+}
+.profile-initials-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  border: 3px solid rgba(255,255,255,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.profile-banner-info h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+.profile-banner-info p {
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.profile-body { padding: 20px 24px; }
+.profile-links { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  background: var(--accent-soft);
+  transition: all .15s;
+}
+.profile-link:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.profile-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.profile-kpi {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.profile-kpi .label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .4px; }
+.profile-kpi .val   { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; margin-top: 4px; }
+.profile-kpi .sub   { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.profile-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin: 16px 0 10px;
+}
+
+/* ── OVERVIEW STAT CARDS (top summary row) ─────────────────────────── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .overlay.open { display: block; }
+  .hamburger { display: flex; }
+  .main { margin-left: 0; }
+  .topbar { padding-left: 60px; }
+  .content { padding: 20px 16px; }
+}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div>
-    <h1>FKM Research Analytics</h1>
-    <div class="topbar-sub">Fakulti Kejuruteraan Mekanikal, UiTM Shah Alam — Expert Portal Data</div>
+<!-- Sidebar overlay (mobile) -->
+<div class="overlay" id="overlay"></div>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar" aria-label="Navigation">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-badge">FK<span style="font-size:11px">M</span></div>
+    <h1>FKM Research<br>Analytics</h1>
+    <p>Fakulti Kejuruteraan Mekanikal<br>UiTM Shah Alam</p>
   </div>
-  <div id="last-updated" class="last-updated"></div>
-</div>
 
-<div class="tabs" role="tablist" aria-label="Dashboard sections">
-  <button class="tab" role="tab" aria-selected="true"  aria-controls="page-overview"    id="tab-overview">Overview</button>
-  <button class="tab" role="tab" aria-selected="false" aria-controls="page-staff"       id="tab-staff">Staff Profiles</button>
-  <button class="tab" role="tab" aria-selected="false" aria-controls="page-pubs"        id="tab-pubs">Publications</button>
-  <button class="tab" role="tab" aria-selected="false" aria-controls="page-grants"      id="tab-grants">Grants</button>
-</div>
+  <nav class="nav" aria-label="Main menu">
+    <div class="nav-label">Dashboard</div>
 
-<!-- ══════════════════════════════════════════════════════════ OVERVIEW -->
-<div id="page-overview" role="tabpanel" aria-labelledby="tab-overview">
-  <div class="content">
-    <div class="section-h">
+    <button class="nav-item active" data-page="overview" aria-current="page">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M2 10a8 8 0 1 1 16 0A8 8 0 0 1 2 10Zm8-6a6 6 0 1 0 0 12A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm0 1.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>
+      </svg>
+      Overview
+    </button>
+
+    <button class="nav-item" data-page="staff">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M9 6a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM3.5 8a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0ZM15 14c0-1.5-1.3-2.7-3-3h-4c-1.7.3-3 1.5-3 3v1h10v-1Z"/>
+      </svg>
+      Staff Profiles
+    </button>
+
+    <button class="nav-item" data-page="pubs">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h4.586A2 2 0 0 1 12 2.586L15.414 6A2 2 0 0 1 16 7.414V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm2 6a1 1 0 0 1 1-1h6a1 1 0 0 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2H7Z" clip-rule="evenodd"/>
+      </svg>
+      Publications
+    </button>
+
+    <button class="nav-item" data-page="grants">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M10.75 10.818v2.614A3.13 3.13 0 0 0 11.888 13c.482-.315.612-.648.612-.875 0-.227-.13-.56-.612-.875a3.13 3.13 0 0 0-1.138-.432ZM8.33 8.62c.053.055.115.11.184.164.208.16.46.284.736.363V6.603a2.45 2.45 0 0 0-.35.13c-.14.065-.27.143-.386.233-.377.292-.514.627-.514.909 0 .184.058.39.33.585Z"/>
+        <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-6a.75.75 0 0 1 .75.75v.316a3.78 3.78 0 0 1 1.653.713c.426.33.744.74.925 1.2a.75.75 0 0 1-1.395.55 1.35 1.35 0 0 0-.428-.507 2.276 2.276 0 0 0-.755-.36V7.5c0-.414.336-.75.75-.75Zm0 12a.75.75 0 0 1-.75-.75v-.316a3.78 3.78 0 0 1-1.653-.713 3.26 3.26 0 0 1-.925-1.2.75.75 0 1 1 1.395-.55c.1.254.275.49.428.507.199.14.448.257.755.36V13.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+      </svg>
+      Grants
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <strong>Expert Portal Data</strong><br>
+    Scraped from expert.uitm.edu.my<br>
+    <span id="sidebar-updated">—</span>
+  </div>
+</aside>
+
+<!-- hamburger (mobile) -->
+<button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div>
+      <div class="topbar-title" id="topbar-title">Overview</div>
+    </div>
+    <div class="topbar-right">
+      <div class="data-pill" id="data-pill">Loading…</div>
+    </div>
+  </header>
+
+  <!-- ══ OVERVIEW ══════════════════════════════════════════════════ -->
+  <div id="page-overview" class="content">
+    <div class="page-header">
       <h2>Research Overview</h2>
-      <p>Aggregated figures from UiTM Expert portal profiles — Shah Alam campus academic staff</p>
+      <p>Aggregated figures from UiTM Expert portal — Shah Alam academic staff</p>
     </div>
 
-    <div class="kpi-row five" id="kpi-row1"></div>
-    <div class="kpi-row five" id="kpi-row2"></div>
+    <div class="kpi-row cols-5" id="kpi-row1"></div>
+    <div class="kpi-row cols-5" id="kpi-row2"></div>
+
+    <div class="section-title">Publications &amp; Grants</div>
+    <div class="chart-grid two">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>H-Index Distribution (Scopus)</h3>
+          <p>Number of staff in each h-index range</p>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-hindex"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Publications by Type</h3>
+          <p>Indexed vs. other publications across all staff</p>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-pubs-type"></canvas></div>
+      </div>
+    </div>
 
     <div class="chart-grid two">
       <div class="chart-card">
-        <h3>H-Index Distribution (Scopus)</h3>
-        <div class="chart-desc">Number of staff in each h-index range</div>
-        <div class="chart-wrap"><canvas id="chart-hindex" aria-label="H-index distribution"></canvas></div>
+        <div class="chart-card-header">
+          <h3>Grants by Level &amp; Status</h3>
+          <p>International and national — active vs. completed</p>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-grants"></canvas></div>
       </div>
       <div class="chart-card">
-        <h3>Publications by Type</h3>
-        <div class="chart-desc">Indexed vs. other publications across all staff</div>
-        <div class="chart-wrap"><canvas id="chart-pubs-type" aria-label="Publications by type"></canvas></div>
-      </div>
-    </div>
-
-    <div class="chart-grid two">
-      <div class="chart-card">
-        <h3>Grants by Level &amp; Status</h3>
-        <div class="chart-desc">International and national grants, active vs. completed</div>
-        <div class="chart-wrap"><canvas id="chart-grants" aria-label="Grants by level and status"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <h3>Supervision (PhD &amp; Master)</h3>
-        <div class="chart-desc">Graduated and ongoing students across all staff</div>
-        <div class="chart-wrap"><canvas id="chart-supervision" aria-label="Supervision breakdown"></canvas></div>
+        <div class="chart-card-header">
+          <h3>Supervision (PhD &amp; Master)</h3>
+          <p>Graduated and ongoing students across all staff</p>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-supervision"></canvas></div>
       </div>
     </div>
 
-    <div class="chart-grid">
-      <div class="chart-card">
+    <div class="section-title">Top Performers</div>
+    <div class="chart-card">
+      <div class="chart-card-header">
         <h3>Top 15 Staff by Indexed Publications</h3>
-        <div class="chart-desc">Ranked by number of indexed publications on the Expert portal</div>
-        <div class="chart-wrap tall"><canvas id="chart-top-pubs" aria-label="Top staff by indexed publications"></canvas></div>
+        <p>Ranked by number of indexed publications on the Expert portal</p>
       </div>
+      <div class="chart-wrap tall"><canvas id="chart-top-pubs"></canvas></div>
     </div>
   </div>
-</div>
 
-<!-- ══════════════════════════════════════════════════════════ STAFF -->
-<div id="page-staff" role="tabpanel" aria-labelledby="tab-staff" hidden>
-  <div class="content">
-    <div class="section-h">
+  <!-- ══ STAFF ══════════════════════════════════════════════════════ -->
+  <div id="page-staff" class="content" hidden>
+    <div class="page-header">
       <h2>Staff Profiles</h2>
-      <p>Click a name to view full profile, publications, and grants</p>
+      <p>Click any name to view full profile, publications, and grants</p>
     </div>
 
-    <div id="staff-profile" class="profile-panel" hidden></div>
+    <div id="staff-profile" class="profile-drawer" hidden></div>
 
-    <div class="panel">
+    <div class="tbl-card">
       <div class="toolbar">
-        <div class="search-box">
+        <div class="search-wrap">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="staff-search" placeholder="Search by name…" aria-label="Search staff">
         </div>
         <select class="filter-select" id="staff-sort" aria-label="Sort by">
-          <option value="name">Sort: Name A–Z</option>
-          <option value="h_scopus">Sort: H-Index (Scopus)</option>
-          <option value="pubs_indexed">Sort: Indexed Pubs</option>
-          <option value="pubs_total">Sort: Total Pubs</option>
-          <option value="grants_total">Sort: Grants</option>
-          <option value="phd_total">Sort: PhD</option>
-          <option value="master_total">Sort: Master</option>
+          <option value="name">Name A–Z</option>
+          <option value="h_scopus">H-Index (Scopus)</option>
+          <option value="pubs_indexed">Indexed Pubs</option>
+          <option value="pubs_total">Total Pubs</option>
+          <option value="grants_total">Total Grants</option>
+          <option value="phd_total">PhD Students</option>
+          <option value="master_total">Master Students</option>
         </select>
-        <span class="count-text" id="staff-count"></span>
+        <span class="count-badge" id="staff-count"></span>
       </div>
       <div class="tbl-wrap">
         <table>
           <thead>
             <tr>
               <th>Name</th>
-              <th class="c">H-Index<br><span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">Sc / WoS / GS</span></th>
+              <th class="c">H-Index<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">Sc / WoS / GS</span></th>
               <th class="r">Indexed<br>Pubs</th>
               <th class="r">Other<br>Pubs</th>
               <th class="r">Active<br>Grants</th>
               <th class="r">Total<br>Grants</th>
               <th class="r">PhD<br>Grad</th>
               <th class="r">PhD<br>Active</th>
-              <th class="r">Master<br>Grad</th>
-              <th class="r">Master<br>Active</th>
-              <th class="r">Consultancy<br>Completed</th>
+              <th class="r">MSc<br>Grad</th>
+              <th class="r">MSc<br>Active</th>
+              <th class="r">Consultancy<br>Done</th>
             </tr>
           </thead>
           <tbody id="staff-tbody"></tbody>
@@ -251,18 +815,17 @@
       <div class="pagination" id="staff-pagination"></div>
     </div>
   </div>
-</div>
 
-<!-- ══════════════════════════════════════════════════════════ PUBLICATIONS -->
-<div id="page-pubs" role="tabpanel" aria-labelledby="tab-pubs" hidden>
-  <div class="content">
-    <div class="section-h">
+  <!-- ══ PUBLICATIONS ════════════════════════════════════════════════ -->
+  <div id="page-pubs" class="content" hidden>
+    <div class="page-header">
       <h2>Publications</h2>
       <p>All publications recorded on the Expert portal for FKM Shah Alam staff</p>
     </div>
-    <div class="panel">
+    <div class="tbl-card">
       <div class="toolbar">
-        <div class="search-box">
+        <div class="search-wrap">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="pubs-search" placeholder="Search title or author…" aria-label="Search publications">
         </div>
         <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
@@ -270,17 +833,17 @@
           <option value="indexed">Indexed only</option>
           <option value="other">Other only</option>
         </select>
-        <span class="count-text" id="pubs-count"></span>
+        <span class="count-badge" id="pubs-count"></span>
       </div>
       <div class="tbl-wrap">
         <table>
           <thead>
             <tr>
-              <th class="num" style="width:46px">#</th>
+              <th style="width:46px">#</th>
               <th>Title</th>
               <th>Type</th>
               <th>Group</th>
-              <th class="num">Date</th>
+              <th>Date</th>
               <th>Staff</th>
             </tr>
           </thead>
@@ -290,18 +853,17 @@
       <div class="pagination" id="pubs-pagination"></div>
     </div>
   </div>
-</div>
 
-<!-- ══════════════════════════════════════════════════════════ GRANTS -->
-<div id="page-grants" role="tabpanel" aria-labelledby="tab-grants" hidden>
-  <div class="content">
-    <div class="section-h">
+  <!-- ══ GRANTS ══════════════════════════════════════════════════════ -->
+  <div id="page-grants" class="content" hidden>
+    <div class="page-header">
       <h2>Grants</h2>
       <p>Research grants from the Expert portal — international and national, active and completed</p>
     </div>
-    <div class="panel">
+    <div class="tbl-card">
       <div class="toolbar">
-        <div class="search-box">
+        <div class="search-wrap">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="grants-search" placeholder="Search title, grant name or staff…" aria-label="Search grants">
         </div>
         <select class="filter-select" id="grants-filter-level" aria-label="Filter by level">
@@ -314,19 +876,19 @@
           <option value="active">Active</option>
           <option value="completed">Completed</option>
         </select>
-        <span class="count-text" id="grants-count"></span>
+        <span class="count-badge" id="grants-count"></span>
       </div>
       <div class="tbl-wrap">
         <table>
           <thead>
             <tr>
-              <th class="num" style="width:46px">#</th>
-              <th class="clip">Title</th>
+              <th style="width:46px">#</th>
+              <th>Title</th>
               <th>Level</th>
               <th>Grant / Scheme</th>
               <th>Role</th>
-              <th class="num">Start</th>
-              <th class="num">End</th>
+              <th>Start</th>
+              <th>End</th>
               <th class="r">Cost (RM)</th>
               <th>Status</th>
               <th>Staff</th>
@@ -338,7 +900,8 @@
       <div class="pagination" id="grants-pagination"></div>
     </div>
   </div>
-</div>
+
+</div><!-- /.main -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
@@ -347,23 +910,29 @@
 // ── State ──────────────────────────────────────────────────────────────────
 let STAFF = [], PUBS = [], GRANTS = [];
 let STAFF_BY_SLUG = new Map();
-
 const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
 
 // ── Helpers ────────────────────────────────────────────────────────────────
-const esc = s => (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const blank = v => v == null || v === '' || v === 0;
-const num = (v, fallback='—') => v == null ? fallback : Number(v).toLocaleString('en-MY');
+const esc = s => (s == null ? '' : String(s))
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const num   = (v, fb='—') => v == null ? fb : Number(v).toLocaleString('en-MY');
 const fmtRM = v => v == null ? '—' : 'RM ' + Number(v).toLocaleString('en-MY');
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const nice = s => s ? s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase()) : '';
+const initials = name => (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
-function kpiTile(label, value, sub) {
-  return `<div class="kpi"><div class="kpi-label">${esc(label)}</div><div class="kpi-value num">${esc(String(value))}</div><div class="kpi-sub">${esc(sub)}</div></div>`;
+function kpi(label, value, sub, color, icon) {
+  return `<div class="kpi" style="--kpi-color:${color}">
+    <span class="kpi-icon">${icon}</span>
+    <div class="kpi-value num">${esc(String(value))}</div>
+    <div class="kpi-label">${esc(label)}</div>
+    <div class="kpi-sub">${esc(sub)}</div>
+  </div>`;
 }
 
-// ── Load data ──────────────────────────────────────────────────────────────
+// ── Load ───────────────────────────────────────────────────────────────────
 async function loadData() {
   try {
     const [sumRes, staffRes, pubsRes, grantsRes] = await Promise.all([
@@ -373,45 +942,48 @@ async function loadData() {
       fetch('data/expert_grants.json'),
     ]);
     const summary = await sumRes.json();
-    STAFF   = await staffRes.json();
-    PUBS    = await pubsRes.json();
-    GRANTS  = await grantsRes.json();
-
+    STAFF  = await staffRes.json();
+    PUBS   = await pubsRes.json();
+    GRANTS = await grantsRes.json();
     STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
 
-    document.getElementById('last-updated').textContent = 'Data: ' + (summary.generated || '—');
+    const dateStr = summary.generated || '—';
+    document.getElementById('sidebar-updated').textContent = dateStr;
+    document.getElementById('data-pill').textContent = 'Data: ' + dateStr;
+
     renderOverview(summary);
     renderStaffTable();
     renderPubsTable();
     renderGrantsTable();
-  } catch (e) {
-    console.error('Failed to load Expert data:', e);
-    document.querySelectorAll('.content').forEach(el => {
-      el.innerHTML = `<div class="loading">Failed to load data. ${esc(e.message)}</div>`;
-    });
+  } catch(e) {
+    console.error(e);
+    document.querySelectorAll('.content').forEach(el =>
+      el.innerHTML = `<p style="color:var(--text2);padding:40px">Failed to load data: ${esc(e.message)}</p>`
+    );
   }
 }
 
 // ── OVERVIEW ───────────────────────────────────────────────────────────────
 function renderOverview(s) {
-  const hVals = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
-  const hMax  = hVals.length ? Math.max(...hVals) : 0;
+  const hVals   = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
+  const hMax    = hVals.length ? Math.max(...hVals) : 0;
   const hMedian = hVals.length ? [...hVals].sort((a,b)=>a-b)[Math.floor(hVals.length/2)] : 0;
+  const totalPubs = (s.pubs_indexed_total||0) + (s.pubs_other_total||0);
 
   document.getElementById('kpi-row1').innerHTML = [
-    kpiTile('Staff scraped', s.staff_count, 'Shah Alam academic staff'),
-    kpiTile('Avg H-Index (Scopus)', s.h_scopus_avg ?? '—', `Max: ${hMax} · Median: ${hMedian}`),
-    kpiTile('Indexed publications', num(s.pubs_indexed_total), 'Scopus / WoS / ERA etc.'),
-    kpiTile('Other publications', num(s.pubs_other_total), 'Non-indexed / proceedings'),
-    kpiTile('Total publications', num((s.pubs_indexed_total||0)+(s.pubs_other_total||0)), 'All types'),
+    kpi('Staff scraped',          s.staff_count,             'Shah Alam academic staff',     '#2563eb', '👥'),
+    kpi('Avg H-Index (Scopus)',   s.h_scopus_avg ?? '—',     `Max: ${hMax} · Median: ${hMedian}`, '#7c3aed', '📊'),
+    kpi('Indexed publications',   num(s.pubs_indexed_total), 'Scopus / WoS / ERA etc.',       '#0891b2', '📄'),
+    kpi('Other publications',     num(s.pubs_other_total),   'Non-indexed / proceedings',     '#059669', '📋'),
+    kpi('Total publications',     num(totalPubs),            'All publication types',          '#d97706', '📚'),
   ].join('');
 
   document.getElementById('kpi-row2').innerHTML = [
-    kpiTile('Active grants', num(s.grants_active), `of ${num(s.grants_total)} total grants`),
-    kpiTile('Total grants', num(s.grants_total), 'All levels, all statuses'),
-    kpiTile('PhD supervision', num(s.phd_total), 'Graduated + ongoing'),
-    kpiTile('Master supervision', num(s.master_total), 'Graduated + ongoing'),
-    kpiTile('Consultancy', num(s.consultancy_total), 'Completed appointments'),
+    kpi('Active grants',    num(s.grants_active),  `of ${num(s.grants_total)} total`,   '#16a34a', '🔬'),
+    kpi('Total grants',     num(s.grants_total),   'All levels and statuses',           '#dc2626', '💰'),
+    kpi('PhD supervision',  num(s.phd_total),      'Graduated + ongoing',               '#7c3aed', '🎓'),
+    kpi('Master supervision',num(s.master_total),  'Graduated + ongoing',               '#2563eb', '🎓'),
+    kpi('Consultancy',      num(s.consultancy_total),'Completed appointments',           '#059669', '🤝'),
   ].join('');
 
   drawCharts();
@@ -425,170 +997,181 @@ function drawCharts() {
   Chart.defaults.borderColor = cssVar('--grid');
 
   // H-index distribution
-  const bins = [0,0,0,0,0,0]; // 0, 1-5, 6-10, 11-15, 16-20, 21+
+  const bins = [0,0,0,0,0,0];
   STAFF.forEach(s => {
     const h = s.h_scopus;
-    if (h == null) { bins[0]++; return; }
-    if (h === 0)   { bins[0]++; }
-    else if (h <= 5)  { bins[1]++; }
-    else if (h <= 10) { bins[2]++; }
-    else if (h <= 15) { bins[3]++; }
-    else if (h <= 20) { bins[4]++; }
-    else              { bins[5]++; }
+    if (h == null || h === 0) bins[0]++;
+    else if (h <= 5)  bins[1]++;
+    else if (h <= 10) bins[2]++;
+    else if (h <= 15) bins[3]++;
+    else if (h <= 20) bins[4]++;
+    else              bins[5]++;
   });
-  makeBarChart('chart-hindex', ['0 / N/A','1–5','6–10','11–15','16–20','21+'], bins, cssVar('--series'));
+  barChart('chart-hindex', ['0 / N/A','1–5','6–10','11–15','16–20','21+'], bins,
+    ['#cbd5e1','#93c5fd','#60a5fa','#3b82f6','#2563eb','#1d4ed8']);
 
   // Publications donut
-  const idxTotal   = STAFF.reduce((a,s)=>a+(s.pubs_indexed||0),0);
-  const otherTotal = STAFF.reduce((a,s)=>a+(s.pubs_other||0),0);
-  makeDonutChart('chart-pubs-type',
-    ['Indexed','Other'],
-    [idxTotal, otherTotal],
-    [cssVar('--series'), cssVar('--series2')]
-  );
+  const idx   = STAFF.reduce((a,s) => a+(s.pubs_indexed||0), 0);
+  const other = STAFF.reduce((a,s) => a+(s.pubs_other||0), 0);
+  donutChart('chart-pubs-type', ['Indexed','Other'], [idx, other], ['#2563eb','#f59e0b']);
 
-  // Grants stacked
-  const iA = STAFF.reduce((a,s)=>a+(s.grants_intl_active||0),0);
-  const iC = STAFF.reduce((a,s)=>a+(s.grants_intl_completed||0),0);
-  const nA = STAFF.reduce((a,s)=>a+(s.grants_natl_active||0),0);
-  const nC = STAFF.reduce((a,s)=>a+(s.grants_natl_completed||0),0);
-  makeBarChart('chart-grants',
+  // Grants
+  const iA = STAFF.reduce((a,s) => a+(s.grants_intl_active||0), 0);
+  const iC = STAFF.reduce((a,s) => a+(s.grants_intl_completed||0), 0);
+  const nA = STAFF.reduce((a,s) => a+(s.grants_natl_active||0), 0);
+  const nC = STAFF.reduce((a,s) => a+(s.grants_natl_completed||0), 0);
+  barChart('chart-grants',
     ['Intl Active','Intl Completed','Natl Active','Natl Completed'],
     [iA, iC, nA, nC],
-    [cssVar('--series'),'#93c5fd',cssVar('--series2'),'#fdba74']
+    ['#2563eb','#93c5fd','#f59e0b','#fcd34d']
   );
 
   // Supervision
-  const phdGrad    = STAFF.reduce((a,s)=>a+(s.phd_graduated||0),0);
-  const phdOngoing = STAFF.reduce((a,s)=>a+(s.phd_ongoing||0),0);
-  const msGrad     = STAFF.reduce((a,s)=>a+(s.master_graduated||0),0);
-  const msOngoing  = STAFF.reduce((a,s)=>a+(s.master_ongoing||0),0);
-  makeBarChart('chart-supervision',
+  const pg = STAFF.reduce((a,s) => a+(s.phd_graduated||0), 0);
+  const po = STAFF.reduce((a,s) => a+(s.phd_ongoing||0), 0);
+  const mg = STAFF.reduce((a,s) => a+(s.master_graduated||0), 0);
+  const mo = STAFF.reduce((a,s) => a+(s.master_ongoing||0), 0);
+  barChart('chart-supervision',
     ['PhD Graduated','PhD Ongoing','Master Graduated','Master Ongoing'],
-    [phdGrad, phdOngoing, msGrad, msOngoing],
-    [cssVar('--series'),'#93c5fd',cssVar('--series2'),'#fdba74']
+    [pg, po, mg, mo],
+    ['#2563eb','#93c5fd','#f59e0b','#fcd34d']
   );
 
   // Top 15 staff by indexed pubs
-  const top15 = [...STAFF]
-    .filter(s => s.pubs_indexed > 0)
-    .sort((a,b) => (b.pubs_indexed||0) - (a.pubs_indexed||0))
-    .slice(0, 15);
-  const names = top15.map(s => {
-    const parts = (s.name||'').split(' ');
-    return parts.length > 2 ? parts[0] + ' ' + parts[parts.length-1] : s.name;
+  const top15 = [...STAFF].filter(s => s.pubs_indexed > 0)
+    .sort((a,b) => (b.pubs_indexed||0) - (a.pubs_indexed||0)).slice(0,15);
+  const labels = top15.map(s => {
+    const p = (s.name||'').split(' ').filter(Boolean);
+    return p.length > 2 ? p[0] + ' ' + p[p.length-1] : s.name;
   });
-  makeHBarChart('chart-top-pubs', names, top15.map(s=>s.pubs_indexed||0), cssVar('--series'));
+  hbarChart('chart-top-pubs', labels, top15.map(s => s.pubs_indexed||0), '#2563eb');
 }
 
-function makeBarChart(id, labels, data, color) {
+function barChart(id, labels, data, colors) {
   const el = document.getElementById(id); if (!el) return;
-  const c = charts.get(id);
-  const colors = Array.isArray(color) ? color : data.map(()=>color);
+  const c   = charts.get(id);
+  const bg  = Array.isArray(colors) ? colors : data.map(() => colors);
   const cfg = {
-    type:'bar', data:{labels, datasets:[{data, backgroundColor:colors, borderRadius:4, maxBarThickness:52}]},
-    options:{responsive:true, maintainAspectRatio:false, animation:false,
-      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}`}}},
-      scales:{x:{grid:{display:false}, ticks:{autoSkip:false}}, y:{beginAtZero:true, ticks:{precision:0}}}}
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: bg, borderRadius: 5, maxBarThickness: 52 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}` } } },
+      scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } }
+    }
   };
-  if (c) { c.data.labels=labels; c.data.datasets[0].data=data; c.data.datasets[0].backgroundColor=colors; c.update('none'); }
-  else   { charts.set(id, new Chart(el, cfg)); }
+  if (c) { c.data.labels = labels; c.data.datasets[0].data = data; c.data.datasets[0].backgroundColor = bg; c.update('none'); }
+  else   charts.set(id, new Chart(el, cfg));
 }
 
-function makeDonutChart(id, labels, data, colors) {
+function donutChart(id, labels, data, colors) {
   const el = document.getElementById(id); if (!el) return;
-  const c = charts.get(id);
-  const lbls = labels.map((l,i)=>`${l} (${data[i]})`);
+  const c   = charts.get(id);
+  const lbl = labels.map((l,i) => `${l} (${data[i].toLocaleString('en-MY')})`);
   const cfg = {
-    type:'doughnut', data:{labels:lbls, datasets:[{data, backgroundColor:colors, borderWidth:2, borderColor:cssVar('--surface')}]},
-    options:{responsive:true, maintainAspectRatio:false, animation:false, cutout:'58%',
-      plugins:{legend:{position:'bottom', labels:{boxWidth:12,padding:14,color:cssVar('--text')}}, tooltip:{callbacks:{label:c=>` ${c.raw.toLocaleString('en-MY')}`}}}}
+    type: 'doughnut',
+    data: { labels: lbl, datasets: [{ data, backgroundColor: colors, borderWidth: 3, borderColor: '#fff' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, color: cssVar('--text') } },
+        tooltip: { callbacks: { label: c => ` ${c.raw.toLocaleString('en-MY')}` } }
+      }
+    }
   };
-  if (c) { c.data.labels=lbls; c.data.datasets[0].data=data; c.update('none'); }
-  else   { charts.set(id, new Chart(el, cfg)); }
+  if (c) { c.data.labels = lbl; c.data.datasets[0].data = data; c.update('none'); }
+  else   charts.set(id, new Chart(el, cfg));
 }
 
-function makeHBarChart(id, labels, data, color) {
+function hbarChart(id, labels, data, color) {
   const el = document.getElementById(id); if (!el) return;
-  const c = charts.get(id);
+  const c   = charts.get(id);
   const cfg = {
-    type:'bar', data:{labels, datasets:[{data, backgroundColor:color, borderRadius:4, maxBarThickness:24}]},
-    options:{responsive:true, maintainAspectRatio:false, animation:false, indexAxis:'y',
-      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw} indexed pubs`}}},
-      scales:{x:{beginAtZero:true, ticks:{precision:0}}, y:{grid:{display:false}, ticks:{autoSkip:false}}}}
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: color, borderRadius: 4, maxBarThickness: 20 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw} indexed pubs` } } },
+      scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } }
+    }
   };
-  if (c) { c.data.labels=labels; c.data.datasets[0].data=data; c.update('none'); }
-  else   { charts.set(id, new Chart(el, cfg)); }
+  if (c) { c.data.labels = labels; c.data.datasets[0].data = data; c.update('none'); }
+  else   charts.set(id, new Chart(el, cfg));
 }
 
-// ── STAFF TABLE ────────────────────────────────────────────────────────────
+// ── STAFF ──────────────────────────────────────────────────────────────────
 let selectedSlug = null;
 
 function getStaffList() {
-  const q = document.getElementById('staff-search').value.trim().toLowerCase();
-  const sortKey = document.getElementById('staff-sort').value;
-  let rows = q ? STAFF.filter(s => (s.name||'').toLowerCase().includes(q)) : [...STAFF];
+  const q   = document.getElementById('staff-search').value.trim().toLowerCase();
+  const key = document.getElementById('staff-sort').value;
+  let rows  = q ? STAFF.filter(s => (s.name||'').toLowerCase().includes(q)) : [...STAFF];
   rows.sort((a,b) => {
-    if (sortKey === 'name')         return (a.name||'').localeCompare(b.name||'');
-    if (sortKey === 'h_scopus')     return (b.h_scopus||0) - (a.h_scopus||0);
-    if (sortKey === 'pubs_indexed') return (b.pubs_indexed||0) - (a.pubs_indexed||0);
-    if (sortKey === 'pubs_total')   return (b.pubs_total||0) - (a.pubs_total||0);
-    if (sortKey === 'grants_total') return (b.grants_total||0) - (a.grants_total||0);
-    if (sortKey === 'phd_total')    return ((b.phd_graduated||0)+(b.phd_ongoing||0)) - ((a.phd_graduated||0)+(a.phd_ongoing||0));
-    if (sortKey === 'master_total') return ((b.master_graduated||0)+(b.master_ongoing||0)) - ((a.master_graduated||0)+(a.master_ongoing||0));
+    if (key==='name')         return (a.name||'').localeCompare(b.name||'');
+    if (key==='h_scopus')     return (b.h_scopus||0)-(a.h_scopus||0);
+    if (key==='pubs_indexed') return (b.pubs_indexed||0)-(a.pubs_indexed||0);
+    if (key==='pubs_total')   return (b.pubs_total||0)-(a.pubs_total||0);
+    if (key==='grants_total') return (b.grants_total||0)-(a.grants_total||0);
+    if (key==='phd_total')    return ((b.phd_graduated||0)+(b.phd_ongoing||0))-((a.phd_graduated||0)+(a.phd_ongoing||0));
+    if (key==='master_total') return ((b.master_graduated||0)+(b.master_ongoing||0))-((a.master_graduated||0)+(a.master_ongoing||0));
     return 0;
   });
   return rows;
 }
 
 function renderStaffTable() {
-  const rows = getStaffList();
-  const q = document.getElementById('staff-search').value.trim();
-  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const rows  = getStaffList();
+  const q     = document.getElementById('staff-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length/PAGE_SIZE));
   pageState.staff = Math.min(pageState.staff, total);
-  const start = (pageState.staff - 1) * PAGE_SIZE;
-  const page  = rows.slice(start, start + PAGE_SIZE);
+  const start = (pageState.staff-1)*PAGE_SIZE;
+  const page  = rows.slice(start, start+PAGE_SIZE);
 
-  document.getElementById('staff-count').textContent = `${rows.length} staff${q ? ` matching "${q}"` : ''}`;
+  document.getElementById('staff-count').textContent =
+    `${rows.length} staff${q ? ` matching "${q}"` : ''}`;
   document.getElementById('staff-pagination').innerHTML = paginHTML(total, pageState.staff, 'staff');
 
-  const hcell = (v) => v == null ? '<span class="muted">—</span>' : `<span class="num">${v}</span>`;
-  const ncell = (v) => !v ? '<span class="muted">0</span>' : `<span class="num">${v}</span>`;
-  const thumbHTML = (s) => s.photo
-    ? `<img src="${esc(s.photo)}" alt="" loading="lazy" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;border:1px solid var(--border)">`
-    : '';
+  const hc = v => v == null ? '<span class="muted">—</span>' : `<span class="num">${v}</span>`;
+  const nc = v => !v ? '<span style="color:var(--text3)">0</span>' : `<span class="num">${v}</span>`;
 
-  document.getElementById('staff-tbody').innerHTML = page.length ? page.map(s => `
-    <tr class="${s.slug === selectedSlug ? 'selected' : ''}">
-      <td style="white-space:nowrap">${thumbHTML(s)}<button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></td>
-      <td class="c num">${hcell(s.h_scopus)} / ${hcell(s.h_wos)} / ${hcell(s.h_gs)}</td>
-      <td class="r">${ncell(s.pubs_indexed)}</td>
-      <td class="r">${ncell(s.pubs_other)}</td>
-      <td class="r">${ncell(s.grants_active)}</td>
-      <td class="r">${ncell(s.grants_total)}</td>
-      <td class="r">${ncell(s.phd_graduated)}</td>
-      <td class="r">${ncell(s.phd_ongoing)}</td>
-      <td class="r">${ncell(s.master_graduated)}</td>
-      <td class="r">${ncell(s.master_ongoing)}</td>
-      <td class="r">${ncell(s.consultancy_completed)}</td>
-    </tr>`).join('') : `<tr><td class="empty" colspan="11">No staff match the search.</td></tr>`;
+  const avatarCell = s => s.photo
+    ? `<img class="row-thumb" src="${esc(s.photo)}" alt="" loading="lazy"
+         onerror="this.outerHTML='<span class=\'row-initials\'>${esc(initials(s.name))}</span>'">`
+    : `<span class="row-initials">${esc(initials(s.name))}</span>`;
+
+  document.getElementById('staff-tbody').innerHTML = page.length
+    ? page.map(s => `
+      <tr>
+        <td><div class="name-cell">${avatarCell(s)}<button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></div></td>
+        <td class="c">${hc(s.h_scopus)} / ${hc(s.h_wos)} / ${hc(s.h_gs)}</td>
+        <td class="r">${nc(s.pubs_indexed)}</td>
+        <td class="r">${nc(s.pubs_other)}</td>
+        <td class="r">${nc(s.grants_active)}</td>
+        <td class="r">${nc(s.grants_total)}</td>
+        <td class="r">${nc(s.phd_graduated)}</td>
+        <td class="r">${nc(s.phd_ongoing)}</td>
+        <td class="r">${nc(s.master_graduated)}</td>
+        <td class="r">${nc(s.master_ongoing)}</td>
+        <td class="r">${nc(s.consultancy_completed)}</td>
+      </tr>`).join('')
+    : `<tr><td class="empty" colspan="11">No staff match the search.</td></tr>`;
 }
 
 function openStaffProfile(slug) {
-  const s = STAFF_BY_SLUG.get(slug);
-  if (!s) return;
+  const s = STAFF_BY_SLUG.get(slug); if (!s) return;
   selectedSlug = slug;
   renderStaffTable();
 
   const staffPubs   = PUBS.filter(p => p.slug === slug);
   const staffGrants = GRANTS.filter(g => g.slug === slug);
-  const idxPubs = staffPubs.filter(p => p.indexed);
-  const otherPubs = staffPubs.filter(p => !p.indexed);
+  const idxPubs     = staffPubs.filter(p => p.indexed);
+  const otherPubs   = staffPubs.filter(p => !p.indexed);
+
   const hStr = [
-    s.h_scopus != null ? `Scopus: ${s.h_scopus}` : null,
-    s.h_wos    != null ? `WoS: ${s.h_wos}`    : null,
-    s.h_gs     != null ? `GS: ${s.h_gs}`      : null,
-  ].filter(Boolean).join(' · ') || '—';
+    s.h_scopus != null ? `Scopus: <strong>${s.h_scopus}</strong>` : null,
+    s.h_wos    != null ? `WoS: <strong>${s.h_wos}</strong>` : null,
+    s.h_gs     != null ? `GS: <strong>${s.h_gs}</strong>` : null,
+  ].filter(Boolean).join(' &nbsp;·&nbsp; ') || '—';
 
   const expertUrl = `https://expert.uitm.edu.my/expert/${slug}`;
   const links = [
@@ -598,62 +1181,69 @@ function openStaffProfile(slug) {
     s.orcid      ? `<a class="profile-link" href="https://orcid.org/${esc(s.orcid)}" target="_blank" rel="noopener">ORCID ↗</a>` : '',
   ].join('');
 
+  const avatarHTML = s.photo
+    ? `<img class="profile-photo" src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy"
+         onerror="this.outerHTML='<div class=\'profile-initials-avatar\'>${esc(initials(s.name))}</div>'">`
+    : `<div class="profile-initials-avatar">${esc(initials(s.name))}</div>`;
+
   const pubsHTML = idxPubs.slice(0,10).map((p,i) => `
     <tr>
-      <td class="num muted">${i+1}</td>
+      <td class="muted">${i+1}</td>
       <td class="clip wide">${esc(p.title||'(no title)')}</td>
       <td>${esc(p.type||'')}</td>
-      <td class="num">${esc(p.date||'')}</td>
+      <td>${esc(p.date||'')}</td>
     </tr>`).join('');
 
-  const grantsHTML = staffGrants.slice(0,10).map((g,i) => `
-    <tr>
-      <td class="num muted">${i+1}</td>
+  const grantsHTML = staffGrants.slice(0,10).map((g,i) => {
+    const isIntl = (g.level||'').toUpperCase().includes('INT');
+    const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
+    return `<tr>
+      <td class="muted">${i+1}</td>
       <td class="clip wide">${esc(g.title||'(no title)')}</td>
-      <td>${g.level && g.level.toUpperCase().includes('INT') ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
-      <td class="num">${esc(String(g.year_start||''))}</td>
-      <td>${g.status && g.status.toUpperCase()==='ACTIVE' ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
-    </tr>`).join('');
+      <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+      <td>${esc(String(g.year_start||''))}</td>
+      <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+    </tr>`;
+  }).join('');
 
   const panel = document.getElementById('staff-profile');
   panel.hidden = false;
-  const initials = (s.name||slug).split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('');
-  const avatarHTML = s.photo
-    ? `<img class="profile-avatar" src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'profile-avatar-placeholder',textContent:'${esc(initials)}'}))">`
-    : `<div class="profile-avatar-placeholder">${esc(initials)}</div>`;
   panel.innerHTML = `
-    <button class="profile-close" id="profile-close-btn" aria-label="Close profile">×</button>
-    <div class="profile-header">
+    <div class="profile-banner">
+      <button class="profile-banner-close" id="profile-close-btn" aria-label="Close profile">×</button>
       ${avatarHTML}
-      <div>
+      <div class="profile-banner-info">
         <h2>${esc(s.name||slug)}</h2>
-        <div class="profile-meta">${esc(s.position||'')}${s.department ? ' · ' + esc(s.department) : ''} · H-Index: ${hStr}</div>
+        <p>${esc(s.position||'')}${s.department ? ' &nbsp;·&nbsp; ' + esc(s.department) : ''}</p>
+        <p style="margin-top:4px">H-Index: ${hStr}</p>
       </div>
     </div>
-    <div class="profile-links" style="margin-top:4px">${links}</div>
-    <div class="profile-kpi-row">
-      <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
-      <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
-      <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
-      <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
-      <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
-      <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
-      <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
-    </div>
-    ${idxPubs.length ? `
-    <div class="sub-title">Indexed Publications (${idxPubs.length}${idxPubs.length>10?' — top 10 shown':''})</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
-      <tbody>${pubsHTML}</tbody>
-    </table></div>` : ''}
-    ${otherPubs.length ? `<div class="sub-title" style="color:var(--text2)">Other Publications: ${otherPubs.length}</div>` : ''}
-    ${staffGrants.length ? `
-    <div class="sub-title">Grants (${staffGrants.length}${staffGrants.length>10?' — top 10 shown':''})</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
-      <tbody>${grantsHTML}</tbody>
-    </table></div>` : ''}
-  `;
+    <div class="profile-body">
+      <div class="profile-links">${links}</div>
+      <div class="profile-kpi-row">
+        <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
+        <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
+        <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
+        <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
+        <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
+        <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
+        <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
+      </div>
+      ${idxPubs.length ? `
+        <div class="profile-section-title">Indexed Publications (${idxPubs.length}${idxPubs.length>10?' — top 10 shown':''})</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
+          <tbody>${pubsHTML}</tbody>
+        </table></div>` : ''}
+      ${otherPubs.length ? `<p style="margin-top:12px;font-size:12px;color:var(--text3)">Other publications: ${otherPubs.length}</p>` : ''}
+      ${staffGrants.length ? `
+        <div class="profile-section-title">Grants (${staffGrants.length}${staffGrants.length>10?' — top 10 shown':''})</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
+          <tbody>${grantsHTML}</tbody>
+        </table></div>` : ''}
+    </div>`;
+
   panel.scrollIntoView({ block:'nearest', behavior:'smooth' });
   document.getElementById('profile-close-btn').addEventListener('click', () => {
     panel.hidden = true;
@@ -662,86 +1252,92 @@ function openStaffProfile(slug) {
   });
 }
 
-// ── PUBLICATIONS TABLE ─────────────────────────────────────────────────────
+// ── PUBLICATIONS ───────────────────────────────────────────────────────────
 function getPubsList() {
-  const q      = document.getElementById('pubs-search').value.trim().toLowerCase();
-  const filter = document.getElementById('pubs-filter-type').value;
+  const q = document.getElementById('pubs-search').value.trim().toLowerCase();
+  const f = document.getElementById('pubs-filter-type').value;
   let rows = [...PUBS];
-  if (filter === 'indexed') rows = rows.filter(p => p.indexed);
-  if (filter === 'other')   rows = rows.filter(p => !p.indexed);
-  if (q) rows = rows.filter(p => ((p.title||'') + ' ' + (p.name||'')).toLowerCase().includes(q));
+  if (f === 'indexed') rows = rows.filter(p => p.indexed);
+  if (f === 'other')   rows = rows.filter(p => !p.indexed);
+  if (q) rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
   return rows;
 }
 
 function renderPubsTable() {
-  const rows = getPubsList();
-  const q = document.getElementById('pubs-search').value.trim();
-  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const rows  = getPubsList();
+  const q     = document.getElementById('pubs-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length/PAGE_SIZE));
   pageState.pubs = Math.min(pageState.pubs, total);
-  const start = (pageState.pubs - 1) * PAGE_SIZE;
-  const page  = rows.slice(start, start + PAGE_SIZE);
+  const start = (pageState.pubs-1)*PAGE_SIZE;
+  const page  = rows.slice(start, start+PAGE_SIZE);
 
-  document.getElementById('pubs-count').textContent = `${rows.length.toLocaleString()} publications${q?` matching "${q}"`:''}`;
+  document.getElementById('pubs-count').textContent =
+    `${rows.length.toLocaleString()} publications${q?` matching "${q}"`:''}`;
   document.getElementById('pubs-pagination').innerHTML = paginHTML(total, pageState.pubs, 'pubs');
 
-  document.getElementById('pubs-tbody').innerHTML = page.length ? page.map((p,i) => `
-    <tr>
-      <td class="num muted">${start+i+1}</td>
-      <td class="clip wide" title="${esc(p.title)}">${esc(p.title||'(no title)')}</td>
-      <td>${esc(nice(p.type))}</td>
-      <td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>
-      <td class="num">${esc(p.date||'')}</td>
-      <td style="white-space:nowrap">${esc(p.name||'')}</td>
-    </tr>`).join('') : `<tr><td class="empty" colspan="6">No publications match the current filters.</td></tr>`;
+  document.getElementById('pubs-tbody').innerHTML = page.length
+    ? page.map((p,i) => `
+      <tr>
+        <td class="muted">${start+i+1}</td>
+        <td class="clip wide" title="${esc(p.title)}">${esc(p.title||'(no title)')}</td>
+        <td>${esc(nice(p.type))}</td>
+        <td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>
+        <td style="white-space:nowrap">${esc(p.date||'')}</td>
+        <td style="white-space:nowrap">${esc(p.name||'')}</td>
+      </tr>`).join('')
+    : `<tr><td class="empty" colspan="6">No publications match the current filters.</td></tr>`;
 }
 
-// ── GRANTS TABLE ───────────────────────────────────────────────────────────
+// ── GRANTS ─────────────────────────────────────────────────────────────────
 function getGrantsList() {
-  const q        = document.getElementById('grants-search').value.trim().toLowerCase();
-  const fLevel   = document.getElementById('grants-filter-level').value;
-  const fStatus  = document.getElementById('grants-filter-status').value;
+  const q  = document.getElementById('grants-search').value.trim().toLowerCase();
+  const fl = document.getElementById('grants-filter-level').value;
+  const fs = document.getElementById('grants-filter-status').value;
   let rows = [...GRANTS];
-  if (fLevel === 'international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
-  if (fLevel === 'national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
-  if (fStatus === 'active')       rows = rows.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
-  if (fStatus === 'completed')    rows = rows.filter(g => (g.status||'').toUpperCase() !== 'ACTIVE');
+  if (fl==='international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
+  if (fl==='national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
+  if (fs==='active')        rows = rows.filter(g => (g.status||'').toUpperCase()==='ACTIVE');
+  if (fs==='completed')     rows = rows.filter(g => (g.status||'').toUpperCase()!=='ACTIVE');
   if (q) rows = rows.filter(g => ((g.title||'')+(g.name||'')+(g.grant_name||'')).toLowerCase().includes(q));
   return rows;
 }
 
 function renderGrantsTable() {
-  const rows = getGrantsList();
-  const q = document.getElementById('grants-search').value.trim();
-  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const rows  = getGrantsList();
+  const q     = document.getElementById('grants-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length/PAGE_SIZE));
   pageState.grants = Math.min(pageState.grants, total);
-  const start = (pageState.grants - 1) * PAGE_SIZE;
-  const page  = rows.slice(start, start + PAGE_SIZE);
+  const start = (pageState.grants-1)*PAGE_SIZE;
+  const page  = rows.slice(start, start+PAGE_SIZE);
 
-  document.getElementById('grants-count').textContent = `${rows.length.toLocaleString()} grants${q?` matching "${q}"`:''}`;
+  document.getElementById('grants-count').textContent =
+    `${rows.length.toLocaleString()} grants${q?` matching "${q}"`:''}`;
   document.getElementById('grants-pagination').innerHTML = paginHTML(total, pageState.grants, 'grants');
 
-  document.getElementById('grants-tbody').innerHTML = page.length ? page.map((g,i) => {
-    const isIntl = (g.level||'').toUpperCase().includes('INT');
-    const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
-    return `<tr>
-      <td class="num muted">${start+i+1}</td>
-      <td class="clip" title="${esc(g.title)}">${esc(g.title||'(no title)')}</td>
-      <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
-      <td class="clip" style="max-width:200px" title="${esc(g.grant_name)}">${esc(g.grant_name||'')}</td>
-      <td>${esc(g.role||'')}</td>
-      <td class="num">${esc(String(g.year_start||''))}</td>
-      <td class="num">${esc(String(g.year_end||''))}</td>
-      <td class="num r">${g.cost ? fmtRM(g.cost) : '<span class="muted">—</span>'}</td>
-      <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
-      <td style="white-space:nowrap">${esc(g.name||'')}</td>
-    </tr>`;
-  }).join('') : `<tr><td class="empty" colspan="10">No grants match the current filters.</td></tr>`;
+  document.getElementById('grants-tbody').innerHTML = page.length
+    ? page.map((g,i) => {
+        const isIntl   = (g.level||'').toUpperCase().includes('INT');
+        const isActive = (g.status||'').toUpperCase()==='ACTIVE';
+        return `<tr>
+          <td class="muted">${start+i+1}</td>
+          <td class="clip" title="${esc(g.title)}">${esc(g.title||'(no title)')}</td>
+          <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+          <td class="clip" style="max-width:180px" title="${esc(g.grant_name)}">${esc(g.grant_name||'')}</td>
+          <td>${esc(g.role||'')}</td>
+          <td style="white-space:nowrap">${esc(String(g.year_start||''))}</td>
+          <td style="white-space:nowrap">${esc(String(g.year_end||''))}</td>
+          <td class="r" style="white-space:nowrap">${g.cost ? fmtRM(g.cost) : '<span style="color:var(--text3)">—</span>'}</td>
+          <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+          <td style="white-space:nowrap">${esc(g.name||'')}</td>
+        </tr>`;
+      }).join('')
+    : `<tr><td class="empty" colspan="10">No grants match the current filters.</td></tr>`;
 }
 
 // ── PAGINATION ─────────────────────────────────────────────────────────────
 function paginHTML(total, current, key) {
   if (total <= 1) return '';
-  let html = `<span>Page ${current} of ${total}</span>`;
+  let html = `<span class="pg-info">Page ${current} of ${total}</span>`;
   if (current > 1) html += `<button class="page-btn" data-page="${key}:${current-1}">Prev</button>`;
   for (let p = Math.max(1,current-2); p <= Math.min(total,current+2); p++) {
     html += `<button class="page-btn" data-page="${key}:${p}"${p===current?' aria-current="page"':''}>${p}</button>`;
@@ -750,40 +1346,58 @@ function paginHTML(total, current, key) {
   return html;
 }
 
-// ── UTILS ──────────────────────────────────────────────────────────────────
-function nice(s) {
-  if (!s) return '';
-  return s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
+const PAGE_TITLES = {
+  overview: 'Overview',
+  staff:    'Staff Profiles',
+  pubs:     'Publications',
+  grants:   'Grants',
+};
+
+function showPage(id) {
+  document.querySelectorAll('.nav-item').forEach(b => {
+    const on = b.dataset.page === id;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-current', on ? 'page' : 'false');
+  });
+  document.querySelectorAll('[id^="page-"]').forEach(p => { p.hidden = p.id !== 'page-' + id; });
+  document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
+  if (id === 'overview') setTimeout(drawCharts, 50);
+  closeSidebar();
 }
 
-// ── TABS ───────────────────────────────────────────────────────────────────
-function showPage(id) {
-  document.querySelectorAll('[role="tab"]').forEach(t => {
-    const on = t.id === 'tab-' + id;
-    t.setAttribute('aria-selected', on);
-  });
-  document.querySelectorAll('[role="tabpanel"]').forEach(p => {
-    p.hidden = p.id !== 'page-' + id;
-  });
-  if (id === 'overview') drawCharts();
-}
-document.querySelectorAll('[role="tab"]').forEach(t => {
-  t.addEventListener('click', () => showPage(t.id.replace('tab-','')) );
+document.querySelectorAll('.nav-item').forEach(b => {
+  b.addEventListener('click', () => showPage(b.dataset.page));
 });
 
-// ── EVENTS ─────────────────────────────────────────────────────────────────
+// ── MOBILE SIDEBAR ─────────────────────────────────────────────────────────
+function closeSidebar() {
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
+  }
+}
+document.getElementById('hamburger').addEventListener('click', () => {
+  const open = document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open', open);
+  document.getElementById('hamburger').setAttribute('aria-expanded', open);
+});
+document.getElementById('overlay').addEventListener('click', closeSidebar);
+
+// ── GLOBAL EVENTS ──────────────────────────────────────────────────────────
 document.addEventListener('click', e => {
   const nb = e.target.closest('[data-slug]');
   if (nb) return openStaffProfile(nb.dataset.slug);
 
   const pb = e.target.closest('[data-page]');
-  if (pb) {
+  if (pb && pb.closest('.pagination')) {
     const [key, p] = pb.dataset.page.split(':');
     pageState[key] = +p;
     if (key==='staff')  renderStaffTable();
     if (key==='pubs')   renderPubsTable();
     if (key==='grants') renderGrantsTable();
-    pb.closest('.panel').scrollIntoView({block:'start'});
+    pb.closest('.tbl-card')?.scrollIntoView({ block:'start' });
   }
 });
 
