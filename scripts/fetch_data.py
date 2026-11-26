@@ -166,7 +166,6 @@ if not staff_df.empty:
         staff_records.append({
             "staff_id":        safe_str(row.get("STAFFID", "")),
             "fullname":        safe_str(row.get("FULLNAME", "")),
-            "email":           safe_str(row.get("EMAIL", "")),
             "designation":     safe_str(row.get("DESIGNATION", "")),
             "permanent_faculty": safe_str(row.get("PERMENANT FACULTY", "")),
             "present_faculty": safe_str(row.get("PRESENT FACULTY", "")),
