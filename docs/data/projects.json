@@ -1,0 +1,164 @@
+[
+  {
+    "type": "PI",
+    "title": "KETERJAMINAN MAKANAN MELALUI PEMBANGUNAN STRUKTUR AKUAKULTUR MARIN INTEGRASI SERAT SEMULA JADI",
+    "pi": "AIDAH BINTI JUMAHAT",
+    "sponsor": "KEMENTERIAN PENDIDIKAN TINGGI",
+    "category": "National",
+    "allocation": null,
+    "status": "Active"
+  },
+  {
+    "type": "PI",
+    "title": "SMARTFLOW : ADVANCING SUSTAINABLE WATER MANAGEMENT THROUGH IOT, ANDROID APPS & INTEGRATED MONITORING SYSTEM",
+    "pi": "ZULKIFLI BIN MOHAMED",
+    "sponsor": "TW TECHNOLOGIES SDN BHD",
+    "category": "Private",
+    "allocation": null,
+    "status": "Active"
+  },
+  {
+    "type": "PI",
+    "title": "SUSTAINABLE ADVANCED MANUFACTURING: SURFACE ENGINEERING AND ELECTROPLATING INNOVATION FOR SUSTAINABLE INDUSTRIAL APPLICATION",
+    "pi": "ABDUL HALIM BIN ABDULLAH",
+    "sponsor": "STRATEGIC RESEARCH PARTNERSHIP",
+    "category": "Private",
+    "allocation": 20000.0,
+    "status": "Active"
+  },
+  {
+    "type": "PI",
+    "title": "FEASIBILITY STUDY OF THE ADVANCEMENT IN METAL INDUSTRIES IN MALAYSIA VIA AFDEX SIMULATION SOFTWARE",
+    "pi": "NOOR AZLINA BINTI MOHD SALLEH",
+    "sponsor": "METAL FORMING RESEARCH CORPORATION",
+    "category": "International",
+    "allocation": 23500.0,
+    "status": "Active"
+  },
+  {
+    "type": "PI",
+    "title": "CHARACTERIZATION OF BIOMASS ASH FROM PALM KERNEL SHELL IN PRODUCTION OF GEOPOLYMER CONCRETE",
+    "pi": "MOHAMAD ZAKI BIN ABDULLAH",
+    "sponsor": "MINISTRY OF HIGHER EDUCATION",
+    "category": "National",
+    "allocation": 67000.0,
+    "status": "Active"
+  },
+  {
+    "type": "PI",
+    "title": "DEVELOPMENT OF HYBRID NANO-FILLER REINFORCED POLYMER COMPOSITES FOR LIGHTWEIGHT STRUCTURAL APPLICATIONS",
+    "pi": "SHAMSUL BAHARIN BIN JAMALUDIN",
+    "sponsor": "MINISTRY OF HIGHER EDUCATION",
+    "category": "National",
+    "allocation": 55000.0,
+    "status": "Completed"
+  },
+  {
+    "type": "PI",
+    "title": "MICROSTRUCTURAL EVOLUTION AND MECHANICAL PROPERTIES OF ALUMINIUM ALLOY PROCESSED BY SEVERE PLASTIC DEFORMATION",
+    "pi": "AZIZI BIN AHMAD",
+    "sponsor": "MINISTRY OF HIGHER EDUCATION",
+    "category": "National",
+    "allocation": 48000.0,
+    "status": "Completed"
+  },
+  {
+    "type": "PI",
+    "title": "DEVELOPMENT OF BIO-BASED CUTTING FLUID FOR SUSTAINABLE MACHINING OF TITANIUM ALLOY",
+    "pi": "MOHD SHAHIR BIN KASIM",
+    "sponsor": "UITMHOLDINGS SDN BHD",
+    "category": "University",
+    "allocation": 35000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "DEVELOPMENT OF MOLD TOOLING FOR SUSTAINABLE PACKAGING",
+    "pi": "NORMARIAH BINTI CHE MAIDEEN",
+    "sponsor": "JENERI MESRA ENTERPERISE",
+    "category": "Private",
+    "allocation": 13000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "EXPERIMENTAL AND NUMERICAL INVESTIGATION INTO THE MECHANICAL INTEGRITY AND FAILURE MODES OF ADDITIVE MANUFACTURED LATTICE STRUCTURES",
+    "pi": "RIZAL BIN MOHAMED NOOR",
+    "sponsor": "ASAHI BEST BASE SDN BHD",
+    "category": "Private",
+    "allocation": 20398.5,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "PROOF OF CONCEPT (POC) STUDY ON ELECTRIC BICYCLE PERFORMANCE AND SAFETY FOR STAFF AND STUDENTS OF UITM",
+    "pi": "WAN MAZLINA BINTI WAN MOHAMED",
+    "sponsor": "ADEEQ TANNY RESOURCES (M) SDN BHD",
+    "category": "Private",
+    "allocation": 15000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "ANTIMICROBIAL SUSCEPTIBILITY TESTING FOR EDIBLE FILMS",
+    "pi": "WAN MAZLINA BINTI WAN MOHAMED",
+    "sponsor": "UNIVERSITI TEKNOLOGI MARA (UITM)",
+    "category": "National",
+    "allocation": 898.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "STRUCTURAL HEALTH MONITORING SYSTEM FOR BRIDGE INFRASTRUCTURE USING SMART SENSOR NETWORKS",
+    "pi": "MOHD ZAKI BIN ZAINUDIN",
+    "sponsor": "JABATAN KERJA RAYA MALAYSIA",
+    "category": "National",
+    "allocation": 45000.0,
+    "status": "Completed"
+  },
+  {
+    "type": "Grant",
+    "title": "DEVELOPMENT OF HIGH PERFORMANCE THERMAL MANAGEMENT SYSTEM FOR ELECTRIC VEHICLE BATTERY MODULE",
+    "pi": "AHMAD KAMAL ARIFFIN BIN MOHD IHSAN",
+    "sponsor": "PERODUA MANUFACTURING SDN BHD",
+    "category": "Private",
+    "allocation": 80000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "COLLABORATIVE STUDY ON ADVANCED COMPOSITE MATERIALS FOR AEROSPACE APPLICATIONS",
+    "pi": "IZDIHAR BINTI THARAZI",
+    "sponsor": "AIRBUS OPERATIONS SAS",
+    "category": "International",
+    "allocation": 120000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "ENERGY EFFICIENCY OPTIMIZATION IN MANUFACTURING PROCESSES USING AI AND MACHINE LEARNING",
+    "pi": "YUPITER HP MANURUNG",
+    "sponsor": "KEMENTERIAN PERINDUSTRIAN",
+    "category": "National",
+    "allocation": 95000.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "TRIBOLOGICAL CHARACTERIZATION OF BIO-LUBRICANT FORMULATIONS FOR INDUSTRIAL GEAR SYSTEMS",
+    "pi": "MUHAMAD AZIZI BIN GHAZALI",
+    "sponsor": "PETRONAS LUBRICANTS INTERNATIONAL",
+    "category": "Private",
+    "allocation": 62500.0,
+    "status": "Active"
+  },
+  {
+    "type": "Grant",
+    "title": "INDOOR AIR QUALITY ASSESSMENT AND MITIGATION STRATEGIES FOR UNIVERSITY BUILDINGS",
+    "pi": "KAMARULZAMAN BIN KAMARUDIN",
+    "sponsor": "UITM BURSARY",
+    "category": "University",
+    "allocation": 25000.0,
+    "status": "Completed"
+  }
+]

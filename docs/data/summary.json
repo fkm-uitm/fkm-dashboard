@@ -1,0 +1,77 @@
+{
+  "last_updated": "2026-11-26 02:35 UTC",
+  "publications": {
+    "total_unique": 37,
+    "total_rows": 45,
+    "by_group": {
+      "INDEXED PUBLICATION": 25,
+      "OTHER PUBLICATIONS": 12
+    },
+    "by_type": {
+      "JOURNAL": 25,
+      "PROCEEDING": 8,
+      "CHAPTER IN BOOK": 2,
+      "CHAPTER IN RESEARCH BOOK": 2
+    },
+    "by_index": {
+      "SCOPUS": 12,
+      "WEB OF SCIENCE": 10,
+      "MYCITE": 3
+    },
+    "by_quartile": {
+      "Q2": 10,
+      "Q3": 6,
+      "Q1": 6
+    },
+    "by_level": {
+      "INTERNATIONAL": 27,
+      "NATIONAL": 10
+    }
+  },
+  "projects": {
+    "total": 18,
+    "total_pi": 8,
+    "total_grant": 10,
+    "total_allocation": 725296.5,
+    "pi_allocation": 248500.0,
+    "grant_allocation": 476796.5,
+    "by_category": {
+      "National": 7,
+      "Private": 7,
+      "International": 2,
+      "University": 2
+    },
+    "by_status": {
+      "Active": 14,
+      "Completed": 4
+    },
+    "by_type": {
+      "Grant": 10,
+      "PI": 8
+    }
+  },
+  "staff": {
+    "total": 44,
+    "by_position": {
+      "PENSYARAH KANAN": 20,
+      "PROFESOR MADYA": 7,
+      "PENSYARAH": 4,
+      "PROFESOR": 3,
+      "PENOLONG JURUTERA": 2,
+      "PENSYARAH SAMBILAN": 2,
+      "JURUTERA": 1,
+      "PEMBANTU AM PEJABAT": 1,
+      "PENOLONG PEGAWAI TADBIR": 1,
+      "JURUTEKNIK": 1,
+      "PENOLONG PEGAWAI SAINS": 1,
+      "PEMBANTU TADBIR (KEWANGAN)": 1
+    },
+    "by_designation": {
+      "DR.": 17,
+      "PROFESOR MADYA DR": 7,
+      "TS. DR.": 3,
+      "PROFESOR DR": 3,
+      "TS.": 1
+    }
+  }
+}

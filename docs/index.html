@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FKM Research Analytics Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#f0f4f8;--surface:#fff;--surface2:#f8fafc;--border:#e2e8f0;
+    --accent:#1e3a5f;--accent2:#2563eb;--text:#1e293b;--text2:#475569;--text3:#94a3b8;
+    --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  /* TOP BAR */
+  .topbar{background:var(--accent);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  .topbar-logo{font-size:19px;font-weight:800;letter-spacing:-.5px}
+  .topbar-logo span{color:#60a5fa}
+  .topbar-sub{font-size:11px;color:#93c5fd;font-weight:500;margin-top:1px}
+  .topbar-right{display:flex;align-items:center;gap:10px}
+  .last-updated{font-size:11px;color:#93c5fd}
+  .refresh-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 12px;font-size:12px;color:#e0f2fe;cursor:pointer;transition:background .15s}
+  .refresh-btn:hover{background:rgba(255,255,255,.22)}
+
+  /* TABS */
+  .tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;padding:0 24px;gap:4px;overflow-x:auto}
+  .tab{padding:13px 18px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:6px}
+  .tab:hover{color:var(--accent2)}
+  .tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+
+  /* PAGE */
+  .page{display:none}.page.active{display:block}
+  .content{padding:24px;max-width:1400px;margin:0 auto}
+
+  /* SECTION */
+  .section-header{margin-bottom:18px}
+  .section-header h2{font-size:19px;font-weight:700;color:var(--accent)}
+  .section-header p{font-size:13px;color:var(--text2);margin-top:3px}
+
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}
+  .kpi{background:var(--surface);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);border-top:4px solid transparent;position:relative;overflow:hidden}
+  .kpi::before{content:'';position:absolute;right:-16px;top:-16px;width:80px;height:80px;border-radius:50%;opacity:.07}
+  .kpi.blue{border-top-color:#2563eb}.kpi.blue::before{background:#2563eb}
+  .kpi.teal{border-top-color:#0d9488}.kpi.teal::before{background:#0d9488}
+  .kpi.green{border-top-color:#16a34a}.kpi.green::before{background:#16a34a}
+  .kpi.amber{border-top-color:#d97706}.kpi.amber::before{background:#d97706}
+  .kpi.purple{border-top-color:#7c3aed}.kpi.purple::before{background:#7c3aed}
+  .kpi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px}
+  .kpi-value{font-size:30px;font-weight:800;color:var(--accent);line-height:1}
+  .kpi-sub{font-size:12px;color:var(--text2);margin-top:5px}
+  .kpi-icon{position:absolute;right:16px;top:16px;font-size:22px;opacity:.2}
+
+  /* CHARTS */
+  .chart-grid{display:grid;gap:16px;margin-bottom:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:2fr 1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr 1fr 1fr}
+  .chart-card{background:var(--surface);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+  .chart-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+  .chart-desc{font-size:11px;color:var(--text3);margin-bottom:14px}
+  .chart-wrap{position:relative;height:220px}
+  .chart-wrap.tall{height:280px}
+
+  /* TABLE */
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead{background:var(--accent);color:#fff}
+  thead th{padding:10px 14px;text-align:left;font-weight:600;font-size:11px;letter-spacing:.4px}
+  tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+  tbody tr:hover{background:var(--surface2)}
+  td{padding:9px 14px;color:var(--text)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap}
+  .b-green{background:#dcfce7;color:#15803d}.b-blue{background:#dbeafe;color:#1d4ed8}
+  .b-amber{background:#fef3c7;color:#b45309}.b-gray{background:#f1f5f9;color:#475569}
+  .b-purple{background:#ede9fe;color:#6d28d9}.b-red{background:#fee2e2;color:#b91c1c}
+  .b-teal{background:#ccfbf1;color:#0f766e}
+
+  /* FILTER BAR */
+  .filter-bar{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .filter-label{font-size:12px;font-weight:600;color:var(--text2)}
+  .filter-btn{padding:5px 13px;border-radius:999px;border:1.5px solid var(--border);background:var(--surface);font-size:12px;cursor:pointer;color:var(--text2);font-weight:500;transition:all .15s}
+  .filter-btn:hover,.filter-btn.active{background:var(--accent2);border-color:var(--accent2);color:#fff}
+  .search-input{padding:7px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;width:200px;color:var(--text);outline:none;background:var(--surface)}
+  .search-input:focus{border-color:var(--accent2)}
+
+  /* PROGRESS */
+  .prog-row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .prog-label{font-size:12px;color:var(--text2);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prog-track{flex:1;height:7px;background:var(--border);border-radius:999px;overflow:hidden}
+  .prog-fill{height:100%;border-radius:999px}
+  .prog-val{font-size:12px;font-weight:700;color:var(--text);width:40px;text-align:right}
+
+  /* LOADING */
+  .loading{display:flex;align-items:center;justify-content:center;height:300px;flex-direction:column;gap:12px}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-box{background:#fee2e2;color:#991b1b;border-radius:10px;padding:16px 20px;font-size:13px;margin:20px 0}
+
+  /* PAGINATION */
+  .pagination{display:flex;gap:6px;align-items:center;padding:12px 0;justify-content:flex-end;font-size:12px;color:var(--text2)}
+  .page-btn{padding:4px 10px;border:1.5px solid var(--border);border-radius:6px;background:var(--surface);cursor:pointer;font-size:12px;transition:all .1s}
+  .page-btn:hover,.page-btn.active{background:var(--accent2);border-color:var(--accent2);color:#fff}
+
+  @media(max-width:900px){
+    .kpi-row{grid-template-columns:repeat(2,1fr)}
+    .g2,.g3,.g4{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-logo">FKM <span>Research</span> Analytics</div>
+    <div class="topbar-sub">Fakulti Kejuruteraan Mekanikal — UiTM Shah Alam</div>
+  </div>
+  <div class="topbar-right">
+    <span class="last-updated" id="last-updated">Loading...</span>
+    <button class="refresh-btn" onclick="location.reload()">↻ Refresh</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPage('overview')" id="tab-overview">🏠 Overview</div>
+  <div class="tab" onclick="showPage('pub')"      id="tab-pub">📖 Publications</div>
+  <div class="tab" onclick="showPage('grant')"    id="tab-grant">💰 Grants & Projects</div>
+  <div class="tab" onclick="showPage('staff')"    id="tab-staff">👥 Staff</div>
+</div>
+
+<!-- LOADING STATE -->
+<div id="loading-screen" class="loading">
+  <div class="spinner"></div>
+  <div style="color:var(--text2);font-size:13px;">Loading dashboard data...</div>
+</div>
+
+<!-- ═══ OVERVIEW ═══ -->
+<div class="page" id="page-overview" style="display:none">
+<div class="content">
+  <div class="section-header">
+    <h2>🏠 Research Overview</h2>
+    <p>High-level snapshot of FKM research performance — publications, grants, projects and staff</p>
+  </div>
+  <div class="kpi-row" id="kpi-overview"></div>
+  <div class="chart-grid g2">
+    <div class="chart-card">
+      <div class="chart-title">Publication Groups</div>
+      <div class="chart-desc">Indexed vs Other Publications</div>
+      <div class="chart-wrap"><canvas id="ch-pubgroup"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Index Database Distribution</div>
+      <div class="chart-desc">Publications by indexing body</div>
+      <div class="chart-wrap"><canvas id="ch-index"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-grid g3">
+    <div class="chart-card">
+      <div class="chart-title">Projects by Sponsor Category</div>
+      <div class="chart-desc">PI + Grant combined</div>
+      <div class="chart-wrap"><canvas id="ch-sponsor"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Project Status</div>
+      <div class="chart-desc">Active vs Completed</div>
+      <div class="chart-wrap"><canvas id="ch-status"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Quartile Distribution</div>
+      <div class="chart-desc">JCR Quartile (Q1–Q4)</div>
+      <div class="chart-wrap"><canvas id="ch-quartile"></canvas></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ PUBLICATIONS ═══ -->
+<div class="page" id="page-pub" style="display:none">
+<div class="content">
+  <div class="section-header">
+    <h2>📖 Publication Analytics</h2>
+    <p>Publication types, indexes, quartiles, and author roles</p>
+  </div>
+  <div class="kpi-row" id="kpi-pub"></div>
+  <div class="chart-grid g2" style="margin-bottom:16px">
+    <div class="chart-card">
+      <div class="chart-title">Publication Type Breakdown</div>
+      <div class="chart-desc">Journal, Proceeding, Chapter, etc.</div>
+      <div class="chart-wrap"><canvas id="ch-pubtype"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Index Database</div>
+      <div class="chart-desc">Where FKM papers are indexed</div>
+      <div class="chart-wrap tall"><canvas id="ch-index2"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div class="chart-title" style="margin-bottom:12px">Publication Directory</div>
+    <div class="filter-bar">
+      <input class="search-input" id="pub-search" placeholder="🔍 Search title or author..." oninput="renderPubTable()">
+      <span class="filter-label">Group:</span>
+      <button class="filter-btn active" onclick="setPubFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setPubFilter('INDEXED PUBLICATION',this)">Indexed</button>
+      <button class="filter-btn" onclick="setPubFilter('OTHER PUBLICATIONS',this)">Other</button>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Group</th><th>Index</th><th>Quartile</th><th>Author</th><th>Role</th></tr></thead>
+      <tbody id="pub-tbody"></tbody>
+    </table></div>
+    <div class="pagination" id="pub-pagination"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ GRANTS ═══ -->
+<div class="page" id="page-grant" style="display:none">
+<div class="content">
+  <div class="section-header">
+    <h2>💰 Grants & Projects</h2>
+    <p>Research projects and grant awards — PI and supplementary grants combined</p>
+  </div>
+  <div class="kpi-row" id="kpi-grant"></div>
+  <div class="chart-grid g2" style="margin-bottom:16px">
+    <div class="chart-card">
+      <div class="chart-title">Projects by Sponsor Category</div>
+      <div class="chart-desc">Combined PI + Grant</div>
+      <div class="chart-wrap"><canvas id="ch-sponsor2"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Allocation by Category</div>
+      <div class="chart-desc">Total RM approved per funder type (PI only)</div>
+      <div class="chart-wrap"><canvas id="ch-alloc"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title" style="margin-bottom:12px">Projects Directory</div>
+    <div class="filter-bar">
+      <input class="search-input" id="grant-search" placeholder="🔍 Search title or PI..." oninput="renderGrantTable()">
+      <span class="filter-label">Type:</span>
+      <button class="filter-btn active" onclick="setGrantFilter('all',this,'type')">All</button>
+      <button class="filter-btn" onclick="setGrantFilter('PI',this,'type')">PI</button>
+      <button class="filter-btn" onclick="setGrantFilter('Grant',this,'type')">Grant</button>
+      <span class="filter-label">Status:</span>
+      <button class="filter-btn active" onclick="setGrantFilter('all',this,'status')">All</button>
+      <button class="filter-btn" onclick="setGrantFilter('Active',this,'status')">Active</button>
+      <button class="filter-btn" onclick="setGrantFilter('Completed',this,'status')">Completed</button>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>PI</th><th>Sponsor</th><th>Category</th><th>Allocation (RM)</th><th>Status</th><th>Type</th></tr></thead>
+      <tbody id="grant-tbody"></tbody>
+    </table></div>
+    <div class="pagination" id="grant-pagination"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STAFF ═══ -->
+<div class="page" id="page-staff" style="display:none">
+<div class="content">
+  <div class="section-header">
+    <h2>👥 Staff Directory</h2>
+    <p>FKM staff roster — designation, position and research role lookup</p>
+  </div>
+  <div class="kpi-row" id="kpi-staff"></div>
+  <div class="chart-grid g2" style="margin-bottom:16px">
+    <div class="chart-card">
+      <div class="chart-title">Staff by Position (Top 8)</div>
+      <div class="chart-desc">Largest position groups</div>
+      <div class="chart-wrap tall"><canvas id="ch-position"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Academic Designation</div>
+      <div class="chart-desc">Profesor, Dr., and others</div>
+      <div class="chart-wrap tall"><canvas id="ch-desig"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title" style="margin-bottom:12px">Staff Directory</div>
+    <div class="filter-bar">
+      <input class="search-input" id="staff-search" placeholder="🔍 Search name or position..." oninput="renderStaffTable()">
+      <span class="filter-label">Position:</span>
+      <button class="filter-btn active" onclick="setStaffFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setStaffFilter('PROFESOR',this)">Profesor</button>
+      <button class="filter-btn" onclick="setStaffFilter('PENSYARAH KANAN',this)">Sr. Lecturer</button>
+      <button class="filter-btn" onclick="setStaffFilter('PENSYARAH SAMBILAN',this)">Part-time</button>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Staff ID</th><th>Full Name</th><th>Designation</th><th>Position</th><th>Current Position</th></tr></thead>
+      <tbody id="staff-tbody"></tbody>
+    </table></div>
+    <div class="pagination" id="staff-pagination"></div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+let DATA = { summary: null, projects: [], publications: [], staff: [] };
+const COLORS = ['#2563eb','#0d9488','#16a34a','#d97706','#7c3aed','#be185d','#ea580c','#0891b2','#65a30d','#dc2626'];
+
+let pubFilter  = 'all', pubPage  = 1, pubSearch  = '';
+let grantTypeFilter = 'all', grantStatusFilter = 'all', grantPage = 1, grantSearch = '';
+let staffFilter = 'all', staffPage = 1, staffSearch = '';
+const PAGE_SIZE = 20;
+
+// ── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const base = window.location.pathname.replace(/\/[^/]*$/, '');
+    const [summary, projects, publications, staff] = await Promise.all([
+      fetch(`${base}/data/summary.json`).then(r => r.json()),
+      fetch(`${base}/data/projects.json`).then(r => r.json()),
+      fetch(`${base}/data/publications.json`).then(r => r.json()),
+      fetch(`${base}/data/staff.json`).then(r => r.json()),
+    ]);
+    DATA = { summary, projects, publications, staff };
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('last-updated').textContent = '🕐 ' + (summary.last_updated || 'Unknown');
+    initDashboard();
+  } catch(e) {
+    document.getElementById('loading-screen').innerHTML =
+      `<div class="error-box" style="max-width:500px">
+        <strong>⚠️ Could not load dashboard data.</strong><br><br>
+        ${e.message}<br><br>
+        If running locally, serve via a web server (e.g. <code>python -m http.server</code> in the <code>docs/</code> folder).
+      </div>`;
+  }
+}
+
+// ── CHART HELPERS ──────────────────────────────────────────────────────────
+function bar(id, labels, data, colors, horizontal=false) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, { type:'bar',
+    data:{ labels, datasets:[{ data, backgroundColor: colors||COLORS, borderRadius:5, borderSkipped:false }] },
+    options:{ responsive:true, maintainAspectRatio:false, indexAxis: horizontal?'y':'x',
+      plugins:{ legend:{display:false} },
+      scales:{ x:{grid:{display:!horizontal},ticks:{font:{size:10}}}, y:{grid:{display:horizontal},ticks:{font:{size:10}}} }
+    }
+  });
+}
+function doughnut(id, labels, data, colors) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, { type:'doughnut',
+    data:{ labels, datasets:[{ data, backgroundColor: colors||COLORS, borderWidth:2, borderColor:'#fff' }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'55%',
+      plugins:{ legend:{ labels:{ font:{size:11,family:'Segoe UI,sans-serif'}, boxWidth:12, padding:10 } } }
+    }
+  });
+}
+function kpiTile(label, value, sub, cls, icon) {
+  return `<div class="kpi ${cls}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-sub">${sub}</div><div class="kpi-icon">${icon}</div></div>`;
+}
+
+// ── BADGE ──────────────────────────────────────────────────────────────────
+function badge(text, cls) {
+  return `<span class="badge ${cls||'b-gray'}">${text||'—'}</span>`;
+}
+function qBadge(q) {
+  return badge(q||'—', q==='Q1'?'b-green':q==='Q2'?'b-blue':q==='Q3'?'b-amber':q==='Q4'?'b-gray':'b-gray');
+}
+function statusBadge(s) { return badge(s, s==='Active'?'b-green':'b-gray'); }
+function catBadge(c) {
+  const cl = (c||'').includes('National')?'b-blue':(c||'').includes('Private')?'b-amber':(c||'').includes('International')?'b-purple':'b-teal';
+  return badge(c||'—', cl);
+}
+
+// ── PAGINATION ──────────────────────────────────────────────────────────────
+function paginate(items, page) {
+  const total = Math.ceil(items.length / PAGE_SIZE);
+  const start = (page - 1) * PAGE_SIZE;
+  return { items: items.slice(start, start + PAGE_SIZE), total, page };
+}
+function paginationHTML(total, current, setter, renderId) {
+  if (total <= 1) return '';
+  let html = `<span>Page ${current} of ${total}</span>`;
+  if (current > 1) html += `<button class="page-btn" onclick="${setter}(${current-1})">‹ Prev</button>`;
+  for (let p = Math.max(1,current-2); p <= Math.min(total,current+2); p++) {
+    html += `<button class="page-btn${p===current?' active':''}" onclick="${setter}(${p})">${p}</button>`;
+  }
+  if (current < total) html += `<button class="page-btn" onclick="${setter}(${current+1})">Next ›</button>`;
+  return html;
+}
+
+// ── INIT DASHBOARD ──────────────────────────────────────────────────────────
+function initDashboard() {
+  const S = DATA.summary;
+  const pub = S.publications, proj = S.projects, staff = S.staff;
+
+  // ── OVERVIEW KPIs
+  document.getElementById('kpi-overview').innerHTML = [
+    kpiTile('Total Publications', pub.total_unique,  `${pub.total_rows} author-records`, 'blue',   '📄'),
+    kpiTile('Indexed Publications', (pub.by_group['INDEXED PUBLICATION']||0), `${((pub.by_group['INDEXED PUBLICATION']||0)/pub.total_unique*100).toFixed(0)}% of total`, 'teal', '🔍'),
+    kpiTile('Q1 + Q2 Journals', ((pub.by_quartile['Q1']||0)+(pub.by_quartile['Q2']||0)), `Q1: ${pub.by_quartile['Q1']||0} · Q2: ${pub.by_quartile['Q2']||0}`, 'green', '⭐'),
+    kpiTile('Total Projects', proj.total, `PI: ${proj.total_pi} · Grant: ${proj.total_grant}`, 'amber', '🔬'),
+    kpiTile('Total Allocation', 'RM '+fmtRM(proj.total_allocation), `PI: RM ${fmtRM(proj.pi_allocation)}`, 'purple', '💰'),
+  ].join('');
+
+  // ── OVERVIEW CHARTS
+  const grpLabels = Object.keys(pub.by_group), grpData = Object.values(pub.by_group);
+  bar('ch-pubgroup', grpLabels, grpData, ['#2563eb','#94a3b8']);
+
+  const idxLabels = Object.keys(pub.by_index).filter(k=>k&&k!=='-'&&k!=='Unknown');
+  bar('ch-index', idxLabels, idxLabels.map(k=>pub.by_index[k]), COLORS);
+
+  const catLabels = Object.keys(proj.by_category).filter(k=>k&&k!=='Unknown');
+  bar('ch-sponsor', catLabels, catLabels.map(k=>proj.by_category[k]), COLORS);
+
+  const statusLabels = Object.keys(proj.by_status);
+  doughnut('ch-status', statusLabels, statusLabels.map(k=>proj.by_status[k]), ['#16a34a','#e2e8f0','#f59e0b']);
+
+  const qLabels = ['Q1','Q2','Q3','Q4'];
+  bar('ch-quartile', qLabels, qLabels.map(k=>pub.by_quartile[k]||0), ['#f59e0b','#22c55e','#3b82f6','#94a3b8']);
+
+  // ── PUB KPIs
+  const uniqTypes = Object.entries(pub.by_type).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('kpi-pub').innerHTML = [
+    kpiTile('Unique Publications', pub.total_unique, `${pub.total_rows} author-rows`, 'blue', '📄'),
+    kpiTile('Journals', pub.by_type['JOURNAL']||0, `${((pub.by_type['JOURNAL']||0)/pub.total_unique*100).toFixed(0)}%`, 'teal', '📰'),
+    kpiTile('Proceedings', pub.by_type['PROCEEDING']||0, `${((pub.by_type['PROCEEDING']||0)/pub.total_unique*100).toFixed(0)}%`, 'green', '📋'),
+    kpiTile('Book Chapters', pub.by_type['CHAPTER IN BOOK']||pub.by_type['CHAPTER IN RESEARCH BOOK']||0, 'incl. Research Books', 'amber', '📚'),
+    kpiTile('SCOPUS Indexed', pub.by_index['SCOPUS']||0, `WoS: ${pub.by_index['WEB OF SCIENCE']||0}`, 'purple', '🔍'),
+  ].join('');
+
+  const ptLabels = Object.keys(pub.by_type), ptData = Object.values(pub.by_type);
+  bar('ch-pubtype', ptLabels, ptData, COLORS);
+  bar('ch-index2', idxLabels, idxLabels.map(k=>pub.by_index[k]), COLORS, true);
+
+  // ── GRANT KPIs
+  document.getElementById('kpi-grant').innerHTML = [
+    kpiTile('Total Projects', proj.total, `PI: ${proj.total_pi} · Grant: ${proj.total_grant}`, 'blue', '🔬'),
+    kpiTile('Active', proj.by_status['Active']||0, `${((proj.by_status['Active']||0)/proj.total*100).toFixed(0)}% of total`, 'green', '✅'),
+    kpiTile('Completed', proj.by_status['Completed']||0, 'Fully delivered', 'teal', '🏁'),
+    kpiTile('Total Allocation', 'RM '+fmtRM(proj.total_allocation), 'Approved budget', 'amber', '💰'),
+    kpiTile('PI Allocation', 'RM '+fmtRM(proj.pi_allocation), `Grant: RM ${fmtRM(proj.grant_allocation)}`, 'purple', '📊'),
+  ].join('');
+
+  doughnut('ch-sponsor2', catLabels, catLabels.map(k=>proj.by_category[k]||0), COLORS);
+
+  // Allocation by category from PI projects only
+  const piProjects = DATA.projects.filter(p=>p.type==='PI');
+  const allocByCat = {};
+  piProjects.forEach(p => {
+    const cat = normCat(p.category);
+    if (p.allocation) allocByCat[cat] = (allocByCat[cat]||0) + p.allocation;
+  });
+  const allocLabels = Object.keys(allocByCat);
+  bar('ch-alloc', allocLabels, allocLabels.map(k=>allocByCat[k]), COLORS);
+
+  // ── STAFF KPIs
+  const topPos = Object.entries(staff.by_position).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('kpi-staff').innerHTML = [
+    kpiTile('Total Staff', staff.total, 'FKM all campuses', 'blue', '👥'),
+    kpiTile('With DR. Title', (staff.by_designation['DR.']||0)+(staff.by_designation['PROFESOR MADYA DR']||0)+(staff.by_designation['PROFESOR DR']||0), 'Doctoral designation', 'teal', '🎓'),
+    kpiTile(topPos[0]?.[0]||'—', topPos[0]?.[1]||0, 'Largest position group', 'amber', '👤'),
+    kpiTile('Profesor Madya+', (staff.by_position['PROFESOR MADYA']||0)+(staff.by_position['PROFESOR']||0), 'Senior academics', 'purple', '⭐'),
+  ].join('');
+
+  const posTop = Object.entries(staff.by_position).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  bar('ch-position', posTop.map(e=>e[0]), posTop.map(e=>e[1]), COLORS, true);
+
+  const desigAll = Object.entries(staff.by_designation).sort((a,b)=>b[1]-a[1]);
+  doughnut('ch-desig', desigAll.slice(0,8).map(e=>e[0]), desigAll.slice(0,8).map(e=>e[1]), COLORS);
+
+  // ── RENDER TABLES
+  renderPubTable();
+  renderGrantTable();
+  renderStaffTable();
+}
+
+function normCat(cat) {
+  if (!cat) return 'Unknown';
+  if (cat.includes('National') || cat.includes('c-National')) return 'National';
+  if (cat.includes('Private')  || cat.includes('b-Private'))  return 'Private';
+  if (cat.includes('International')||cat.includes('a-International')) return 'International';
+  if (cat.includes('University')||cat.includes('d-University')) return 'University';
+  return cat;
+}
+function fmtRM(n) {
+  if (!n) return '0';
+  if (n >= 1000000) return (n/1000000).toFixed(2)+'M';
+  if (n >= 1000)    return (n/1000).toFixed(1)+'K';
+  return n.toFixed(0);
+}
+
+// ── PUB TABLE ──────────────────────────────────────────────────────────────
+function setPubFilter(val, btn) {
+  document.querySelectorAll('#page-pub .filter-bar .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); pubFilter = val; pubPage = 1; renderPubTable();
+}
+function setPubPage(p) { pubPage = p; renderPubTable(); }
+
+function renderPubTable() {
+  pubSearch = document.getElementById('pub-search')?.value.toLowerCase() || '';
+  // Unique pubs: deduplicate by pub_id, keeping first occurrence
+  const seen = new Set(); const unique = [];
+  for (const r of DATA.publications) {
+    if (r.pub_id && !seen.has(r.pub_id)) { seen.add(r.pub_id); unique.push(r); }
+  }
+  let rows = unique;
+  if (pubFilter !== 'all') rows = rows.filter(r => r.group === pubFilter);
+  if (pubSearch) rows = rows.filter(r => (r.title+r.author_name).toLowerCase().includes(pubSearch));
+  const { items, total, page } = paginate(rows, pubPage);
+  const start = (page-1)*PAGE_SIZE;
+  document.getElementById('pub-tbody').innerHTML = items.map((r,i) => `
+    <tr>
+      <td>${start+i+1}</td>
+      <td style="max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(r.title)}">${esc(r.title)||'—'}</td>
+      <td>${badge(r.type,'b-blue')}</td>
+      <td>${badge(r.group==='INDEXED PUBLICATION'?'Indexed':'Other', r.group==='INDEXED PUBLICATION'?'b-teal':'b-gray')}</td>
+      <td>${r.index_name&&r.index_name!=='-'?badge(r.index_name,'b-purple'):'—'}</td>
+      <td>${qBadge(r.jcr_quartile&&r.jcr_quartile!=='-'?r.jcr_quartile:'')}</td>
+      <td>${esc(r.author_name)||'—'}</td>
+      <td><span style="font-size:11px;color:var(--text2)">${r.author_type||'—'}</span></td>
+    </tr>`).join('');
+  document.getElementById('pub-pagination').innerHTML = paginationHTML(total, page, 'setPubPage');
+}
+
+// ── GRANT TABLE ────────────────────────────────────────────────────────────
+function setGrantFilter(val, btn, field) {
+  const bar = document.querySelectorAll('#page-grant .filter-bar .filter-btn');
+  if (field==='type') {
+    bar.forEach((b,i)=>{ if(i<3) b.classList.remove('active'); });
+    btn.classList.add('active'); grantTypeFilter = val;
+  } else {
+    bar.forEach((b,i)=>{ if(i>=3) b.classList.remove('active'); });
+    btn.classList.add('active'); grantStatusFilter = val;
+  }
+  grantPage = 1; renderGrantTable();
+}
+function setGrantPage(p) { grantPage = p; renderGrantTable(); }
+
+function renderGrantTable() {
+  grantSearch = document.getElementById('grant-search')?.value.toLowerCase() || '';
+  let rows = DATA.projects;
+  if (grantTypeFilter !== 'all') rows = rows.filter(r => r.type === grantTypeFilter);
+  if (grantStatusFilter !== 'all') rows = rows.filter(r => r.status === grantStatusFilter);
+  if (grantSearch) rows = rows.filter(r => (r.title+r.pi).toLowerCase().includes(grantSearch));
+  const { items, total, page } = paginate(rows, grantPage);
+  const start = (page-1)*PAGE_SIZE;
+  document.getElementById('grant-tbody').innerHTML = items.map((r,i) => `
+    <tr>
+      <td>${start+i+1}</td>
+      <td style="max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(r.title)}">${esc(r.title)||'—'}</td>
+      <td style="white-space:nowrap">${esc(r.pi)||'—'}</td>
+      <td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(r.sponsor)}">${esc(r.sponsor)||'—'}</td>
+      <td>${catBadge(normCat(r.category))}</td>
+      <td>${r.allocation?'RM '+r.allocation.toLocaleString('en-MY',{minimumFractionDigits:2}):'—'}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td>${badge(r.type, r.type==='PI'?'b-blue':'b-amber')}</td>
+    </tr>`).join('');
+  document.getElementById('grant-pagination').innerHTML = paginationHTML(total, page, 'setGrantPage');
+}
+
+// ── STAFF TABLE ────────────────────────────────────────────────────────────
+function setStaffFilter(val, btn) {
+  document.querySelectorAll('#page-staff .filter-bar .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); staffFilter = val; staffPage = 1; renderStaffTable();
+}
+function setStaffPage(p) { staffPage = p; renderStaffTable(); }
+
+function renderStaffTable() {
+  staffSearch = document.getElementById('staff-search')?.value.toLowerCase() || '';
+  let rows = DATA.staff;
+  if (staffFilter !== 'all') rows = rows.filter(r => (r.position||'').toUpperCase().includes(staffFilter));
+  if (staffSearch) rows = rows.filter(r => (r.fullname+r.position).toLowerCase().includes(staffSearch));
+  const { items, total, page } = paginate(rows, staffPage);
+  document.getElementById('staff-tbody').innerHTML = items.map(r => `
+    <tr>
+      <td>${esc(r.staff_id)}</td>
+      <td style="font-weight:600">${esc(r.fullname)}</td>
+      <td>${esc(r.designation)||'—'}</td>
+      <td>${badge(r.position,'b-blue')}</td>
+      <td>${esc(r.current_position)||'—'}</td>
+    </tr>`).join('');
+  document.getElementById('staff-pagination').innerHTML = paginationHTML(total, page, 'setStaffPage');
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── PAGE SWITCHING ──────────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+id).style.display = 'block';
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ── BOOT ───────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>

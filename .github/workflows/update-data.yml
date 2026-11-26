@@ -1,0 +1,38 @@
+name: Update Dashboard Data
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Runs every day at 1:00 AM UTC (9:00 AM MYT)
+    - cron: '0 1 * * *'
+  workflow_dispatch:   # allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pandas
+
+      - name: Fetch data from Google Sheets
+        run: python scripts/fetch_data.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/
+          git diff --staged --quiet || git commit -m "chore: auto-update dashboard data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
