@@ -1,0 +1,37 @@
+name: Scrape UiTM Expert profiles
+
+on:
+  schedule:
+    # 3 AM MYT (UTC+8) = 7 PM UTC — runs after the Google Sheets sync at 1 AM UTC (9 AM MYT)
+    - cron: "0 19 * * *"
+  workflow_dispatch:   # allow manual trigger from the Actions tab
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Scrape expert.uitm.edu.my
+        run: python scripts/scraper_expert.py
+
+      - name: Transform raw data → dashboard JSON
+        run: python scripts/transform_expert.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/profiles_raw.json docs/data/expert_*.json
+          git diff --cached --quiet || git commit -m "chore: auto-update expert scrape data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
