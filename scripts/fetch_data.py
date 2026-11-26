@@ -70,20 +70,20 @@ for name in SHEET_URLS:
         print(f"    ✗ {name}: {e}")
         dfs[name] = pd.DataFrame()
 
-# ── PROCESS: PI ───────────────────────────────────────────────────────────────
-pi_df = dfs.get("pi", pd.DataFrame())
-pi_records = []
-pi_total_alloc = 0.0
-
-if not pi_df.empty:
-    for _, row in pi_df.iterrows():
+# ── PROCESS: PI AND GRANT ─────────────────────────────────────────────────────
+# The two sheets overlap: a newly acquired grant usually also appears in the PI sheet.
+# They are kept as separate datasets and never summed together.
+def process_projects(df, kind):
+    records, total = [], 0.0
+    for _, row in df.iterrows():
         alloc = clean_money(row.get("PERUNTUKKAN DILULUSKAN (RM)", ""))
         if alloc:
-            pi_total_alloc += alloc
-        pi_records.append({
+            total += alloc
+        records.append({
             "no_fail":    safe_str(row.get("NO. FAIL", "")),
             "title":      safe_str(row.get("TAJUK PENYELIDIKAN", "")),
             "pi":         safe_str(row.get("KETUA PROJEK", "")),
+            "staff_no":   safe_str(row.get("STAFF NO.", "")),
             "grant_name": safe_str(row.get("NAMA GERAN", "")),
             "sponsor":    safe_str(row.get("PENAJA", "")),
             "category":   safe_str(row.get("KATEGORI PENAJA", "")),
@@ -91,32 +91,12 @@ if not pi_df.empty:
             "end":        safe_str(row.get("TARIKH TAMAT", "")),
             "status":     safe_str(row.get("STATUS", "")),
             "allocation": alloc,
-            "type":       "PI",
+            "type":       kind,
         })
+    return records, total
 
-# ── PROCESS: GRANT ────────────────────────────────────────────────────────────
-grant_df = dfs.get("grant", pd.DataFrame())
-grant_records = []
-grant_total_alloc = 0.0
-
-if not grant_df.empty:
-    for _, row in grant_df.iterrows():
-        alloc = clean_money(row.get("PERUNTUKKAN DILULUSKAN (RM)", ""))
-        if alloc:
-            grant_total_alloc += alloc
-        grant_records.append({
-            "no_fail":    safe_str(row.get("NO. FAIL", "")),
-            "title":      safe_str(row.get("TAJUK PENYELIDIKAN", "")),
-            "pi":         safe_str(row.get("KETUA PROJEK", "")),
-            "grant_name": safe_str(row.get("NAMA GERAN", "")),
-            "sponsor":    safe_str(row.get("PENAJA", "")),
-            "category":   safe_str(row.get("KATEGORI PENAJA", "")),
-            "start":      safe_str(row.get("TARIKH MULA", "")),
-            "end":        safe_str(row.get("TARIKH TAMAT", "")),
-            "status":     safe_str(row.get("STATUS", "")),
-            "allocation": alloc,
-            "type":       "Grant",
-        })
+pi_records, pi_total_alloc = process_projects(dfs.get("pi", pd.DataFrame()), "PI")
+grant_records, grant_total_alloc = process_projects(dfs.get("grant", pd.DataFrame()), "Grant")
 
 all_projects = pi_records + grant_records
 
@@ -212,10 +192,9 @@ summary = {
     "projects": {
         "total_pi":          len(pi_records),
         "total_grant":       len(grant_records),
-        "total":             len(all_projects),
         "pi_allocation":     round(pi_total_alloc, 2),
         "grant_allocation":  round(grant_total_alloc, 2),
-        "total_allocation":  round(pi_total_alloc + grant_total_alloc, 2),
+        "distinct_pi":       len({r["staff_no"] or r["pi"] for r in pi_records}),
         "by_status":         proj_by_status,
         "by_category":       proj_by_category,
         "by_type":           proj_by_type,
@@ -243,7 +222,7 @@ write_json("staff.json",    staff_records)
 print(f"""
 Done.
   Publications : {len(unique_pubs)} unique ({len(pub_records)} rows)
-  Projects     : {len(all_projects)} total (PI: {len(pi_records)}, Grant: {len(grant_records)})
+  PI projects  : {len(pi_records)} (RM {pi_total_alloc:,.2f})
+  Grants       : {len(grant_records)} (RM {grant_total_alloc:,.2f})
   Staff        : {len(staff_records)} records
-  Total alloc  : RM {pi_total_alloc + grant_total_alloc:,.2f}
 """)
