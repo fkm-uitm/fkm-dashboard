@@ -2,8 +2,8 @@ name: Scrape UiTM Expert profiles
 
 on:
   schedule:
-    # 3 AM MYT (UTC+8) = 7 PM UTC — runs after the Google Sheets sync at 1 AM UTC (9 AM MYT)
-    - cron: "0 19 * * *"
+    # 3 AM MYT Monday (UTC+8) = Sunday 7 PM UTC
+    - cron: "0 19 * * 0"
   workflow_dispatch:   # allow manual trigger from the Actions tab
 
 jobs:

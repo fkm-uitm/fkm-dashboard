@@ -796,6 +796,50 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 }
 .pub-drawer-backdrop.open { display: block; }
 
+/* ── OVERVIEW DATE FILTER ──────────────────────────────────────────── */
+.ov-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ov-filter-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+}
+.ov-filter-group {
+  display: flex;
+  gap: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+.ov-filter-btn {
+  padding: 5px 12px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: all .15s;
+  white-space: nowrap;
+}
+.ov-filter-btn:hover { background: var(--surface); color: var(--text); }
+.ov-filter-btn.active {
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: var(--shadow);
+}
+.ov-period-note {
+  font-size: 12px;
+  color: var(--text3);
+  margin-left: auto;
+}
+
 /* ── RESPONSIVE ────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
@@ -896,6 +940,16 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
     <div class="page-header">
       <h2>Research Overview</h2>
       <p>Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
+    </div>
+    <div class="ov-filter-bar">
+      <span class="ov-filter-label">Period:</span>
+      <div class="ov-filter-group" role="group" aria-label="Date period">
+        <button class="ov-filter-btn" data-period="all">All time</button>
+        <button class="ov-filter-btn" data-period="5y">Last 5 years</button>
+        <button class="ov-filter-btn" data-period="year">This year</button>
+        <button class="ov-filter-btn active" data-period="month">This month</button>
+      </div>
+      <span class="ov-period-note" id="ov-period-note"></span>
     </div>
     <div id="kpi-row1" class="kpi-row cols-5"></div>
     <div id="kpi-row2" class="kpi-row cols-5"></div>
@@ -1099,15 +1153,20 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 </div><!-- /.main -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script>
 'use strict';
 
 // ── State ──────────────────────────────────────────────────────────────────
 let STAFF = [], PUBS = [], GRANTS = [];
 let STAFF_BY_SLUG = new Map();
+let SUMMARY = {};
 const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
+
+// Overview date filter state (default: this month)
+let ovDateFilter = 'month';
 
 // Cross-filter state
 const xf = {
@@ -1124,6 +1183,46 @@ const fmtRM = v => v == null ? '--' : 'RM ' + Number(v).toLocaleString('en-MY');
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const nice = s => s ? s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase()) : '';
 const initials = name => (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+
+// Overview date filtering — returns filtered PUBS and GRANTS for the selected period
+function getOvFilteredData() {
+  const now = new Date();
+  const thisYear  = now.getFullYear();
+  const thisMonth = now.getMonth(); // 0-based
+
+  let pubFilter, grantYearMin;
+  if (ovDateFilter === 'month') {
+    pubFilter    = p => { if (!p.date) return false; const d = new Date(p.date); return d.getFullYear() === thisYear && d.getMonth() === thisMonth; };
+    grantYearMin = thisYear;
+  } else if (ovDateFilter === 'year') {
+    pubFilter    = p => p.date && +p.date.slice(0,4) === thisYear;
+    grantYearMin = thisYear;
+  } else if (ovDateFilter === '5y') {
+    const cutoff = thisYear - 4;
+    pubFilter    = p => p.date && +p.date.slice(0,4) >= cutoff;
+    grantYearMin = cutoff;
+  } else {
+    pubFilter    = () => true;
+    grantYearMin = null;
+  }
+
+  return {
+    filteredPubs:   PUBS.filter(pubFilter),
+    filteredGrants: grantYearMin ? GRANTS.filter(g => g.year_start && +g.year_start >= grantYearMin) : [...GRANTS],
+  };
+}
+
+function renderOvPeriodNote() {
+  const now = new Date();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const labels = {
+    all:   'All publications and grants',
+    '5y':  `Publications ${now.getFullYear()-4}–${now.getFullYear()} · Grants from ${now.getFullYear()-4}`,
+    year:  `Publications in ${now.getFullYear()} · Grants started ${now.getFullYear()}`,
+    month: `Publications in ${months[now.getMonth()]} ${now.getFullYear()} · Grants started ${now.getFullYear()}`,
+  };
+  document.getElementById('ov-period-note').textContent = labels[ovDateFilter] || '';
+}
 
 // F-01: SVG icons tied to data domain — each icon is chosen for content relevance
 const SVG = {
@@ -1204,25 +1303,32 @@ async function loadData() {
 
 // ── OVERVIEW ───────────────────────────────────────────────────────────────
 function renderOverview(s) {
+  SUMMARY = s;
+  renderOvPeriodNote();
+
   const hVals   = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
   const hMax    = hVals.length ? Math.max(...hVals) : 0;
   const hMedian = hVals.length ? [...hVals].sort((a,b)=>a-b)[Math.floor(hVals.length/2)] : 0;
-  const totalPubs = (s.pubs_indexed_total||0) + (s.pubs_other_total||0);
+
+  const { filteredPubs, filteredGrants } = getOvFilteredData();
+  const indexedCount = filteredPubs.filter(p => p.indexed).length;
+  const otherCount   = filteredPubs.filter(p => !p.indexed).length;
+  const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
 
   document.getElementById('kpi-row1').innerHTML = [
-    kpi('Staff scraped',         s.staff_count,            'Shah Alam academic staff',    '#2563eb', 'staff'),
-    kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--',   `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
-    kpi('Indexed publications',  num(s.pubs_indexed_total),'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
-    kpi('Other publications',    num(s.pubs_other_total),  'Non-indexed / proceedings',    '#059669', 'docs'),
-    kpi('Total publications',    num(totalPubs),           'All publication types',         '#d97706', 'sum'),
+    kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
+    kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
+    kpi('Indexed publications',  num(indexedCount),      'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
+    kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
+    kpi('Total publications',    num(filteredPubs.length),'All publication types',       '#d97706', 'sum'),
   ].join('');
 
   document.getElementById('kpi-row2').innerHTML = [
-    kpi('Active grants',     num(s.grants_active),    `of ${num(s.grants_total)} total`, '#16a34a', 'beaker'),
-    kpi('Total grants',      num(s.grants_total),     'All levels and statuses',         '#dc2626', 'money'),
-    kpi('PhD supervision',   num(s.phd_total),        'Graduated and ongoing',           '#7c3aed', 'cap'),
-    kpi('Master supervision',num(s.master_total),     'Graduated and ongoing',           '#2563eb', 'cap'),
-    kpi('Consultancy',       num(s.consultancy_total),'Completed appointments',           '#059669', 'handshake'),
+    kpi('Active grants',     num(activeGrants),          `of ${num(filteredGrants.length)} total`, '#16a34a', 'beaker'),
+    kpi('Total grants',      num(filteredGrants.length), 'All levels and statuses',     '#dc2626', 'money'),
+    kpi('PhD supervision',   num(s.phd_total),           'Graduated and ongoing',       '#7c3aed', 'cap'),
+    kpi('Master supervision',num(s.master_total),        'Graduated and ongoing',       '#2563eb', 'cap'),
+    kpi('Consultancy',       num(s.consultancy_total),   'Completed appointments',      '#059669', 'handshake'),
   ].join('');
 
   drawCharts();
@@ -1269,9 +1375,10 @@ function drawCharts() {
     drawCharts();
   });
 
-  // Publications donut
-  const idx   = STAFF.reduce((a,s) => a+(s.pubs_indexed||0), 0);
-  const other = STAFF.reduce((a,s) => a+(s.pubs_other||0),   0);
+  // Publications donut — uses filtered data
+  const { filteredPubs: ovPubs, filteredGrants: ovGrants } = getOvFilteredData();
+  const idx   = ovPubs.filter(p => p.indexed).length;
+  const other = ovPubs.filter(p => !p.indexed).length;
   donutChart('chart-pubs-type', ['Indexed','Other'], [idx, other], ['#2563eb','#f59e0b'], (segIdx) => {
     const val = segIdx === 0 ? 'indexed' : 'other';
     xf.pubs_type = xf.pubs_type === val ? null : val;
@@ -1284,12 +1391,12 @@ function drawCharts() {
     showPage('pubs');
   });
 
-  // Grants bar
+  // Grants bar — uses filtered data
   const gVals = [
-    STAFF.reduce((a,s) => a+(s.grants_intl_active||0), 0),
-    STAFF.reduce((a,s) => a+(s.grants_intl_completed||0), 0),
-    STAFF.reduce((a,s) => a+(s.grants_natl_active||0), 0),
-    STAFF.reduce((a,s) => a+(s.grants_natl_completed||0), 0),
+    ovGrants.filter(g => g.level && g.level.toUpperCase().includes('INTERNATIONAL') && g.status && g.status.toUpperCase() === 'ACTIVE').length,
+    ovGrants.filter(g => g.level && g.level.toUpperCase().includes('INTERNATIONAL') && g.status && g.status.toUpperCase() !== 'ACTIVE').length,
+    ovGrants.filter(g => (!g.level || !g.level.toUpperCase().includes('INTERNATIONAL')) && g.status && g.status.toUpperCase() === 'ACTIVE').length,
+    ovGrants.filter(g => (!g.level || !g.level.toUpperCase().includes('INTERNATIONAL')) && g.status && g.status.toUpperCase() !== 'ACTIVE').length,
   ];
   const gColors = gVals.map((_,i) => GRANT_KEYS[i] === xf.grants_key ? '#1d4ed8' :
     ['#2563eb','#93c5fd','#f59e0b','#fcd34d'][i]);
@@ -1325,14 +1432,16 @@ function drawCharts() {
     ['#2563eb','#93c5fd','#f59e0b','#fcd34d'],
     false, null);
 
-  // Top 15 horizontal bar — click opens staff profile
-  const top15 = [...STAFF].filter(s => s.pubs_indexed > 0)
-    .sort((a,b) => (b.pubs_indexed||0) - (a.pubs_indexed||0)).slice(0,15);
+  // Top 15 horizontal bar — uses filtered pubs data
+  const pubCountBySlug = new Map();
+  for (const p of ovPubs) { if (p.indexed) pubCountBySlug.set(p.slug, (pubCountBySlug.get(p.slug)||0)+1); }
+  const top15 = [...STAFF].filter(s => (pubCountBySlug.get(s.slug)||0) > 0)
+    .sort((a,b) => (pubCountBySlug.get(b.slug)||0) - (pubCountBySlug.get(a.slug)||0)).slice(0,15);
   const labels = top15.map(s => {
     const p = (s.name||'').split(' ').filter(Boolean);
     return p.length > 2 ? p[0] + ' ' + p[p.length-1] : s.name;
   });
-  hbarChart('chart-top-pubs', labels, top15.map(s => s.pubs_indexed||0), '#2563eb', (idx) => {
+  hbarChart('chart-top-pubs', labels, top15.map(s => pubCountBySlug.get(s.slug)||0), '#2563eb', (idx) => {
     showPage('staff');
     setTimeout(() => openStaffProfile(top15[idx].slug), 60);
   });
@@ -1356,7 +1465,12 @@ function barChart(id, labels, data, colors, clickable, onClick) {
     data: { labels, datasets: [{ data, backgroundColor: bg, borderRadius: 5, maxBarThickness: 52 }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}` } } },
+      layout: { padding: { top: 20 } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` ${c.raw}` } },
+        datalabels: { anchor: 'end', align: 'top', color: cssVar('--text2'), font: { size: 11, weight: '600' }, formatter: v => v > 0 ? v : '' },
+      },
       scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } },
       onClick: clickable && onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
@@ -1383,7 +1497,8 @@ function donutChart(id, labels, data, colors, onClick) {
       responsive: true, maintainAspectRatio: false, animation: false, cutout: '62%',
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, color: cssVar('--text') } },
-        tooltip: { callbacks: { label: c => ` ${c.raw.toLocaleString('en-MY')}` } }
+        tooltip: { callbacks: { label: c => ` ${c.raw.toLocaleString('en-MY')}` } },
+        datalabels: { color: '#fff', font: { size: 12, weight: '600' }, formatter: v => v > 0 ? v.toLocaleString('en-MY') : '' },
       },
       onClick: onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
@@ -1406,7 +1521,12 @@ function hbarChart(id, labels, data, color, onClick) {
     data: { labels, datasets: [{ data, backgroundColor: color, borderRadius: 4, maxBarThickness: 20 }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false, indexAxis: 'y',
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw} indexed pubs` } } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` ${c.raw} indexed pubs` } },
+        datalabels: { anchor: 'end', align: 'right', color: cssVar('--text2'), font: { size: 11, weight: '600' }, formatter: v => v > 0 ? v : '' },
+      },
+      layout: { padding: { right: 30 } },
       scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } },
       onClick: onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
@@ -1813,6 +1933,16 @@ document.getElementById('grants-year-from').addEventListener('change',     () =>
 document.getElementById('grants-year-to').addEventListener('change',       () => { pageState.grants=1; renderGrantsTable(); });
 
 // ── BOOT ───────────────────────────────────────────────────────────────────
+Chart.register(ChartDataLabels);
+
+document.querySelectorAll('.ov-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ovDateFilter = btn.dataset.period;
+    document.querySelectorAll('.ov-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderOverview(SUMMARY);
+  });
+});
+
 loadData();
 </script>
 </body>
