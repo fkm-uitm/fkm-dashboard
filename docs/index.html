@@ -5,17 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FKM Research Analytics</title>
 <style>
-  /*
-    Design read: internal research dashboard for FKM staff and management, institutional
-    style carried over from the existing navy header, dial ENERGY 1 / RHYTHM 1 / MOTION 1.
-    Colour: navy band = faculty identity; one blue accent marks the active tab, selected
-    filters and single-series bars. A selected bar keeps the full blue while the others fade
-    to a pale fill with a blue outline, so the selection reads without losing the context.
-    Type: system UI stack, because this is an internal tool that should load instantly.
-    Motif: navy header + tabular figures. Cards sit flat with a hairline border; only the
-    sticky header carries a shadow, because it is the one surface that overlaps content.
-    Motion: none beyond hover states; charts redraw instantly when filters change.
-  */
   :root{
     color-scheme:light;
     --bg:#f4f6f9;--surface:#fff;--surface2:#f8fafc;--border:#d8dee6;--control:#6b7787;
@@ -24,1597 +13,772 @@
     --text:#1b2533;--text2:#4a5566;
     --series:#257de0;--series2:#f47230;--series-muted:#d3e4f8;--grid:#e7e7e7;--axis:#4a5566;
     --ok-bg:#dcfce7;--ok-ink:#166534;--neutral-bg:#e2e8f0;--neutral-ink:#334155;
-    --err-bg:#fee2e2;--err-ink:#991b1b;
     --focus:#1d4ed8;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
   [hidden]{display:none!important}
   body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.4}
-  button,a[href],summary,select{cursor:pointer}
-  button:disabled{cursor:not-allowed}
+  button,a[href],select{cursor:pointer}
   button,input,select{font:inherit;color:inherit}
   :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .skip{position:absolute;left:12px;top:-60px;background:var(--surface);color:var(--text);min-height:44px;padding:12px 14px;border-radius:6px;z-index:200}
-  .skip:focus{top:8px}
   .num{font-variant-numeric:tabular-nums}
 
   /* HEADER */
   .topbar{background:var(--brand);color:var(--brand-ink);padding:10px 24px;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
   .topbar h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
   .topbar-sub{font-size:12px;color:var(--brand-ink2);margin-top:1px}
-  .topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .last-updated{font-size:12px;color:var(--brand-ink2)}
-  .bar-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.55);border-radius:6px;min-height:36px;padding:6px 12px;font-size:13px;color:var(--brand-ink);transition:background .15s}
-  .bar-btn:hover{background:rgba(255,255,255,.22)}
-  .bar-btn:active{background:rgba(255,255,255,.32)}
-  .bar-btn:focus-visible{outline-color:#fff}
 
   /* TABS */
   .tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:4px;overflow-x:auto}
   .tab{background:none;border:0;border-bottom:3px solid transparent;min-height:46px;padding:12px 16px;font-size:14px;font-weight:600;color:var(--text2);white-space:nowrap;transition:color .15s}
   .tab:hover{color:var(--text)}
-  .tab:active{color:var(--accent)}
   .tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
-  .tab:focus-visible{outline-offset:-3px}
 
   /* PAGE */
   .content{padding:24px;max-width:1400px;margin:0 auto}
-  .section-header{margin-bottom:16px}
-  .section-header h2{font-size:20px;font-weight:700;color:var(--text)}
-  .section-header p{font-size:14px;color:var(--text2);margin-top:3px}
   .panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px;min-width:0;scroll-margin-top:80px}
-  .panel h3{font-size:15px;font-weight:700;color:var(--text)}
-  .note{font-size:13px;color:var(--text2)}
-
-  /* ACTIVE FILTER CHIPS */
-  .chips{max-width:1400px;margin:0 auto;padding:12px 24px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  .chips-label{font-size:13px;font-weight:600;color:var(--text2);margin-right:2px}
-  .chip{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 10px;border-radius:6px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--text);font-size:13px}
-  .chip:hover{background:var(--border)}
-  .chip .x{font-weight:700;color:var(--accent)}
-  .text-btn{background:none;border:0;color:var(--accent);text-decoration:underline;font-size:13px;min-height:32px;padding:4px 6px}
-  .text-btn:hover{text-decoration-thickness:2px}
-
-  /* SLICERS */
-  .slicers{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px 14px}
-  .slicers+.slicers{margin-top:12px}
-  .slicer{display:flex;flex-direction:column;gap:4px;min-width:0}
-  .slicer label,.field label{font-size:12px;font-weight:600;color:var(--text2)}
-  .slicer select{min-height:36px;width:100%;padding:6px 8px;border:1px solid var(--control);border-radius:6px;background:var(--surface);color:var(--text);font-size:14px}
-  .slicer select.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);font-weight:600}
-  .slicer-heading{font-size:13px;font-weight:700;color:var(--text);margin:4px 0 8px}
-  /* The summary is drawn as a button with a chevron so it reads as something to open. */
-  details.filters>summary{list-style:none;display:inline-flex;align-items:center;gap:10px;min-height:36px;padding:6px 14px;border:1px solid var(--control);border-radius:6px;background:var(--surface);color:var(--accent);font-size:14px;font-weight:600;user-select:none}
-  details.filters>summary::-webkit-details-marker{display:none}
-  details.filters>summary:hover{background:var(--accent-soft);border-color:var(--accent)}
-  details.filters>summary:active{background:var(--border)}
-  details.filters .chev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
-  details.filters[open] .chev{transform:translateY(2px) rotate(-135deg)}
-  details.filters .when-open,details.filters[open] .when-closed{display:none}
-  details.filters[open] .when-open{display:inline}
-  details.filters .filter-count{background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 8px;font-size:12px}
-  details.filters[open]>summary{margin-bottom:14px}
+  .panel-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px}
 
   /* KPI */
-  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:16px}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px}
   .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
   .kpi-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
   .kpi-value{font-size:28px;font-weight:800;color:var(--text);line-height:1.1}
   .kpi-sub{font-size:13px;color:var(--text2);margin-top:6px}
-  .board-title{font-size:17px;font-weight:700}
-  @media (min-width:760px){.kpi-eight{grid-template-columns:repeat(4,1fr)}}
-  .kpi-row.kpi-ten{grid-template-columns:1fr 1fr}
-  @media (min-width:760px){.kpi-row.kpi-ten{grid-template-columns:repeat(5,1fr)}}
-  @media (min-width:760px) and (max-width:1099px){.kpi-ten{gap:10px}.kpi-ten .kpi{padding:14px}.kpi-ten .kpi-value{font-size:22px}}
+  @media (min-width:760px){.kpi-row.five{grid-template-columns:repeat(5,1fr)}}
 
   /* CHARTS */
   .chart-grid{display:grid;gap:16px;margin-bottom:16px;grid-template-columns:1fr}
+  @media (min-width:900px){.chart-grid.two{grid-template-columns:1fr 1fr}}
+  @media (min-width:900px){.chart-grid.three{grid-template-columns:1fr 1fr 1fr}}
   .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;min-width:0}
-  .chart-card h3{font-size:15px;font-weight:700;color:var(--text)}
-  .chart-desc{font-size:13px;color:var(--text2);margin:2px 0 12px}
+  .chart-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+  .chart-desc{font-size:13px;color:var(--text2);margin-bottom:12px}
   .chart-wrap{position:relative;height:230px}
   .chart-wrap.tall{height:290px}
-  .chart-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);text-align:center;padding:0 16px}
-  @media (min-width:760px){
-    .g2{grid-template-columns:1fr 1fr}
-    .g3{grid-template-columns:1fr 1fr}
-    .g3>:first-child{grid-column:1/-1}
-  }
-  @media (min-width:1150px){
-    .g3{grid-template-columns:2fr 1fr 1fr}
-    .g3>:first-child{grid-column:auto}
-  }
+  .chart-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2)}
+
+  /* TOOLBAR */
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .search-box{flex:1;min-width:200px;max-width:360px;position:relative}
+  .search-box input{width:100%;min-height:36px;padding:6px 10px 6px 34px;border:1px solid var(--control);border-radius:6px;background:var(--surface);font-size:14px;color:var(--text)}
+  .search-box::before{content:"⌕";position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--control);font-size:17px;pointer-events:none}
+  .filter-select{min-height:36px;padding:6px 8px;border:1px solid var(--control);border-radius:6px;background:var(--surface);font-size:14px;color:var(--text)}
+  .filter-select.on{border-color:var(--accent);font-weight:600}
+  .count-text{font-size:13px;color:var(--text2);margin-left:auto}
 
   /* TABLE */
-  .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
-  table{width:100%;min-width:760px;border-collapse:collapse;font-size:13px}
-  td.authors{min-width:240px}
-  thead th{background:var(--surface2);color:var(--text2);padding:10px 14px;text-align:left;font-weight:600;font-size:12px;border-bottom:1px solid var(--border);white-space:nowrap}
-  th.r,td.r{text-align:right}
-  .sort-btn{background:none;border:0;font:inherit;color:inherit;font-weight:600;display:inline-flex;gap:4px;align-items:center;padding:2px 0}
-  .sort-btn:hover{color:var(--text)}
-  th[aria-sort] .sort-btn{color:var(--accent)}
-  tbody tr{border-bottom:1px solid var(--border)}
-  tbody tr:last-child{border-bottom:0}
-  tbody tr:hover{background:var(--surface2)}
-  tbody tr.selected{background:var(--accent-soft)}
-  td{padding:9px 14px;color:var(--text);vertical-align:top}
-  td.clip{max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  td.muted,.muted{color:var(--text2)}
-  td.empty{padding:28px 14px;text-align:center;color:var(--text2)}
-  /* Keep the message inside the visible part of a table that scrolls sideways. */
-  td.empty span{position:sticky;left:14px;display:inline-block;max-width:min(560px,calc(100vw - 96px));text-align:left}
-  .status{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600;white-space:nowrap}
-  .status.active{background:var(--ok-bg);color:var(--ok-ink)}
-  .status.done{background:var(--neutral-bg);color:var(--neutral-ink)}
-  .person-btn{background:none;border:0;padding:2px 0;color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-align:left;font-size:inherit}
-  .person-btn:hover{text-decoration-thickness:2px}
-  .person-btn.me{font-weight:700}
-  .sep{color:var(--text2)}
-
-  .list-bar{display:flex;gap:10px 16px;align-items:flex-end;justify-content:space-between;margin:14px 0 8px;flex-wrap:wrap}
-  .field{display:flex;flex-direction:column;gap:4px}
-  .search-input{min-height:36px;padding:6px 12px;border:1px solid var(--control);border-radius:6px;font-size:14px;width:260px;max-width:100%;background:var(--surface);color:var(--text)}
-  .result-count{font-size:13px;color:var(--text2)}
-  .person-picker+.slicers{margin-top:12px}
-  .person-picker .note{margin-top:6px}
-  .combo{position:relative}
-  .combo-box{position:relative}
-  .combo-box .search-input{padding-right:46px}
-  .combo-toggle{position:absolute;top:1px;right:1px;bottom:1px;width:42px;border:0;border-left:1px solid var(--border);border-radius:0 5px 5px 0;background:var(--surface2);color:var(--text2);display:flex;align-items:center;justify-content:center}
-  .combo-toggle:hover{background:var(--accent-soft);color:var(--accent)}
-  .combo-toggle .chev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
-  .combo-toggle[aria-expanded="true"] .chev{transform:translateY(2px) rotate(-135deg)}
-  .combo-list{position:absolute;top:100%;left:0;right:0;z-index:50;margin-top:4px;max-height:300px;overflow-y:auto;list-style:none;background:var(--surface);color:var(--text);border:1px solid var(--control);border-radius:6px;box-shadow:0 6px 18px rgba(16,24,40,.14);padding:4px 0}
-  .combo-list li{padding:8px 12px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
-  .combo-list li:hover,.combo-list li[aria-selected="true"]{background:var(--accent-soft)}
-  .combo-list li.current{font-weight:600}
-  .combo-list li.combo-empty{color:var(--text2);cursor:default}
-  .combo-list li.combo-empty:hover{background:none}
-
-  /* STAFF PROFILE */
-  .picker{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
-  .picker .search-input{width:380px}
-  .btn{min-height:36px;padding:6px 14px;border-radius:6px;border:1px solid var(--control);background:var(--surface);color:var(--text);font-size:14px;font-weight:600}
-  .btn:hover{background:var(--accent-soft)}
-  .btn:active{background:var(--border)}
-  .profile-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;margin:18px 0 14px;padding-top:16px;border-top:1px solid var(--border)}
-  .profile-head h3{font-size:20px}
-  .profile-meta{font-size:14px;color:var(--text2);margin-top:4px}
-  .profile-links{display:flex;gap:8px;flex-wrap:wrap}
-  .sub-h{font-size:14px;font-weight:700;margin:18px 0 8px}
-
-  /* PUBLICATION DETAIL PANEL: a side panel on wide screens, a bottom sheet on phones */
-  .title-btn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-align:left;text-decoration:underline;text-underline-offset:2px;display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .title-btn:hover{text-decoration-thickness:2px}
-  dialog.drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(560px,100%);height:100%;max-height:none;max-width:none;padding:0;border:0;border-left:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:-8px 0 28px rgba(16,24,40,.18)}
-  dialog.drawer[open]{display:flex;flex-direction:column}
-  dialog.drawer::backdrop{background:rgba(15,22,32,.38)}
-  .drawer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 22px;border-bottom:1px solid var(--border)}
-  .drawer-kicker{font-size:13px;font-weight:600;color:var(--text2)}
-  .drawer-close{width:40px;height:40px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:24px;line-height:1;color:var(--text2)}
-  .drawer-close:hover{background:var(--accent-soft);color:var(--text)}
-  .drawer-body{overflow-y:auto;padding:18px 22px 28px;flex:1}
-  .drawer-body h2{font-size:19px;line-height:1.35;font-weight:700}
-  .pd-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
-  .pd-tag{font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--neutral-bg);color:var(--neutral-ink)}
-  .pd-tag.strong{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-  .pd-sec{margin-top:20px}
-  .pd-sec h3{font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-  .pd-facts{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:14px}
-  .pd-facts dt{color:var(--text2)}
-  .pd-facts dd{min-width:0;overflow-wrap:anywhere}
-  .pd-facts a{color:var(--accent)}
-  .pd-people{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px}
-  .pd-people li{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .pd-kpis{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px}
-  .pd-kpis li::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
-  .pd-text{font-size:14px;overflow-wrap:anywhere}
-  @media (max-width:700px){
-    dialog.drawer{inset:auto 0 0 0;width:100%;height:88vh;height:88dvh;border-left:0;border-top:1px solid var(--border);border-radius:14px 14px 0 0}
-    .drawer-head{padding-left:16px}
-    .drawer-body{padding:16px 16px 28px}
-    .pd-facts{grid-template-columns:1fr;gap:2px}
-    .pd-facts dd{margin-bottom:8px}
-    td.clip .title-btn{white-space:normal}
-    .drawer-close{width:44px;height:44px}
-  }
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{background:var(--surface2);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text2);padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;position:sticky;top:0}
+  td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text)}
+  tr:last-child td{border-bottom:0}
+  tr:hover td{background:var(--surface2)}
+  .r{text-align:right}
+  .c{text-align:center}
+  .muted{color:var(--text2)}
+  .clip{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .clip.wide{max-width:480px}
+  td.empty{color:var(--text2);font-style:italic;padding:24px 10px;text-align:center}
+  th.sortable{cursor:pointer;user-select:none}
+  th.sortable:hover{color:var(--accent)}
+  th.sortable .arrow{margin-left:4px;opacity:.4}
+  th.sortable[aria-sort] .arrow{opacity:1;color:var(--accent)}
+  th[aria-sort="ascending"] .arrow::after{content:"↑"}
+  th[aria-sort="descending"] .arrow::after{content:"↓"}
+  th:not([aria-sort]) .arrow::after{content:"↕"}
 
   /* PAGINATION */
-  .pagination{display:flex;gap:6px;align-items:center;padding:12px 0 0;justify-content:flex-end;font-size:13px;color:var(--text2);flex-wrap:wrap}
-  .page-btn{min-width:36px;min-height:36px;padding:4px 10px;border:1px solid var(--control);border-radius:6px;background:var(--surface);font-size:13px;color:var(--text)}
-  .page-btn:hover{background:var(--accent-soft)}
-  .page-btn[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .pagination{display:flex;align-items:center;gap:6px;margin-top:14px;flex-wrap:wrap}
+  .pagination span{font-size:13px;color:var(--text2);margin-right:4px}
+  .page-btn{min-height:32px;min-width:32px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:13px;color:var(--text)}
+  .page-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .page-btn[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
-  /* STATES */
-  .loading{display:flex;align-items:center;justify-content:center;min-height:300px;flex-direction:column;gap:12px;color:var(--text2);font-size:14px;padding:24px}
-  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.spinner{animation:none}*{transition:none!important}}
-  .error-box{background:var(--err-bg);color:var(--err-ink);border-radius:8px;padding:16px 20px;font-size:14px;max-width:560px;line-height:1.5}
-  .error-box code{font-size:13px}
-  .error-box button{margin-top:12px;min-height:40px;padding:6px 14px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;font-weight:600}
+  /* STATUS BADGES */
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600;white-space:nowrap}
+  .badge-active{background:var(--ok-bg);color:var(--ok-ink)}
+  .badge-done{background:var(--neutral-bg);color:var(--neutral-ink)}
+  .badge-indexed{background:#eff6ff;color:#1e40af}
+  .badge-other{background:#f0fdf4;color:#166534}
+  .badge-intl{background:#fdf4ff;color:#7e22ce}
+  .badge-natl{background:#fff7ed;color:#c2410c}
 
-  /* MOBILE */
-  @media (max-width:700px){
-    .topbar{padding:10px 16px;position:static}
-    .tabs{padding:0 4px;gap:0}
-    .tab{padding:12px 10px;font-size:13px}
-    .topbar-right{width:100%}
-    .last-updated{flex:1 1 100%}
-    .content{padding:16px}
-    .chips{padding:12px 16px 0}
-    .panel,.chart-card{padding:16px}
-    .kpi-row{grid-template-columns:1fr 1fr;gap:10px}
-    .kpi{padding:14px}
-    .kpi-value{font-size:22px}
-    .slicers{grid-template-columns:1fr 1fr}
-    .search-input,.picker .search-input{width:100%}
-    .field{flex:1 1 100%}
-    td.clip{white-space:normal;min-width:220px}
-  }
-  @media (max-width:700px),(pointer:coarse){
-    .bar-btn,.btn,.page-btn,.search-input,.slicer select,.chip,.text-btn{min-height:44px}
-    .page-btn{min-width:44px}
-    .person-btn,.sort-btn{min-height:44px;padding:10px 0}
-    details.filters>summary{min-height:44px}
-  }
+  /* STAFF PROFILE DRAWER */
+  .profile-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+  .profile-panel h2{font-size:18px;font-weight:800;color:var(--text);margin-bottom:2px}
+  .profile-meta{font-size:13px;color:var(--text2);margin-bottom:14px}
+  .profile-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+  .profile-kpi{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+  .profile-kpi .label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px}
+  .profile-kpi .val{font-size:22px;font-weight:800;color:var(--text);line-height:1.1}
+  .profile-kpi .sub{font-size:12px;color:var(--text2);margin-top:3px}
+  .profile-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .profile-link{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface)}
+  .profile-link:hover{background:var(--accent-soft);border-color:var(--accent)}
+  .profile-close{float:right;background:none;border:0;font-size:20px;color:var(--text2);line-height:1;padding:0 4px}
+  .profile-close:hover{color:var(--text)}
+  .sub-title{font-size:14px;font-weight:700;color:var(--text);margin:14px 0 8px}
+
+  /* NAME BUTTON */
+  .name-btn{background:none;border:0;color:var(--accent);font-size:14px;font-weight:600;text-align:left;text-decoration:underline;padding:0;cursor:pointer}
+  .name-btn:hover{text-decoration-thickness:2px}
+
+  /* LOADING */
+  .loading{display:flex;align-items:center;justify-content:center;min-height:200px;font-size:15px;color:var(--text2)}
+
+  /* SECTION HEADER */
+  .section-h{margin-bottom:16px}
+  .section-h h2{font-size:20px;font-weight:700}
+  .section-h p{font-size:14px;color:var(--text2);margin-top:3px}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
 
-<header class="topbar">
+<div class="topbar">
   <div>
     <h1>FKM Research Analytics</h1>
-    <div class="topbar-sub">Fakulti Kejuruteraan Mekanikal, UiTM Shah Alam</div>
+    <div class="topbar-sub">Fakulti Kejuruteraan Mekanikal, UiTM Shah Alam — Expert Portal Data</div>
   </div>
-  <div class="topbar-right">
-    <span class="last-updated" id="last-updated" aria-live="polite">Loading data</span>
-  </div>
-</header>
-
-<nav class="tabs" role="tablist" aria-label="Dashboard sections">
-  <button type="button" class="tab" role="tab" id="tab-overview" aria-controls="page-overview" aria-selected="true">Overview</button>
-  <button type="button" class="tab" role="tab" id="tab-pub" aria-controls="page-pub" aria-selected="false" tabindex="-1">Publications</button>
-  <button type="button" class="tab" role="tab" id="tab-pi" aria-controls="page-pi" aria-selected="false" tabindex="-1">Principal investigators</button>
-  <button type="button" class="tab" role="tab" id="tab-grant" aria-controls="page-grant" aria-selected="false" tabindex="-1">Grant acquisition</button>
-  <button type="button" class="tab" role="tab" id="tab-staff" aria-controls="page-staff" aria-selected="false" tabindex="-1">Staff</button>
-</nav>
-
-<main id="main" tabindex="-1">
-
-<div class="chips" id="chips" role="region" aria-label="Active filters" aria-live="polite" hidden></div>
-
-<div id="loading-screen" class="loading" role="status">
-  <div class="spinner" aria-hidden="true"></div>
-  <div>Loading publications, projects and staff data</div>
+  <div id="last-updated" class="last-updated"></div>
 </div>
 
-<!-- OVERVIEW -->
-<section class="page" id="page-overview" role="tabpanel" aria-labelledby="tab-overview" hidden>
-<div class="content">
-  <div class="section-header">
-    <h2>Research overview</h2>
-    <p>Publications, principal investigator projects and grants recorded for FKM. Click any bar or segment to filter the whole dashboard by it; click it again to clear.</p>
-  </div>
-  <div class="panel">
-    <div class="person-picker"></div>
-    <details class="filters" style="margin-top:12px">
-      <summary>
-        <span class="chev" aria-hidden="true"></span>
-        <span class="when-closed">Show more filters</span><span class="when-open">Hide more filters</span>
-        <span class="filter-count" id="more-filter-count" hidden></span>
-      </summary>
-      <p class="slicer-heading">Publications</p>
-      <div class="slicers" data-slicers="pub"></div>
-      <p class="slicer-heading" style="margin-top:14px">PI projects</p>
-      <div class="slicers" data-slicers="pi"></div>
-      <p class="slicer-heading" style="margin-top:14px">Grants</p>
-      <div class="slicers" data-slicers="grant"></div>
-    </details>
-  </div>
-  <div class="section-header" style="margin-top:4px">
-    <h3 class="board-title">Pencapaian KPI</h3>
-    <p class="note">The 10 figures from the Data Pencapaian file, counted the same way: FKM academic staff at UiTM Selangor. They follow the filters above.</p>
-  </div>
-  <div class="kpi-row kpi-ten" id="kpi-overview"></div>
-  <div class="chart-grid g2">
-    <div class="chart-card">
-      <h3>Indexed vs other publications</h3>
-      <p class="chart-desc">Unique publications by group</p>
-      <div class="chart-wrap"><canvas id="ch-pubgroup"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Where publications are indexed</h3>
-      <p class="chart-desc">Unique publications per indexing database</p>
-      <div class="chart-wrap"><canvas id="ch-index"></canvas></div>
-    </div>
-  </div>
-  <div class="chart-grid g3">
-    <div class="chart-card">
-      <h3>PI projects by sponsor category</h3>
-      <p class="chart-desc">Number of projects led as principal investigator</p>
-      <div class="chart-wrap"><canvas id="ch-sponsor"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Grant acquired by sponsor category</h3>
-      <p class="chart-desc">Total RM approved</p>
-      <div class="chart-wrap"><canvas id="ch-galloc-ov"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>JCR quartile</h3>
-      <p class="chart-desc">Ranked journal publications, Q1 to Q4</p>
-      <div class="chart-wrap"><canvas id="ch-quartile"></canvas></div>
-    </div>
-  </div>
+<div class="tabs" role="tablist" aria-label="Dashboard sections">
+  <button class="tab" role="tab" aria-selected="true"  aria-controls="page-overview"    id="tab-overview">Overview</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="page-staff"       id="tab-staff">Staff Profiles</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="page-pubs"        id="tab-pubs">Publications</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="page-grants"      id="tab-grants">Grants</button>
 </div>
-</section>
 
-<!-- PUBLICATIONS -->
-<section class="page" id="page-pub" role="tabpanel" aria-labelledby="tab-pub" hidden>
-<div class="content">
-  <div class="section-header">
-    <h2>Publications</h2>
-    <p>Filter with the menus or click a bar. Click a title to see the publication's details; author names open their staff profile.</p>
-  </div>
-  <div class="panel"><div class="person-picker"></div><div class="slicers" data-slicers="pub"></div></div>
-  <p class="note" style="margin-bottom:8px">Pencapaian KPI for publications: FKM academic staff at UiTM Selangor, following the filters above.</p>
-  <div class="kpi-row kpi-eight" id="kpi-pub"></div>
-  <div class="chart-grid g3">
-    <div class="chart-card">
-      <h3>Publication type</h3>
-      <p class="chart-desc">Unique publications per type</p>
-      <div class="chart-wrap"><canvas id="ch-pubtype"></canvas></div>
+<!-- ══════════════════════════════════════════════════════════ OVERVIEW -->
+<div id="page-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <div class="content">
+    <div class="section-h">
+      <h2>Research Overview</h2>
+      <p>Aggregated figures from UiTM Expert portal profiles — Shah Alam campus academic staff</p>
     </div>
-    <div class="chart-card">
-      <h3>International vs national</h3>
-      <p class="chart-desc">Unique publications by level</p>
-      <div class="chart-wrap"><canvas id="ch-level"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Author role</h3>
-      <p class="chart-desc">Author records per role</p>
-      <div class="chart-wrap"><canvas id="ch-role"></canvas></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>Publication list</h3>
-    <div class="list-bar">
-      <div class="field">
-        <label for="pub-search">Search title or author</label>
-        <input class="search-input" id="pub-search" type="search" autocomplete="off">
+
+    <div class="kpi-row five" id="kpi-row1"></div>
+    <div class="kpi-row five" id="kpi-row2"></div>
+
+    <div class="chart-grid two">
+      <div class="chart-card">
+        <h3>H-Index Distribution (Scopus)</h3>
+        <div class="chart-desc">Number of staff in each h-index range</div>
+        <div class="chart-wrap"><canvas id="chart-hindex" aria-label="H-index distribution"></canvas></div>
       </div>
-        <p class="result-count" id="pub-count" aria-live="polite"></p>
-    </div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Publication list, scrolls sideways"><table>
-      <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">Type</th><th scope="col">Index</th><th scope="col">Quartile</th><th scope="col">Level</th><th scope="col">Authors</th></tr></thead>
-      <tbody id="pub-tbody"></tbody>
-    </table></div>
-    <nav class="pagination" id="pub-pagination" aria-label="Publication list pages"></nav>
-  </div>
-</div>
-</section>
-
-<!-- PRINCIPAL INVESTIGATORS -->
-<section class="page" id="page-pi" role="tabpanel" aria-labelledby="tab-pi" hidden>
-<div class="content">
-  <div class="section-header">
-    <h2>Principal investigators</h2>
-    <p>Research projects led by FKM staff as principal investigator (PI sheet). Filter with the menus or click a bar.</p>
-  </div>
-  <div class="panel"><div class="person-picker"></div><div class="slicers" data-slicers="pi"></div></div>
-  <div class="kpi-row" id="kpi-pi"></div>
-  <div class="chart-grid g3">
-    <div class="chart-card">
-      <h3>PI projects by sponsor category</h3>
-      <p class="chart-desc">Number of projects</p>
-      <div class="chart-wrap"><canvas id="ch-pi-cat"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Project status</h3>
-      <p class="chart-desc">Active vs completed</p>
-      <div class="chart-wrap"><canvas id="ch-pi-status"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>PI projects by start year</h3>
-      <p class="chart-desc">Number of projects starting each year</p>
-      <div class="chart-wrap"><canvas id="ch-pi-year"></canvas></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>PI project list</h3>
-    <div class="list-bar">
-      <div class="field">
-        <label for="pi-search">Search title, PI or sponsor</label>
-        <input class="search-input" id="pi-search" type="search" autocomplete="off">
+      <div class="chart-card">
+        <h3>Publications by Type</h3>
+        <div class="chart-desc">Indexed vs. other publications across all staff</div>
+        <div class="chart-wrap"><canvas id="chart-pubs-type" aria-label="Publications by type"></canvas></div>
       </div>
-        <p class="result-count" id="pi-count" aria-live="polite"></p>
     </div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="PI project list, scrolls sideways"><table>
-      <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">PI</th><th scope="col">Sponsor</th><th scope="col">Category</th><th scope="col">Start</th><th scope="col">End</th><th scope="col" class="r">Allocation (RM)</th><th scope="col">Status</th></tr></thead>
-      <tbody id="pi-tbody"></tbody>
-    </table></div>
-    <nav class="pagination" id="pi-pagination" aria-label="PI project list pages"></nav>
-  </div>
-</div>
-</section>
 
-<!-- GRANT ACQUISITION -->
-<section class="page" id="page-grant" role="tabpanel" aria-labelledby="tab-grant" hidden>
-<div class="content">
-  <div class="section-header">
-    <h2>Grant acquisition</h2>
-    <p>Grants acquired by FKM staff (grant sheet). Some of these projects also appear under Principal investigators, so the two are never added together.</p>
-  </div>
-  <div class="panel"><div class="person-picker"></div><div class="slicers" data-slicers="grant"></div></div>
-  <div class="kpi-row" id="kpi-grant"></div>
-  <div class="chart-grid g2">
-    <div class="chart-card">
-      <h3>Grant acquired by sponsor category</h3>
-      <p class="chart-desc">Total RM approved</p>
-      <div class="chart-wrap"><canvas id="ch-g-alloc"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Grant acquired by start year</h3>
-      <p class="chart-desc">Total RM approved for grants starting each year</p>
-      <div class="chart-wrap"><canvas id="ch-g-year"></canvas></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>Grant list</h3>
-    <div class="list-bar">
-      <div class="field">
-        <label for="grant-search">Search title, PI or sponsor</label>
-        <input class="search-input" id="grant-search" type="search" autocomplete="off">
+    <div class="chart-grid two">
+      <div class="chart-card">
+        <h3>Grants by Level &amp; Status</h3>
+        <div class="chart-desc">International and national grants, active vs. completed</div>
+        <div class="chart-wrap"><canvas id="chart-grants" aria-label="Grants by level and status"></canvas></div>
       </div>
-        <p class="result-count" id="grant-count" aria-live="polite"></p>
+      <div class="chart-card">
+        <h3>Supervision (PhD &amp; Master)</h3>
+        <div class="chart-desc">Graduated and ongoing students across all staff</div>
+        <div class="chart-wrap"><canvas id="chart-supervision" aria-label="Supervision breakdown"></canvas></div>
+      </div>
     </div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Grant list, scrolls sideways"><table>
-      <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">PI</th><th scope="col">Sponsor</th><th scope="col">Category</th><th scope="col">Start</th><th scope="col">End</th><th scope="col" class="r">Allocation (RM)</th><th scope="col">Status</th></tr></thead>
-      <tbody id="grant-tbody"></tbody>
-    </table></div>
-    <nav class="pagination" id="grant-pagination" aria-label="Grant list pages"></nav>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>Top 15 Staff by Indexed Publications</h3>
+        <div class="chart-desc">Ranked by number of indexed publications on the Expert portal</div>
+        <div class="chart-wrap tall"><canvas id="chart-top-pubs" aria-label="Top staff by indexed publications"></canvas></div>
+      </div>
+    </div>
   </div>
 </div>
-</section>
 
-<!-- STAFF -->
-<section class="page" id="page-staff" role="tabpanel" aria-labelledby="tab-staff" hidden>
-<div class="content">
-  <div class="section-header">
-    <h2>Staff</h2>
-    <p>Pick a staff member to see their publications and projects. The choice also filters Overview, Publications and Grants.</p>
-  </div>
+<!-- ══════════════════════════════════════════════════════════ STAFF -->
+<div id="page-staff" role="tabpanel" aria-labelledby="tab-staff" hidden>
+  <div class="content">
+    <div class="section-h">
+      <h2>Staff Profiles</h2>
+      <p>Click a name to view full profile, publications, and grants</p>
+    </div>
 
-  <div class="panel" id="profile-panel">
-    <h3>Staff profile</h3>
-    <div class="person-picker" data-hint="Or click a name in the staff list below." style="margin-top:10px"></div>
+    <div id="staff-profile" class="profile-panel" hidden></div>
 
-    <div id="profile" hidden>
-      <div class="profile-head">
-        <div>
-          <h3 id="profile-name"></h3>
-          <p class="profile-meta" id="profile-meta"></p>
+    <div class="panel">
+      <div class="toolbar">
+        <div class="search-box">
+          <input type="search" id="staff-search" placeholder="Search by name…" aria-label="Search staff">
         </div>
-        <div class="profile-links">
-          <button type="button" class="btn" data-goto="pub">Open in Publications</button>
-          <button type="button" class="btn" data-goto="pi">Open in PI projects</button>
-          <button type="button" class="btn" data-goto="grant">Open in Grants</button>
-        </div>
+        <select class="filter-select" id="staff-sort" aria-label="Sort by">
+          <option value="name">Sort: Name A–Z</option>
+          <option value="h_scopus">Sort: H-Index (Scopus)</option>
+          <option value="pubs_indexed">Sort: Indexed Pubs</option>
+          <option value="pubs_total">Sort: Total Pubs</option>
+          <option value="grants_total">Sort: Grants</option>
+          <option value="phd_total">Sort: PhD</option>
+          <option value="master_total">Sort: Master</option>
+        </select>
+        <span class="count-text" id="staff-count"></span>
       </div>
-      <div class="kpi-row" id="kpi-profile"></div>
-      <div class="chart-grid g2">
-        <div class="chart-card">
-          <h3>Their publications by type</h3>
-          <p class="chart-desc">Unique publications</p>
-          <div class="chart-wrap"><canvas id="ch-p-type"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <h3>Their author role</h3>
-          <p class="chart-desc">Role on each publication</p>
-          <div class="chart-wrap"><canvas id="ch-p-role"></canvas></div>
-        </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th class="c">H-Index<br><span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">Sc / WoS / GS</span></th>
+              <th class="r">Indexed<br>Pubs</th>
+              <th class="r">Other<br>Pubs</th>
+              <th class="r">Active<br>Grants</th>
+              <th class="r">Total<br>Grants</th>
+              <th class="r">PhD<br>Grad</th>
+              <th class="r">PhD<br>Active</th>
+              <th class="r">Master<br>Grad</th>
+              <th class="r">Master<br>Active</th>
+              <th class="r">Consultancy<br>Completed</th>
+            </tr>
+          </thead>
+          <tbody id="staff-tbody"></tbody>
+        </table>
       </div>
-      <p class="sub-h" id="ppub-title">Publications</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Staff member's publications, scrolls sideways"><table>
-        <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">Type</th><th scope="col">Index</th><th scope="col">Quartile</th><th scope="col">Their role</th><th scope="col">Co-authors</th></tr></thead>
-        <tbody id="ppub-tbody"></tbody>
-      </table></div>
-      <nav class="pagination" id="ppub-pagination" aria-label="Staff member's publication pages"></nav>
-      <p class="sub-h" id="ppi-title">Projects as PI</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Staff member's PI projects, scrolls sideways"><table>
-        <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">Sponsor</th><th scope="col">Start</th><th scope="col">End</th><th scope="col" class="r">Allocation (RM)</th><th scope="col">Status</th></tr></thead>
-        <tbody id="ppi-tbody"></tbody>
-      </table></div>
-      <nav class="pagination" id="ppi-pagination" aria-label="Staff member's PI project pages"></nav>
-      <p class="sub-h" id="pgrant-title">Grants acquired</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Staff member's grants, scrolls sideways"><table>
-        <thead><tr><th scope="col">#</th><th scope="col">Title</th><th scope="col">Sponsor</th><th scope="col">Start</th><th scope="col">End</th><th scope="col" class="r">Allocation (RM)</th><th scope="col">Status</th></tr></thead>
-        <tbody id="pgrant-tbody"></tbody>
-      </table></div>
-      <nav class="pagination" id="pgrant-pagination" aria-label="Staff member's grant pages"></nav>
-      <p class="note" style="margin-top:12px">Publications, PI projects and grants are matched to staff by staff ID. A project without a staff number falls back to matching the PI name.</p>
+      <div class="pagination" id="staff-pagination"></div>
     </div>
-  </div>
-
-  <div class="panel"><div class="slicers" data-slicers="staff"></div></div>
-  <div class="kpi-row" id="kpi-staff"></div>
-  <div class="chart-grid g2">
-    <div class="chart-card">
-      <h3>Largest position groups</h3>
-      <p class="chart-desc">Staff count, top 8 positions</p>
-      <div class="chart-wrap tall"><canvas id="ch-position"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Academic title</h3>
-      <p class="chart-desc">Staff with a recorded title, top 8 titles</p>
-      <div class="chart-wrap tall"><canvas id="ch-desig"></canvas></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>Staff list</h3>
-    <p class="note" style="margin-top:4px">Counts follow the publication, PI and grant filters, so you can rank staff by, for example, Q1 journals or active PI projects.</p>
-    <div class="list-bar">
-      <div class="field">
-        <label for="staff-search">Search name, staff ID or position</label>
-        <input class="search-input" id="staff-search" type="search" autocomplete="off">
-      </div>
-        <p class="result-count" id="staff-count" aria-live="polite"></p>
-    </div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Staff list, scrolls sideways"><table>
-      <thead><tr>
-        <th scope="col" data-sort="name"><button type="button" class="sort-btn">Name</button></th>
-        <th scope="col">Staff ID</th><th scope="col">Title</th><th scope="col">Position</th>
-        <th scope="col" class="r" data-sort="pubs"><button type="button" class="sort-btn">Publications</button></th>
-        <th scope="col" class="r" data-sort="pi"><button type="button" class="sort-btn">PI projects</button></th>
-        <th scope="col" class="r" data-sort="grant"><button type="button" class="sort-btn">Grants</button></th>
-      </tr></thead>
-      <tbody id="staff-tbody"></tbody>
-    </table></div>
-    <nav class="pagination" id="staff-pagination" aria-label="Staff list pages"></nav>
   </div>
 </div>
-</section>
 
-</main>
-
-<dialog class="drawer" id="pub-dialog" aria-labelledby="pd-title">
-  <div class="drawer-head">
-    <p class="drawer-kicker">Publication details</p>
-    <button type="button" class="drawer-close" data-close-dialog aria-label="Close publication details">&times;</button>
+<!-- ══════════════════════════════════════════════════════════ PUBLICATIONS -->
+<div id="page-pubs" role="tabpanel" aria-labelledby="tab-pubs" hidden>
+  <div class="content">
+    <div class="section-h">
+      <h2>Publications</h2>
+      <p>All publications recorded on the Expert portal for FKM Shah Alam staff</p>
+    </div>
+    <div class="panel">
+      <div class="toolbar">
+        <div class="search-box">
+          <input type="search" id="pubs-search" placeholder="Search title or author…" aria-label="Search publications">
+        </div>
+        <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
+          <option value="">All types</option>
+          <option value="indexed">Indexed only</option>
+          <option value="other">Other only</option>
+        </select>
+        <span class="count-text" id="pubs-count"></span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="num" style="width:46px">#</th>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Group</th>
+              <th class="num">Date</th>
+              <th>Staff</th>
+            </tr>
+          </thead>
+          <tbody id="pubs-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pubs-pagination"></div>
+    </div>
   </div>
-  <div class="drawer-body" id="pd-body"></div>
-</dialog>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ GRANTS -->
+<div id="page-grants" role="tabpanel" aria-labelledby="tab-grants" hidden>
+  <div class="content">
+    <div class="section-h">
+      <h2>Grants</h2>
+      <p>Research grants from the Expert portal — international and national, active and completed</p>
+    </div>
+    <div class="panel">
+      <div class="toolbar">
+        <div class="search-box">
+          <input type="search" id="grants-search" placeholder="Search title, grant name or staff…" aria-label="Search grants">
+        </div>
+        <select class="filter-select" id="grants-filter-level" aria-label="Filter by level">
+          <option value="">All levels</option>
+          <option value="international">International</option>
+          <option value="national">National</option>
+        </select>
+        <select class="filter-select" id="grants-filter-status" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+        </select>
+        <span class="count-text" id="grants-count"></span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="num" style="width:46px">#</th>
+              <th class="clip">Title</th>
+              <th>Level</th>
+              <th>Grant / Scheme</th>
+              <th>Role</th>
+              <th class="num">Start</th>
+              <th class="num">End</th>
+              <th class="r">Cost (RM)</th>
+              <th>Status</th>
+              <th>Staff</th>
+            </tr>
+          </thead>
+          <tbody id="grants-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="grants-pagination"></div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────────
-let DATA = null;          // raw JSON
-let PUBS = [];            // one entry per publication, with all author rows
-let STAFF_BY_ID = new Map();
-// PI projects and grants come from two sheets that overlap (a new grant is usually also a
-// PI project), so they are separate datasets and are never added together.
-let SETS = { pi: [], grant: [] };
-let COUNTS = { pubs: new Map(), pi: new Map(), grant: new Map() };
-const F = { pub: {}, pi: {}, grant: {}, staff: {}, person: null };   // every filter lives here
-const DATASETS = ['pub', 'pi', 'grant', 'staff'];
-const PAGE_SIZE = 10;
-const PAGES = ['overview', 'pub', 'pi', 'grant', 'staff'];
-const pageState = { pub: 1, pi: 1, grant: 1, staff: 1, ppub: 1, ppi: 1, pgrant: 1 };
-const sortState = { key: 'pubs', dir: -1 };
-const OTHER = '__other__';
+'use strict';
 
-// ── HELPERS ────────────────────────────────────────────────────────────────
-function esc(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function blank(v) { return v == null || v === '' || v === '-' || v === 'Unknown' || v === 'none'; }
-function cell(v) { return blank(v) ? '<span class="muted">n/a</span>' : esc(v); }
-function pct(n, d) { return d ? Math.round(n / d * 100) + '%' : 'n/a'; }
-function normName(s) { return String(s || '').toUpperCase().replace(/\s+/g, ' ').trim(); }
-// Sheet values arrive in capitals; show them in readable case.
-function nice(s) {
-  if (!s) return s;
-  return String(s).toLowerCase().replace(/(^|[\s(.-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase())
-    .replace(/\b(Pi|Wos|Jcr|Uitm|Fkm|Era)\b/g, w => w.toUpperCase())
-    .replace(/(?!^)\b(Of|In|And|The)\b/g, w => w.toLowerCase());
-}
-function fmtRM(n) {
-  if (!n) return '0';
-  if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
-  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
-  return n.toFixed(0);
-}
-function money(n) { return n ? n.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''; }
-function normCat(cat) {
-  const c = String(cat || '').toLowerCase();
-  if (!c) return 'none';
-  if (c.includes('international')) return 'International';
-  if (c.includes('private')) return 'Private';
-  if (c.includes('university')) return 'University';
-  if (c.includes('national')) return 'National';
-  return cat;
-}
-function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-const ROLE_LABEL = { 'UiTM FIRST AUTHOR': 'UiTM first author', 'CORRESPONDING AUTHOR': 'Corresponding author', 'CO-AUTHOR': 'Co-author' };
-const isDoctor = d => /\bDR\b/i.test(d || '');
+// ── State ──────────────────────────────────────────────────────────────────
+let STAFF = [], PUBS = [], GRANTS = [];
+let STAFF_BY_SLUG = new Map();
 
-// ── DIMENSIONS ─────────────────────────────────────────────────────────────
-// Every filterable field: label (used in menus and chips), how to read it, how to show it.
-const DIMS = {
-  pub: {
-    group:    { label: 'Publication group', get: p => p.group || 'none', fmt: v => v === 'INDEXED PUBLICATION' ? 'Indexed' : v === 'OTHER PUBLICATIONS' ? 'Other' : nice(v) },
-    type:     { label: 'Publication type', get: p => p.type || 'none', fmt: nice },
-    index:    { label: 'Index', get: p => blank(p.index_name) ? 'none' : p.index_name, fmt: v => v === 'none' ? 'Not indexed' : nice(v) },
-    quartile: { label: 'JCR quartile', get: p => p.jcr_quartile || 'none', fmt: v => v === 'none' ? 'Not ranked' : v, order: ['Q1', 'Q2', 'Q3', 'Q4', 'none'] },
-    level:    { label: 'Publication level', get: p => p.level || 'none', fmt: nice },
-    role:     { label: 'Author role', row: true, get: r => r.author_type || 'none', fmt: v => ROLE_LABEL[v] || nice(v) },
-  },
-  pi:    projDims('PI'),
-  grant: projDims('Grant'),
-  staff: {
-    position:    { label: 'Position', get: s => s.position || 'none', fmt: v => v === 'none' ? 'Not set' : nice(v) },
-    designation: { label: 'Title', get: s => s.designation || 'none', fmt: v => v === 'none' ? 'No title' : nice(v) },
-    activity:    { label: 'Research output', get: s => outputCount(s) > 0 ? 'yes' : 'no',
-                   fmt: v => v === 'yes' ? 'Has publications, PI projects or grants' : 'None recorded', order: ['yes', 'no'] },
-  },
-};
-function projDims(p) {
-  return {
-    status:   { label: `${p} status`, get: r => r.status || 'none', fmt: v => v === 'none' ? 'Not set' : v },
-    category: { label: `${p} sponsor category`, get: r => normCat(r.category), fmt: v => v === 'none' ? 'Not set' : v },
-    year:     { label: `${p} start year`, get: r => (r.start || '').slice(0, 4) || 'none', fmt: v => v === 'none' ? 'Not set' : v, asc: true },
-  };
-}
-const DOMAIN = { pub: {}, pi: {}, grant: {}, staff: {} };   // every value seen, for the menus
-
-// ── FILTERING ──────────────────────────────────────────────────────────────
-// `ignore` names one filter to skip, so a chart can show the options of its own field.
-function rowPass(r, ignore) {
-  if (F.person && ignore !== 'person' && r.staff_id !== F.person) return false;
-  if (F.pub.role && ignore !== 'role' && r.author_type !== F.pub.role) return false;
-  return true;
-}
-function pubPass(p, ignore) {
-  for (const [k, d] of Object.entries(DIMS.pub)) {
-    if (d.row || k === ignore || F.pub[k] == null) continue;
-    if (d.get(p) !== F.pub[k]) return false;
-  }
-  if ((F.person && ignore !== 'person') || (F.pub.role && ignore !== 'role')) return p.rows.some(r => rowPass(r, ignore));
-  return true;
-}
-function projPass(ds, r, ignore) {
-  for (const [k, d] of Object.entries(DIMS[ds])) {
-    if (k === ignore || F[ds][k] == null) continue;
-    if (d.get(r) !== F[ds][k]) return false;
-  }
-  if (F.person && ignore !== 'person' && r._sid !== F.person) return false;
-  return true;
-}
-function staffPass(s, ignore) {
-  for (const [k, d] of Object.entries(DIMS.staff)) {
-    if (k === ignore || F.staff[k] == null) continue;
-    if (d.get(s) !== F.staff[k]) return false;
-  }
-  return true;
-}
-const pubsFor  = ignore => PUBS.filter(p => pubPass(p, ignore));
-const projsFor = (ds, ignore) => SETS[ds].filter(r => projPass(ds, r, ignore));
-const staffFor = ignore => DATA.staff.filter(s => staffPass(s, ignore));
-const pubCount   = s => COUNTS.pubs.get(s.staff_id) || 0;
-const piCount    = s => COUNTS.pi.get(s.staff_id) || 0;
-const grantCount = s => COUNTS.grant.get(s.staff_id) || 0;
-const outputCount = s => pubCount(s) + piCount(s) + grantCount(s);
-
-// Per-staff output under the current publication, PI and grant filters (person excluded).
-function computeCounts() {
-  const pubs = new Map(), add = (m, k) => m.set(k, (m.get(k) || 0) + 1);
-  for (const p of pubsFor('person')) {
-    new Set(p.rows.filter(r => rowPass(r, 'person')).map(r => r.staff_id)).forEach(id => add(pubs, id));
-  }
-  const byStaff = ds => { const m = new Map(); projsFor(ds, 'person').forEach(r => { if (r._sid) add(m, r._sid); }); return m; };
-  COUNTS = { pubs, pi: byStaff('pi'), grant: byStaff('grant') };
-}
-
-// Counts for one field under every other active filter.
-function countBy(ds, dim, opts = {}) {
-  const d = DIMS[ds][dim], m = new Map();
-  const add = (v, n) => m.set(v, (m.get(v) || 0) + n);
-  if (ds === 'pub') {
-    for (const p of pubsFor(dim)) {
-      if (d.row) p.rows.forEach(r => { if (rowPass(r, dim)) add(d.get(r), 1); });
-      else add(d.get(p), 1);
-    }
-  } else if (SETS[ds]) {
-    projsFor(ds, dim).forEach(r => add(d.get(r), opts.money ? (r.allocation || 0) : 1));
-  } else {
-    staffFor(dim).forEach(s => add(d.get(s), 1));
-  }
-  return m;
-}
-function orderEntries(ds, dim, entries) {
-  const d = DIMS[ds][dim];
-  if (d.order) return entries.sort((a, b) => d.order.indexOf(a[0]) - d.order.indexOf(b[0]));
-  if (d.asc) return entries.sort((a, b) => String(a[0]).localeCompare(String(b[0])));
-  return entries.sort((a, b) => b[1] - a[1]);
-}
-
-function setFilter(ds, dim, value) {
-  if (ds === 'person') F.person = value || null;
-  else if (value == null || value === '' || F[ds][dim] === value) delete F[ds][dim];
-  else F[ds][dim] = value;
-  Object.keys(pageState).forEach(k => pageState[k] = 1);
-  refresh();
-}
-function clearAll() { DATASETS.forEach(ds => F[ds] = {}); F.person = null; Object.keys(pageState).forEach(k => pageState[k] = 1); refresh(); }
-
-// ── TABS & URL ─────────────────────────────────────────────────────────────
-// URL form: #<page>, or #<page>/<staff id> when a staff member is selected, so a filtered
-// view can be shared as a link.
-function currentPage() { return PAGES.find(p => !document.getElementById('page-' + p).hidden) || 'overview'; }
-function syncHash() {
-  const h = '#' + currentPage() + (F.person ? '/' + F.person : '');
-  if (location.hash !== h) history.replaceState(null, '', h);
-}
-function showPage(id, focusTab) {
-  if (!PAGES.includes(id)) id = 'overview';
-  PAGES.forEach(p => {
-    const on = p === id;
-    document.getElementById('page-' + p).hidden = !on;
-    const tab = document.getElementById('tab-' + p);
-    tab.setAttribute('aria-selected', String(on));
-    tab.tabIndex = on ? 0 : -1;
-  });
-  syncCharts();
-  syncHash();
-  if (focusTab) document.getElementById('tab-' + id).focus();
-}
-document.querySelector('.tabs').addEventListener('click', e => {
-  const t = e.target.closest('.tab'); if (t) showPage(t.id.slice(4));
-});
-document.querySelector('.tabs').addEventListener('keydown', e => {
-  const i = PAGES.indexOf(document.activeElement.id?.slice(4));
-  if (i < 0) return;
-  let n = null;
-  if (e.key === 'ArrowRight') n = (i + 1) % PAGES.length;
-  if (e.key === 'ArrowLeft')  n = (i - 1 + PAGES.length) % PAGES.length;
-  if (e.key === 'Home') n = 0;
-  if (e.key === 'End')  n = PAGES.length - 1;
-  if (n !== null) { e.preventDefault(); showPage(PAGES[n], true); }
-});
-
-// ── LOAD DATA ──────────────────────────────────────────────────────────────
-async function loadData() {
-  const ls = document.getElementById('loading-screen');
-  try {
-    if (!window.Chart) throw new Error('The chart library did not load. Check your connection.');
-    const getJSON = name => fetch(`data/${name}.json`, { cache: 'no-cache' }).then(r => {
-      if (!r.ok) throw new Error(`data/${name}.json returned HTTP ${r.status}`);
-      return r.json();
-    });
-    const [summary, projects, publications, staff] = await Promise.all(
-      ['summary', 'projects', 'publications', 'staff'].map(getJSON)
-    );
-    DATA = { summary, projects, publications, staff };
-    prepare();
-    document.getElementById('last-updated').textContent = 'Data updated ' + (summary.last_updated || 'at an unknown time');
-    const [page, id] = location.hash.slice(1).split('/');
-    if (id && STAFF_BY_ID.has(id)) F.person = id;
-    ls.hidden = true;
-    showPage(page);
-    refresh();
-  } catch (e) {
-    console.error(e);
-    DATA = null;
-    PAGES.forEach(p => document.getElementById('page-' + p).hidden = true);
-    document.getElementById('last-updated').textContent = 'Data not loaded';
-    ls.hidden = false;
-    ls.setAttribute('role', 'alert');
-    ls.innerHTML =
-      `<div class="error-box">
-        <strong>The dashboard data could not be loaded.</strong><br>
-        ${esc(e.message)}<br><br>
-        Try again in a moment. If you opened the file directly from disk, serve the
-        <code>docs/</code> folder instead, for example with <code>python -m http.server</code>.
-        <br><button type="button" onclick="location.reload()">Try again</button>
-      </div>`;
-  }
-}
-
-function prepare() {
-  const byId = new Map();
-  for (const r of DATA.publications) {
-    if (!r.pub_id) continue;
-    if (!byId.has(r.pub_id)) byId.set(r.pub_id, { ...r, rows: [] });
-    byId.get(r.pub_id).rows.push({ staff_id: r.staff_id, author_name: r.author_name, author_type: r.author_type, negeri: r.negeri, author_category: r.author_category });
-  }
-  PUBS = [...byId.values()];
-  STAFF_BY_ID = new Map(DATA.staff.map(s => [s.staff_id, s]));
-  // Link each project to a staff ID: the sheet's staff number, else the PI name.
-  const idByName = new Map();
-  DATA.staff.forEach(s => { const k = normName(s.fullname); if (!idByName.has(k)) idByName.set(k, s.staff_id); });
-  for (const r of DATA.projects) r._sid = STAFF_BY_ID.has(r.staff_no) ? r.staff_no : (idByName.get(normName(r.pi)) || null);
-  SETS = { pi: DATA.projects.filter(r => r.type === 'PI'), grant: DATA.projects.filter(r => r.type === 'Grant') };
-  computeCounts();
-
-  // Menu values: every value present in the full data.
-  for (const ds of DATASETS) {
-    const src = ds === 'pub' ? PUBS : ds === 'staff' ? DATA.staff : SETS[ds];
-    for (const [k, d] of Object.entries(DIMS[ds])) {
-      const vals = new Set();
-      if (d.row) src.forEach(p => p.rows.forEach(r => vals.add(d.get(r))));
-      else src.forEach(x => vals.add(d.get(x)));
-      DOMAIN[ds][k] = [...vals];
-    }
-  }
-
-  const seen = new Set();
-  DUP_NAMES = new Set(DATA.staff.map(x => x.fullname).filter(n => seen.has(n) || !seen.add(n)));
-  buildSlicers();
-  buildPickers();
-}
-// Names show without the staff ID, except where two staff share a name.
-let DUP_NAMES = new Set();
-const personLabel = s => DUP_NAMES.has(s.fullname) ? `${s.fullname} (${s.staff_id})` : s.fullname;
-
-// ── STAFF MEMBER FILTER ────────────────────────────────────────────────────
-// The same name filter sits on every page; picking a name filters the whole dashboard.
-const PICKER_HINT = 'Shows only this staff member\'s publications, PI projects and grants.';
-// A custom list instead of <datalist>: the browser draws datalist suggestions in its own
-// colours (dark in Chrome's dark mode) and they cannot be styled.
-const SORTED_STAFF = () => [...DATA.staff].sort((a, b) => a.fullname.localeCompare(b.fullname));
-// Two ways in: tapping the text box is for typing (suggestions appear once you type), and
-// the arrow button opens the full list without focusing the box, so phones do not pop up
-// the keyboard when someone only wants to browse.
-function buildPickers() {
-  document.querySelectorAll('.person-picker').forEach((box, i) => {
-    box.innerHTML = `<div class="picker">
-        <div class="field combo">
-          <label for="person-${i}">Staff member, type a name or open the list</label>
-          <div class="combo-box">
-            <input class="search-input" id="person-${i}" type="text" autocomplete="off" spellcheck="false"
-              role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="person-${i}-list" data-person-input>
-            <button type="button" class="combo-toggle" aria-label="Show all staff" aria-expanded="false" aria-controls="person-${i}-list" tabindex="-1"><span class="chev" aria-hidden="true"></span></button>
-          </div>
-          <ul class="combo-list" id="person-${i}-list" role="listbox" aria-label="Staff members" hidden></ul>
-        </div>
-        <button type="button" class="btn" data-person-clear hidden>Clear staff member</button>
-      </div>
-      <p class="note" aria-live="polite" data-person-msg>${esc(box.dataset.hint || PICKER_HINT)}</p>`;
-  });
-}
-function renderPickers() {
-  const s = F.person && STAFF_BY_ID.get(F.person);
-  document.querySelectorAll('.person-picker').forEach(box => {
-    const input = box.querySelector('[data-person-input]');
-    if (document.activeElement !== input) input.value = s ? personLabel(s) : '';
-    box.querySelector('[data-person-clear]').hidden = !s;
-  });
-}
-const comboOf = el => el.closest('.combo');
-const inputOf = el => comboOf(el).querySelector('[data-person-input]');
-const listOf = el => comboOf(el).querySelector('.combo-list');
-function staffMatches(q) {
-  q = q.trim().toLowerCase();
-  if (!q) return SORTED_STAFF();
-  return SORTED_STAFF().filter(x => x.staff_id.includes(q) || x.fullname.toLowerCase().includes(q));
-}
-function openList(input, all) {
-  const list = listOf(input);
-  const hits = staffMatches(all ? '' : input.value);
-  list.innerHTML = hits.length
-    ? hits.map((x, i) => `<li role="option" id="${list.id}-${i}" data-id="${esc(x.staff_id)}" aria-selected="false"${x.staff_id === F.person ? ' class="current"' : ''}>${esc(personLabel(x))}</li>`).join('')
-    : '<li class="combo-empty" aria-disabled="true">No staff member matches</li>';
-  list.hidden = false;
-  list.scrollTop = 0;
-  if (all) list.querySelector('.current')?.scrollIntoView({ block: 'center' });
-  input.setAttribute('aria-expanded', 'true');
-  comboOf(input).querySelector('.combo-toggle').setAttribute('aria-expanded', 'true');
-  input.removeAttribute('aria-activedescendant');
-}
-function closeList(input) {
-  listOf(input).hidden = true;
-  input.setAttribute('aria-expanded', 'false');
-  comboOf(input).querySelector('.combo-toggle').setAttribute('aria-expanded', 'false');
-  input.removeAttribute('aria-activedescendant');
-}
-function pickPerson(input, id) {
-  const box = input.closest('.person-picker');
-  box.querySelector('[data-person-msg]').textContent = box.dataset.hint || PICKER_HINT;
-  closeList(input);
-  input.value = personLabel(STAFF_BY_ID.get(id));
-  setFilter('person', '', id);
-}
-function moveActive(input, step) {
-  const opts = [...listOf(input).querySelectorAll('[role=option]')];
-  if (!opts.length) return;
-  const cur = opts.findIndex(o => o.getAttribute('aria-selected') === 'true');
-  const next = Math.max(0, Math.min(opts.length - 1, cur + step));
-  opts.forEach((o, i) => o.setAttribute('aria-selected', String(i === next)));
-  input.setAttribute('aria-activedescendant', opts[next].id);
-  opts[next].scrollIntoView({ block: 'nearest' });
-}
-document.addEventListener('focusin', e => {
-  const input = e.target.closest('[data-person-input]'); if (input) input.select();
-});
-document.addEventListener('input', e => {
-  const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
-  if (input.value.trim()) openList(input); else closeList(input);
-});
-document.addEventListener('keydown', e => {
-  const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
-  const list = listOf(input);
-  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-    e.preventDefault();
-    if (list.hidden) openList(input);
-    moveActive(input, e.key === 'ArrowDown' ? 1 : -1);
-  } else if (e.key === 'Escape' && !list.hidden) {
-    e.preventDefault(); closeList(input);
-  } else if (e.key === 'Enter') {
-    e.preventDefault();
-    const active = list.hidden ? null : list.querySelector('[aria-selected="true"]');
-    const opts = list.hidden ? [] : list.querySelectorAll('[role=option]');
-    if (active) pickPerson(input, active.dataset.id);
-    else if (opts.length === 1) pickPerson(input, opts[0].dataset.id);
-    else if (!input.value.trim()) { closeList(input); if (F.person) setFilter('person', '', null); }
-    else input.closest('.person-picker').querySelector('[data-person-msg]').textContent =
-      opts.length ? `${opts.length} staff match "${input.value.trim()}". Pick one from the list.` : `No staff member matches "${input.value.trim()}".`;
-  }
-});
-// mousedown, not click: picking a name must not blur the text box first, which would close
-// the list. A finger that scrolls the list sends no mousedown, so scrolling never picks.
-document.addEventListener('mousedown', e => {
-  const li = e.target.closest('.combo-list [role=option]');
-  if (li) { e.preventDefault(); pickPerson(inputOf(li), li.dataset.id); return; }
-  const t = e.target.closest('.combo-toggle');
-  if (t) {
-    e.preventDefault();   // keep focus (and the phone keyboard) where it is
-    const input = inputOf(t);
-    if (listOf(t).hidden) openList(input, true); else closeList(input);
-  }
-});
-// Tapping anywhere else closes an open list.
-document.addEventListener('pointerdown', e => {
-  document.querySelectorAll('.combo-list:not([hidden])').forEach(list => {
-    if (!comboOf(list).contains(e.target)) closeList(inputOf(list));
-  });
-});
-document.addEventListener('focusout', e => {
-  const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
-  closeList(input);
-  // Leaving the box puts back the current selection; an emptied box clears it.
-  if (!input.value.trim() && F.person) setFilter('person', '', null);
-  else renderPickers();
-});
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-person-clear]'); if (!b) return;
-  setFilter('person', '', null);
-});
-
-// ── SLICERS (dropdown filters) ─────────────────────────────────────────────
-function buildSlicers() {
-  document.querySelectorAll('[data-slicers]').forEach((box, bi) => {
-    const ds = box.dataset.slicers;
-    box.innerHTML = Object.entries(DIMS[ds]).map(([k, d]) => {
-      const id = `sl-${bi}-${ds}-${k}`;
-      return `<div class="slicer"><label for="${id}">${esc(d.label)}</label><select id="${id}" data-ds="${ds}" data-dim="${k}"></select></div>`;
-    }).join('');
-  });
-  document.addEventListener('change', e => {
-    const s = e.target.closest('select[data-ds]'); if (!s) return;
-    setFilter(s.dataset.ds, s.dataset.dim, s.value || null);
-  });
-}
-function renderSlicers() {
-  const cache = {};
-  document.querySelectorAll('select[data-ds]').forEach(sel => {
-    const ds = sel.dataset.ds, dim = sel.dataset.dim, d = DIMS[ds][dim];
-    const key = ds + dim;
-    if (!cache[key]) {
-      const counts = countBy(ds, dim);
-      const entries = orderEntries(ds, dim, DOMAIN[ds][dim].map(v => [v, counts.get(v) || 0]));
-      const total = [...counts.values()].reduce((a, b) => a + b, 0);
-      cache[key] = `<option value="">All (${total})</option>` +
-        entries.map(([v, n]) => `<option value="${esc(v)}">${esc(d.fmt(v))} (${n})</option>`).join('');
-    }
-    sel.innerHTML = cache[key];
-    sel.value = F[ds][dim] ?? '';
-    sel.classList.toggle('on', F[ds][dim] != null);
-  });
-}
-
-// ── ACTIVE FILTER CHIPS ────────────────────────────────────────────────────
-function renderChips() {
-  const n = ['pub', 'pi', 'grant'].reduce((a, ds) => a + Object.keys(F[ds]).length, 0);
-  const badge = document.getElementById('more-filter-count');
-  badge.hidden = !n;
-  badge.textContent = `${n} active`;
-  const chips = [];
-  if (F.person) {
-    const s = STAFF_BY_ID.get(F.person);
-    chips.push({ ds: 'person', dim: '', text: `Staff member: ${s ? s.fullname : F.person}` });
-  }
-  for (const ds of DATASETS)
-    for (const [k, v] of Object.entries(F[ds])) chips.push({ ds, dim: k, text: `${DIMS[ds][k].label}: ${DIMS[ds][k].fmt(v)}` });
-  const box = document.getElementById('chips');
-  box.hidden = !chips.length;
-  box.innerHTML = chips.length ? `<span class="chips-label">Filtered by</span>` +
-    chips.map(c => `<button type="button" class="chip" data-ds="${c.ds}" data-dim="${c.dim}" aria-label="Remove filter ${esc(c.text)}">${esc(c.text)} <span class="x" aria-hidden="true">×</span></button>`).join('') +
-    `<button type="button" class="text-btn" id="clear-all">Clear all filters</button>` : '';
-}
-document.getElementById('chips').addEventListener('click', e => {
-  if (e.target.closest('#clear-all')) return clearAll();
-  const c = e.target.closest('.chip'); if (!c) return;
-  setFilter(c.dataset.ds, c.dataset.dim, null);
-});
-
-// ── CHARTS ─────────────────────────────────────────────────────────────────
-// Each chart is bound to one field. Clicking a bar filters by it; the chart itself ignores
-// its own filter so the other options stay visible, with the selected one highlighted.
-const CHART_DEFS = [
-  { id: 'ch-pubgroup', ds: 'pub',  dim: 'group' },
-  { id: 'ch-index',    ds: 'pub',  dim: 'index' },
-  { id: 'ch-sponsor',  ds: 'pi',   dim: 'category', exclude: ['none'] },
-  { id: 'ch-galloc-ov', ds: 'grant', dim: 'category', money: true, exclude: ['none'] },
-  { id: 'ch-quartile', ds: 'pub',  dim: 'quartile', fixed: ['Q1', 'Q2', 'Q3', 'Q4'] },
-  { id: 'ch-pubtype',  ds: 'pub',  dim: 'type' },
-  { id: 'ch-level',    ds: 'pub',  dim: 'level' },
-  { id: 'ch-role',     ds: 'pub',  dim: 'role', horizontal: true },
-  { id: 'ch-pi-cat',   ds: 'pi',   dim: 'category', exclude: ['none'] },
-  { id: 'ch-pi-status', ds: 'pi',  dim: 'status', kind: 'doughnut', exclude: ['none'] },
-  { id: 'ch-pi-year',  ds: 'pi',   dim: 'year', exclude: ['none'] },
-  { id: 'ch-g-alloc',  ds: 'grant', dim: 'category', money: true, exclude: ['none'] },
-  { id: 'ch-g-year',   ds: 'grant', dim: 'year', money: true, exclude: ['none'] },
-  { id: 'ch-p-type',   ds: 'pub',  dim: 'type' },
-  { id: 'ch-p-role',   ds: 'pub',  dim: 'role', horizontal: true },
-  { id: 'ch-position', ds: 'staff', dim: 'position', horizontal: true, top: 8 },
-  { id: 'ch-desig',    ds: 'staff', dim: 'designation', horizontal: true, top: 8, exclude: ['none'] },
-];
+const PAGE_SIZE = 50;
+const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
 
-function chartEntries(def) {
-  const m = countBy(def.ds, def.dim, { money: def.money });
-  let entries;
-  if (def.fixed) entries = def.fixed.map(k => [k, m.get(k) || 0]);
-  else entries = orderEntries(def.ds, def.dim, [...m].filter(([k]) => !(def.exclude || []).includes(k)));
-  if (def.top && entries.length > def.top) {
-    const rest = entries.slice(def.top);
-    entries = entries.slice(0, def.top);
-    entries.push([OTHER, rest.reduce((a, e) => a + e[1], 0), rest.length]);
-  }
-  return entries;
-}
-function labelOf(def, e) {
-  return e[0] === OTHER ? `Other (${e[2]} more)` : DIMS[def.ds][def.dim].fmt(e[0]);
-}
-function chartColors(def, keys) {
-  const sel = F[def.ds][def.dim];
-  const base = def.kind === 'doughnut' ? [cssVar('--series'), cssVar('--series2')] : null;
-  return keys.map((k, i) => {
-    const full = base ? base[i % 2] : cssVar('--series');
-    return sel == null || k === sel ? full : cssVar('--series-muted');
-  });
-}
-function chartOptions(def) {
-  const fmt = v => def.money ? 'RM ' + Number(v).toLocaleString('en-MY') : v;
-  const onClick = (evt, els, chart) => {
-    if (!els.length) return;
-    const k = chart.$keys[els[0].index];
-    if (k !== OTHER) setFilter(def.ds, def.dim, k);
-  };
-  const tooltip = { callbacks: {
-    label: c => ' ' + fmt(c.raw),
-    footer: items => {
-      const k = items[0] && items[0].chart.$keys[items[0].dataIndex];
-      if (k === OTHER) return 'Use the menu to pick one of these';
-      return F[def.ds][def.dim] === k ? 'Click to clear this filter' : 'Click to filter by this';
-    },
-  } };
-  const onHover = (e, els, chart) => {
-    chart.canvas.style.cursor = els.length && chart.$keys[els[0].index] !== OTHER ? 'pointer' : 'default';
-  };
-  if (def.kind === 'doughnut') {
-    return { responsive: true, maintainAspectRatio: false, animation: false, cutout: '58%', onClick, onHover,
-      plugins: { tooltip, legend: { position: 'bottom',
-        onClick: (e, item, legend) => setFilter(def.ds, def.dim, legend.chart.$keys[item.index]),
-        labels: { boxWidth: 12, padding: 12, color: cssVar('--text') } } } };
-  }
-  const h = !!def.horizontal;
-  const tick = def.money ? { callback: v => 'RM ' + fmtRM(v) } : { precision: 0 };
-  return { responsive: true, maintainAspectRatio: false, animation: false, indexAxis: h ? 'y' : 'x', onClick, onHover,
-    plugins: { legend: { display: false }, tooltip, valueLabels: { on: true, money: def.money, horizontal: h } },
-    // grace leaves room past the longest bar for its value label
-    scales: {
-      x: { grid: { display: h }, beginAtZero: true, grace: h ? '15%' : 0, ticks: h ? tick : { autoSkip: false, maxRotation: 45 } },
-      y: { grid: { display: !h }, beginAtZero: true, grace: h ? 0 : '12%', ticks: h ? { autoSkip: false } : tick },
-    } };
-}
-// Writes each bar's value at the end of the bar, so readers don't need to hover.
-// Doughnuts already show their counts in the legend.
-const valueLabels = {
-  id: 'valueLabels',
-  afterDatasetsDraw(chart, args, opts) {
-    if (!opts || !opts.on) return;
-    const { ctx } = chart, data = chart.data.datasets[0].data;
-    ctx.save();
-    ctx.font = `600 12px ${Chart.defaults.font.family}`;
-    ctx.fillStyle = cssVar('--text');
-    ctx.textAlign = opts.horizontal ? 'left' : 'center';
-    ctx.textBaseline = opts.horizontal ? 'middle' : 'bottom';
-    chart.getDatasetMeta(0).data.forEach((bar, i) => {
-      const v = data[i] || 0;
-      const text = opts.money ? 'RM ' + fmtRM(v) : v.toLocaleString('en-MY');
-      if (opts.horizontal) ctx.fillText(text, bar.x + 6, bar.y);
-      else ctx.fillText(text, bar.x, bar.y - 4);
-    });
-    ctx.restore();
-  },
-};
-if (window.Chart) Chart.register(valueLabels);
-function chartDataset(def, entries) {
-  const keys = entries.map(e => e[0]);
-  const labels = entries.map(e => def.kind === 'doughnut' ? `${labelOf(def, e)} (${e[1]})` : labelOf(def, e));
-  const ds = { data: entries.map(e => e[1]), backgroundColor: chartColors(def, keys) };
-  if (def.kind === 'doughnut') Object.assign(ds, { borderWidth: 2, borderColor: cssVar('--surface') });
-  else Object.assign(ds, { borderRadius: 4, borderSkipped: 'start', maxBarThickness: 56, borderWidth: F[def.ds][def.dim] != null ? 1.5 : 0, borderColor: cssVar('--series') });
-  return { keys, labels, ds };
-}
-function describe(canvas, def, labels, data) {
-  const fmt = v => def.money ? 'RM ' + fmtRM(v) : v;
-  canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', `${DIMS[def.ds][def.dim].label}: ` + labels.map((l, i) => `${l} ${fmt(data[i])}`).join(', ') +
-    `. Use the ${DIMS[def.ds][def.dim].label} menu to filter.`);
-}
-function setEmpty(canvas, empty) {
-  const wrap = canvas.parentElement;
-  let msg = wrap.querySelector('.chart-empty');
-  if (empty && !msg) { msg = document.createElement('div'); msg.className = 'chart-empty'; msg.textContent = 'No records match the current filters.'; wrap.appendChild(msg); }
-  if (msg) msg.hidden = !empty;
-  canvas.style.visibility = empty ? 'hidden' : '';
-}
-function chartBase() {
-  Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
-  Chart.defaults.font.size = 12;
-  Chart.defaults.color = cssVar('--axis');
-  Chart.defaults.borderColor = cssVar('--grid');
-}
-// Create charts whose canvas is visible, update the rest. A chart created inside a hidden
-// panel gets zero size, so creation waits until its panel is shown.
-function syncCharts() {
-  if (!DATA) return;
-  chartBase();
-  for (const def of CHART_DEFS) {
-    const el = document.getElementById(def.id);
-    const visible = el && el.offsetParent !== null;
-    let chart = charts.get(def.id);
-    if (!chart && !visible) continue;
-    const entries = chartEntries(def);
-    const { keys, labels, ds } = chartDataset(def, entries);
-    const empty = !entries.length || entries.every(e => !e[1]);
-    if (!chart) {
-      chart = new Chart(el, { type: def.kind === 'doughnut' ? 'doughnut' : 'bar', data: { labels, datasets: [ds] }, options: chartOptions(def) });
-      charts.set(def.id, chart);
-    } else {
-      chart.data.labels = labels;
-      chart.data.datasets[0] = ds;
-      chart.update('none');
-    }
-    chart.$keys = keys;
-    describe(el, def, labels, ds.data);
-    setEmpty(el, empty);
-  }
-}
+// ── Helpers ────────────────────────────────────────────────────────────────
+const esc = s => (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const blank = v => v == null || v === '' || v === 0;
+const num = (v, fallback='—') => v == null ? fallback : Number(v).toLocaleString('en-MY');
+const fmtRM = v => v == null ? '—' : 'RM ' + Number(v).toLocaleString('en-MY');
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
-// ── KPI ────────────────────────────────────────────────────────────────────
 function kpiTile(label, value, sub) {
-  return `<div class="kpi"><div class="kpi-label">${esc(label)}</div><div class="kpi-value num">${esc(value)}</div><div class="kpi-sub">${esc(sub)}</div></div>`;
-}
-function pubStats(pubs) {
-  const s = { total: pubs.length, rows: 0, indexed: 0, q1: 0, q2: 0, journal: 0, proc: 0, chapter: 0, scopus: 0, wos: 0, lead: 0 };
-  for (const p of pubs) {
-    const rows = p.rows.filter(r => rowPass(r));
-    s.rows += rows.length;
-    if (p.group === 'INDEXED PUBLICATION') s.indexed++;
-    if (p.jcr_quartile === 'Q1') s.q1++;
-    if (p.jcr_quartile === 'Q2') s.q2++;
-    if (p.type === 'JOURNAL') s.journal++;
-    if (p.type === 'PROCEEDING') s.proc++;
-    if (/^CHAPTER/.test(p.type || '')) s.chapter++;
-    if (p.index_name === 'SCOPUS') s.scopus++;
-    if (p.index_name === 'WEB OF SCIENCE') s.wos++;
-    if (rows.some(r => r.author_type === 'UiTM FIRST AUTHOR' || r.author_type === 'CORRESPONDING AUTHOR')) s.lead++;
-  }
-  return s;
-}
-function projStats(projs) {
-  const s = { total: projs.length, active: 0, done: 0, alloc: 0, priced: 0, max: 0, people: new Set() };
-  for (const r of projs) {
-    const a = r.allocation || 0;
-    s.alloc += a;
-    if (a) s.priced++;
-    if (a > s.max) s.max = a;
-    s.people.add(r._sid || normName(r.pi));
-    if (r.status === 'Active') s.active++;
-    if (r.status === 'Completed') s.done++;
-  }
-  return s;
-}
-// ── PENCAPAIAN KPI ─────────────────────────────────────────────────────────
-// The 10 figures of the Data Pencapaian file, with the same rules as its pivot tables:
-// UiTM academic staff, FKM, state Selangor. Publications are counted once each; the
-// corresponding/first author figure counts staff. Checked against the August 2026 file.
-const KPI_INDEX = new Set(['SCOPUS', 'WEB OF SCIENCE', 'EXCELLENCE IN RESEARCH AUSTRALIA (ERA)']);
-const KPI_BOOK = new Set(['BOOK', 'RESEARCH BOOK', 'CHAPTER IN BOOK', 'CHAPTER IN RESEARCH BOOK']);
-const KPI_LEAD = new Set(['CORRESPONDING AUTHOR', 'UiTM FIRST AUTHOR']);
-const inKpiScope = r => r.author_category === 'UiTM STAFF (ACADEMIC)' && r.negeri === 'SELANGOR';
-const projInKpiScope = r => r.department === 'FAKULTI KEJURUTERAAN MEKANIKAL' && r.negeri === 'SELANGOR';
-function officialKPIs() {
-  const k = { lead: new Set(), indexed: 0, qs: 0, q12: 0, mycite: 0, book: 0, nonIndexed: 0, other: 0 };
-  for (const p of pubsFor()) {
-    const rows = p.rows.filter(r => rowPass(r) && inKpiScope(r));
-    if (!rows.length) continue;
-    const jp = p.type === 'JOURNAL' || p.type === 'PROCEEDING';
-    if (jp && KPI_INDEX.has(p.index_name)) {
-      k.indexed++;
-      if (p.qs === 'Yes') k.qs++;
-      rows.forEach(r => { if (KPI_LEAD.has(r.author_type)) k.lead.add(r.staff_id); });
-    }
-    if (jp && (p.jcr_quartile === 'Q1' || p.jcr_quartile === 'Q2')) k.q12++;
-    if (jp && p.index_name === 'MYCITE') k.mycite++;
-    if (jp && blank(p.index_name)) k.nonIndexed++;
-    if (KPI_BOOK.has(p.type)) k.book++;
-    else if (!jp) k.other++;
-  }
-  const pis = projsFor('pi').filter(projInKpiScope), grants = projsFor('grant').filter(projInKpiScope);
-  k.pi = pis.length;
-  k.grant = grants.reduce((a, r) => a + (r.allocation || 0), 0);
-  k.grantCount = grants.length;
-  return k;
-}
-const rmFull = n => 'RM ' + Math.round(n).toLocaleString('en-MY');
-function officialTiles(k) {
-  return {
-    lead:   kpiTile('Corresponding / first authors', k.lead.size, 'Jumlah corresponding/first authors (staf)'),
-    idx:    kpiTile('Indexed journals & proceedings', k.indexed, 'Berindeks Scopus / WoS / ERA'),
-    qs:     kpiTile('QS journals & proceedings', k.qs, 'Berindeks QS'),
-    q12:    kpiTile('Q1 & Q2 journals & proceedings', k.q12, 'Berindeks Q1Q2 JCR'),
-    mycite: kpiTile('MyCite journals & proceedings', k.mycite, 'Berindeks MyCite'),
-    book:   kpiTile('Books & book chapters', k.book, 'Buku dan bab dalam buku'),
-    nonidx: kpiTile('Non-indexed journals & proceedings', k.nonIndexed, 'Jurnal dan prosiding tidak berindeks'),
-    other:  kpiTile('Other publications', k.other, 'Lain-lain penerbitan'),
-    pi:     kpiTile('Principal investigators', k.pi, 'Jumlah penyelidik utama'),
-    grant:  kpiTile('Grant acquisition', rmFull(k.grant), `Jumlah perolehan geran (${k.grantCount} geran)`),
-  };
+  return `<div class="kpi"><div class="kpi-label">${esc(label)}</div><div class="kpi-value num">${esc(String(value))}</div><div class="kpi-sub">${esc(sub)}</div></div>`;
 }
 
-function renderKPIs() {
-  const P = pubStats(pubsFor()), J = projStats(projsFor('pi')), G = projStats(projsFor('grant'));
-  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
-  const T = officialTiles(officialKPIs());
-  document.getElementById('kpi-overview').innerHTML = Object.values(T).join('');
-  document.getElementById('kpi-pi').innerHTML = [
-    T.pi,
-    kpiTile('PI projects, all campuses', J.total, plural(J.people.size, 'principal investigator')),
-    kpiTile('Active', J.active, `${pct(J.active, J.total)} of PI projects`),
-    kpiTile('Completed', J.done, `${pct(J.done, J.total)} of PI projects`),
-    kpiTile('Approved allocation', 'RM ' + fmtRM(J.alloc), `${J.priced} of ${J.total} have an amount recorded`),
-  ].join('');
-  document.getElementById('kpi-grant').innerHTML = [
-    T.grant,
-    kpiTile('Grant acquired, all campuses', 'RM ' + fmtRM(G.alloc), plural(G.total, 'grant')),
-    kpiTile('Staff holding grants', G.people.size, 'As project leader'),
-    kpiTile('Average per grant', 'RM ' + fmtRM(G.priced ? G.alloc / G.priced : 0), `Across ${plural(G.priced, 'grant')} with an amount`),
-    kpiTile('Largest grant', 'RM ' + fmtRM(G.max), `${G.active} of ${G.total} still active`),
-  ].join('');
-  document.getElementById('kpi-pub').innerHTML = [T.lead, T.idx, T.qs, T.q12, T.mycite, T.book, T.nonidx, T.other].join('');
-  const S = staffFor();
-  const doctors = S.filter(s => isDoctor(s.designation)).length;
-  const profs = S.filter(s => s.position === 'PROFESOR' || s.position === 'PROFESOR MADYA').length;
-  const active = S.filter(s => outputCount(s) > 0).length;
-  document.getElementById('kpi-staff').innerHTML = [
-    kpiTile('Staff', S.length, `of ${DATA.staff.length} in the staff list`),
-    kpiTile('With research output', active, `${pct(active, S.length)} have publications, PI projects or grants`),
-    kpiTile('With a doctorate', doctors, `${pct(doctors, S.length)} of these staff`),
-    kpiTile('Profesor and Profesor Madya', profs, `${pct(profs, S.length)} of these staff`),
-  ].join('');
-}
+// ── Load data ──────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const [sumRes, staffRes, pubsRes, grantsRes] = await Promise.all([
+      fetch('data/expert_summary.json'),
+      fetch('data/expert_staff.json'),
+      fetch('data/expert_pubs.json'),
+      fetch('data/expert_grants.json'),
+    ]);
+    const summary = await sumRes.json();
+    STAFF   = await staffRes.json();
+    PUBS    = await pubsRes.json();
+    GRANTS  = await grantsRes.json();
 
-// ── TABLES ─────────────────────────────────────────────────────────────────
-function paginate(items, key) {
-  const total = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
-  const page = pageState[key] = Math.min(pageState[key], total);
-  const start = (page - 1) * PAGE_SIZE;
-  document.getElementById(key + '-pagination').innerHTML = paginationHTML(total, page, key);
-  return { items: items.slice(start, start + PAGE_SIZE), start };
-}
-function paginationHTML(total, current, key) {
-  if (total <= 1) return '';
-  let html = `<span>Page ${current} of ${total}</span>`;
-  if (current > 1) html += `<button type="button" class="page-btn" data-page="${key}:${current - 1}" aria-label="Previous page">Prev</button>`;
-  for (let p = Math.max(1, current - 2); p <= Math.min(total, current + 2); p++) {
-    html += `<button type="button" class="page-btn" data-page="${key}:${p}" aria-label="Page ${p}"${p === current ? ' aria-current="page"' : ''}>${p}</button>`;
+    STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
+
+    document.getElementById('last-updated').textContent = 'Data: ' + (summary.generated || '—');
+    renderOverview(summary);
+    renderStaffTable();
+    renderPubsTable();
+    renderGrantsTable();
+  } catch (e) {
+    console.error('Failed to load Expert data:', e);
+    document.querySelectorAll('.content').forEach(el => {
+      el.innerHTML = `<div class="loading">Failed to load data. ${esc(e.message)}</div>`;
+    });
   }
-  if (current < total) html += `<button type="button" class="page-btn" data-page="${key}:${current + 1}" aria-label="Next page">Next</button>`;
-  return html;
 }
-function countText(n, noun, q) { return `${n} ${noun}${n === 1 ? '' : 's'}${q ? ` matching "${q}"` : ''}`; }
-function emptyRow(cols, q) {
-  return `<tr><td class="empty" colspan="${cols}"><span>No results${q ? ` for "${esc(q)}"` : ''}. Clear the search or remove a filter above.</span></td></tr>`;
-}
-function personBtn(id, name) {
-  const s = STAFF_BY_ID.get(id);
-  if (!s) return esc(name);
-  return `<button type="button" class="person-btn${id === F.person ? ' me' : ''}" data-person="${esc(id)}" aria-label="Open staff profile of ${esc(name)}">${esc(name)}</button>`;
-}
-function piCell(r) { return r._sid ? personBtn(r._sid, r.pi) : cell(r.pi); }
-function statusCell(st) {
-  return blank(st) ? cell('') : `<span class="status ${st === 'Active' ? 'active' : 'done'}">${esc(st)}</span>`;
-}
-const search = id => document.getElementById(id).value.trim().toLowerCase();
 
-// The lists below are what the tables show and what Download to Excel saves.
-function pubList() {
-  const q = search('pub-search');
-  const rows = pubsFor();
-  return q ? rows.filter(p => ((p.title || '') + ' ' + p.rows.map(r => r.author_name).join(' ')).toLowerCase().includes(q)) : rows;
+// ── OVERVIEW ───────────────────────────────────────────────────────────────
+function renderOverview(s) {
+  const hVals = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
+  const hMax  = hVals.length ? Math.max(...hVals) : 0;
+  const hMedian = hVals.length ? [...hVals].sort((a,b)=>a-b)[Math.floor(hVals.length/2)] : 0;
+
+  document.getElementById('kpi-row1').innerHTML = [
+    kpiTile('Staff scraped', s.staff_count, 'Shah Alam academic staff'),
+    kpiTile('Avg H-Index (Scopus)', s.h_scopus_avg ?? '—', `Max: ${hMax} · Median: ${hMedian}`),
+    kpiTile('Indexed publications', num(s.pubs_indexed_total), 'Scopus / WoS / ERA etc.'),
+    kpiTile('Other publications', num(s.pubs_other_total), 'Non-indexed / proceedings'),
+    kpiTile('Total publications', num((s.pubs_indexed_total||0)+(s.pubs_other_total||0)), 'All types'),
+  ].join('');
+
+  document.getElementById('kpi-row2').innerHTML = [
+    kpiTile('Active grants', num(s.grants_active), `of ${num(s.grants_total)} total grants`),
+    kpiTile('Total grants', num(s.grants_total), 'All levels, all statuses'),
+    kpiTile('PhD supervision', num(s.phd_total), 'Graduated + ongoing'),
+    kpiTile('Master supervision', num(s.master_total), 'Graduated + ongoing'),
+    kpiTile('Consultancy', num(s.consultancy_total), 'Completed appointments'),
+  ].join('');
+
+  drawCharts();
 }
-function projList(ds) {
-  const q = search(ds + '-search');
-  const rows = projsFor(ds);
-  return q ? rows.filter(r => [r.title, r.pi, r.sponsor].join(' ').toLowerCase().includes(q)) : rows;
-}
-function staffList() {
-  const q = search('staff-search');
-  let rows = staffFor();
-  if (q) rows = rows.filter(s => [s.fullname, s.staff_id, s.position].join(' ').toLowerCase().includes(q));
-  const { key, dir } = sortState;
-  const val = s => key === 'pubs' ? pubCount(s) : key === 'pi' ? piCount(s) : key === 'grant' ? grantCount(s) : s.fullname;
-  return [...rows].sort((a, b) => {
-    const x = val(a), y = val(b);
-    const c = typeof x === 'number' ? x - y : String(x).localeCompare(String(y));
-    return c * dir || a.fullname.localeCompare(b.fullname);
+
+// ── CHARTS ─────────────────────────────────────────────────────────────────
+function drawCharts() {
+  Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+  Chart.defaults.font.size   = 12;
+  Chart.defaults.color       = cssVar('--axis');
+  Chart.defaults.borderColor = cssVar('--grid');
+
+  // H-index distribution
+  const bins = [0,0,0,0,0,0]; // 0, 1-5, 6-10, 11-15, 16-20, 21+
+  STAFF.forEach(s => {
+    const h = s.h_scopus;
+    if (h == null) { bins[0]++; return; }
+    if (h === 0)   { bins[0]++; }
+    else if (h <= 5)  { bins[1]++; }
+    else if (h <= 10) { bins[2]++; }
+    else if (h <= 15) { bins[3]++; }
+    else if (h <= 20) { bins[4]++; }
+    else              { bins[5]++; }
   });
+  makeBarChart('chart-hindex', ['0 / N/A','1–5','6–10','11–15','16–20','21+'], bins, cssVar('--series'));
+
+  // Publications donut
+  const idxTotal   = STAFF.reduce((a,s)=>a+(s.pubs_indexed||0),0);
+  const otherTotal = STAFF.reduce((a,s)=>a+(s.pubs_other||0),0);
+  makeDonutChart('chart-pubs-type',
+    ['Indexed','Other'],
+    [idxTotal, otherTotal],
+    [cssVar('--series'), cssVar('--series2')]
+  );
+
+  // Grants stacked
+  const iA = STAFF.reduce((a,s)=>a+(s.grants_intl_active||0),0);
+  const iC = STAFF.reduce((a,s)=>a+(s.grants_intl_completed||0),0);
+  const nA = STAFF.reduce((a,s)=>a+(s.grants_natl_active||0),0);
+  const nC = STAFF.reduce((a,s)=>a+(s.grants_natl_completed||0),0);
+  makeBarChart('chart-grants',
+    ['Intl Active','Intl Completed','Natl Active','Natl Completed'],
+    [iA, iC, nA, nC],
+    [cssVar('--series'),'#93c5fd',cssVar('--series2'),'#fdba74']
+  );
+
+  // Supervision
+  const phdGrad    = STAFF.reduce((a,s)=>a+(s.phd_graduated||0),0);
+  const phdOngoing = STAFF.reduce((a,s)=>a+(s.phd_ongoing||0),0);
+  const msGrad     = STAFF.reduce((a,s)=>a+(s.master_graduated||0),0);
+  const msOngoing  = STAFF.reduce((a,s)=>a+(s.master_ongoing||0),0);
+  makeBarChart('chart-supervision',
+    ['PhD Graduated','PhD Ongoing','Master Graduated','Master Ongoing'],
+    [phdGrad, phdOngoing, msGrad, msOngoing],
+    [cssVar('--series'),'#93c5fd',cssVar('--series2'),'#fdba74']
+  );
+
+  // Top 15 staff by indexed pubs
+  const top15 = [...STAFF]
+    .filter(s => s.pubs_indexed > 0)
+    .sort((a,b) => (b.pubs_indexed||0) - (a.pubs_indexed||0))
+    .slice(0, 15);
+  const names = top15.map(s => {
+    const parts = (s.name||'').split(' ');
+    return parts.length > 2 ? parts[0] + ' ' + parts[parts.length-1] : s.name;
+  });
+  makeHBarChart('chart-top-pubs', names, top15.map(s=>s.pubs_indexed||0), cssVar('--series'));
 }
 
-function renderPubTable() {
-  const q = search('pub-search');
-  const rows = pubList();
-  const { items, start } = paginate(rows, 'pub');
-  document.getElementById('pub-count').textContent = countText(rows.length, 'publication', q);
-  document.getElementById('pub-tbody').innerHTML = items.length ? items.map((p, i) => `
-    <tr>
-      <td class="num muted">${start + i + 1}</td>
-      <td class="clip">${titleBtn(p)}</td>
-      <td>${cell(nice(p.type))}</td>
-      <td>${blank(p.index_name) ? cell('') : esc(nice(p.index_name))}</td>
-      <td>${cell(p.jcr_quartile)}</td>
-      <td>${cell(nice(p.level))}</td>
-      <td class="authors">${p.rows.map(r => personBtn(r.staff_id, r.author_name)).join('<span class="sep">; </span>')}</td>
-    </tr>`).join('') : emptyRow(7, q);
+function makeBarChart(id, labels, data, color) {
+  const el = document.getElementById(id); if (!el) return;
+  const c = charts.get(id);
+  const colors = Array.isArray(color) ? color : data.map(()=>color);
+  const cfg = {
+    type:'bar', data:{labels, datasets:[{data, backgroundColor:colors, borderRadius:4, maxBarThickness:52}]},
+    options:{responsive:true, maintainAspectRatio:false, animation:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}`}}},
+      scales:{x:{grid:{display:false}, ticks:{autoSkip:false}}, y:{beginAtZero:true, ticks:{precision:0}}}}
+  };
+  if (c) { c.data.labels=labels; c.data.datasets[0].data=data; c.data.datasets[0].backgroundColor=colors; c.update('none'); }
+  else   { charts.set(id, new Chart(el, cfg)); }
 }
 
-function projRow(r, i, start, withPi) {
-  return `<tr>
-      <td class="num muted">${start + i + 1}</td>
-      <td class="clip" title="${esc(r.title)}">${cell(r.title)}</td>
-      ${withPi ? `<td style="white-space:nowrap">${piCell(r)}</td>` : ''}
-      <td class="clip" style="max-width:200px" title="${esc(r.sponsor)}">${cell(r.sponsor)}</td>
-      ${withPi ? `<td>${cell(normCat(r.category))}</td>` : ''}
-      <td class="num" style="white-space:nowrap">${cell(r.start)}</td>
-      <td class="num" style="white-space:nowrap">${cell(r.end)}</td>
-      <td class="num r" style="white-space:nowrap">${r.allocation ? money(r.allocation) : cell('')}</td>
-      <td>${statusCell(r.status)}</td>
-    </tr>`;
+function makeDonutChart(id, labels, data, colors) {
+  const el = document.getElementById(id); if (!el) return;
+  const c = charts.get(id);
+  const lbls = labels.map((l,i)=>`${l} (${data[i]})`);
+  const cfg = {
+    type:'doughnut', data:{labels:lbls, datasets:[{data, backgroundColor:colors, borderWidth:2, borderColor:cssVar('--surface')}]},
+    options:{responsive:true, maintainAspectRatio:false, animation:false, cutout:'58%',
+      plugins:{legend:{position:'bottom', labels:{boxWidth:12,padding:14,color:cssVar('--text')}}, tooltip:{callbacks:{label:c=>` ${c.raw.toLocaleString('en-MY')}`}}}}
+  };
+  if (c) { c.data.labels=lbls; c.data.datasets[0].data=data; c.update('none'); }
+  else   { charts.set(id, new Chart(el, cfg)); }
 }
-function renderProjTable(ds) {
-  const q = search(ds + '-search');
-  const rows = projList(ds);
-  const { items, start } = paginate(rows, ds);
-  document.getElementById(ds + '-count').textContent = countText(rows.length, ds === 'pi' ? 'PI project' : 'grant', q);
-  document.getElementById(ds + '-tbody').innerHTML = items.length ? items.map((r, i) => projRow(r, i, start, true)).join('') : emptyRow(9, q);
+
+function makeHBarChart(id, labels, data, color) {
+  const el = document.getElementById(id); if (!el) return;
+  const c = charts.get(id);
+  const cfg = {
+    type:'bar', data:{labels, datasets:[{data, backgroundColor:color, borderRadius:4, maxBarThickness:24}]},
+    options:{responsive:true, maintainAspectRatio:false, animation:false, indexAxis:'y',
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw} indexed pubs`}}},
+      scales:{x:{beginAtZero:true, ticks:{precision:0}}, y:{grid:{display:false}, ticks:{autoSkip:false}}}}
+  };
+  if (c) { c.data.labels=labels; c.data.datasets[0].data=data; c.update('none'); }
+  else   { charts.set(id, new Chart(el, cfg)); }
+}
+
+// ── STAFF TABLE ────────────────────────────────────────────────────────────
+let selectedSlug = null;
+
+function getStaffList() {
+  const q = document.getElementById('staff-search').value.trim().toLowerCase();
+  const sortKey = document.getElementById('staff-sort').value;
+  let rows = q ? STAFF.filter(s => (s.name||'').toLowerCase().includes(q)) : [...STAFF];
+  rows.sort((a,b) => {
+    if (sortKey === 'name')         return (a.name||'').localeCompare(b.name||'');
+    if (sortKey === 'h_scopus')     return (b.h_scopus||0) - (a.h_scopus||0);
+    if (sortKey === 'pubs_indexed') return (b.pubs_indexed||0) - (a.pubs_indexed||0);
+    if (sortKey === 'pubs_total')   return (b.pubs_total||0) - (a.pubs_total||0);
+    if (sortKey === 'grants_total') return (b.grants_total||0) - (a.grants_total||0);
+    if (sortKey === 'phd_total')    return ((b.phd_graduated||0)+(b.phd_ongoing||0)) - ((a.phd_graduated||0)+(a.phd_ongoing||0));
+    if (sortKey === 'master_total') return ((b.master_graduated||0)+(b.master_ongoing||0)) - ((a.master_graduated||0)+(a.master_ongoing||0));
+    return 0;
+  });
+  return rows;
 }
 
 function renderStaffTable() {
-  const q = search('staff-search');
-  const rows = staffList();
-  const { key, dir } = sortState;
-  document.querySelectorAll('th[data-sort]').forEach(th => {
-    if (th.dataset.sort === key) th.setAttribute('aria-sort', dir > 0 ? 'ascending' : 'descending');
-    else th.removeAttribute('aria-sort');
-  });
-  const { items } = paginate(rows, 'staff');
-  document.getElementById('staff-count').textContent = countText(rows.length, 'staff member', q);
-  document.getElementById('staff-tbody').innerHTML = items.length ? items.map(s => `
-    <tr${s.staff_id === F.person ? ' class="selected"' : ''}>
-      <td>${personBtn(s.staff_id, s.fullname)}</td>
-      <td class="num">${cell(s.staff_id)}</td>
-      <td>${cell(s.designation)}</td>
-      <td>${cell(nice(s.position))}</td>
-      <td class="num r">${pubCount(s) || '<span class="muted">0</span>'}</td>
-      <td class="num r">${piCount(s) || '<span class="muted">0</span>'}</td>
-      <td class="num r">${grantCount(s) || '<span class="muted">0</span>'}</td>
-    </tr>`).join('') : emptyRow(7, q);
-}
-document.querySelectorAll('th[data-sort] .sort-btn').forEach(b => b.addEventListener('click', () => {
-  const k = b.closest('th').dataset.sort;
-  if (sortState.key === k) sortState.dir *= -1;
-  else { sortState.key = k; sortState.dir = k === 'name' ? 1 : -1; }
-  pageState.staff = 1; renderStaffTable();
-}));
+  const rows = getStaffList();
+  const q = document.getElementById('staff-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  pageState.staff = Math.min(pageState.staff, total);
+  const start = (pageState.staff - 1) * PAGE_SIZE;
+  const page  = rows.slice(start, start + PAGE_SIZE);
 
-// ── STAFF PROFILE ──────────────────────────────────────────────────────────
-function renderProfile() {
-  const s = F.person && STAFF_BY_ID.get(F.person);
-  document.getElementById('profile').hidden = !s;
+  document.getElementById('staff-count').textContent = `${rows.length} staff${q ? ` matching "${q}"` : ''}`;
+  document.getElementById('staff-pagination').innerHTML = paginHTML(total, pageState.staff, 'staff');
+
+  const hcell = (v) => v == null ? '<span class="muted">—</span>' : `<span class="num">${v}</span>`;
+  const ncell = (v) => !v ? '<span class="muted">0</span>' : `<span class="num">${v}</span>`;
+
+  document.getElementById('staff-tbody').innerHTML = page.length ? page.map(s => `
+    <tr class="${s.slug === selectedSlug ? 'selected' : ''}">
+      <td><button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></td>
+      <td class="c num">${hcell(s.h_scopus)} / ${hcell(s.h_wos)} / ${hcell(s.h_gs)}</td>
+      <td class="r">${ncell(s.pubs_indexed)}</td>
+      <td class="r">${ncell(s.pubs_other)}</td>
+      <td class="r">${ncell(s.grants_active)}</td>
+      <td class="r">${ncell(s.grants_total)}</td>
+      <td class="r">${ncell(s.phd_graduated)}</td>
+      <td class="r">${ncell(s.phd_ongoing)}</td>
+      <td class="r">${ncell(s.master_graduated)}</td>
+      <td class="r">${ncell(s.master_ongoing)}</td>
+      <td class="r">${ncell(s.consultancy_completed)}</td>
+    </tr>`).join('') : `<tr><td class="empty" colspan="11">No staff match the search.</td></tr>`;
+}
+
+function openStaffProfile(slug) {
+  const s = STAFF_BY_SLUG.get(slug);
   if (!s) return;
+  selectedSlug = slug;
+  renderStaffTable();
 
-  document.getElementById('profile-name').textContent = s.fullname;
-  document.getElementById('profile-meta').textContent =
-    [s.designation, nice(s.position), s.current_position && s.current_position !== s.position ? nice(s.current_position) : '', 'Staff ID ' + s.staff_id]
-      .filter(Boolean).join(' · ');
+  const staffPubs   = PUBS.filter(p => p.slug === slug);
+  const staffGrants = GRANTS.filter(g => g.slug === slug);
+  const idxPubs = staffPubs.filter(p => p.indexed);
+  const otherPubs = staffPubs.filter(p => !p.indexed);
+  const hStr = [
+    s.h_scopus != null ? `Scopus: ${s.h_scopus}` : null,
+    s.h_wos    != null ? `WoS: ${s.h_wos}`    : null,
+    s.h_gs     != null ? `GS: ${s.h_gs}`      : null,
+  ].filter(Boolean).join(' · ') || '—';
 
-  const pubs = pubsFor(), P = pubStats(pubs);
-  const pis = projsFor('pi'), J = projStats(pis), grants = projsFor('grant'), G = projStats(grants);
-  document.getElementById('kpi-profile').innerHTML = [
-    kpiTile('Publications', P.total, `${P.indexed} indexed`),
-    kpiTile('Q1 and Q2 journals', P.q1 + P.q2, `Q1: ${P.q1}, Q2: ${P.q2}`),
-    kpiTile('As first or corresponding author', P.lead, `${pct(P.lead, P.total)} of their publications`),
-    kpiTile('Projects as PI', J.total, `${J.active} active`),
-    kpiTile('Grant acquired', 'RM ' + fmtRM(G.alloc), `${G.total} grant${G.total === 1 ? '' : 's'}`),
+  const expertUrl = `https://expert.uitm.edu.my/expert/${slug}`;
+  const links = [
+    `<a class="profile-link" href="${expertUrl}" target="_blank" rel="noopener">Expert Portal ↗</a>`,
+    s.scopus_id  ? `<a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=${esc(s.scopus_id)}" target="_blank" rel="noopener">Scopus ↗</a>` : '',
+    s.scholar_id ? `<a class="profile-link" href="https://scholar.google.com/citations?user=${esc(s.scholar_id)}" target="_blank" rel="noopener">Google Scholar ↗</a>` : '',
+    s.orcid      ? `<a class="profile-link" href="https://orcid.org/${esc(s.orcid)}" target="_blank" rel="noopener">ORCID ↗</a>` : '',
   ].join('');
 
-  document.getElementById('ppub-title').textContent = `Publications (${pubs.length})`;
-  const pp = paginate(pubs, 'ppub');
-  document.getElementById('ppub-tbody').innerHTML = pp.items.length ? pp.items.map((p, i) => {
-    const mine = p.rows.filter(r => r.staff_id === s.staff_id);
-    const others = p.rows.filter(r => r.staff_id !== s.staff_id);
+  const pubsHTML = idxPubs.slice(0,10).map((p,i) => `
+    <tr>
+      <td class="num muted">${i+1}</td>
+      <td class="clip wide">${esc(p.title||'(no title)')}</td>
+      <td>${esc(p.type||'')}</td>
+      <td class="num">${esc(p.date||'')}</td>
+    </tr>`).join('');
+
+  const grantsHTML = staffGrants.slice(0,10).map((g,i) => `
+    <tr>
+      <td class="num muted">${i+1}</td>
+      <td class="clip wide">${esc(g.title||'(no title)')}</td>
+      <td>${g.level && g.level.toUpperCase().includes('INT') ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+      <td class="num">${esc(String(g.year_start||''))}</td>
+      <td>${g.status && g.status.toUpperCase()==='ACTIVE' ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+    </tr>`).join('');
+
+  const panel = document.getElementById('staff-profile');
+  panel.hidden = false;
+  panel.innerHTML = `
+    <button class="profile-close" id="profile-close-btn" aria-label="Close profile">×</button>
+    <h2>${esc(s.name||slug)}</h2>
+    <div class="profile-meta">${esc(s.position||'')}${s.department ? ' · ' + esc(s.department) : ''} · H-Index: ${hStr}</div>
+    <div class="profile-links">${links}</div>
+    <div class="profile-kpi-row">
+      <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
+      <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
+      <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
+      <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
+      <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
+      <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
+      <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
+    </div>
+    ${idxPubs.length ? `
+    <div class="sub-title">Indexed Publications (${idxPubs.length}${idxPubs.length>10?' — top 10 shown':''})</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
+      <tbody>${pubsHTML}</tbody>
+    </table></div>` : ''}
+    ${otherPubs.length ? `<div class="sub-title" style="color:var(--text2)">Other Publications: ${otherPubs.length}</div>` : ''}
+    ${staffGrants.length ? `
+    <div class="sub-title">Grants (${staffGrants.length}${staffGrants.length>10?' — top 10 shown':''})</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
+      <tbody>${grantsHTML}</tbody>
+    </table></div>` : ''}
+  `;
+  panel.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  document.getElementById('profile-close-btn').addEventListener('click', () => {
+    panel.hidden = true;
+    selectedSlug = null;
+    renderStaffTable();
+  });
+}
+
+// ── PUBLICATIONS TABLE ─────────────────────────────────────────────────────
+function getPubsList() {
+  const q      = document.getElementById('pubs-search').value.trim().toLowerCase();
+  const filter = document.getElementById('pubs-filter-type').value;
+  let rows = [...PUBS];
+  if (filter === 'indexed') rows = rows.filter(p => p.indexed);
+  if (filter === 'other')   rows = rows.filter(p => !p.indexed);
+  if (q) rows = rows.filter(p => ((p.title||'') + ' ' + (p.name||'')).toLowerCase().includes(q));
+  return rows;
+}
+
+function renderPubsTable() {
+  const rows = getPubsList();
+  const q = document.getElementById('pubs-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  pageState.pubs = Math.min(pageState.pubs, total);
+  const start = (pageState.pubs - 1) * PAGE_SIZE;
+  const page  = rows.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('pubs-count').textContent = `${rows.length.toLocaleString()} publications${q?` matching "${q}"`:''}`;
+  document.getElementById('pubs-pagination').innerHTML = paginHTML(total, pageState.pubs, 'pubs');
+
+  document.getElementById('pubs-tbody').innerHTML = page.length ? page.map((p,i) => `
+    <tr>
+      <td class="num muted">${start+i+1}</td>
+      <td class="clip wide" title="${esc(p.title)}">${esc(p.title||'(no title)')}</td>
+      <td>${esc(nice(p.type))}</td>
+      <td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>
+      <td class="num">${esc(p.date||'')}</td>
+      <td style="white-space:nowrap">${esc(p.name||'')}</td>
+    </tr>`).join('') : `<tr><td class="empty" colspan="6">No publications match the current filters.</td></tr>`;
+}
+
+// ── GRANTS TABLE ───────────────────────────────────────────────────────────
+function getGrantsList() {
+  const q        = document.getElementById('grants-search').value.trim().toLowerCase();
+  const fLevel   = document.getElementById('grants-filter-level').value;
+  const fStatus  = document.getElementById('grants-filter-status').value;
+  let rows = [...GRANTS];
+  if (fLevel === 'international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
+  if (fLevel === 'national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
+  if (fStatus === 'active')       rows = rows.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
+  if (fStatus === 'completed')    rows = rows.filter(g => (g.status||'').toUpperCase() !== 'ACTIVE');
+  if (q) rows = rows.filter(g => ((g.title||'')+(g.name||'')+(g.grant_name||'')).toLowerCase().includes(q));
+  return rows;
+}
+
+function renderGrantsTable() {
+  const rows = getGrantsList();
+  const q = document.getElementById('grants-search').value.trim();
+  const total = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  pageState.grants = Math.min(pageState.grants, total);
+  const start = (pageState.grants - 1) * PAGE_SIZE;
+  const page  = rows.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('grants-count').textContent = `${rows.length.toLocaleString()} grants${q?` matching "${q}"`:''}`;
+  document.getElementById('grants-pagination').innerHTML = paginHTML(total, pageState.grants, 'grants');
+
+  document.getElementById('grants-tbody').innerHTML = page.length ? page.map((g,i) => {
+    const isIntl = (g.level||'').toUpperCase().includes('INT');
+    const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
     return `<tr>
-      <td class="num muted">${pp.start + i + 1}</td>
-      <td class="clip">${titleBtn(p)}</td>
-      <td>${cell(nice(p.type))}</td>
-      <td>${blank(p.index_name) ? cell('') : esc(nice(p.index_name))}</td>
-      <td>${cell(p.jcr_quartile)}</td>
-      <td>${esc([...new Set(mine.map(r => DIMS.pub.role.fmt(r.author_type)))].join(', '))}</td>
-      <td class="authors">${others.length ? others.map(r => personBtn(r.staff_id, r.author_name)).join('<span class="sep">; </span>') : '<span class="muted">None recorded</span>'}</td>
+      <td class="num muted">${start+i+1}</td>
+      <td class="clip" title="${esc(g.title)}">${esc(g.title||'(no title)')}</td>
+      <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+      <td class="clip" style="max-width:200px" title="${esc(g.grant_name)}">${esc(g.grant_name||'')}</td>
+      <td>${esc(g.role||'')}</td>
+      <td class="num">${esc(String(g.year_start||''))}</td>
+      <td class="num">${esc(String(g.year_end||''))}</td>
+      <td class="num r">${g.cost ? fmtRM(g.cost) : '<span class="muted">—</span>'}</td>
+      <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+      <td style="white-space:nowrap">${esc(g.name||'')}</td>
     </tr>`;
-  }).join('') : `<tr><td class="empty" colspan="7"><span>${Object.keys(F.pub).length ? 'No publications match the current filters. Remove a publication filter above to see more.' : 'No publications are recorded under this staff ID.'}</span></td></tr>`;
+  }).join('') : `<tr><td class="empty" colspan="10">No grants match the current filters.</td></tr>`;
+}
 
-  for (const [ds, rows, noun] of [['pi', pis, 'Projects as PI'], ['grant', grants, 'Grants acquired']]) {
-    document.getElementById(`p${ds}-title`).textContent = `${noun} (${rows.length})`;
-    const pj = paginate(rows, 'p' + ds);
-    const none = Object.keys(F[ds]).length ? `Nothing matches the current ${ds === 'pi' ? 'PI' : 'grant'} filters. Remove one above to see more.`
-      : ds === 'pi' ? 'No PI projects list this staff member.' : 'No grants list this staff member.';
-    document.getElementById(`p${ds}-tbody`).innerHTML = pj.items.length ? pj.items.map((r, i) => projRow(r, i, pj.start, false)).join('')
-      : `<tr><td class="empty" colspan="7"><span>${none}</span></td></tr>`;
+// ── PAGINATION ─────────────────────────────────────────────────────────────
+function paginHTML(total, current, key) {
+  if (total <= 1) return '';
+  let html = `<span>Page ${current} of ${total}</span>`;
+  if (current > 1) html += `<button class="page-btn" data-page="${key}:${current-1}">Prev</button>`;
+  for (let p = Math.max(1,current-2); p <= Math.min(total,current+2); p++) {
+    html += `<button class="page-btn" data-page="${key}:${p}"${p===current?' aria-current="page"':''}>${p}</button>`;
   }
+  if (current < total) html += `<button class="page-btn" data-page="${key}:${current+1}">Next</button>`;
+  return html;
 }
 
-function selectPerson(id, scroll) {
-  setFilter('person', '', id);
-  if (currentPage() !== 'staff') showPage('staff');
-  syncHash();
-  if (scroll) document.getElementById('profile-panel').scrollIntoView({ block: 'start' });
+// ── UTILS ──────────────────────────────────────────────────────────────────
+function nice(s) {
+  if (!s) return '';
+  return s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
-document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => showPage(b.dataset.goto)));
 
-// ── PUBLICATION DETAILS ────────────────────────────────────────────────────
-function titleBtn(p) {
-  if (blank(p.title)) return cell('');
-  return `<button type="button" class="title-btn" data-pub="${esc(p.pub_id)}" title="${esc(p.title)}">${esc(p.title)}</button>`;
+// ── TABS ───────────────────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('[role="tab"]').forEach(t => {
+    const on = t.id === 'tab-' + id;
+    t.setAttribute('aria-selected', on);
+  });
+  document.querySelectorAll('[role="tabpanel"]').forEach(p => {
+    p.hidden = p.id !== 'page-' + id;
+  });
+  if (id === 'overview') drawCharts();
 }
-// Which of the 10 Pencapaian KPIs this publication counts toward (same rules as the cards).
-function pubKpis(p) {
-  const rows = p.rows.filter(inKpiScope);
-  if (!rows.length) return null;
-  const jp = p.type === 'JOURNAL' || p.type === 'PROCEEDING', out = [];
-  if (jp && KPI_INDEX.has(p.index_name)) {
-    const lead = rows.filter(r => KPI_LEAD.has(r.author_type)).map(r => r.author_name);
-    if (lead.length) out.push(`Corresponding / first authors (${[...new Set(lead)].join(', ')})`);
-    out.push('Indexed journals & proceedings');
-    if (p.qs === 'Yes') out.push('QS journals & proceedings');
-  }
-  if (jp && (p.jcr_quartile === 'Q1' || p.jcr_quartile === 'Q2')) out.push('Q1 & Q2 journals & proceedings');
-  if (jp && p.index_name === 'MYCITE') out.push('MyCite journals & proceedings');
-  if (jp && blank(p.index_name)) out.push('Non-indexed journals & proceedings');
-  if (KPI_BOOK.has(p.type)) out.push('Books & book chapters');
-  else if (!jp) out.push('Other publications');
-  return out;
-}
-function facts(pairs) {
-  const rows = pairs.filter(([, v]) => !blank(v));
-  return rows.length ? `<dl class="pd-facts">${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
-}
-const extLink = (href, text) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>`;
-function openPub(id) {
-  const p = PUBS.find(x => x.pub_id === id); if (!p) return;
-  const dlg = document.getElementById('pub-dialog');
-  const doi = blank(p.doi) ? '' : p.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '');
-  const url = /^https?:\/\//i.test(p.url || '') ? p.url : '';
-  const isProc = p.type === 'PROCEEDING' || !blank(p.conference);
-  const tags = [
-    `<span class="pd-tag">${esc(nice(p.type))}</span>`,
-    blank(p.index_name) ? '<span class="pd-tag">Not indexed</span>' : `<span class="pd-tag strong">${esc(nice(p.index_name))}</span>`,
-    blank(p.jcr_quartile) ? '' : `<span class="pd-tag strong">JCR ${esc(p.jcr_quartile)}</span>`,
-    p.qs === 'Yes' ? '<span class="pd-tag strong">QS</span>' : '',
-    blank(p.level) ? '' : `<span class="pd-tag">${esc(nice(p.level))}</span>`,
-  ].join('');
-  const fkm = p.rows.map(r => `<li>${personBtn(r.staff_id, r.author_name)}<span class="muted">${esc(ROLE_LABEL[r.author_type] || nice(r.author_type))}</span></li>`).join('');
-  const kpis = pubKpis(p);
-  document.getElementById('pd-body').innerHTML = `
-    <h2 id="pd-title">${esc(p.title)}</h2>
-    <div class="pd-tags">${tags}</div>
-    <section class="pd-sec"><h3>Published in</h3>${facts([
-      [isProc ? 'Proceedings' : 'Journal / book', esc(p.sub_title)],
-      ['Conference', esc(p.conference)],
-      ['Venue', esc(p.venue)],
-      ['Conference date', esc(p.conf_date)],
-      ['Organiser', esc(p.organiser)],
-      ['Publisher', esc(p.publisher)],
-      ['Volume / issue', [p.volume, p.issues].filter(v => !blank(v)).map(esc).join(' / ')],
-      ['Date', esc(p.pub_date)],
-      ['ISSN', esc(p.issn)],
-      ['ISBN', esc(p.isbn)],
-      ['DOI', doi ? extLink('https://doi.org/' + doi, doi) : ''],
-      ['Link', url ? extLink(url, url.replace(/^https?:\/\//, '')) : ''],
-    ])}</section>
-    <section class="pd-sec"><h3>FKM authors</h3><ul class="pd-people">${fkm}</ul></section>
-    ${blank(p.authors) && blank(p.external_authors) ? '' : `<section class="pd-sec"><h3>All authors</h3>${facts([
-      ['UiTM authors', esc((p.authors || '').replace(/\s*,\s*/g, ', '))],
-      ['External authors', esc((p.external_authors || '').replace(/\s*,\s*/g, ', '))],
-    ])}</section>`}
-    <section class="pd-sec"><h3>Counted in Pencapaian KPI</h3>${kpis
-      ? (kpis.length ? `<ul class="pd-kpis">${kpis.map(k => `<li>${esc(k)}</li>`).join('')}</ul>` : '<p class="pd-text muted">None of the 10 figures.</p>')
-      : '<p class="pd-text muted">Not counted: none of its authors is an FKM academic at UiTM Selangor.</p>'}</section>
-    <section class="pd-sec"><h3>Record</h3>${facts([
-      ['PRIME ref. no.', esc(p.ref_no)],
-      ['Publication ID', esc(p.pub_id)],
-      ['Group', esc(DIMS.pub.group.fmt(p.group || 'none'))],
-      ['Refereed', p.refereed === 'Y' ? 'Yes' : p.refereed === 'N' ? 'No' : esc(p.refereed)],
-      ['Paper type', esc(nice(p.paper_type))],
-      ['Media', esc(nice(p.media))],
-      ['Status', esc(nice(p.status))],
-    ])}</section>`;
-  if (!dlg.open) dlg.showModal();
-  dlg.querySelector('.drawer-body').scrollTop = 0;
-  dlg.querySelector('[data-close-dialog]').focus();
-}
-const pubDialog = document.getElementById('pub-dialog');
-pubDialog.addEventListener('click', e => {
-  // A click on the backdrop lands on the dialog element itself.
-  if (e.target === pubDialog || e.target.closest('[data-close-dialog]')) pubDialog.close();
-  else if (e.target.closest('[data-person]')) pubDialog.close();
+document.querySelectorAll('[role="tab"]').forEach(t => {
+  t.addEventListener('click', () => showPage(t.id.replace('tab-','')) );
 });
 
 // ── EVENTS ─────────────────────────────────────────────────────────────────
 document.addEventListener('click', e => {
-  const tb = e.target.closest('[data-pub]');
-  if (tb) return openPub(tb.dataset.pub);
-  const pb = e.target.closest('[data-person]');
-  if (pb) return selectPerson(pb.dataset.person, true);
-  const b = e.target.closest('[data-page]'); if (!b) return;
-  const [key, p] = b.dataset.page.split(':');
-  pageState[key] = +p;
-  if (['ppub', 'ppi', 'pgrant'].includes(key)) renderProfile(); else RENDER[key]();
-  b.closest('.panel').scrollIntoView({ block: 'start' });
-});
-const RENDER = { pub: renderPubTable, pi: () => renderProjTable('pi'), grant: () => renderProjTable('grant'), staff: renderStaffTable };
-for (const key of Object.keys(RENDER)) {
-  document.getElementById(key + '-search').addEventListener('input', () => { pageState[key] = 1; if (DATA) RENDER[key](); });
-}
+  const nb = e.target.closest('[data-slug]');
+  if (nb) return openStaffProfile(nb.dataset.slug);
 
-function refresh() {
-  if (!DATA) return;
-  computeCounts();
-  renderChips();
-  renderSlicers();
-  renderPickers();
-  renderKPIs();
-  renderProfile();
-  syncCharts();
-  Object.values(RENDER).forEach(f => f());
-  syncHash();
-}
+  const pb = e.target.closest('[data-page]');
+  if (pb) {
+    const [key, p] = pb.dataset.page.split(':');
+    pageState[key] = +p;
+    if (key==='staff')  renderStaffTable();
+    if (key==='pubs')   renderPubsTable();
+    if (key==='grants') renderGrantsTable();
+    pb.closest('.panel').scrollIntoView({block:'start'});
+  }
+});
+
+document.getElementById('staff-search').addEventListener('input',  () => { pageState.staff=1;  renderStaffTable(); });
+document.getElementById('staff-sort').addEventListener('change',   () => { pageState.staff=1;  renderStaffTable(); });
+document.getElementById('pubs-search').addEventListener('input',   () => { pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('pubs-filter-type').addEventListener('change', () => { pageState.pubs=1; renderPubsTable(); });
+document.getElementById('grants-search').addEventListener('input',     () => { pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-filter-level').addEventListener('change',  () => { pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-filter-status').addEventListener('change', () => { pageState.grants=1; renderGrantsTable(); });
 
 // ── BOOT ───────────────────────────────────────────────────────────────────
 loadData();
