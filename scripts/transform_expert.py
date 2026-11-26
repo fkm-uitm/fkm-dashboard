@@ -15,10 +15,22 @@ import json
 from pathlib import Path
 from datetime import date
 
-REPO = Path(__file__).parent.parent
-RAW  = REPO / "data" / "profiles_raw.json"
-OUT  = REPO / "docs" / "data"
+REPO      = Path(__file__).parent.parent
+RAW       = REPO / "data" / "profiles_raw.json"
+OUT       = REPO / "docs" / "data"
+PHOTO_DIR = REPO / "docs" / "images" / "staff"
 OUT.mkdir(parents=True, exist_ok=True)
+
+DEFAULT_PHOTO = "https://expert.uitm.edu.my/assets/images/profile_default.png"
+
+
+def photo_path(slug: str, photo_url: str) -> str:
+    """Return the local path (relative to docs/) if downloaded, else empty string."""
+    for ext in (".jpg", ".jpeg", ".png", ".gif", ".webp"):
+        f = PHOTO_DIR / f"{slug}{ext}"
+        if f.exists():
+            return f"images/staff/{slug}{ext}"
+    return ""
 
 
 def main():
@@ -53,6 +65,7 @@ def main():
             "scopus_id":          p.get("scopus_id", ""),
             "scholar_id":         p.get("scholar_id", ""),
             "orcid":              p.get("orcid", ""),
+            "photo":              photo_path(slug, p.get("photo_url", "")),
             "grants_intl_active":      p.get("grants_intl_active", 0),
             "grants_intl_completed":   p.get("grants_intl_completed", 0),
             "grants_natl_active":      p.get("grants_natl_active", 0),
@@ -131,7 +144,7 @@ def main():
 def _write(filename: str, data):
     path = OUT / filename
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"→ {path}")
+    print(f"-> {path}")
 
 
 def _avg(values: list) -> float | None:

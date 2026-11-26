@@ -108,6 +108,9 @@
 
   /* STAFF PROFILE DRAWER */
   .profile-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+  .profile-header{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
+  .profile-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;background:var(--surface2)}
+  .profile-avatar-placeholder{width:80px;height:80px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;flex-shrink:0}
   .profile-panel h2{font-size:18px;font-weight:800;color:var(--text);margin-bottom:2px}
   .profile-meta{font-size:13px;color:var(--text2);margin-bottom:14px}
   .profile-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
@@ -551,10 +554,13 @@ function renderStaffTable() {
 
   const hcell = (v) => v == null ? '<span class="muted">—</span>' : `<span class="num">${v}</span>`;
   const ncell = (v) => !v ? '<span class="muted">0</span>' : `<span class="num">${v}</span>`;
+  const thumbHTML = (s) => s.photo
+    ? `<img src="${esc(s.photo)}" alt="" loading="lazy" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;border:1px solid var(--border)">`
+    : '';
 
   document.getElementById('staff-tbody').innerHTML = page.length ? page.map(s => `
     <tr class="${s.slug === selectedSlug ? 'selected' : ''}">
-      <td><button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></td>
+      <td style="white-space:nowrap">${thumbHTML(s)}<button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></td>
       <td class="c num">${hcell(s.h_scopus)} / ${hcell(s.h_wos)} / ${hcell(s.h_gs)}</td>
       <td class="r">${ncell(s.pubs_indexed)}</td>
       <td class="r">${ncell(s.pubs_other)}</td>
@@ -611,11 +617,20 @@ function openStaffProfile(slug) {
 
   const panel = document.getElementById('staff-profile');
   panel.hidden = false;
+  const initials = (s.name||slug).split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('');
+  const avatarHTML = s.photo
+    ? `<img class="profile-avatar" src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'profile-avatar-placeholder',textContent:'${esc(initials)}'}))">`
+    : `<div class="profile-avatar-placeholder">${esc(initials)}</div>`;
   panel.innerHTML = `
     <button class="profile-close" id="profile-close-btn" aria-label="Close profile">×</button>
-    <h2>${esc(s.name||slug)}</h2>
-    <div class="profile-meta">${esc(s.position||'')}${s.department ? ' · ' + esc(s.department) : ''} · H-Index: ${hStr}</div>
-    <div class="profile-links">${links}</div>
+    <div class="profile-header">
+      ${avatarHTML}
+      <div>
+        <h2>${esc(s.name||slug)}</h2>
+        <div class="profile-meta">${esc(s.position||'')}${s.department ? ' · ' + esc(s.department) : ''} · H-Index: ${hStr}</div>
+      </div>
+    </div>
+    <div class="profile-links" style="margin-top:4px">${links}</div>
     <div class="profile-kpi-row">
       <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
       <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>

@@ -108,6 +108,7 @@ def scrape_profile(slug: str) -> dict | None:
         "scopus_id":         links.get("prf_scopus", ""),
         "scholar_id":        links.get("prf_gscholar", ""),
         "orcid":             links.get("prf_orchid", ""),
+        "photo_url":         prof.get("PR_RS_IMG", ""),
         "grants_intl_completed": res.get("IC", 0),
         "grants_intl_active":    res.get("IA", 0),
         "grants_natl_completed": res.get("NC", 0),
