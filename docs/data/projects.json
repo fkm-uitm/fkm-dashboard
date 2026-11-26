@@ -10,6 +10,8 @@
     "start": "2025-09-01",
     "end": "2026-09-01",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -24,6 +26,8 @@
     "start": "2024-04-06",
     "end": "2027-04-05",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -38,6 +42,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -52,6 +58,8 @@
     "start": "2024-07-05",
     "end": "2026-07-05",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 23500.0,
     "type": "PI"
   },
@@ -66,6 +74,8 @@
     "start": "2022-10-01",
     "end": "2025-03-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 86800.0,
     "type": "PI"
   },
@@ -80,6 +90,8 @@
     "start": "2021-10-01",
     "end": "2023-09-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 10000.0,
     "type": "PI"
   },
@@ -94,6 +106,8 @@
     "start": "2024-10-01",
     "end": "2026-09-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 29498.0,
     "type": "PI"
   },
@@ -108,6 +122,8 @@
     "start": "2024-08-01",
     "end": "2026-07-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 95534.0,
     "type": "PI"
   },
@@ -122,6 +138,8 @@
     "start": "2023-12-15",
     "end": "2025-12-14",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -136,6 +154,8 @@
     "start": "2023-10-01",
     "end": "2025-09-30",
     "status": "Completed",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 85343.0,
     "type": "PI"
   },
@@ -150,6 +170,8 @@
     "start": "2021-09-01",
     "end": "2026-08-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -164,6 +186,8 @@
     "start": "2025-01-15",
     "end": "2026-07-14",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 50033.0,
     "type": "PI"
   },
@@ -178,6 +202,8 @@
     "start": "2022-06-20",
     "end": "2024-10-19",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 15000.0,
     "type": "PI"
   },
@@ -192,6 +218,8 @@
     "start": "2025-04-29",
     "end": "2026-04-28",
     "status": "Completed",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -206,6 +234,8 @@
     "start": "2025-04-30",
     "end": "2026-03-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 70000.0,
     "type": "PI"
   },
@@ -220,6 +250,8 @@
     "start": "2023-10-01",
     "end": "2025-09-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 84476.0,
     "type": "PI"
   },
@@ -234,6 +266,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -248,6 +282,8 @@
     "start": "2025-02-01",
     "end": "2027-01-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -262,6 +298,8 @@
     "start": "2023-10-01",
     "end": "2025-09-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 82027.0,
     "type": "PI"
   },
@@ -276,6 +314,8 @@
     "start": "2025-02-01",
     "end": "2027-01-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -290,6 +330,8 @@
     "start": "2023-10-01",
     "end": "2026-09-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -304,6 +346,8 @@
     "start": "2024-02-15",
     "end": "2026-02-14",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 10000.0,
     "type": "PI"
   },
@@ -318,6 +362,8 @@
     "start": "2025-12-01",
     "end": "2027-11-30",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -332,6 +378,8 @@
     "start": "",
     "end": "",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "PI"
   },
@@ -346,6 +394,8 @@
     "start": "2024-11-01",
     "end": "2026-10-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "PI"
   },
@@ -360,6 +410,8 @@
     "start": "2026-06-05",
     "end": "2029-06-05",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "PULAU PINANG",
     "allocation": 13000.0,
     "type": "Grant"
   },
@@ -374,6 +426,8 @@
     "start": "2026-01-15",
     "end": "2027-01-14",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "PULAU PINANG",
     "allocation": 20398.5,
     "type": "Grant"
   },
@@ -388,6 +442,8 @@
     "start": "2026-05-01",
     "end": "2026-07-03",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 15000.0,
     "type": "Grant"
   },
@@ -402,6 +458,8 @@
     "start": "2026-05-18",
     "end": "2026-08-17",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 898.0,
     "type": "Grant"
   },
@@ -416,6 +474,8 @@
     "start": "2026-01-01",
     "end": "2027-12-31",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 10000.0,
     "type": "Grant"
   },
@@ -430,6 +490,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "Grant"
   },
@@ -444,6 +506,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "Grant"
   },
@@ -458,6 +522,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "Grant"
   },
@@ -472,6 +538,8 @@
     "start": "2026-04-08",
     "end": "2028-04-07",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": 20000.0,
     "type": "Grant"
   },
@@ -486,6 +554,8 @@
     "start": "2026-05-15",
     "end": "2027-05-14",
     "status": "Active",
+    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "negeri": "SELANGOR",
     "allocation": null,
     "type": "Grant"
   }

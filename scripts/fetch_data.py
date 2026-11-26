@@ -90,6 +90,8 @@ def process_projects(df, kind):
             "start":      safe_str(row.get("TARIKH MULA", "")),
             "end":        safe_str(row.get("TARIKH TAMAT", "")),
             "status":     safe_str(row.get("STATUS", "")),
+            "department": safe_str(row.get("JABATAN HAKIKI", "")),
+            "negeri":     safe_str(row.get("NEGERI", "")),
             "allocation": alloc,
             "type":       kind,
         })
@@ -125,6 +127,9 @@ if not pub_df.empty:
             "index_name":   safe_str(row.get("INDEX_NAME", "")),
             "jcr_quartile": safe_str(row.get("JCR_QUARTILE", "")),
             "faculty":      safe_str(row.get("FACULTY", "")),
+            "negeri":       safe_str(row.get("NEGERI", "")),
+            "author_category": safe_str(row.get("AUTHOR_CATEGORY_NAME", "")),
+            "qs":           safe_str(row.get("QS", "")),
         })
 
 # Unique publications by PUB_ID
