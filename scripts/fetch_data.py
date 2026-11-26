@@ -19,25 +19,24 @@ import os
 from datetime import datetime
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-SHEET_ID = "1qCyJ2V1CfCpXOo2EulT0bxBpYLQ0Jq6QEae5490_xdI"
-OUT_DIR  = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
+OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
 
-# Sheet GIDs (from the Google Sheets URL when clicking each tab)
-SHEETS = {
-    "pi":    0,        # Masterlist PI
-    "grant": 492988248,  # Masterlist Grant
-    "pub":   1543655237, # Masterlist Pub
-    "staff": 1693068791, # Masterlist Staff
+# Published CSV URLs (from File → Share → Publish to web, select each tab → CSV)
+SHEET_URLS = {
+    "pi":    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIlNapeM8vYpPVhXNh8KLrN_yNf9I7ClYkcH7Y1jdv8UpQ0r0PrVvAf8aX5e1WyOfabKrqFAuJb2cL/pub?gid=0&single=true&output=csv",
+    "grant": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIlNapeM8vYpPVhXNh8KLrN_yNf9I7ClYkcH7Y1jdv8UpQ0r0PrVvAf8aX5e1WyOfabKrqFAuJb2cL/pub?gid=789115517&single=true&output=csv",
+    "pub":   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIlNapeM8vYpPVhXNh8KLrN_yNf9I7ClYkcH7Y1jdv8UpQ0r0PrVvAf8aX5e1WyOfabKrqFAuJb2cL/pub?gid=1133740796&single=true&output=csv",
+    "staff": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIlNapeM8vYpPVhXNh8KLrN_yNf9I7ClYkcH7Y1jdv8UpQ0r0PrVvAf8aX5e1WyOfabKrqFAuJb2cL/pub?gid=1759196802&single=true&output=csv",
 }
 
 os.makedirs(OUT_DIR, exist_ok=True)
 
-def csv_url(gid):
-    return f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={gid}"
+def csv_url(name):
+    return SHEET_URLS[name]
 
-def fetch_sheet(name, gid):
-    url = csv_url(gid)
-    print(f"  Fetching {name} (gid={gid})...")
+def fetch_sheet(name):
+    url = csv_url(name)
+    print(f"  Fetching {name}...")
     r = requests.get(url, timeout=30)
     r.raise_for_status()
     from io import StringIO
@@ -63,9 +62,9 @@ def safe_str(val):
 # ── FETCH ALL SHEETS ──────────────────────────────────────────────────────────
 print("Fetching sheets from Google Sheets...")
 dfs = {}
-for name, gid in SHEETS.items():
+for name in SHEET_URLS:
     try:
-        dfs[name] = fetch_sheet(name, gid)
+        dfs[name] = fetch_sheet(name)
         print(f"    ✓ {name}: {len(dfs[name])} rows, {len(dfs[name].columns)} cols")
     except Exception as e:
         print(f"    ✗ {name}: {e}")
