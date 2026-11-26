@@ -689,22 +689,19 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 /* ── PUBLICATION DETAIL DRAWER ─────────────────────────────────────── */
 .pub-drawer {
   position: fixed;
-  bottom: 0; right: 0;
-  width: 100%;
-  max-width: 560px;
-  max-height: 70vh;
+  top: 0; right: 0; bottom: 0;
+  width: 420px;
+  max-width: 90vw;
   background: var(--surface);
-  border-top: 1px solid var(--border);
   border-left: 1px solid var(--border);
-  border-radius: var(--radius) var(--radius) 0 0;
-  box-shadow: var(--shadow-lg);
+  box-shadow: -4px 0 24px rgba(0,0,0,.12);
   z-index: 400;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%);
+  transform: translateX(100%);
   transition: transform .25s ease;
 }
-.pub-drawer.open { transform: translateY(0); }
+.pub-drawer.open { transform: translateX(0); }
 .pub-drawer-header {
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
@@ -712,7 +709,6 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   align-items: flex-start;
   gap: 12px;
   background: var(--surface2);
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 .pub-drawer-header h3 {
   flex: 1;
@@ -849,7 +845,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   .main { margin-left: 0; }
   .topbar { padding-left: 60px; }
   .content { padding: 20px 16px; }
-  .pub-drawer { max-width: 100%; }
+  .pub-drawer { width: 100%; max-width: 100%; }
   .year-range { flex-wrap: wrap; }
 }
 </style>
