@@ -37,8 +37,8 @@ def main():
         slug = p.get("slug", "")
 
         # ── staff record ──────────────────────────────────────────────────
-        indexed_count = sum(1 for x in p.get("publications", []) if x["type"] == "indexed")
-        other_count   = sum(1 for x in p.get("publications", []) if x["type"] == "other")
+        indexed_count = p.get("pubs_indexed", 0)
+        other_count   = p.get("pubs_other", 0)
 
         staff_rows.append({
             "slug":               slug,
@@ -53,10 +53,10 @@ def main():
             "scopus_id":          p.get("scopus_id", ""),
             "scholar_id":         p.get("scholar_id", ""),
             "orcid":              p.get("orcid", ""),
-            "grants_intl_active":      p.get("grants_international_active", 0),
-            "grants_intl_completed":   p.get("grants_international_completed", 0),
-            "grants_natl_active":      p.get("grants_national_active", 0),
-            "grants_natl_completed":   p.get("grants_national_completed", 0),
+            "grants_intl_active":      p.get("grants_intl_active", 0),
+            "grants_intl_completed":   p.get("grants_intl_completed", 0),
+            "grants_natl_active":      p.get("grants_natl_active", 0),
+            "grants_natl_completed":   p.get("grants_natl_completed", 0),
             "grants_total":       len(p.get("grants", [])),
             "grants_active":      sum(1 for g in p.get("grants", []) if g.get("status", "").upper() == "ACTIVE"),
             "pubs_indexed":       indexed_count,
@@ -72,25 +72,34 @@ def main():
 
         # ── publications ──────────────────────────────────────────────────
         for pub in p.get("publications", []):
+            group = pub.get("group", "")
             pub_rows.append({
-                "slug":  slug,
-                "name":  p.get("name", ""),
-                "ref":   pub.get("ref", ""),
-                "title": pub.get("title", ""),
-                "type":  pub.get("type", ""),
+                "slug":    slug,
+                "name":    p.get("name", ""),
+                "ref":     pub.get("ref", ""),
+                "title":   pub.get("title", ""),
+                "date":    pub.get("date", ""),
+                "type":    pub.get("type", ""),
+                "group":   group,
+                "indexed": "INDEXED" in group.upper(),
+                "url":     pub.get("url", ""),
             })
 
         # ── grants ────────────────────────────────────────────────────────
         for g in p.get("grants", []):
             grant_rows.append({
-                "slug":    slug,
-                "name":    p.get("name", ""),
-                "title":   g.get("title", ""),
-                "level":   g.get("level", ""),
-                "file_no": g.get("file_no", ""),
-                "year":    g.get("year"),
-                "role":    g.get("role", ""),
-                "status":  g.get("status", ""),
+                "slug":       slug,
+                "name":       p.get("name", ""),
+                "title":      g.get("title", ""),
+                "level":      g.get("level", ""),
+                "file_no":    g.get("file_no", ""),
+                "year_start": g.get("year_start"),
+                "year_end":   g.get("year_end"),
+                "grant_name": g.get("grant_name", ""),
+                "grant_code": g.get("grant_code", ""),
+                "role":       g.get("role", ""),
+                "cost":       g.get("cost"),
+                "status":     g.get("status", ""),
             })
 
     # ── summary ───────────────────────────────────────────────────────────

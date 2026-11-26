@@ -36,4 +36,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/profiles_raw.json docs/data/expert_*.json
           git diff --cached --quiet || git commit -m "chore: auto-update expert scrape data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git pull --rebase origin main
           git push
