@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-26 07:10 UTC",
+  "last_updated": "2026-11-26 07:17 UTC",
   "snapshot": "Live from Google Sheets",
   "publications": {
     "total_rows": 282,
@@ -42,7 +42,7 @@
     "total_pi": 25,
     "total_grant": 10,
     "pi_allocation": 762211.0,
-    "grant_allocation": 139296.5,
+    "grant_allocation": 439296.5,
     "distinct_pi": 25,
     "by_status": {
       "Active": 33,

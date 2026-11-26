@@ -556,7 +556,7 @@
     "status": "Active",
     "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "negeri": "SELANGOR",
-    "allocation": null,
+    "allocation": 300000.0,
     "type": "Grant"
   }
 ]
