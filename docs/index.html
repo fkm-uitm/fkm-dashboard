@@ -805,31 +805,28 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   font-weight: 600;
   color: var(--text3);
 }
-.ov-filter-group {
+/* sub-tabs for Publications and Grants pages */
+.sub-tabs {
   display: flex;
-  gap: 4px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 3px;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
 }
-.ov-filter-btn {
-  padding: 5px 12px;
+.sub-tab {
+  padding: 8px 18px;
   border: 0;
-  border-radius: 4px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
   background: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text2);
-  transition: all .15s;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
   white-space: nowrap;
 }
-.ov-filter-btn:hover { background: var(--surface); color: var(--text); }
-.ov-filter-btn.active {
-  background: var(--surface);
-  color: var(--accent);
-  box-shadow: var(--shadow);
-}
+.sub-tab:hover { color: var(--text); }
+.sub-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 .ov-period-note {
   font-size: 12px;
   color: var(--text3);
@@ -938,13 +935,17 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       <p>Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
     <div class="ov-filter-bar">
-      <span class="ov-filter-label">Period:</span>
-      <div class="ov-filter-group" role="group" aria-label="Date period">
-        <button class="ov-filter-btn" data-period="all">All time</button>
-        <button class="ov-filter-btn" data-period="5y">Last 5 years</button>
-        <button class="ov-filter-btn" data-period="year">This year</button>
-        <button class="ov-filter-btn active" data-period="month">This month</button>
-      </div>
+      <span class="ov-filter-label">Year:</span>
+      <select class="filter-select" id="ov-year" aria-label="Select year"></select>
+      <span class="ov-filter-label" id="ov-month-lbl">Up to month:</span>
+      <select class="filter-select" id="ov-month" aria-label="Up to month">
+        <option value="1">January</option><option value="2">February</option>
+        <option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option>
+        <option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
       <span class="ov-period-note" id="ov-period-note"></span>
     </div>
     <div id="kpi-row1" class="kpi-row cols-5"></div>
@@ -1049,7 +1050,12 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   <div id="page-pubs" class="content" hidden>
     <div class="page-header">
       <h2>Publications</h2>
-      <p>All publications recorded on the Expert portal for FKM Shah Alam staff. Click a title for details.</p>
+      <p>Publications from the Expert portal for FKM Shah Alam academic staff. Click a title for details.</p>
+    </div>
+    <div class="sub-tabs" role="tablist" aria-label="Publication category">
+      <button class="sub-tab active" role="tab" data-pubtab="all">All Publications</button>
+      <button class="sub-tab" role="tab" data-pubtab="indexed">Indexed (Scopus / WoS / ERA)</button>
+      <button class="sub-tab" role="tab" data-pubtab="nonindexed">Non-Indexed</button>
     </div>
     <div class="tbl-card">
       <div class="toolbar">
@@ -1057,11 +1063,6 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
         </div>
-        <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
-          <option value="">All types</option>
-          <option value="indexed">Indexed only</option>
-          <option value="other">Other only</option>
-        </select>
         <div class="year-range" aria-label="Year range">
           <label for="pubs-year-from" class="sr-only">From year</label>
           <select class="filter-select" id="pubs-year-from" aria-label="From year"></select>
@@ -1074,12 +1075,12 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       </div>
       <div class="tbl-wrap">
         <table>
-          <thead>
+          <thead id="pubs-thead">
             <tr>
               <th style="width:46px">#</th>
               <th>Title</th>
               <th>Type</th>
-              <th>Category</th>
+              <th id="pubs-th-cat">Category</th>
               <th>Date</th>
               <th>Author</th>
             </tr>
@@ -1096,6 +1097,10 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
     <div class="page-header">
       <h2>Grants</h2>
       <p>Research grants from the Expert portal, international and national, active and completed</p>
+    </div>
+    <div class="sub-tabs" role="tablist" aria-label="Grant role">
+      <button class="sub-tab active" role="tab" data-granttab="pi">As Principal Investigator</button>
+      <button class="sub-tab" role="tab" data-granttab="all">All Grants</button>
     </div>
     <div class="tbl-card">
       <div class="toolbar">
@@ -1162,7 +1167,10 @@ const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
 
 // Overview date filter state (default: this month)
-let ovDateFilter = 'month';
+let ovYear  = new Date().getFullYear();   // 0 = all time
+let ovMonth = new Date().getMonth() + 1; // 1-12, up-to-month
+let pubTab   = 'all';    // 'all' | 'indexed' | 'nonindexed'
+let grantTab = 'pi';     // 'pi'  | 'all'
 
 // Cross-filter state
 const xf = {
@@ -1180,44 +1188,42 @@ const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(
 const nice = s => s ? s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase()) : '';
 const initials = name => (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
-// Overview date filtering — returns filtered PUBS and GRANTS for the selected period
+// Overview date filtering — returns filtered PUBS and GRANTS for selected year+month
 function getOvFilteredData() {
-  const now = new Date();
-  const thisYear  = now.getFullYear();
-  const thisMonth = now.getMonth(); // 0-based
-
-  let pubFilter, grantYearMin;
-  if (ovDateFilter === 'month') {
-    pubFilter    = p => { if (!p.date) return false; const d = new Date(p.date); return d.getFullYear() === thisYear && d.getMonth() === thisMonth; };
-    grantYearMin = thisYear;
-  } else if (ovDateFilter === 'year') {
-    pubFilter    = p => p.date && +p.date.slice(0,4) === thisYear;
-    grantYearMin = thisYear;
-  } else if (ovDateFilter === '5y') {
-    const cutoff = thisYear - 4;
-    pubFilter    = p => p.date && +p.date.slice(0,4) >= cutoff;
-    grantYearMin = cutoff;
-  } else {
-    pubFilter    = () => true;
-    grantYearMin = null;
+  if (!ovYear) {
+    return { filteredPubs: [...PUBS], filteredGrants: [...GRANTS] };
   }
+  const filteredPubs = PUBS.filter(p => {
+    if (!p.date) return false;
+    const y = +p.date.slice(0,4);
+    const m = +p.date.slice(5,7);
+    return y === ovYear && m <= ovMonth;
+  });
+  const filteredGrants = GRANTS.filter(g => g.year_start && +g.year_start === ovYear);
+  return { filteredPubs, filteredGrants };
+}
 
-  return {
-    filteredPubs:   PUBS.filter(pubFilter),
-    filteredGrants: grantYearMin ? GRANTS.filter(g => g.year_start && +g.year_start >= grantYearMin) : [...GRANTS],
-  };
+function buildOvYearSelect() {
+  const years = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(Boolean))].sort((a,b)=>b-a);
+  const el = document.getElementById('ov-year');
+  el.innerHTML = '<option value="0">All time</option>' +
+    years.map(y => `<option value="${y}"${y===ovYear?' selected':''}>${y}</option>`).join('');
+  document.getElementById('ov-month').value = String(ovMonth);
+  toggleOvMonth();
+}
+
+function toggleOvMonth() {
+  const show = ovYear > 0;
+  document.getElementById('ov-month').style.display = show ? '' : 'none';
+  document.getElementById('ov-month-lbl').style.display = show ? '' : 'none';
 }
 
 function renderOvPeriodNote() {
-  const now = new Date();
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const labels = {
-    all:   'All publications and grants',
-    '5y':  `Publications ${now.getFullYear()-4}–${now.getFullYear()} · Grants from ${now.getFullYear()-4}`,
-    year:  `Publications in ${now.getFullYear()} · Grants started ${now.getFullYear()}`,
-    month: `Publications in ${months[now.getMonth()]} ${now.getFullYear()} · Grants started ${now.getFullYear()}`,
-  };
-  document.getElementById('ov-period-note').textContent = labels[ovDateFilter] || '';
+  const note = ovYear
+    ? `Publications Jan–${months[ovMonth-1]} ${ovYear} · Grants started ${ovYear}`
+    : 'All publications and grants (no date filter)';
+  document.getElementById('ov-period-note').textContent = note;
 }
 
 // F-01: SVG icons tied to data domain — each icon is chosen for content relevance
@@ -1300,6 +1306,7 @@ async function loadData() {
 // ── OVERVIEW ───────────────────────────────────────────────────────────────
 function renderOverview(s) {
   SUMMARY = s;
+  if (PUBS.length) buildOvYearSelect();
   renderOvPeriodNote();
 
   const hVals   = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
@@ -1307,8 +1314,12 @@ function renderOverview(s) {
   const hMedian = hVals.length ? [...hVals].sort((a,b)=>a-b)[Math.floor(hVals.length/2)] : 0;
 
   const { filteredPubs, filteredGrants } = getOvFilteredData();
-  const indexedCount = filteredPubs.filter(p => p.indexed).length;
-  const otherCount   = filteredPubs.filter(p => !p.indexed).length;
+  // deduplicate by ref to count unique papers (a pub shared by multiple authors = 1 paper)
+  const uniqueRefs    = p => p.ref || p.title; // fall back to title if no ref
+  const uniqIndexed   = new Set(filteredPubs.filter(p =>  p.indexed).map(uniqueRefs));
+  const uniqOther     = new Set(filteredPubs.filter(p => !p.indexed).map(uniqueRefs));
+  const indexedCount  = uniqIndexed.size;
+  const otherCount    = uniqOther.size;
   const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
 
   document.getElementById('kpi-row1').innerHTML = [
@@ -1316,7 +1327,7 @@ function renderOverview(s) {
     kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
     kpi('Indexed publications',  num(indexedCount),      'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
     kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
-    kpi('Total publications',    num(filteredPubs.length),'All publication types',       '#d97706', 'sum'),
+    kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
   ].join('');
 
   document.getElementById('kpi-row2').innerHTML = [
@@ -1378,11 +1389,10 @@ function drawCharts() {
   donutChart('chart-pubs-type', ['Indexed','Other'], [idx, other], ['#2563eb','#f59e0b'], (segIdx) => {
     const val = segIdx === 0 ? 'indexed' : 'other';
     xf.pubs_type = xf.pubs_type === val ? null : val;
-    document.getElementById('pubs-filter-type').value = xf.pubs_type || '';
     pageState.pubs = 1;
     renderPubsTable();
     updateXfBadge('pubs-xf-badge', xf.pubs_type ? `Type: ${xf.pubs_type}` : null, () => {
-      xf.pubs_type=null; document.getElementById('pubs-filter-type').value=''; pageState.pubs=1; renderPubsTable();
+      xf.pubs_type=null; pageState.pubs=1; renderPubsTable();
     });
     showPage('pubs');
   });
@@ -1697,12 +1707,14 @@ function openStaffProfile(slug) {
 // ── PUBLICATIONS ───────────────────────────────────────────────────────────
 function getPubsList() {
   const q  = document.getElementById('pubs-search').value.trim().toLowerCase();
-  const ft = document.getElementById('pubs-filter-type').value || (xf.pubs_type || '');
   const yf = +document.getElementById('pubs-year-from').value || null;
   const yt = +document.getElementById('pubs-year-to').value   || null;
+  // start with cross-filter type override or sub-tab
   let rows = [...PUBS];
-  if (ft === 'indexed') rows = rows.filter(p =>  p.indexed);
-  if (ft === 'other')   rows = rows.filter(p => !p.indexed);
+  if (xf.pubs_type === 'indexed')      rows = rows.filter(p =>  p.indexed);
+  else if (xf.pubs_type === 'other')   rows = rows.filter(p => !p.indexed);
+  else if (pubTab === 'indexed')        rows = rows.filter(p =>  p.indexed);
+  else if (pubTab === 'nonindexed')     rows = rows.filter(p => !p.indexed);
   if (yf) rows = rows.filter(p => p.date && +p.date.slice(0,4) >= yf);
   if (yt) rows = rows.filter(p => p.date && +p.date.slice(0,4) <= yt);
   if (q)  rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
@@ -1716,8 +1728,11 @@ function renderPubsTable() {
   pageState.pubs = Math.min(pageState.pubs, total);
   const start = (pageState.pubs-1)*PAGE_SIZE;
   const page  = rows.slice(start, start+PAGE_SIZE);
+  const showCatHdr = pubTab === 'all' && !xf.pubs_type;
+  document.getElementById('pubs-th-cat').hidden = !showCatHdr;
+  const tabLabel = pubTab === 'indexed' ? 'indexed publications' : pubTab === 'nonindexed' ? 'non-indexed publications' : 'publications';
   document.getElementById('pubs-count').textContent =
-    `${rows.length.toLocaleString()} publications${q?` matching "${q}"`:''}`;
+    `${rows.length.toLocaleString()} ${tabLabel}${q?` matching "${q}"`:''}`;
   document.getElementById('pubs-pagination').innerHTML = paginHTML(total, pageState.pubs, 'pubs');
 
   document.getElementById('pubs-tbody').innerHTML = page.length
@@ -1726,11 +1741,11 @@ function renderPubsTable() {
         <td class="muted">${start+i+1}</td>
         <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}" title="${esc(p.title)}">${esc(p.title||'(no title)')}</button></td>
         <td>${esc(nice(p.type))}</td>
-        <td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>
+        ${showCatHdr ? `<td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>` : ''}
         <td style="white-space:nowrap">${esc(p.date||'')}</td>
         <td style="white-space:nowrap">${esc(p.name||'')}</td>
       </tr>`).join('')
-    : `<tr><td class="empty" colspan="6">No publications match the current filters.</td></tr>`;
+    : `<tr><td class="empty" colspan="${showCatHdr?6:5}">No publications match the current filters.</td></tr>`;
 }
 
 // ── PUB DETAIL DRAWER ──────────────────────────────────────────────────────
@@ -1798,6 +1813,7 @@ function getGrantsList() {
   const yf = +document.getElementById('grants-year-from').value || null;
   const yt = +document.getElementById('grants-year-to').value   || null;
   let rows = [...GRANTS];
+  if (grantTab === 'pi') rows = rows.filter(g => (g.role||'').toUpperCase().includes('PRINCIPAL'));
   if (fl==='international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
   if (fl==='national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
   if (fs==='active')        rows = rows.filter(g => (g.status||'').toUpperCase()==='ACTIVE');
@@ -1919,7 +1935,6 @@ document.addEventListener('click', e => {
 document.getElementById('staff-search').addEventListener('input',          () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('staff-sort').addEventListener('change',           () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('pubs-search').addEventListener('input',           () => { pageState.pubs=1;   renderPubsTable(); });
-document.getElementById('pubs-filter-type').addEventListener('change',     () => { xf.pubs_type=null;  pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-from').addEventListener('change',       () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-to').addEventListener('change',         () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('grants-search').addEventListener('input',         () => { pageState.grants=1; renderGrantsTable(); });
@@ -1931,11 +1946,35 @@ document.getElementById('grants-year-to').addEventListener('change',       () =>
 // ── BOOT ───────────────────────────────────────────────────────────────────
 Chart.register(ChartDataLabels);
 
-document.querySelectorAll('.ov-filter-btn').forEach(btn => {
+// Overview year+month filter
+document.getElementById('ov-year').addEventListener('change', () => {
+  ovYear = +document.getElementById('ov-year').value;
+  toggleOvMonth();
+  renderOverview(SUMMARY);
+});
+document.getElementById('ov-month').addEventListener('change', () => {
+  ovMonth = +document.getElementById('ov-month').value;
+  renderOverview(SUMMARY);
+});
+
+// Publications sub-tabs
+document.querySelectorAll('[data-pubtab]').forEach(btn => {
   btn.addEventListener('click', () => {
-    ovDateFilter = btn.dataset.period;
-    document.querySelectorAll('.ov-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
-    renderOverview(SUMMARY);
+    pubTab = btn.dataset.pubtab;
+    xf.pubs_type = null; // clear cross-filter when switching tabs
+    document.querySelectorAll('[data-pubtab]').forEach(b => b.classList.toggle('active', b === btn));
+    pageState.pubs = 1;
+    renderPubsTable();
+  });
+});
+
+// Grants sub-tabs
+document.querySelectorAll('[data-granttab]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    grantTab = btn.dataset.granttab;
+    document.querySelectorAll('[data-granttab]').forEach(b => b.classList.toggle('active', b === btn));
+    pageState.grants = 1;
+    renderGrantsTable();
   });
 });
 
