@@ -1,77 +1,138 @@
 {
-  "last_updated": "2026-11-26 02:35 UTC",
+  "last_updated": "2026-11-26 03:05 UTC",
+  "snapshot": "Live from Google Sheets",
   "publications": {
-    "total_unique": 37,
-    "total_rows": 45,
+    "total_rows": 282,
+    "total_unique": 159,
     "by_group": {
-      "INDEXED PUBLICATION": 25,
-      "OTHER PUBLICATIONS": 12
+      "INDEXED PUBLICATION": 119,
+      "OTHER PUBLICATIONS": 40
     },
     "by_type": {
-      "JOURNAL": 25,
-      "PROCEEDING": 8,
-      "CHAPTER IN BOOK": 2,
-      "CHAPTER IN RESEARCH BOOK": 2
+      "JOURNAL": 110,
+      "PROCEEDING": 23,
+      "CHAPTER IN BOOK": 12,
+      "CHAPTER IN RESEARCH BOOK": 4,
+      "EXHIBITION": 3,
+      "NEWSLETTER": 2,
+      "NEWSPAPER ARTICLE": 1,
+      "RESEARCH BOOK": 1,
+      "POLICY PAPER": 1,
+      "CREATIVE WORK": 1,
+      "MAGAZINE": 1
     },
     "by_index": {
-      "SCOPUS": 12,
-      "WEB OF SCIENCE": 10,
-      "MYCITE": 3
+      "SCOPUS": 47,
+      "WEB OF SCIENCE": 45,
+      "MYCITE": 23,
+      "EXCELLENCE IN RESEARCH AUSTRALIA (ERA)": 4
     },
     "by_quartile": {
-      "Q2": 10,
-      "Q3": 6,
-      "Q1": 6
+      "Q3": 14,
+      "Q1": 14,
+      "Q2": 13,
+      "Q4": 4
     },
     "by_level": {
-      "INTERNATIONAL": 27,
-      "NATIONAL": 10
+      "INTERNATIONAL": 132,
+      "NATIONAL": 27
     }
   },
   "projects": {
-    "total": 18,
-    "total_pi": 8,
+    "total_pi": 25,
     "total_grant": 10,
-    "total_allocation": 725296.5,
-    "pi_allocation": 248500.0,
-    "grant_allocation": 476796.5,
-    "by_category": {
-      "National": 7,
-      "Private": 7,
-      "International": 2,
-      "University": 2
-    },
+    "total": 35,
+    "pi_allocation": 762211.0,
+    "grant_allocation": 139296.5,
+    "total_allocation": 901507.5,
     "by_status": {
-      "Active": 14,
-      "Completed": 4
+      "Active": 33,
+      "Completed": 2
+    },
+    "by_category": {
+      "Private": 15,
+      "National": 11,
+      "University": 5,
+      "International": 3,
+      "PRIVATE": 1
     },
     "by_type": {
-      "Grant": 10,
-      "PI": 8
+      "PI": 25,
+      "Grant": 10
     }
   },
   "staff": {
-    "total": 44,
+    "total": 379,
     "by_position": {
-      "PENSYARAH KANAN": 20,
-      "PROFESOR MADYA": 7,
-      "PENSYARAH": 4,
-      "PROFESOR": 3,
-      "PENOLONG JURUTERA": 2,
-      "PENSYARAH SAMBILAN": 2,
-      "JURUTERA": 1,
-      "PEMBANTU AM PEJABAT": 1,
-      "PENOLONG PEGAWAI TADBIR": 1,
-      "JURUTEKNIK": 1,
+      "PENSYARAH SAMBILAN": 121,
+      "PENSYARAH KANAN": 67,
+      "PROFESOR MADYA": 43,
+      "PENSYARAH SAMBILAN (SEPENUH MASA)": 30,
+      "PENOLONG JURUTERA": 29,
+      "PENSYARAH": 13,
+      "PROFESOR": 8,
+      "KERANI KANAN": 8,
+      "PEGAWAI EKSEKUTIF": 6,
+      "PENSYARAH KANAN (KONTRAK 29000 B/W)": 5,
+      "KERANI": 5,
+      "PROFESOR KHAS": 3,
+      "PEMBANTU MAKMAL": 3,
+      "PENOLONG JURUTERA KANAN": 2,
+      "PEGAWAI EKSEKUTIF KANAN": 2,
+      "TIMBALAN PENDAFTAR": 2,
+      "PROFESOR MADYA(KONTRAK 11000 B.W.NEGARA)": 2,
+      "PROFESOR MADYA KHAS": 2,
+      "PENSYARAH MUDA (SEMENTARA)": 2,
+      "PENOLONG PEGAWAI SAINS KANAN": 2,
+      "PENSYARAH KANAN (KONTRAK 29000)": 1,
       "PENOLONG PEGAWAI SAINS": 1,
-      "PEMBANTU TADBIR (KEWANGAN)": 1
+      "PROFESOR MADYA (KONTRAK 29000 B/W)": 1,
+      "TIMBALAN PEGAWAI SAINS KANAN": 1,
+      "PENSYARAH KANAN(KONTRAK 11000 B.W.NEGARA": 1,
+      "PROF. MADYA(KONTRAK)": 1,
+      "PROF.MADYA (KONTRAK 29000 B.W.NEGARA)": 1,
+      "DISTINGUISH VISITING / PROFESOR": 1,
+      "PEMBANTU MAKMAL KANAN": 1,
+      "PEMBANTU KHIDMAT AM": 1,
+      "PENSYARAH (SEMENTARA)": 1,
+      "PENSYARAH JEMPUTAN": 1,
+      "PENOLONG JURUTERA (KONTRAK 29000)": 1,
+      "KETUA PENOLONG JURUTERA": 1,
+      "PENOLONG PEGAWAI SAINS TERTINGGI": 1,
+      "JURUTEKNIK KOMPUTER": 1,
+      "PENOLONG PENSYARAH TERTINGGI": 1,
+      "PROFESOR (KONTRAK 29000)": 1,
+      "SETIAUSAHA PEJABAT KANAN": 1,
+      "PENOLONG PENDAFTAR KANAN": 1,
+      "PENOLONG JURUTERA TERTINGGI": 1,
+      "PENOLONG PENSYARAH (DM32)": 1,
+      "PROFESOR (KONTRAK 29000 B/W)": 1,
+      "PENOLONG PENDAFTAR": 1
     },
     "by_designation": {
-      "DR.": 17,
-      "PROFESOR MADYA DR": 7,
+      "Unknown": 242,
+      "DR.": 49,
+      "PROFESOR MADYA DR": 21,
+      "PROFESOR MADYA": 10,
+      "PROFESOR DR": 8,
+      "PROFESOR MADYA IR DR": 8,
+      "PROFESOR IR. DR.": 5,
+      "PROFESOR MADYA TS. DR.": 5,
+      "IR. TS. DR": 5,
+      "PROFESOR MADYA IR.TS.DR": 4,
+      "IR. DR.": 4,
+      "IR.": 4,
       "TS. DR.": 3,
-      "PROFESOR DR": 3,
-      "TS.": 1
+      "TS.": 2,
+      "PROF. MADYA DR.-ING.": 1,
+      "IR. TS.": 1,
+      "DR.-ING.": 1,
+      "IR. DR. TS.": 1,
+      "DATUK PROFESOR DR": 1,
+      "PROFESOR": 1,
+      "PROFESOR TS. DR.": 1,
+      "TC.": 1,
+      "PROFESOR IR. TS. DR.-ING": 1
     }
   }
 }

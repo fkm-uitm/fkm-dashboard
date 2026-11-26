@@ -2,309 +2,3791 @@
   {
     "staff_id": "71893",
     "fullname": "ABD KARIM B DAUD",
+    "email": "karim893@uitm.edu.my",
     "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENOLONG JURUTERA",
     "current_position": "PENOLONG JURUTERA"
   },
   {
     "staff_id": "242981",
     "fullname": "ABDUL GHALIB @ THAM HOCK KHAN",
+    "email": "ghalibtham@salam.uitm.edu.my",
     "designation": "",
-    "position": "PENSYARAH KANAN",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000)",
     "current_position": "PENSYARAH KANAN (KONTRAK 29000)"
   },
   {
     "staff_id": "290865",
     "fullname": "ABDUL HAKIM BIN ABDULLAH",
+    "email": "hakimnen@uitm.edu.my",
     "designation": "TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH KANAN",
     "current_position": "KOORDINATOR"
   },
   {
     "staff_id": "231471",
     "fullname": "ABDUL HALIM BIN ABDULLAH",
+    "email": "halim471@uitm.edu.my",
     "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PROFESOR MADYA",
     "current_position": "TIMB. DEKAN(P'LIDIKAN&JARINGAN INDUSTRI)"
   },
   {
-    "staff_id": "168696",
-    "fullname": "AIDAH BINTI JUMAHAT",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "213127",
-    "fullname": "ZULKIFLI BIN MOHAMED",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "315889",
-    "fullname": "NOOR AZLINA BINTI MOHD SALLEH",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "KETUA PROGRAM"
-  },
-  {
-    "staff_id": "289290",
-    "fullname": "NORMARIAH BINTI CHE MAIDEEN",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "162809",
-    "fullname": "RIZAL BIN MOHAMED NOOR",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "PROFESOR MADYA"
-  },
-  {
-    "staff_id": "176840",
-    "fullname": "WAN MAZLINA BINTI WAN MOHAMED",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENYELARAS PROGRAM"
-  },
-  {
-    "staff_id": "316024",
-    "fullname": "HAZRIEL FAIZAL BIN PAHRORAJI",
+    "staff_id": "127129",
+    "fullname": "ABDUL HALIM BIN MINAR",
+    "email": "haliminar@uitm.edu.my",
     "designation": "",
-    "position": "PENSYARAH",
-    "current_position": "PENSYARAH"
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA KANAN",
+    "current_position": "PENOLONG JURUTERA KANAN"
   },
   {
-    "staff_id": "290920",
-    "fullname": "SITI KHADIJAH BINTI ALIAS",
+    "staff_id": "337359",
+    "fullname": "ABDUL MALEK BIN ABDUL WAHAB",
+    "email": "abdmalek@uitm.edu.my",
     "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "362081",
+    "fullname": "ABDUL MANAF BIN ABDULLAH",
+    "email": "abdulmanaf@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH KANAN",
     "current_position": "PENSYARAH KANAN"
   },
   {
-    "staff_id": "307091",
-    "fullname": "SYIDATUL AKMA BINTI SULAIMAN",
+    "staff_id": "838120",
+    "fullname": "ABDUL MUTALIB BIN LEMAN",
+    "email": "",
     "designation": "",
-    "position": "PENSYARAH",
-    "current_position": "PENSYARAH"
-  },
-  {
-    "staff_id": "200112",
-    "fullname": "YUPITER HP MANURUNG",
-    "designation": "PROFESOR DR",
-    "position": "PROFESOR",
-    "current_position": "PROFESOR"
-  },
-  {
-    "staff_id": "198503",
-    "fullname": "SHAMSUL BAHARIN BIN JAMALUDIN",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "DEKAN"
-  },
-  {
-    "staff_id": "195001",
-    "fullname": "AZIZI BIN AHMAD",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "PROFESOR MADYA"
-  },
-  {
-    "staff_id": "203445",
-    "fullname": "MOHAMAD ZAKI BIN ABDULLAH",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "KETUA JABATAN"
-  },
-  {
-    "staff_id": "225011",
-    "fullname": "MOHD SHAHIR BIN KASIM",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "218890",
-    "fullname": "AHMAD KAMAL ARIFFIN BIN MOHD IHSAN",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "PROFESSOR MADYA"
-  },
-  {
-    "staff_id": "235601",
-    "fullname": "KAMARULZAMAN BIN KAMARUDIN",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENYELARAS LAB"
-  },
-  {
-    "staff_id": "241209",
-    "fullname": "IZDIHAR BINTI THARAZI",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "251802",
-    "fullname": "MUHAMAD AZIZI BIN GHAZALI",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "262003",
-    "fullname": "MOHD ZAKI BIN ZAINUDIN",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "100012",
-    "fullname": "AHMAD FARIS BIN ISMAIL",
-    "designation": "",
-    "position": "JURUTERA",
-    "current_position": "JURUTERA"
-  },
-  {
-    "staff_id": "100089",
-    "fullname": "NURUL AIN BINTI ZAINAL",
-    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH SAMBILAN",
     "current_position": "PENSYARAH SAMBILAN"
   },
   {
-    "staff_id": "100145",
-    "fullname": "MOHD HAFIZ BIN AHMAD",
+    "staff_id": "826514",
+    "fullname": "ABDUL RAHIM MAHAMAD SAHAB",
+    "email": "",
     "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "373850",
+    "fullname": "ABDUL RAHMAN BIN OMAR",
+    "email": "aro@uitm.edu.my",
+    "designation": "PROFESOR IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR KHAS",
+    "current_position": "PROFESOR KHAS"
+  },
+  {
+    "staff_id": "822961",
+    "fullname": "ABDUL SHUKOR BIN ABDULLAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "36919",
+    "fullname": "ADAM BIN MOHLAS",
+    "email": "adammokhlas@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENOLONG JURUTERA",
     "current_position": "PENOLONG JURUTERA"
   },
   {
-    "staff_id": "100201",
-    "fullname": "RUZITA BINTI SULAIMAN",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "100267",
-    "fullname": "KHAIRUL ANUAR BIN MOHAMAD",
-    "designation": "TS.",
+    "staff_id": "277367",
+    "fullname": "ADAM TAN BIN MOHD AMIN",
+    "email": "adamtan@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH",
     "current_position": "PENSYARAH"
   },
   {
-    "staff_id": "100334",
-    "fullname": "NORHAYATI BINTI MOHD AKHIR",
+    "staff_id": "393186",
+    "fullname": "ADEL MOHAMMED MOHAMMED AL-DHAHEBI",
+    "email": "adelaldhahebi@uitm.edu.my",
     "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "TIMB. DEKAN(AKADEMIK)"
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000 B/W)",
+    "current_position": "PENSYARAH KANAN (KONTRAK 29000 B/W)"
   },
   {
-    "staff_id": "100412",
-    "fullname": "SITI RAHMAH BINTI AWANG",
-    "designation": "",
-    "position": "PEMBANTU AM PEJABAT",
-    "current_position": "PEMBANTU AM PEJABAT"
-  },
-  {
-    "staff_id": "100478",
-    "fullname": "AHMAD TARMIZI BIN ABDULLAH",
-    "designation": "PROFESOR DR",
-    "position": "PROFESOR",
-    "current_position": "PROFESOR"
-  },
-  {
-    "staff_id": "100534",
-    "fullname": "ZAINUDIN BIN ABU BAKAR",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "KOORDINATOR"
-  },
-  {
-    "staff_id": "100601",
-    "fullname": "FARIDAH BINTI HANIM YUSOF",
-    "designation": "",
+    "staff_id": "90010887",
+    "fullname": "AHMAD @ AHMAD FAUZI BIN IBRAHIM",
+    "email": "",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH SAMBILAN",
     "current_position": "PENSYARAH SAMBILAN"
   },
   {
-    "staff_id": "100667",
-    "fullname": "MOHAMAD RIDZUAN BIN MOHAMAD RAMLI",
-    "designation": "TS. DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENSYARAH KANAN"
-  },
-  {
-    "staff_id": "100734",
-    "fullname": "NORSAZWAN BIN MOHAMAD SHAHLAN",
-    "designation": "",
-    "position": "PENOLONG PEGAWAI TADBIR",
-    "current_position": "PENOLONG PEGAWAI TADBIR"
-  },
-  {
-    "staff_id": "100800",
-    "fullname": "ZULAIKHA BINTI ZULKIFLI",
-    "designation": "DR.",
-    "position": "PENSYARAH",
-    "current_position": "PENSYARAH"
-  },
-  {
-    "staff_id": "100867",
-    "fullname": "MOHD KHAIR BIN HASSAN",
-    "designation": "",
-    "position": "JURUTEKNIK",
-    "current_position": "JURUTEKNIK"
-  },
-  {
-    "staff_id": "100934",
-    "fullname": "NUR ATIQAH BINTI ROHAIZI",
-    "designation": "",
-    "position": "PENOLONG PEGAWAI SAINS",
-    "current_position": "PENOLONG PEGAWAI SAINS"
-  },
-  {
-    "staff_id": "101001",
-    "fullname": "HARWINDER SINGH BEDI",
+    "staff_id": "98410",
+    "fullname": "AHMAD AZLAN BIN MAT ISA",
+    "email": "ahmadazlan@uitm.edu.my",
     "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PROFESOR",
     "current_position": "PROFESOR"
   },
   {
-    "staff_id": "101078",
-    "fullname": "MASTURA BINTI SHAFINAZ BAHRIN",
-    "designation": "DR.",
-    "position": "PENSYARAH KANAN",
-    "current_position": "PENYELARAS PROGRAM"
+    "staff_id": "90027363",
+    "fullname": "AHMAD AZLAN BIN MAT ISA",
+    "email": "",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
   },
   {
-    "staff_id": "101145",
-    "fullname": "MOHD RASIDI BIN IBRAHIM",
-    "designation": "TS. DR.",
+    "staff_id": "116787",
+    "fullname": "AHMAD DAHARI BIN ISHAK",
+    "email": "adahari@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PEGAWAI SAINS",
+    "current_position": "PENOLONG PEGAWAI SAINS"
+  },
+  {
+    "staff_id": "201029",
+    "fullname": "AHMAD FAIZ BIN NAWAWI",
+    "email": "faiz029@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "855527",
+    "fullname": "AHMAD FAKRI BIN SHAARI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90014889",
+    "fullname": "AHMAD FATHI BIN ZAINAZLAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "239224",
+    "fullname": "AHMAD HUSSEIN BIN ABDUL HAMID",
+    "email": "hussein@uitm.edu.my",
+    "designation": "PROFESOR MADYA TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "843364",
+    "fullname": "AHMAD HUSSIEN BIN ABDUL HAMID",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "213279",
+    "fullname": "AHMAD NASHWIZAL BIN MOHD NOOR",
+    "email": "ahmadnas@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF KANAN",
+    "current_position": "PEGAWAI EKSEKUTIF KANAN"
+  },
+  {
+    "staff_id": "201715",
+    "fullname": "AHMAD NAZEMAN BIN MOHAMED",
+    "email": "nazeman@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "851165",
+    "fullname": "AHMAD SUHAIMI BIN ABD RAHIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "253598",
+    "fullname": "AHMAD YUSRI BIN ISMAIL",
+    "email": "yusri3598@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "819783",
+    "fullname": "AHMAD ZAINAL ABIDIN ABD RAZAK",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "335380",
+    "fullname": "AHMED B JAFFAR",
+    "email": "ahmedjaffar@uitm.edu.my",
+    "designation": "PROFESOR IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR KHAS",
+    "current_position": "PROFESOR KHAS"
+  },
+  {
+    "staff_id": "151991",
+    "fullname": "AHMED BIN JAFFAR (PROF)(IR)(DR)(HJ)",
+    "email": "ahmedjaffar@salam.uitm.edu.my",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "DEKAN"
+  },
+  {
+    "staff_id": "313739",
+    "fullname": "AHSANA AQILAH BINTI AHMAD",
+    "email": "aqilah3739@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH KANAN",
     "current_position": "PENSYARAH KANAN"
   },
   {
-    "staff_id": "101212",
-    "fullname": "MASLINDA BINTI MUSA",
+    "staff_id": "168696",
+    "fullname": "AIDAH BINTI JUMAHAT",
+    "email": "aidahjumahat@uitm.edu.my",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "PROFESOR"
+  },
+  {
+    "staff_id": "822932",
+    "fullname": "AIDAH BT JUMAHAT",
+    "email": "",
     "designation": "",
-    "position": "PEMBANTU TADBIR (KEWANGAN)",
-    "current_position": "PEMBANTU TADBIR (KEWANGAN)"
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
   },
   {
-    "staff_id": "101279",
-    "fullname": "AZWAN BIN ISMAIL",
-    "designation": "PROFESOR MADYA DR",
-    "position": "PROFESOR MADYA",
-    "current_position": "TIMB. DEKAN(HAL EHWAL PELAJAR)"
+    "staff_id": "838094",
+    "fullname": "AIDY BIN ALI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
   },
   {
-    "staff_id": "101346",
-    "fullname": "SHAHRIZAN BIN BAHAROM",
+    "staff_id": "193328",
+    "fullname": "AISHAH RAIDAH BINTI AB RAHMAN",
+    "email": "aisha328@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "TIMBALAN PENDAFTAR",
+    "current_position": "TIMBALAN PENDAFTAR"
+  },
+  {
+    "staff_id": "826527",
+    "fullname": "AL EMRAN BIN ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "290962",
+    "fullname": "ALHASSAN SALAMI TIJANI",
+    "email": "alhassan@uitm.edu.my",
+    "designation": "PROF. MADYA DR.-ING.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA (KONTRAK 29000 B/W)",
+    "current_position": "PROFESOR MADYA (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "229111",
+    "fullname": "ALIAS BIN MOHD SAMAN",
+    "email": "aliasms@uitm.edu.my",
     "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
     "position": "PENSYARAH KANAN",
-    "current_position": "KETUA JABATAN"
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "251891",
+    "fullname": "AMALINA BINTI AMIR",
+    "email": "amalina.amir@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "847629",
+    "fullname": "AMALINA BT AMIR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "272498",
+    "fullname": "AMERAN BIN SAIMAN",
+    "email": "ameran@uitm.edu.my",
+    "designation": "TS.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "TIMBALAN PEGAWAI SAINS KANAN",
+    "current_position": "TIMBALAN PEGAWAI SAINS KANAN"
+  },
+  {
+    "staff_id": "817510",
+    "fullname": "AMIR AKRAMIN SHAFIE",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "261580",
+    "fullname": "AMIR RADZI BIN AB. GHANI",
+    "email": "amirradzi@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "817523",
+    "fullname": "AMIR RADZI BIN AB. GHANI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "865562",
+    "fullname": "AMIRUL BIN ABD. RASHID",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "819738",
+    "fullname": "AMIZON BT AZIZAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "287425",
+    "fullname": "ARMANSYAH",
+    "email": "armansyah@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN(KONTRAK 11000 B.W.NEGARA",
+    "current_position": "PENSYARAH KANAN(KONTRAK 11000 B.W.NEGARA"
+  },
+  {
+    "staff_id": "90017556",
+    "fullname": "ARMANSYAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "256126",
+    "fullname": "ARZUAN BIN KASIM",
+    "email": "arzuankasim@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "834577",
+    "fullname": "ASLI BIN KASIM",
+    "email": "",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "33462",
+    "fullname": "ASLI BIN KASIM (HAJI)",
+    "email": "ilsa_wira@yahoo.com",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROF. MADYA(KONTRAK)",
+    "current_position": "PROF. MADYA(KONTRAK)"
+  },
+  {
+    "staff_id": "860648",
+    "fullname": "ASRI BIN MAT DESA",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "819822",
+    "fullname": "AZEZE BIN AZIZ",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "819770",
+    "fullname": "AZHAN B AB RAHMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "205106",
+    "fullname": "AZIANTI BINTI ISMAIL",
+    "email": "azianti106@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "185268",
+    "fullname": "AZLI BIN ABD RAZAK",
+    "email": "azlirazak@uitm.edu.my",
+    "designation": "PROFESOR IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "DEKAN"
+  },
+  {
+    "staff_id": "203234",
+    "fullname": "AZLIN BINTI MOHD AZMI",
+    "email": "azlinazmi@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "829980",
+    "fullname": "AZLIN BINTI MOHD AZMI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "819806",
+    "fullname": "AZMAN BIN AHMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "831868",
+    "fullname": "AZWIEN SHAFARA BT AYOB",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90004596",
+    "fullname": "BAHARUDIN BIN ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "176222",
+    "fullname": "BULAN BINTI ABDULLAH",
+    "email": "bulan_abd@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR.TS.DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "148085",
+    "fullname": "CHE FARIDAH BINTI MAT TAIB",
+    "email": "faridah8085@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "850784",
+    "fullname": "CHIA HAM @ SIA HAM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "817662",
+    "fullname": "CLIFF AK BIDI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "312073",
+    "fullname": "DIPES CHAKRABARTY",
+    "email": "dipes@salam.uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROF.MADYA (KONTRAK 29000 B.W.NEGARA)",
+    "current_position": "PROF.MADYA (KONTRAK 29000 B.W.NEGARA)"
+  },
+  {
+    "staff_id": "855909",
+    "fullname": "DR NAWAL ASWAN B ABDUL JALIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90003504",
+    "fullname": "EHAN SABAH SHUKRI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "248406",
+    "fullname": "ELI NADIA BINTI ABDUL LATIP",
+    "email": "elinadia@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "194738",
+    "fullname": "ELWAN BIN SALLEH",
+    "email": "elwan@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "831237",
+    "fullname": "EZZARHAN BIN ABDULLAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "815949",
+    "fullname": "FAIEZA BINTI ABDUL AZIZ",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "847823",
+    "fullname": "FAQIR GUL (DR)",
+    "email": "",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "DISTINGUISH VISITING / PROFESOR",
+    "current_position": "DISTINGUISH VISITING / PROFESOR"
+  },
+  {
+    "staff_id": "377830",
+    "fullname": "FARAH ADILAH BINTI MOHD. KASRAN",
+    "email": "farahadilah@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "857703",
+    "fullname": "FARIZAH ADLIZA BINTI GHAZALI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "269663",
+    "fullname": "FARRAHSHAIDA BINTI MOHD SALLEH",
+    "email": "fshaida@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "825696",
+    "fullname": "FATMAWATI BT ADAM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "239279",
+    "fullname": "FAUZIAH BINTI JERAI @ JUNAIDI",
+    "email": "fauziahjerai@uitm.edu.my",
+    "designation": "IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "827759",
+    "fullname": "FAUZIAH BINTI JERAI @ JUNAIDI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "179232",
+    "fullname": "FAUZIAH BT MD YUSOF",
+    "email": "myfauziah@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "90028233",
+    "fullname": "FAUZIAH NOORDIN",
+    "email": "",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "93075",
+    "fullname": "FAZILON BT BAADARI @ MOHD SALLEH",
+    "email": "fazilon075@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "190512",
+    "fullname": "FAZLIN SUHAINA BINTI MAMAT",
+    "email": "fazlin512@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEMBANTU MAKMAL KANAN",
+    "current_position": "PEMBANTU MAKMAL KANAN"
+  },
+  {
+    "staff_id": "188155",
+    "fullname": "FAZLY ZAIMIE BIN YAACOB",
+    "email": "fazly@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "257769",
+    "fullname": "FREDDAWATI BINTI RASHIDDY WONG",
+    "email": "freddawati@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "851903",
+    "fullname": "HADZRIE ABDUL KHAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "258085",
+    "fullname": "HAFIZAN BIN HASHIM",
+    "email": "hafizan8085@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "257882",
+    "fullname": "HAFIZI BIN LUKMAN",
+    "email": "hafizi7882@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "861142",
+    "fullname": "HAMDAN BIN YA",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "134002",
+    "fullname": "HAMIDUN BIN MD ISA (IR.)",
+    "email": "hamidun@salam.uitm.edu.my",
+    "designation": "IR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "241034",
+    "fullname": "HANAFIAH BIN YUSSOF",
+    "email": "hanafiah1034@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "836863",
+    "fullname": "HANIZA BINTI SUBARI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "396044",
+    "fullname": "HARISH VENU",
+    "email": "harishvenu@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000 B/W)",
+    "current_position": "PENSYARAH KANAN (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "260112",
+    "fullname": "HARYATI BINTI DOLLAH",
+    "email": "haryati_dollah@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "254610",
+    "fullname": "HAYDER M. A. ALI AL-ASSADI (DR)",
+    "email": "hayder@salam.uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA(KONTRAK 11000 B.W.NEGARA)",
+    "current_position": "PROFESOR MADYA(KONTRAK 11000 B.W.NEGARA)"
+  },
+  {
+    "staff_id": "180771",
+    "fullname": "HAZMI BIN MD SAAD",
+    "email": "hazmi771@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "249667",
+    "fullname": "HAZRAN BIN HUSAIN",
+    "email": "hazran@uitm.edu.my",
+    "designation": "IR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "833387",
+    "fullname": "HAZRAN BIN HUSAIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "90006264",
+    "fullname": "HAZRUL BIN HUSAIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "239208",
+    "fullname": "HELMI BIN RASHID",
+    "email": "helmi_rashid@uitm.edu.my",
+    "designation": "TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "185006",
+    "fullname": "IDRIS BIN SAAD",
+    "email": "edris_sd@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "847616",
+    "fullname": "IJHAR HIDAYAT RUSLI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "90017898",
+    "fullname": "IR ABDUL MALIK HUSSEIN BIN ABDUL JALIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "831208",
+    "fullname": "ISA BIN HALIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "851822",
+    "fullname": "ISMAIL BIN IBRAHIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "120252",
+    "fullname": "ISMAIL NASIRUDDIN BIN AHMAD",
+    "email": "ismailna@uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "355043",
+    "fullname": "ISMAIL NASIRUDDIN BIN AHMAD",
+    "email": "ismailna@uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA KHAS",
+    "current_position": "PROFESOR MADYA KHAS"
+  },
+  {
+    "staff_id": "822990",
+    "fullname": "ISMAIL NIK TAIB",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "198530",
+    "fullname": "IZAN SUFINAH BINTI MAT TOHID",
+    "email": "izansufinah@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "269692",
+    "fullname": "IZDIHAR BINTI THARAZI",
+    "email": "izdihar92@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "840053",
+    "fullname": "IZZAD BIN ISHAK",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "395155",
+    "fullname": "IZZAMUDDIN BIN IBRAHIM",
+    "email": "izzamuddin@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEMBANTU KHIDMAT AM",
+    "current_position": "PEMBANTU KHIDMAT AM"
+  },
+  {
+    "staff_id": "831172",
+    "fullname": "JAISATIA VARTHANI A/P APPALANAIDU",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "843021",
+    "fullname": "JAMALIAH MD. SAID",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "159906",
+    "fullname": "JAMALUDDIN BIN MAHMUD",
+    "email": "jm@uitm.edu.my",
+    "designation": "PROFESOR IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "PROFESOR"
+  },
+  {
+    "staff_id": "90027321",
+    "fullname": "JAMALUDDIN BIN MAHMUD",
+    "email": "",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "873211",
+    "fullname": "JIWA BIN MOHD ISA",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "10692",
+    "fullname": "JOHARI BIN MAAMOR",
+    "email": "johari123@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "380267",
+    "fullname": "JOHNSON LIM SOON CHONG",
+    "email": "johnson@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR.TS.DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "140054",
+    "fullname": "JUNAIDAH BINTI RAHMAD",
+    "email": "junaidah054@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "128500",
+    "fullname": "JUNAINAH BINTI BAJURI",
+    "email": "junainah500@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "138891",
+    "fullname": "JURI BIN SAEDON",
+    "email": "jurisaedon41@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "201728",
+    "fullname": "KAMARIZAL BIN KAMARUDDIN",
+    "email": "kamarizal@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "90006273",
+    "fullname": "KAMARUDIN BIN NORDIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "817565",
+    "fullname": "KASBUN BIN KAMAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "182724",
+    "fullname": "KAUSALYAH A/P VENKATASON",
+    "email": "kausalyah@uitm.edu.my",
+    "designation": "IR. TS. DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "320803",
+    "fullname": "KHAIRUL HAZWAN BIN ABDUL HADI",
+    "email": "khair0803@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "293862",
+    "fullname": "KHAIRUL IMRAN BIN SAINAN",
+    "email": "imransainan@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "863195",
+    "fullname": "KHAIRULNIZAM BIN KASIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "829524",
+    "fullname": "KHAIRUR RIJAL JAMALUDDIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "37060",
+    "fullname": "KHALILI BIN MAT SOM",
+    "email": "khalilifkm@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "827762",
+    "fullname": "LAU SING HUI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "119962",
+    "fullname": "LOO HUCK SOO (IR) (DR)",
+    "email": "loo962@salam.uitm.edu.my",
+    "designation": "IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "190305",
+    "fullname": "LOW CHENG YEE (DR)",
+    "email": "chengyee.low@salam.uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "309060",
+    "fullname": "LUTHFFI IDZHAR BIN ISMAIL",
+    "email": "luthffi118@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH (SEMENTARA)",
+    "current_position": "PENSYARAH (SEMENTARA)"
+  },
+  {
+    "staff_id": "90006432",
+    "fullname": "LUTHFFI IDZHAR BIN ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "855912",
+    "fullname": "MAHAMAD HISYAM B MAHAMAD BASRI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "287331",
+    "fullname": "MARDZIAH BINTI CHE MURAD",
+    "email": "mardziah31@uitm.edu.my",
+    "designation": "IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KETUA UNIT"
+  },
+  {
+    "staff_id": "90013095",
+    "fullname": "MASLINA BINTI MOHD ARIFFIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "864725",
+    "fullname": "MATZAINI BIN KATON",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "814678",
+    "fullname": "MAZANAH BTE MOHD ZAHINI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "822987",
+    "fullname": "MAZIAH BT MOHAMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "805991",
+    "fullname": "MICHAEL SCRIABIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH JEMPUTAN",
+    "current_position": "PENSYARAH JEMPUTAN"
+  },
+  {
+    "staff_id": "152932",
+    "fullname": "MIMI AZLINA BT ABU BAKAR",
+    "email": "mimi_azlina@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "870007",
+    "fullname": "MOHAMAD ALI BIN AHMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "329383",
+    "fullname": "MOHAMAD ALI BIN AHMAD",
+    "email": "mohama9383@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "321132",
+    "fullname": "MOHAMAD AZWAN BIN ABD KHAIR",
+    "email": "mdazwan1132@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA (KONTRAK 29000)",
+    "current_position": "PENOLONG JURUTERA (KONTRAK 29000)"
+  },
+  {
+    "staff_id": "385783",
+    "fullname": "MOHAMAD DZULHELMY BIN AMARI",
+    "email": "mdzulhelmy@uitm.edu.my",
+    "designation": "IR. TS. DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "238018",
+    "fullname": "MOHAMAD FIRHAN BIN MORNI",
+    "email": "firhan@uitm.edu.my",
+    "designation": "IR. TS.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA KANAN",
+    "current_position": "PENOLONG JURUTERA KANAN"
+  },
+  {
+    "staff_id": "401382",
+    "fullname": "MOHAMAD IKBAR BIN ABDUL WAHAB",
+    "email": "mohamadikbar@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "272210",
+    "fullname": "MOHAMAD MAZWAN BIN MAHAT",
+    "email": "mazwan@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "100230",
+    "fullname": "MOHAMAD NOR BIN BERHAN (IR)(PROF. DR)",
+    "email": "berhan@salam.uitm.edu.my",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "PROFESOR"
+  },
+  {
+    "staff_id": "861155",
+    "fullname": "MOHAMAD SAIFUL BIN ABDUL RANI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "314657",
+    "fullname": "MOHAMAD SUHAIRI BIN ZAINUDIN",
+    "email": "suhairi657@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEMBANTU MAKMAL",
+    "current_position": "PEMBANTU MAKMAL"
+  },
+  {
+    "staff_id": "163578",
+    "fullname": "MOHAMAD TOLHA BIN SUBHI",
+    "email": "tolha@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KETUA PENOLONG JURUTERA",
+    "current_position": "KETUA PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "819848",
+    "fullname": "MOHAMAD ZAKI BIN HASSAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "400341",
+    "fullname": "MOHAMED ASYRAF BIN MAHBOOB ALI",
+    "email": "mohamedasyraf@uitm.edu.my",
+    "designation": "IR. TS. DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "387626",
+    "fullname": "MOHAMED AZLY BIN ABDUL AZIZ",
+    "email": "azly81@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "814694",
+    "fullname": "MOHAMED TARMIZI B AHMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "252049",
+    "fullname": "MOHAMMAD AZZEIM BIN MAT JUSOH",
+    "email": "m_azzeim@uitm.edu.my",
+    "designation": "IR. TS. DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "90019410",
+    "fullname": "MOHAMMAD RADHI BIN MOHAMMAD NOH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "864576",
+    "fullname": "MOHAMMAD RIZAL BIN SALIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "90044010",
+    "fullname": "MOHD ADAM MOHD SAID",
+    "email": "adamsaid@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "843238",
+    "fullname": "MOHD AFANDI B. MAT RANI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "219341",
+    "fullname": "MOHD AFZAN BIN MOHD ANUAR",
+    "email": "afzan341@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "250669",
+    "fullname": "MOHD ALIF BIN JALALUDDIN",
+    "email": "alif0669@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "24303",
+    "fullname": "MOHD AMIN BIN ABU BAKAR",
+    "email": "mamin303@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "192028",
+    "fullname": "MOHD AZMAN BIN YAHAYA",
+    "email": "azman028@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "310389",
+    "fullname": "MOHD AZMI BIN YUNUS",
+    "email": "mayunus@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "265722",
+    "fullname": "MOHD AZROL BIN ZULKEFLI",
+    "email": "azrol5722@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PEGAWAI SAINS TERTINGGI",
+    "current_position": "PENOLONG PEGAWAI SAINS TERTINGGI"
+  },
+  {
+    "staff_id": "832977",
+    "fullname": "MOHD DARNALIS ABD RAHMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "296490",
+    "fullname": "MOHD EMY AZLY BIN MOHD ARNAWI",
+    "email": "emyazly@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "219163",
+    "fullname": "MOHD EZZUAN BIN SALLEH",
+    "email": "ezzuan9163@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "243744",
+    "fullname": "MOHD FAIZAL BIN MOHAMAD",
+    "email": "faizal3744@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "188919",
+    "fullname": "MOHD FAIZAZAIRI BIN MOHAMAD RIDUAN",
+    "email": "faiza_5za@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "188168",
+    "fullname": "MOHD FARID BIN MOHD SAAD",
+    "email": "farid168@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "187305",
+    "fullname": "MOHD FAUZI BIN ISMAIL",
+    "email": "mohdfauzi305@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "815936",
+    "fullname": "MOHD FAUZI ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "204576",
+    "fullname": "MOHD FIRDAUS BIN MOHD SAHIR",
+    "email": "alienz@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "JURUTEKNIK KOMPUTER",
+    "current_position": "JURUTEKNIK KOMPUTER"
+  },
+  {
+    "staff_id": "101433",
+    "fullname": "MOHD GHAZALI BIN SIKIN",
+    "email": "mohdghaz@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PENSYARAH TERTINGGI",
+    "current_position": "PENOLONG PENSYARAH TERTINGGI"
+  },
+  {
+    "staff_id": "852423",
+    "fullname": "MOHD HAFEEZ BIN MOHD AINI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90010572",
+    "fullname": "MOHD HAFIEZ IZZWAN BIN SAAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "284923",
+    "fullname": "MOHD HAFIZUL BIN YUSOF",
+    "email": "idulll@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "278476",
+    "fullname": "MOHD HANIF BIN MAT @ MUHAMMAD",
+    "email": "mhanif76@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "269605",
+    "fullname": "MOHD HANIF BIN MOHD RAMLI",
+    "email": "haniframli@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "218148",
+    "fullname": "MOHD HARYSHAM BIN ZAINAL ABIDIN",
+    "email": "harysham@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "827746",
+    "fullname": "MOHD HAZANI HAJI SHAFIE",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "359719",
+    "fullname": "MOHD HAZRI BIN MOHD RUSLI",
+    "email": "hazrirusli@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "305501",
+    "fullname": "MOHD HELMI BIN MOHD MUSTAMIL",
+    "email": "helmi5501@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI",
+    "current_position": "KERANI"
+  },
+  {
+    "staff_id": "232975",
+    "fullname": "MOHD HELMI BIN OMAR",
+    "email": "helmi975@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "835097",
+    "fullname": "MOHD KHADRI BIN JUSOH @ YUSOFF",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "107550",
+    "fullname": "MOHD KHALID BIN HASSAN",
+    "email": "khalid_hassan@salam.uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "90016887",
+    "fullname": "MOHD KHALID HASSAN (IR)",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90027594",
+    "fullname": "MOHD MANSOR BIN SALLEH",
+    "email": "mohdmansor@uitm.edu.my",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "850959",
+    "fullname": "MOHD NAZRI BIN OMAR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "267636",
+    "fullname": "MOHD NOR AZMI BIN AB PATAR",
+    "email": "azmipatar@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "207926",
+    "fullname": "MOHD RAHIMI BIN ABDUL RAHMAN @ MOHD SALLEH",
+    "email": "mohdrahimi@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "293684",
+    "fullname": "MOHD SAIFUL BAHARI BIN SHAARI",
+    "email": "saifulbahari@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "861964",
+    "fullname": "MOHD SARIZAL BIN ABU BAKAR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "391434",
+    "fullname": "MOHD SHAHROM BIN ISMAIL",
+    "email": "mohdshahrom@uitm.edu.my",
+    "designation": "IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "254979",
+    "fullname": "MOHD SUHAIRIL BIN MEON",
+    "email": "msuhairil@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "833345",
+    "fullname": "MOHD SUHAIRIL BIN MEON",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "256595",
+    "fullname": "MOHD SYAHAR BIN MOHD SHAWAL",
+    "email": "syahar6595@uitm.edu.my",
+    "designation": "DR.-ING.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "32285",
+    "fullname": "MOHD YUSUFF BIN MOHD",
+    "email": "mymohd@hotmail.com",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "813310",
+    "fullname": "MOHD ZAID OTHMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90015786",
+    "fullname": "MOHD ZOOL KHAZANI BIN ZAINAL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "171641",
+    "fullname": "MONA LISA BINTI ABU BAKAR",
+    "email": "monal641@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI",
+    "current_position": "KERANI"
+  },
+  {
+    "staff_id": "320890",
+    "fullname": "MUHAD ROZI BIN MAT NAWI",
+    "email": "muhad@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "TIMBALAN DEKAN (HAL EHWAL PELAJAR)"
+  },
+  {
+    "staff_id": "90008085",
+    "fullname": "MUHAD ROZI BIN MAT NAWI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "212788",
+    "fullname": "MUHAMAD AZHAN BIN ANUAR",
+    "email": "azhan788@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "257044",
+    "fullname": "MUHAMAD FAUZI BIN OTHMAN",
+    "email": "fauzi7044@uitm.edu.my",
+    "designation": "TS.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "309934",
+    "fullname": "MUHAMAD NORHISHAM BIN ABDUL RANI",
+    "email": "mnarani@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "335872",
+    "fullname": "MUHAMAD SUKRI BIN HADI",
+    "email": "msukrihadi@uitm.edu.my",
+    "designation": "IR. DR. TS.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "814681",
+    "fullname": "MUHAMAD SUWAID B SAAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "855598",
+    "fullname": "MUHAMMAD ARIF BIN AH. HAMID PAHMI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "392190",
+    "fullname": "MUHAMMAD AZMI BIN AYUB",
+    "email": "muhammadayub@uitm.edu.my",
+    "designation": "PROFESOR IR. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR KHAS",
+    "current_position": "PROFESOR KHAS"
+  },
+  {
+    "staff_id": "251299",
+    "fullname": "MUHAMMAD FAIRUZ BIN REMELI",
+    "email": "fairuz1299@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "354468",
+    "fullname": "MUHAMMAD FAZLEE BIN SUMAIRI",
+    "email": "fazleesumairi@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "855721",
+    "fullname": "MUHAMMAD HAFIDZ BIN RAHMAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "400817",
+    "fullname": "MUHAMMAD HANAFI BIN YUSOP",
+    "email": "mhanafiyusop@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "201045",
+    "fullname": "MUHAMMAD ISRAR BIN ABU HASSAN",
+    "email": "israr@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "195685",
+    "fullname": "MUHAMMAD SHAHRIZAL BIN MOHD SUBOH",
+    "email": "shahrizal685@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "339357",
+    "fullname": "MUHAMMAD SYAFIQ NAIM BIN MOHD SOHAMI",
+    "email": "syafiqnaim@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI",
+    "current_position": "KERANI"
+  },
+  {
+    "staff_id": "306416",
+    "fullname": "MUHAMMAD ZAIYAD BIN MUDA @ ISMAIL",
+    "email": "zaiyad@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "279640",
+    "fullname": "MUHD AZIMIN BIN AB GHANI",
+    "email": "azimin@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "847687",
+    "fullname": "MUZAIYANAH MOHAMMAD JUDI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "90015783",
+    "fullname": "NAEEM M.S HANNOON",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "335267",
+    "fullname": "NATASHA BINTI AHMAD NAWAWI",
+    "email": "natashanawawi@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "833400",
+    "fullname": "NAZRI MOHAMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "393924",
+    "fullname": "NIK NORMUNIRA BINTI MAT HASSAN",
+    "email": "normunira@uitm.edu.my",
+    "designation": "IR. TS. DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "295462",
+    "fullname": "NIK ROSELINA BINTI NIK ROSELEY",
+    "email": "roselina_roseley@uitm.edu.my",
+    "designation": "TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "222040",
+    "fullname": "NIK ROZLIN BINTI NIK MOHD MASDEK",
+    "email": "nikrozlin@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "333094",
+    "fullname": "NOOR ANIZA BINTI NORRDIN",
+    "email": "nooraniza@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "315889",
+    "fullname": "NOOR AZLINA BINTI MOHD SALLEH",
+    "email": "noorazlinamohdsalleh@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "253585",
+    "fullname": "NOOR LEHA BINTI ABDUL RAHMAN",
+    "email": "noorleha3585@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "826501",
+    "fullname": "NOR 'AZIZI BIN OTHMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "196710",
+    "fullname": "NOR AFIFAH BT YAHAYA",
+    "email": "afifah@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "177289",
+    "fullname": "NOR AMALINA BT NORDIN",
+    "email": "noramalina@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "286659",
+    "fullname": "NOR AZIZI BIN CHE SOH",
+    "email": "noraziz6659@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "239253",
+    "fullname": "NOR AZLAN BIN OTHMAN",
+    "email": "azlan253@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "219325",
+    "fullname": "NOR FAZLI BIN ADULL MANAN",
+    "email": "norfazli@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR.TS.DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "KETUA PUSAT PENGAJIAN"
+  },
+  {
+    "staff_id": "164946",
+    "fullname": "NOR HAFIEZ BIN MOHAMAD NOR",
+    "email": "norhafiez@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR.TS.DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "817536",
+    "fullname": "NOR HAYATI BINTI SAAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "252405",
+    "fullname": "NOR MERLISA BINTI ALI",
+    "email": "merlisa@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "207052",
+    "fullname": "NOR SALWA BINTI DAMANHURI",
+    "email": "norsalwa071@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "322319",
+    "fullname": "NOR SUHADA BINTI ABDULLAH",
+    "email": "norsuhada2319@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "90010716",
+    "fullname": "NORAINI BT ZOLKAFFLI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "205481",
+    "fullname": "NORAZMAN BIN NORDIN",
+    "email": "norazman5481@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "830005",
+    "fullname": "NORFARANI BT HARUN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "380296",
+    "fullname": "NORHAFLYZA BINTI MARBUKHARI",
+    "email": "norhaflyza@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "391447",
+    "fullname": "NORHAYATI BINTI MAT WAJID",
+    "email": "norhayatimw@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "325963",
+    "fullname": "NORHELIENA BINTI AZIZ",
+    "email": "norheliena@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "296979",
+    "fullname": "NORHISYAM BIN JENAL",
+    "email": "norhisyam_jenal@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH MUDA (SEMENTARA)",
+    "current_position": "PENSYARAH MUDA (SEMENTARA)"
+  },
+  {
+    "staff_id": "247313",
+    "fullname": "NORIAH BINTI YUSOFF",
+    "email": "noriahyusoff@uitm.edu.my",
+    "designation": "PROFESOR MADYA IR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "834580",
+    "fullname": "NORIAH BINTI YUSOFF",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "219312",
+    "fullname": "NORLIANA BINTI MOHD ABBAS",
+    "email": "norliana@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "TIMBALAN DEKAN (AKADEMIK)"
+  },
+  {
+    "staff_id": "833413",
+    "fullname": "NORLIANA BINTI MOHD ABBAS",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "834593",
+    "fullname": "NORLINI BINTI HUSSHIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "847645",
+    "fullname": "NORLINI BT HUSSHIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "205368",
+    "fullname": "NORLYDAWATI BINTI SOLORI",
+    "email": "norlydawati@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "95497",
+    "fullname": "NORMAH BT ISMAIL",
+    "email": "normahis@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "43177",
+    "fullname": "NORMAH BT OTHMAN",
+    "email": "norma431@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "TIMBALAN PENDAFTAR",
+    "current_position": "TIMBALAN PENDAFTAR"
+  },
+  {
+    "staff_id": "389064",
+    "fullname": "NOROL FARHANA BINTI MOHD FUZI",
+    "email": "norolfarhana@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEMBANTU MAKMAL",
+    "current_position": "PEMBANTU MAKMAL"
+  },
+  {
+    "staff_id": "79536",
+    "fullname": "NORZIMAH BINTI MIDIN",
+    "email": "norzim@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "393335",
+    "fullname": "NUR ATIQAH BINTI RAMLAN",
+    "email": "nar@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "341688",
+    "fullname": "NUR ATIQAH BINTI RAMLAN",
+    "email": "atiqahramlan@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI",
+    "current_position": "KERANI"
+  },
+  {
+    "staff_id": "380843",
+    "fullname": "NUR HUSNA BINTI SOBRI",
+    "email": "nurhusnasobri@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI",
+    "current_position": "KERANI"
+  },
+  {
+    "staff_id": "819796",
+    "fullname": "NURAINI ABD AZIZ",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "198556",
+    "fullname": "NURNABILLAH BINTI KHALID",
+    "email": "nurnabillah@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "357096",
+    "fullname": "NURNIDA ELMIRA BINTI OTHMAN",
+    "email": "nurnida@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "238953",
+    "fullname": "NURSALBIAH BINTI NASIR",
+    "email": "nursalbiah@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "399876",
+    "fullname": "NURUL HAKIMAH BINTI MOHD LAZIM",
+    "email": "hakimahlazim@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "299510",
+    "fullname": "NURUL HAYATI BINTI ABDUL HALIM",
+    "email": "hayatihalim@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "90012771",
+    "fullname": "NURUL IZZATUL AKMA BINTI KATIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "322089",
+    "fullname": "NURUL SYUHADAH BINTI KHUSAINI",
+    "email": "nurulsyuhadah2089@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "850425",
+    "fullname": "ONG TIT SUEN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "194000",
+    "fullname": "OW CHEE SHENG @ AW HEE TENG (DR) (DATUK PROF.)",
+    "email": "owche870@salam.uitm.edu.my",
+    "designation": "DATUK PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR (KONTRAK 29000)",
+    "current_position": "PROFESOR (KONTRAK 29000)"
+  },
+  {
+    "staff_id": "90019593",
+    "fullname": "PROF IR DR HJ AHMED JAFFAR",
+    "email": "ahmedjaffar@salam.uitm.edu.my",
+    "designation": "PROFESOR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90013203",
+    "fullname": "PROF MADYA DR RAHIM BIN ATAN",
+    "email": "",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "855886",
+    "fullname": "PROF MADYA MOHD SHIF ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "869539",
+    "fullname": "PUTERI ZIRWATUL NADILA BT MEGAT ZAMANHURI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "260028",
+    "fullname": "QHAIRUL NATRAH BINTI BAHARUDIN",
+    "email": "qn@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "SETIAUSAHA PEJABAT KANAN",
+    "current_position": "SETIAUSAHA PEJABAT KANAN"
+  },
+  {
+    "staff_id": "269566",
+    "fullname": "RAHANI BINTI ABDUL RAHMAN",
+    "email": "rahani@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "78689",
+    "fullname": "RAHIM BIN ATAN (HAJI) (DR)",
+    "email": "rahimatan@salam.uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "KETUA"
+  },
+  {
+    "staff_id": "834564",
+    "fullname": "RAJA IZAMSHAH RAJA ABDULLAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "822958",
+    "fullname": "RAJA MAZUIR RAJA AHSAN SHAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "223748",
+    "fullname": "RAMLAN BIN KASIRAN",
+    "email": "ramlan748@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "90027366",
+    "fullname": "RAMLAN BIN ZAILANI",
+    "email": "",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "38467",
+    "fullname": "RAMLI BIN BADRON",
+    "email": "ramlibadron@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "170312",
+    "fullname": "RAMZYZAN BIN RAMLY",
+    "email": "ramzyzan@uitm.edu.my",
+    "designation": "PROFESOR MADYA TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "827843",
+    "fullname": "RAYVEN JAY CHINIAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "270571",
+    "fullname": "RAZALI BIN HASSAN",
+    "email": "razalihassan@uitm.edu.my",
+    "designation": "IR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "829511",
+    "fullname": "RAZALI BIN MOHD TIHTH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "817947",
+    "fullname": "RAZEIM AZPAR MOHD BASHIR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "191524",
+    "fullname": "RIZAL EFFENDY BIN MOHD NASIR",
+    "email": "rizal524@uitm.edu.my",
+    "designation": "PROFESOR MADYA TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "832029",
+    "fullname": "RIZAL EFFENDY BIN MOHD NASIR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "92461",
+    "fullname": "ROHAYA BT YAHAYA",
+    "email": "rohaya461@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "825133",
+    "fullname": "ROHAYATI BINTI BAKRI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "814665",
+    "fullname": "ROMZEE BIN ISMAIL",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "847674",
+    "fullname": "ROSDI BIN MEOR ENDUT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "189714",
+    "fullname": "ROSELEENA BINTE JAAFAR",
+    "email": "rosel714@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA(KONTRAK 11000 B.W.NEGARA)",
+    "current_position": "PROFESOR MADYA(KONTRAK 11000 B.W.NEGARA)"
+  },
+  {
+    "staff_id": "374118",
+    "fullname": "ROSHAKIMAH BINTI MOHD ISA",
+    "email": "roshakimah@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "238791",
+    "fullname": "ROSLIANA BINTI ABU BAKAR",
+    "email": "rosliana8791@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "851084",
+    "fullname": "ROSMAWATI MAT JIHIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "245645",
+    "fullname": "ROSNADIAH BINTI BAHSAN",
+    "email": "rosnadiah@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "869898",
+    "fullname": "ROSNIZA BT RABILAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "103392",
+    "fullname": "ROSZIAN BINTI SHAHARUDDIN",
+    "email": "roszi392@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF KANAN",
+    "current_position": "PEGAWAI EKSEKUTIF KANAN"
+  },
+  {
+    "staff_id": "337304",
+    "fullname": "ROZINA BINTI ABDUL RANI",
+    "email": "rozina7370@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "828363",
+    "fullname": "RUSESALIZA MOHAMAD ROZI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "822974",
+    "fullname": "SABARIAH BT MOHD ZIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "180373",
+    "fullname": "SAHRIL B KUSHAIRI",
+    "email": "sahril373@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "190156",
+    "fullname": "SALINA BINTI MOHD SALLEH",
+    "email": "salinasalleh@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PENDAFTAR KANAN",
+    "current_position": "PENOLONG PENDAFTAR KANAN"
+  },
+  {
+    "staff_id": "838117",
+    "fullname": "SALINA BT SELAMAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "134507",
+    "fullname": "SALMIAH BINTI KASOLANG",
+    "email": "salmiahk@uitm.edu.my",
+    "designation": "PROFESOR TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "PROFESOR"
+  },
+  {
+    "staff_id": "397881",
+    "fullname": "SAMI ABDO MOHAMMED AL-ALIMI",
+    "email": "samialalimi@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000 B/W)",
+    "current_position": "PENSYARAH KANAN (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "829993",
+    "fullname": "SAMSOL FAIZAL BIN ANIS",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "856814",
+    "fullname": "SHAFIZAL BIN MAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "122344",
+    "fullname": "SHAHAR BIN ISMAIL",
+    "email": "shaha344@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA TERTINGGI",
+    "current_position": "PENOLONG JURUTERA TERTINGGI"
+  },
+  {
+    "staff_id": "136233",
+    "fullname": "SHAHARUDIN BIN AHMAD",
+    "email": "syadmnov@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "190567",
+    "fullname": "SHAHIDAN BIN MOHAMAD",
+    "email": "shahi567@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "817675",
+    "fullname": "SHAHRIL BIN NOH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "286701",
+    "fullname": "SHAIFUL AMRI BIN RAMLI",
+    "email": "shaifulamri@uitm.edu.my",
+    "designation": "TC.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "90001002",
+    "fullname": "SHARUZEE BIN ABDUL HAMID",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "855899",
+    "fullname": "SHARZALI B CHE MAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "838133",
+    "fullname": "SHASTHRI SIVAGURU",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "43164",
+    "fullname": "SHAWAL BIN IBRAHIM",
+    "email": "shawalibrahim@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG JURUTERA",
+    "current_position": "PENOLONG JURUTERA"
+  },
+  {
+    "staff_id": "316820",
+    "fullname": "SITI AZNIM SYAKILA BINTI BAKRI",
+    "email": "sitia820@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PEGAWAI SAINS KANAN",
+    "current_position": "PENOLONG PEGAWAI SAINS KANAN"
+  },
+  {
+    "staff_id": "827348",
+    "fullname": "SITI IDA FARIDA BT ABD RAZAK",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "854395",
+    "fullname": "SITI KHADIJAH BINTI ALIAS",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "294528",
+    "fullname": "SITI MARIAM BINTI ABDUL RAHMAN",
+    "email": "mariam4528@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "342700",
+    "fullname": "SITI NAJWA BINTI MUHAMAD ZAMRI",
+    "email": "najwazmr@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEGAWAI EKSEKUTIF",
+    "current_position": "PEGAWAI EKSEKUTIF"
+  },
+  {
+    "staff_id": "90016281",
+    "fullname": "SITI NOR BAIZURA ZAWAWI",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "822929",
+    "fullname": "SITI NORBAYA DAUD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "338222",
+    "fullname": "SITI RABIZAH BINTI MAKHSIN",
+    "email": "sitirabizah@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "KOORDINATOR"
+  },
+  {
+    "staff_id": "165233",
+    "fullname": "SITI ZAINUN BINTI MOHAMAD",
+    "email": "sitiz233@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "KERANI KANAN",
+    "current_position": "KERANI KANAN"
+  },
+  {
+    "staff_id": "834603",
+    "fullname": "SITI ZALIHA BINTI MOHAMMAD NOOR",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90025020",
+    "fullname": "SOLEHUDDIN BIN SHUIB",
+    "email": "",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "817691",
+    "fullname": "SUAIBUNAHA BIN JUSOH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "819385",
+    "fullname": "SUHAIME B SUPARMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "142010",
+    "fullname": "SUHAIME BIN SAPARI",
+    "email": "suhaime05@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "822945",
+    "fullname": "SUHAIRI BIN ABDUL SATA",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "823300",
+    "fullname": "SUHAIZI HASSAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "190169",
+    "fullname": "SUKARNUR BIN CHE ABDULLAH",
+    "email": "sukarnur@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "70506",
+    "fullname": "SULAIMAN B MOHAMAD",
+    "email": "sulaiman506@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PENSYARAH (DM32)",
+    "current_position": "PENOLONG PENSYARAH (DM32)"
+  },
+  {
+    "staff_id": "840037",
+    "fullname": "SULAIMAN HJ ABDUL RAHMAN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "40824",
+    "fullname": "SUNHAJI B HAJI KIYAI ABAS",
+    "email": "sunhajiabas@salam.uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "851026",
+    "fullname": "SURIATI ABDULLAH",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "323389",
+    "fullname": "SUZAILI SHAH BIN BAHARUDDIN",
+    "email": "sshah3389@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PEMBANTU MAKMAL",
+    "current_position": "PEMBANTU MAKMAL"
+  },
+  {
+    "staff_id": "375971",
+    "fullname": "SUZILAWATI BINTI MUHAMUD @ KAYAT",
+    "email": "suzilawati6191@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "90020409",
+    "fullname": "SYAHIRA RAIHAN BINTI OON",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "866503",
+    "fullname": "SYAZUAN BIN ABDUL LATIP",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "817701",
+    "fullname": "SYED MOHD NAZRI BIN SYED AZIZ",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "394295",
+    "fullname": "TEMITOPE THEOPHILUS DELE-AFOLABI",
+    "email": "deleafolabitemitope@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000 B/W)",
+    "current_position": "PENSYARAH KANAN (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "187952",
+    "fullname": "TUAN MUHD HAFIIDZ BIN TUAN KAMAUZAMAN",
+    "email": "tuanm952@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PEGAWAI SAINS KANAN",
+    "current_position": "PENOLONG PEGAWAI SAINS KANAN"
+  },
+  {
+    "staff_id": "261784",
+    "fullname": "UMI KALSOM BINTI AHMAD",
+    "email": "umikalsom@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH MUDA (SEMENTARA)",
+    "current_position": "PENSYARAH MUDA (SEMENTARA)"
+  },
+  {
+    "staff_id": "169789",
+    "fullname": "VALLIYAPPAN DAVID A/L NATARAJAN",
+    "email": "davidfkm@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "168939",
+    "fullname": "WAN AHMAD NAJMI BIN WAN MOHAMED",
+    "email": "wanajmi@uitm.edu.my",
+    "designation": "PROFESOR DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR",
+    "current_position": "PROFESOR"
+  },
+  {
+    "staff_id": "176840",
+    "fullname": "WAN MAZLINA BINTI WAN MOHAMED",
+    "email": "wmazlina@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "847658",
+    "fullname": "WAN MOHD FAIRUZ BIN WAN MAMAT",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "370361",
+    "fullname": "WAN NURSHAZWANI BINTI WAN ZAKARIA",
+    "email": "wshazwani@uitm.edu.my",
+    "designation": "PROFESOR MADYA DR",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "273895",
+    "fullname": "WAN SULAIMAN BIN WAN MOHAMAD",
+    "email": "wsulaiman@uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "830555",
+    "fullname": "WAN SULAIMAN BIN WAN MOHAMAD",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "72685",
+    "fullname": "YA'KUB B MD TAIB",
+    "email": "yakubtaib@uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA KHAS",
+    "current_position": "PROFESOR MADYA KHAS"
+  },
+  {
+    "staff_id": "193768",
+    "fullname": "YUPITER HARANGAN PRASADA MANURUNG",
+    "email": "yupiter.manurung@uitm.edu.my",
+    "designation": "PROFESOR IR. TS. DR.-ING",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR (KONTRAK 29000 B/W)",
+    "current_position": "PROFESOR (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "828376",
+    "fullname": "YUSNIZA BT YEM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "381062",
+    "fullname": "YUSUF OLANREWAJU BUSARI",
+    "email": "yusufbusari@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN (KONTRAK 29000 B/W)",
+    "current_position": "PENSYARAH KANAN (KONTRAK 29000 B/W)"
+  },
+  {
+    "staff_id": "833976",
+    "fullname": "YUZAINEE MD. YUSOFF",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "90006267",
+    "fullname": "ZAINI BIN CHE AWANG",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "254898",
+    "fullname": "ZAINOOR HAILMEE BIN SOLIHIN",
+    "email": "zainoor@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
+  },
+  {
+    "staff_id": "864741",
+    "fullname": "ZAINOOR HAILMEE BIN SOLIHIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN (SEPENUH MASA)",
+    "current_position": "PENSYARAH SAMBILAN (SEPENUH MASA)"
+  },
+  {
+    "staff_id": "77321",
+    "fullname": "ZAINUDDIN BIN MOHAMAD (IR)",
+    "email": "zainuddin1@salam.uitm.edu.my",
+    "designation": "IR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH",
+    "current_position": "PENSYARAH"
+  },
+  {
+    "staff_id": "850988",
+    "fullname": "ZAINUDIN BIN A RASID",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "122755",
+    "fullname": "ZAMRI BIN ABDUL RAHMAN",
+    "email": "zamriabd@uitm.edu.my",
+    "designation": "PROFESOR MADYA",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "829582",
+    "fullname": "ZANINA SHAHABUDIN",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "213127",
+    "fullname": "ZULKIFLI BIN MOHAMED",
+    "email": "zulkifli127@uitm.edu.my",
+    "designation": "PROFESOR MADYA TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "25483",
+    "fullname": "ZULKIFLI BIN TAWIL",
+    "email": "zult@salam.uitm.edu.my",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENOLONG PENDAFTAR",
+    "current_position": "PENOLONG PENDAFTAR"
+  },
+  {
+    "staff_id": "855585",
+    "fullname": "ZURAIDAH BT IBRAHIM",
+    "email": "",
+    "designation": "",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH SAMBILAN",
+    "current_position": "PENSYARAH SAMBILAN"
+  },
+  {
+    "staff_id": "183419",
+    "fullname": "ZURAIDAH BT SALLEH",
+    "email": "szuraidah@uitm.edu.my",
+    "designation": "PROFESOR MADYA TS. DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PROFESOR MADYA",
+    "current_position": "PROFESOR MADYA"
+  },
+  {
+    "staff_id": "189798",
+    "fullname": "ZURRIATI BINTI MOHD ALI",
+    "email": "zurriatimohdali@uitm.edu.my",
+    "designation": "DR.",
+    "permanent_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "present_faculty": "FAKULTI KEJURUTERAAN MEKANIKAL",
+    "position": "PENSYARAH KANAN",
+    "current_position": "PENSYARAH KANAN"
   }
 ]
