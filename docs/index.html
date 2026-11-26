@@ -161,6 +161,12 @@
   .person-picker+.slicers{margin-top:12px}
   .person-picker .note{margin-top:6px}
   .combo{position:relative}
+  .combo-box{position:relative}
+  .combo-box .search-input{padding-right:46px}
+  .combo-toggle{position:absolute;top:1px;right:1px;bottom:1px;width:42px;border:0;border-left:1px solid var(--border);border-radius:0 5px 5px 0;background:var(--surface2);color:var(--text2);display:flex;align-items:center;justify-content:center}
+  .combo-toggle:hover{background:var(--accent-soft);color:var(--accent)}
+  .combo-toggle .chev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+  .combo-toggle[aria-expanded="true"] .chev{transform:translateY(2px) rotate(-135deg)}
   .combo-list{position:absolute;top:100%;left:0;right:0;z-index:50;margin-top:4px;max-height:300px;overflow-y:auto;list-style:none;background:var(--surface);color:var(--text);border:1px solid var(--control);border-radius:6px;box-shadow:0 6px 18px rgba(16,24,40,.14);padding:4px 0}
   .combo-list li{padding:8px 12px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
   .combo-list li:hover,.combo-list li[aria-selected="true"]{background:var(--accent-soft)}
@@ -179,6 +185,42 @@
   .profile-meta{font-size:14px;color:var(--text2);margin-top:4px}
   .profile-links{display:flex;gap:8px;flex-wrap:wrap}
   .sub-h{font-size:14px;font-weight:700;margin:18px 0 8px}
+
+  /* PUBLICATION DETAIL PANEL: a side panel on wide screens, a bottom sheet on phones */
+  .title-btn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-align:left;text-decoration:underline;text-underline-offset:2px;display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .title-btn:hover{text-decoration-thickness:2px}
+  dialog.drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(560px,100%);height:100%;max-height:none;max-width:none;padding:0;border:0;border-left:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:-8px 0 28px rgba(16,24,40,.18)}
+  dialog.drawer[open]{display:flex;flex-direction:column}
+  dialog.drawer::backdrop{background:rgba(15,22,32,.38)}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 22px;border-bottom:1px solid var(--border)}
+  .drawer-kicker{font-size:13px;font-weight:600;color:var(--text2)}
+  .drawer-close{width:40px;height:40px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:24px;line-height:1;color:var(--text2)}
+  .drawer-close:hover{background:var(--accent-soft);color:var(--text)}
+  .drawer-body{overflow-y:auto;padding:18px 22px 28px;flex:1}
+  .drawer-body h2{font-size:19px;line-height:1.35;font-weight:700}
+  .pd-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+  .pd-tag{font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--neutral-bg);color:var(--neutral-ink)}
+  .pd-tag.strong{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+  .pd-sec{margin-top:20px}
+  .pd-sec h3{font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+  .pd-facts{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:14px}
+  .pd-facts dt{color:var(--text2)}
+  .pd-facts dd{min-width:0;overflow-wrap:anywhere}
+  .pd-facts a{color:var(--accent)}
+  .pd-people{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px}
+  .pd-people li{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .pd-kpis{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px}
+  .pd-kpis li::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+  .pd-text{font-size:14px;overflow-wrap:anywhere}
+  @media (max-width:700px){
+    dialog.drawer{inset:auto 0 0 0;width:100%;height:88vh;height:88dvh;border-left:0;border-top:1px solid var(--border);border-radius:14px 14px 0 0}
+    .drawer-head{padding-left:16px}
+    .drawer-body{padding:16px 16px 28px}
+    .pd-facts{grid-template-columns:1fr;gap:2px}
+    .pd-facts dd{margin-bottom:8px}
+    td.clip .title-btn{white-space:normal}
+    .drawer-close{width:44px;height:44px}
+  }
 
   /* PAGINATION */
   .pagination{display:flex;gap:6px;align-items:center;padding:12px 0 0;justify-content:flex-end;font-size:13px;color:var(--text2);flex-wrap:wrap}
@@ -316,7 +358,7 @@
 <div class="content">
   <div class="section-header">
     <h2>Publications</h2>
-    <p>Filter with the menus or click a bar. Author names link to their staff profile.</p>
+    <p>Filter with the menus or click a bar. Click a title to see the publication's details; author names open their staff profile.</p>
   </div>
   <div class="panel"><div class="person-picker"></div><div class="slicers" data-slicers="pub"></div></div>
   <p class="note" style="margin-bottom:8px">Pencapaian KPI for publications: FKM academic staff at UiTM Selangor, following the filters above.</p>
@@ -539,6 +581,14 @@
 
 </main>
 
+<dialog class="drawer" id="pub-dialog" aria-labelledby="pd-title">
+  <div class="drawer-head">
+    <p class="drawer-kicker">Publication details</p>
+    <button type="button" class="drawer-close" data-close-dialog aria-label="Close publication details">&times;</button>
+  </div>
+  <div class="drawer-body" id="pd-body"></div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────────
@@ -551,7 +601,7 @@ let SETS = { pi: [], grant: [] };
 let COUNTS = { pubs: new Map(), pi: new Map(), grant: new Map() };
 const F = { pub: {}, pi: {}, grant: {}, staff: {}, person: null };   // every filter lives here
 const DATASETS = ['pub', 'pi', 'grant', 'staff'];
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 const PAGES = ['overview', 'pub', 'pi', 'grant', 'staff'];
 const pageState = { pub: 1, pi: 1, grant: 1, staff: 1, ppub: 1, ppi: 1, pgrant: 1 };
 const sortState = { key: 'pubs', dir: -1 };
@@ -814,13 +864,19 @@ const PICKER_HINT = 'Shows only this staff member\'s publications, PI projects a
 // A custom list instead of <datalist>: the browser draws datalist suggestions in its own
 // colours (dark in Chrome's dark mode) and they cannot be styled.
 const SORTED_STAFF = () => [...DATA.staff].sort((a, b) => a.fullname.localeCompare(b.fullname));
+// Two ways in: tapping the text box is for typing (suggestions appear once you type), and
+// the arrow button opens the full list without focusing the box, so phones do not pop up
+// the keyboard when someone only wants to browse.
 function buildPickers() {
   document.querySelectorAll('.person-picker').forEach((box, i) => {
     box.innerHTML = `<div class="picker">
         <div class="field combo">
-          <label for="person-${i}">Staff member, by name or staff ID</label>
-          <input class="search-input" id="person-${i}" type="text" autocomplete="off" spellcheck="false"
-            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="person-${i}-list" data-person-input>
+          <label for="person-${i}">Staff member, type a name or open the list</label>
+          <div class="combo-box">
+            <input class="search-input" id="person-${i}" type="text" autocomplete="off" spellcheck="false"
+              role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="person-${i}-list" data-person-input>
+            <button type="button" class="combo-toggle" aria-label="Show all staff" aria-expanded="false" aria-controls="person-${i}-list" tabindex="-1"><span class="chev" aria-hidden="true"></span></button>
+          </div>
           <ul class="combo-list" id="person-${i}-list" role="listbox" aria-label="Staff members" hidden></ul>
         </div>
         <button type="button" class="btn" data-person-clear hidden>Clear staff member</button>
@@ -836,27 +892,31 @@ function renderPickers() {
     box.querySelector('[data-person-clear]').hidden = !s;
   });
 }
-function staffMatches(v) {
-  const q = v.trim().toLowerCase();
-  const s = F.person && STAFF_BY_ID.get(F.person);
-  if (!q || (s && v === personLabel(s))) return SORTED_STAFF();
+const comboOf = el => el.closest('.combo');
+const inputOf = el => comboOf(el).querySelector('[data-person-input]');
+const listOf = el => comboOf(el).querySelector('.combo-list');
+function staffMatches(q) {
+  q = q.trim().toLowerCase();
+  if (!q) return SORTED_STAFF();
   return SORTED_STAFF().filter(x => x.staff_id.includes(q) || x.fullname.toLowerCase().includes(q));
 }
-function openList(input) {
-  const list = document.getElementById(input.getAttribute('aria-controls'));
-  const hits = staffMatches(input.value);
+function openList(input, all) {
+  const list = listOf(input);
+  const hits = staffMatches(all ? '' : input.value);
   list.innerHTML = hits.length
     ? hits.map((x, i) => `<li role="option" id="${list.id}-${i}" data-id="${esc(x.staff_id)}" aria-selected="false"${x.staff_id === F.person ? ' class="current"' : ''}>${esc(personLabel(x))}</li>`).join('')
     : '<li class="combo-empty" aria-disabled="true">No staff member matches</li>';
   list.hidden = false;
   list.scrollTop = 0;
+  if (all) list.querySelector('.current')?.scrollIntoView({ block: 'center' });
   input.setAttribute('aria-expanded', 'true');
+  comboOf(input).querySelector('.combo-toggle').setAttribute('aria-expanded', 'true');
   input.removeAttribute('aria-activedescendant');
 }
 function closeList(input) {
-  const list = document.getElementById(input.getAttribute('aria-controls'));
-  list.hidden = true;
+  listOf(input).hidden = true;
   input.setAttribute('aria-expanded', 'false');
+  comboOf(input).querySelector('.combo-toggle').setAttribute('aria-expanded', 'false');
   input.removeAttribute('aria-activedescendant');
 }
 function pickPerson(input, id) {
@@ -867,8 +927,7 @@ function pickPerson(input, id) {
   setFilter('person', '', id);
 }
 function moveActive(input, step) {
-  const list = document.getElementById(input.getAttribute('aria-controls'));
-  const opts = [...list.querySelectorAll('[role=option]')];
+  const opts = [...listOf(input).querySelectorAll('[role=option]')];
   if (!opts.length) return;
   const cur = opts.findIndex(o => o.getAttribute('aria-selected') === 'true');
   const next = Math.max(0, Math.min(opts.length - 1, cur + step));
@@ -877,16 +936,15 @@ function moveActive(input, step) {
   opts[next].scrollIntoView({ block: 'nearest' });
 }
 document.addEventListener('focusin', e => {
-  const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
-  input.select();
-  openList(input);
+  const input = e.target.closest('[data-person-input]'); if (input) input.select();
 });
 document.addEventListener('input', e => {
-  const input = e.target.closest('[data-person-input]'); if (input && DATA) openList(input);
+  const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
+  if (input.value.trim()) openList(input); else closeList(input);
 });
 document.addEventListener('keydown', e => {
   const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
-  const list = document.getElementById(input.getAttribute('aria-controls'));
+  const list = listOf(input);
   if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
     e.preventDefault();
     if (list.hidden) openList(input);
@@ -895,8 +953,8 @@ document.addEventListener('keydown', e => {
     e.preventDefault(); closeList(input);
   } else if (e.key === 'Enter') {
     e.preventDefault();
-    const active = list.querySelector('[aria-selected="true"]');
-    const opts = list.querySelectorAll('[role=option]');
+    const active = list.hidden ? null : list.querySelector('[aria-selected="true"]');
+    const opts = list.hidden ? [] : list.querySelectorAll('[role=option]');
     if (active) pickPerson(input, active.dataset.id);
     else if (opts.length === 1) pickPerson(input, opts[0].dataset.id);
     else if (!input.value.trim()) { closeList(input); if (F.person) setFilter('person', '', null); }
@@ -904,11 +962,23 @@ document.addEventListener('keydown', e => {
       opts.length ? `${opts.length} staff match "${input.value.trim()}". Pick one from the list.` : `No staff member matches "${input.value.trim()}".`;
   }
 });
-// mousedown, not click, so the input keeps focus and the list does not close first.
+// mousedown, not click: picking a name must not blur the text box first, which would close
+// the list. A finger that scrolls the list sends no mousedown, so scrolling never picks.
 document.addEventListener('mousedown', e => {
-  const li = e.target.closest('.combo-list [role=option]'); if (!li) return;
-  e.preventDefault();
-  pickPerson(li.closest('.combo').querySelector('[data-person-input]'), li.dataset.id);
+  const li = e.target.closest('.combo-list [role=option]');
+  if (li) { e.preventDefault(); pickPerson(inputOf(li), li.dataset.id); return; }
+  const t = e.target.closest('.combo-toggle');
+  if (t) {
+    e.preventDefault();   // keep focus (and the phone keyboard) where it is
+    const input = inputOf(t);
+    if (listOf(t).hidden) openList(input, true); else closeList(input);
+  }
+});
+// Tapping anywhere else closes an open list.
+document.addEventListener('pointerdown', e => {
+  document.querySelectorAll('.combo-list:not([hidden])').forEach(list => {
+    if (!comboOf(list).contains(e.target)) closeList(inputOf(list));
+  });
 });
 document.addEventListener('focusout', e => {
   const input = e.target.closest('[data-person-input]'); if (!input || !DATA) return;
@@ -920,7 +990,6 @@ document.addEventListener('focusout', e => {
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-person-clear]'); if (!b) return;
   setFilter('person', '', null);
-  b.closest('.person-picker').querySelector('[data-person-input]').focus();
 });
 
 // ── SLICERS (dropdown filters) ─────────────────────────────────────────────
@@ -1316,7 +1385,7 @@ function renderPubTable() {
   document.getElementById('pub-tbody').innerHTML = items.length ? items.map((p, i) => `
     <tr>
       <td class="num muted">${start + i + 1}</td>
-      <td class="clip" title="${esc(p.title)}">${cell(p.title)}</td>
+      <td class="clip">${titleBtn(p)}</td>
       <td>${cell(nice(p.type))}</td>
       <td>${blank(p.index_name) ? cell('') : esc(nice(p.index_name))}</td>
       <td>${cell(p.jcr_quartile)}</td>
@@ -1402,7 +1471,7 @@ function renderProfile() {
     const others = p.rows.filter(r => r.staff_id !== s.staff_id);
     return `<tr>
       <td class="num muted">${pp.start + i + 1}</td>
-      <td class="clip" title="${esc(p.title)}">${cell(p.title)}</td>
+      <td class="clip">${titleBtn(p)}</td>
       <td>${cell(nice(p.type))}</td>
       <td>${blank(p.index_name) ? cell('') : esc(nice(p.index_name))}</td>
       <td>${cell(p.jcr_quartile)}</td>
@@ -1429,8 +1498,98 @@ function selectPerson(id, scroll) {
 }
 document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => showPage(b.dataset.goto)));
 
+// ── PUBLICATION DETAILS ────────────────────────────────────────────────────
+function titleBtn(p) {
+  if (blank(p.title)) return cell('');
+  return `<button type="button" class="title-btn" data-pub="${esc(p.pub_id)}" title="${esc(p.title)}">${esc(p.title)}</button>`;
+}
+// Which of the 10 Pencapaian KPIs this publication counts toward (same rules as the cards).
+function pubKpis(p) {
+  const rows = p.rows.filter(inKpiScope);
+  if (!rows.length) return null;
+  const jp = p.type === 'JOURNAL' || p.type === 'PROCEEDING', out = [];
+  if (jp && KPI_INDEX.has(p.index_name)) {
+    const lead = rows.filter(r => KPI_LEAD.has(r.author_type)).map(r => r.author_name);
+    if (lead.length) out.push(`Corresponding / first authors (${[...new Set(lead)].join(', ')})`);
+    out.push('Indexed journals & proceedings');
+    if (p.qs === 'Yes') out.push('QS journals & proceedings');
+  }
+  if (jp && (p.jcr_quartile === 'Q1' || p.jcr_quartile === 'Q2')) out.push('Q1 & Q2 journals & proceedings');
+  if (jp && p.index_name === 'MYCITE') out.push('MyCite journals & proceedings');
+  if (jp && blank(p.index_name)) out.push('Non-indexed journals & proceedings');
+  if (KPI_BOOK.has(p.type)) out.push('Books & book chapters');
+  else if (!jp) out.push('Other publications');
+  return out;
+}
+function facts(pairs) {
+  const rows = pairs.filter(([, v]) => !blank(v));
+  return rows.length ? `<dl class="pd-facts">${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
+}
+const extLink = (href, text) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>`;
+function openPub(id) {
+  const p = PUBS.find(x => x.pub_id === id); if (!p) return;
+  const dlg = document.getElementById('pub-dialog');
+  const doi = blank(p.doi) ? '' : p.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '');
+  const url = /^https?:\/\//i.test(p.url || '') ? p.url : '';
+  const isProc = p.type === 'PROCEEDING' || !blank(p.conference);
+  const tags = [
+    `<span class="pd-tag">${esc(nice(p.type))}</span>`,
+    blank(p.index_name) ? '<span class="pd-tag">Not indexed</span>' : `<span class="pd-tag strong">${esc(nice(p.index_name))}</span>`,
+    blank(p.jcr_quartile) ? '' : `<span class="pd-tag strong">JCR ${esc(p.jcr_quartile)}</span>`,
+    p.qs === 'Yes' ? '<span class="pd-tag strong">QS</span>' : '',
+    blank(p.level) ? '' : `<span class="pd-tag">${esc(nice(p.level))}</span>`,
+  ].join('');
+  const fkm = p.rows.map(r => `<li>${personBtn(r.staff_id, r.author_name)}<span class="muted">${esc(ROLE_LABEL[r.author_type] || nice(r.author_type))}</span></li>`).join('');
+  const kpis = pubKpis(p);
+  document.getElementById('pd-body').innerHTML = `
+    <h2 id="pd-title">${esc(p.title)}</h2>
+    <div class="pd-tags">${tags}</div>
+    <section class="pd-sec"><h3>Published in</h3>${facts([
+      [isProc ? 'Proceedings' : 'Journal / book', esc(p.sub_title)],
+      ['Conference', esc(p.conference)],
+      ['Venue', esc(p.venue)],
+      ['Conference date', esc(p.conf_date)],
+      ['Organiser', esc(p.organiser)],
+      ['Publisher', esc(p.publisher)],
+      ['Volume / issue', [p.volume, p.issues].filter(v => !blank(v)).map(esc).join(' / ')],
+      ['Date', esc(p.pub_date)],
+      ['ISSN', esc(p.issn)],
+      ['ISBN', esc(p.isbn)],
+      ['DOI', doi ? extLink('https://doi.org/' + doi, doi) : ''],
+      ['Link', url ? extLink(url, url.replace(/^https?:\/\//, '')) : ''],
+    ])}</section>
+    <section class="pd-sec"><h3>FKM authors</h3><ul class="pd-people">${fkm}</ul></section>
+    ${blank(p.authors) && blank(p.external_authors) ? '' : `<section class="pd-sec"><h3>All authors</h3>${facts([
+      ['UiTM authors', esc((p.authors || '').replace(/\s*,\s*/g, ', '))],
+      ['External authors', esc((p.external_authors || '').replace(/\s*,\s*/g, ', '))],
+    ])}</section>`}
+    <section class="pd-sec"><h3>Counted in Pencapaian KPI</h3>${kpis
+      ? (kpis.length ? `<ul class="pd-kpis">${kpis.map(k => `<li>${esc(k)}</li>`).join('')}</ul>` : '<p class="pd-text muted">None of the 10 figures.</p>')
+      : '<p class="pd-text muted">Not counted: none of its authors is an FKM academic at UiTM Selangor.</p>'}</section>
+    <section class="pd-sec"><h3>Record</h3>${facts([
+      ['PRIME ref. no.', esc(p.ref_no)],
+      ['Publication ID', esc(p.pub_id)],
+      ['Group', esc(DIMS.pub.group.fmt(p.group || 'none'))],
+      ['Refereed', p.refereed === 'Y' ? 'Yes' : p.refereed === 'N' ? 'No' : esc(p.refereed)],
+      ['Paper type', esc(nice(p.paper_type))],
+      ['Media', esc(nice(p.media))],
+      ['Status', esc(nice(p.status))],
+    ])}</section>`;
+  if (!dlg.open) dlg.showModal();
+  dlg.querySelector('.drawer-body').scrollTop = 0;
+  dlg.querySelector('[data-close-dialog]').focus();
+}
+const pubDialog = document.getElementById('pub-dialog');
+pubDialog.addEventListener('click', e => {
+  // A click on the backdrop lands on the dialog element itself.
+  if (e.target === pubDialog || e.target.closest('[data-close-dialog]')) pubDialog.close();
+  else if (e.target.closest('[data-person]')) pubDialog.close();
+});
+
 // ── EVENTS ─────────────────────────────────────────────────────────────────
 document.addEventListener('click', e => {
+  const tb = e.target.closest('[data-pub]');
+  if (tb) return openPub(tb.dataset.pub);
   const pb = e.target.closest('[data-person]');
   if (pb) return selectPerson(pb.dataset.person, true);
   const b = e.target.closest('[data-page]'); if (!b) return;

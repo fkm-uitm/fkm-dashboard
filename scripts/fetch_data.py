@@ -130,6 +130,20 @@ if not pub_df.empty:
             "negeri":       safe_str(row.get("NEGERI", "")),
             "author_category": safe_str(row.get("AUTHOR_CATEGORY_NAME", "")),
             "qs":           safe_str(row.get("QS", "")),
+            # Shown in the publication detail panel
+            "sub_title":    safe_str(row.get("SUB_TITLE", "")),
+            "conference":   safe_str(row.get("CONFERENCE_NAME", "")),
+            "venue":        safe_str(row.get("CONFERENCE_VENUE", "")),
+            "conf_date":    safe_str(row.get("CONFERENCE_START_DATE", "")),
+            "organiser":    safe_str(row.get("ORGANISER", "")),
+            "isbn":         safe_str(row.get("ISBN_NO", "")),
+            "issn":         safe_str(row.get("ISSN_NO", "")),
+            "url":          safe_str(row.get("URL", "")),
+            "refereed":     safe_str(row.get("REFEREED", "")),
+            "paper_type":   safe_str(row.get("PUBLICATION_PAPER_TYPE", "")),
+            "media":        safe_str(row.get("PUBLICATION_MEDIA", "")),
+            "authors":      safe_str(row.get("AUTHORS", "")),
+            "external_authors": safe_str(row.get("EXTERNAL_AUTHORS", "")),
         })
 
 # Unique publications by PUB_ID
