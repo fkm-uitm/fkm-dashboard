@@ -354,7 +354,7 @@
     </div>
     <div class="chart-card">
       <h3>Academic designation</h3>
-      <p class="chart-desc">Staff with a recorded title</p>
+      <p class="chart-desc">Staff with a recorded title, top 8 titles</p>
       <div class="chart-wrap tall"><canvas id="ch-desig"></canvas></div>
     </div>
   </div>
@@ -616,7 +616,11 @@ staff() {
   bar('ch-position', pos.map(e => nice(e[0])), pos.map(e => e[1]), { horizontal: true });
 
   const des = Object.entries(staff.by_designation).filter(([k]) => !blank(k)).sort((a, b) => b[1] - a[1]);
-  bar('ch-desig', des.map(e => nice(e[0])), des.map(e => e[1]), { horizontal: true });
+  // Many title variants exist; show the 8 largest and fold the rest into "Other".
+  const desTop = des.slice(0, 8).map(e => [nice(e[0]), e[1]]);
+  const desRest = des.slice(8).reduce((a, e) => a + e[1], 0);
+  if (desRest) desTop.push([`Other (${des.length - 8} titles)`, desRest]);
+  bar('ch-desig', desTop.map(e => e[0]), desTop.map(e => e[1]), { horizontal: true });
 },
 };
 
