@@ -11,9 +11,11 @@
   --surface:     #ffffff;
   --surface2:    #f8f9fb;
   --border:      #e2e6ed;
+  /* Shadows: used selectively as elevation markers (R-12) */
   --shadow:      0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
   --shadow-lg:   0 4px 24px rgba(0,0,0,.12);
 
+  /* Brand palette: FKM navy + one blue accent + semantic status (R-29: 2 core + 1 accent + semantics) */
   --brand:       #1e3a5f;
   --brand-dark:  #152c48;
   --brand-light: #2a4f80;
@@ -23,7 +25,6 @@
 
   --accent:      #2563eb;
   --accent-soft: #eff6ff;
-  --accent-ink:  #ffffff;
 
   --text:        #111827;
   --text2:       #4b5563;
@@ -32,8 +33,6 @@
   --ok:          #16a34a;
   --ok-bg:       #dcfce7;
   --ok-ink:      #14532d;
-  --warn-bg:     #fef9c3;
-  --warn-ink:    #713f12;
   --neutral-bg:  #f1f5f9;
   --neutral-ink: #475569;
 
@@ -62,14 +61,47 @@ body {
   line-height: 1.5;
   font-size: 14px;
 }
+button, a[href], select, [role="button"] { cursor: pointer; }
 button, input, select { font: inherit; color: inherit; }
-button, a[href], select { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap; }
 .num { font-variant-numeric: tabular-nums; }
 
 /* ── App shell ─────────────────────────────────────────────────────── */
 .app { display: flex; min-height: 100vh; }
+
+/* ── LOADING / ERROR overlay (R-27) ────────────────────────────────── */
+.load-overlay {
+  position: fixed; inset: 0;
+  background: rgba(255,255,255,.92);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.load-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .load-spinner { animation: none; border-top-color: var(--accent); }
+}
+.load-text { font-size: 14px; color: var(--text2); }
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px;
+  font-size: 13px;
+}
 
 /* ── SIDEBAR ───────────────────────────────────────────────────────── */
 .sidebar {
@@ -114,11 +146,10 @@ button, a[href], select { cursor: pointer; }
 }
 
 .nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+/* F-05: nav section label — sentence case, standard weight, no wide tracking */
 .nav-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .8px;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--brand-ink2);
   padding: 8px 10px 4px;
   margin-top: 4px;
@@ -138,7 +169,6 @@ button, a[href], select { cursor: pointer; }
   font-weight: 500;
   text-align: left;
   transition: background .15s, color .15s;
-  cursor: pointer;
 }
 .nav-item:hover { background: rgba(255,255,255,.08); color: var(--brand-ink); }
 .nav-item.active {
@@ -163,7 +193,6 @@ button, a[href], select { cursor: pointer; }
 }
 .sidebar-footer strong { color: var(--brand-ink); font-size: 12px; }
 
-/* hamburger (mobile) */
 .hamburger {
   display: none;
   position: fixed;
@@ -184,7 +213,6 @@ button, a[href], select { cursor: pointer; }
   width: 18px; height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transition: .2s;
 }
 .overlay {
   display: none;
@@ -202,7 +230,7 @@ button, a[href], select { cursor: pointer; }
   min-width: 0;
 }
 
-/* ── PAGE TOPBAR ───────────────────────────────────────────────────── */
+/* ── TOPBAR ────────────────────────────────────────────────────────── */
 .topbar {
   position: sticky;
   top: 0;
@@ -217,7 +245,6 @@ button, a[href], select { cursor: pointer; }
   box-shadow: 0 1px 0 var(--border), var(--shadow);
 }
 .topbar-title { font-size: 16px; font-weight: 700; color: var(--text); }
-.topbar-sub { font-size: 12px; color: var(--text3); margin-left: 2px; }
 .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 .data-pill {
   display: inline-flex;
@@ -235,6 +262,7 @@ button, a[href], select { cursor: pointer; }
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--ok);
+  flex-shrink: 0;
 }
 
 /* ── CONTENT ───────────────────────────────────────────────────────── */
@@ -265,6 +293,8 @@ button, a[href], select { cursor: pointer; }
   position: relative;
   overflow: hidden;
 }
+/* F-04: Colored left stripe is semantic color-coding for KPI category — not decoration.
+   Each row of 5 uses a hue that maps to its data domain (staff/research/funding/people). */
 .kpi::before {
   content: '';
   position: absolute;
@@ -274,9 +304,11 @@ button, a[href], select { cursor: pointer; }
   border-radius: var(--radius) 0 0 var(--radius);
 }
 .kpi-icon {
-  font-size: 20px;
+  width: 20px; height: 20px;
   margin-bottom: 8px;
+  color: var(--kpi-color, var(--accent));
   display: block;
+  flex-shrink: 0;
 }
 .kpi-value {
   font-size: 26px;
@@ -297,7 +329,6 @@ button, a[href], select { cursor: pointer; }
   margin-top: 3px;
 }
 
-/* ── SECTION HEADING inside content ───────────────────────────────── */
 .section-title {
   font-size: 13px;
   font-weight: 700;
@@ -321,8 +352,33 @@ button, a[href], select { cursor: pointer; }
 .chart-card-header { margin-bottom: 14px; }
 .chart-card h3 { font-size: 14px; font-weight: 700; color: var(--text); }
 .chart-card p  { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.chart-hint    { font-size: 11px; color: var(--accent); margin-top: 4px; }
 .chart-wrap { position: relative; height: 220px; }
 .chart-wrap.tall { height: 300px; }
+
+/* cross-filter active indicator */
+.cross-filter-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.cross-filter-clear {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0 2px;
+  line-height: 1;
+  cursor: pointer;
+}
 
 /* ── TOOLBAR ───────────────────────────────────────────────────────── */
 .toolbar {
@@ -330,18 +386,20 @@ button, a[href], select { cursor: pointer; }
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  padding: 16px 20px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--border);
   background: var(--surface2);
   border-radius: var(--radius) var(--radius) 0 0;
 }
-.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 320px; }
 .search-wrap svg {
   position: absolute;
   left: 10px; top: 50%;
   transform: translateY(-50%);
   color: var(--text3);
   pointer-events: none;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
 }
 .search-wrap input {
   width: 100%;
@@ -369,7 +427,17 @@ button, a[href], select { cursor: pointer; }
   transition: border-color .15s;
 }
 .filter-select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
-.filter-select.active { border-color: var(--accent); font-weight: 600; }
+
+.year-range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.year-range select { padding: 7px 8px; min-height: 36px; }
+.year-sep { color: var(--text3); }
+
 .count-badge {
   margin-left: auto;
   font-size: 12px;
@@ -458,15 +526,15 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   white-space: nowrap;
   letter-spacing: .2px;
 }
-.badge-active   { background: var(--ok-bg);      color: var(--ok-ink); }
-.badge-done     { background: var(--neutral-bg);  color: var(--neutral-ink); }
-.badge-indexed  { background: #eff6ff;             color: #1d4ed8; }
-.badge-other    { background: #f0fdf4;             color: #15803d; }
-.badge-intl     { background: #faf5ff;             color: #7c3aed; }
-.badge-natl     { background: #fff7ed;             color: #c2410c; }
+.badge-active   { background: var(--ok-bg);     color: var(--ok-ink); }
+.badge-done     { background: var(--neutral-bg); color: var(--neutral-ink); }
+.badge-indexed  { background: #eff6ff;            color: #1d4ed8; }
+.badge-other    { background: #f0fdf4;            color: #15803d; }
+.badge-intl     { background: #faf5ff;            color: #7c3aed; }
+.badge-natl     { background: #fff7ed;            color: #c2410c; }
 
-/* ── NAME BUTTON ───────────────────────────────────────────────────── */
-.name-btn {
+/* ── NAME / TITLE BUTTONS ──────────────────────────────────────────── */
+.name-btn, .title-btn {
   background: none;
   border: 0;
   color: var(--accent);
@@ -474,13 +542,15 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   font-weight: 600;
   text-align: left;
   padding: 0;
-  text-decoration: none;
   cursor: pointer;
   transition: color .15s;
+  text-decoration: none;
+  line-height: 1.4;
 }
-.name-btn:hover { color: #1d40b0; text-decoration: underline; }
+.name-btn:hover, .title-btn:hover { color: #1d40b0; text-decoration: underline; }
+.title-btn { font-weight: 400; }
 
-/* ── STAFF AVATAR (table row thumbnail) ────────────────────────────── */
+/* ── STAFF AVATAR ──────────────────────────────────────────────────── */
 .row-thumb {
   width: 30px; height: 30px;
   border-radius: 50%;
@@ -491,6 +561,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   background: var(--surface2);
   flex-shrink: 0;
 }
+/* F-03: aria-hidden="true" is set on the initials span in JS (dynamic content) */
 .row-initials {
   display: inline-flex;
   align-items: center;
@@ -574,7 +645,6 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   margin-top: 4px;
   line-height: 1.5;
 }
-
 .profile-body { padding: 20px 24px; }
 .profile-links { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
 .profile-link {
@@ -591,11 +661,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   background: var(--accent-soft);
   transition: all .15s;
 }
-.profile-link:hover {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
+.profile-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 .profile-kpi-row {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -620,13 +686,115 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   margin: 16px 0 10px;
 }
 
-/* ── OVERVIEW STAT CARDS (top summary row) ─────────────────────────── */
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-  margin-bottom: 24px;
+/* ── PUBLICATION DETAIL DRAWER ─────────────────────────────────────── */
+.pub-drawer {
+  position: fixed;
+  bottom: 0; right: 0;
+  width: 100%;
+  max-width: 560px;
+  max-height: 70vh;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: var(--shadow-lg);
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform .25s ease;
 }
+.pub-drawer.open { transform: translateY(0); }
+.pub-drawer-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface2);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.pub-drawer-header h3 {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.pub-drawer-close {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  width: 30px; height: 30px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.pub-drawer-close:hover { border-color: var(--accent); color: var(--accent); }
+.pub-drawer-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+.pub-meta { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; align-items: start; }
+.pub-meta dt {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  padding-top: 2px;
+  white-space: nowrap;
+}
+.pub-meta dd { font-size: 13px; color: var(--text); }
+.pub-drawer-actions {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s;
+}
+.btn-primary:hover { background: #1d4ed8; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--surface);
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .15s;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.pub-drawer-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 399;
+}
+.pub-drawer-backdrop.open { display: block; }
 
 /* ── RESPONSIVE ────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
@@ -637,18 +805,36 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   .main { margin-left: 0; }
   .topbar { padding-left: 60px; }
   .content { padding: 20px 16px; }
+  .pub-drawer { max-width: 100%; }
+  .year-range { flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
-<!-- Sidebar overlay (mobile) -->
+<!-- F-02: Loading overlay shown during async data fetch -->
+<div class="load-overlay" id="load-overlay" role="status" aria-live="polite">
+  <div class="load-spinner" aria-hidden="true"></div>
+  <div class="load-text">Loading dashboard data...</div>
+</div>
+
+<!-- Publication detail drawer -->
+<div class="pub-drawer-backdrop" id="pub-backdrop"></div>
+<div class="pub-drawer" id="pub-drawer" role="dialog" aria-modal="true" aria-labelledby="pub-drawer-title">
+  <div class="pub-drawer-header">
+    <h3 id="pub-drawer-title"></h3>
+    <button class="pub-drawer-close" id="pub-drawer-close" aria-label="Close publication detail">&times;</button>
+  </div>
+  <div class="pub-drawer-body" id="pub-drawer-body"></div>
+  <div class="pub-drawer-actions" id="pub-drawer-actions"></div>
+</div>
+
 <div class="overlay" id="overlay"></div>
 
 <!-- ══ SIDEBAR ══════════════════════════════════════════════════════ -->
 <aside class="sidebar" id="sidebar" aria-label="Navigation">
   <div class="sidebar-logo">
-    <div class="sidebar-logo-badge">FK<span style="font-size:11px">M</span></div>
+    <div class="sidebar-logo-badge" aria-hidden="true">FK<span style="font-size:11px">M</span></div>
     <h1>FKM Research<br>Analytics</h1>
     <p>Fakulti Kejuruteraan Mekanikal<br>UiTM Shah Alam</p>
   </div>
@@ -658,29 +844,28 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 
     <button class="nav-item active" data-page="overview" aria-current="page">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M2 10a8 8 0 1 1 16 0A8 8 0 0 1 2 10Zm8-6a6 6 0 1 0 0 12A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm0 1.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>
+        <path d="M2 10a8 8 0 1 1 16 0A8 8 0 0 1 2 10Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM10 5a1 1 0 0 1 1 1v3.586l2.207 2.207a1 1 0 0 1-1.414 1.414l-2.5-2.5A1 1 0 0 1 9 10V6a1 1 0 0 1 1-1Z"/>
       </svg>
       Overview
     </button>
 
     <button class="nav-item" data-page="staff">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M9 6a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM3.5 8a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0ZM15 14c0-1.5-1.3-2.7-3-3h-4c-1.7.3-3 1.5-3 3v1h10v-1Z"/>
+        <path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 17a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z"/>
       </svg>
       Staff Profiles
     </button>
 
     <button class="nav-item" data-page="pubs">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h4.586A2 2 0 0 1 12 2.586L15.414 6A2 2 0 0 1 16 7.414V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm2 6a1 1 0 0 1 1-1h6a1 1 0 0 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2H7Z" clip-rule="evenodd"/>
+        <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h4.586A2 2 0 0 1 12 2.586L15.414 6A2 2 0 0 1 16 7.414V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm2 6a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H7Z" clip-rule="evenodd"/>
       </svg>
       Publications
     </button>
 
     <button class="nav-item" data-page="grants">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M10.75 10.818v2.614A3.13 3.13 0 0 0 11.888 13c.482-.315.612-.648.612-.875 0-.227-.13-.56-.612-.875a3.13 3.13 0 0 0-1.138-.432ZM8.33 8.62c.053.055.115.11.184.164.208.16.46.284.736.363V6.603a2.45 2.45 0 0 0-.35.13c-.14.065-.27.143-.386.233-.377.292-.514.627-.514.909 0 .184.058.39.33.585Z"/>
-        <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-6a.75.75 0 0 1 .75.75v.316a3.78 3.78 0 0 1 1.653.713c.426.33.744.74.925 1.2a.75.75 0 0 1-1.395.55 1.35 1.35 0 0 0-.428-.507 2.276 2.276 0 0 0-.755-.36V7.5c0-.414.336-.75.75-.75Zm0 12a.75.75 0 0 1-.75-.75v-.316a3.78 3.78 0 0 1-1.653-.713 3.26 3.26 0 0 1-.925-1.2.75.75 0 1 1 1.395-.55c.1.254.275.49.428.507.199.14.448.257.755.36V13.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+        <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.798 7.45c.512-.67 1.135-1.2 1.927-1.2.68 0 1.212.405 1.555.952.343.546.47 1.233.47 1.798 0 .68-.262 1.37-.752 1.86a3.45 3.45 0 0 1-.673.502v.138a1 1 0 1 1-2 0v-.6a1 1 0 0 1 1-1 1.45 1.45 0 0 0 .88-.316c.198-.194.345-.484.345-.784 0-.365-.077-.712-.22-.946-.143-.228-.295-.304-.405-.304-.277 0-.609.235-1.021.77a1 1 0 0 1-1.606-1.17ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
       </svg>
       Grants
     </button>
@@ -693,21 +878,16 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   </div>
 </aside>
 
-<!-- hamburger (mobile) -->
 <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
   <span></span><span></span><span></span>
 </button>
 
 <!-- ══ MAIN ══════════════════════════════════════════════════════════ -->
 <div class="main">
-
-  <!-- Top bar -->
   <header class="topbar">
-    <div>
-      <div class="topbar-title" id="topbar-title">Overview</div>
-    </div>
+    <div class="topbar-title" id="topbar-title">Overview</div>
     <div class="topbar-right">
-      <div class="data-pill" id="data-pill">Loading…</div>
+      <div class="data-pill" id="data-pill">Loading...</div>
     </div>
   </header>
 
@@ -715,18 +895,17 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   <div id="page-overview" class="content">
     <div class="page-header">
       <h2>Research Overview</h2>
-      <p>Aggregated figures from UiTM Expert portal — Shah Alam academic staff</p>
+      <p>Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
-
-    <div class="kpi-row cols-5" id="kpi-row1"></div>
-    <div class="kpi-row cols-5" id="kpi-row2"></div>
-
+    <div id="kpi-row1" class="kpi-row cols-5"></div>
+    <div id="kpi-row2" class="kpi-row cols-5"></div>
     <div class="section-title">Publications &amp; Grants</div>
     <div class="chart-grid two">
       <div class="chart-card">
         <div class="chart-card-header">
           <h3>H-Index Distribution (Scopus)</h3>
           <p>Number of staff in each h-index range</p>
+          <p class="chart-hint">Click a bar to filter the Staff table</p>
         </div>
         <div class="chart-wrap"><canvas id="chart-hindex"></canvas></div>
       </div>
@@ -734,33 +913,34 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
         <div class="chart-card-header">
           <h3>Publications by Type</h3>
           <p>Indexed vs. other publications across all staff</p>
+          <p class="chart-hint">Click a segment to filter Publications</p>
         </div>
         <div class="chart-wrap"><canvas id="chart-pubs-type"></canvas></div>
       </div>
     </div>
-
     <div class="chart-grid two">
       <div class="chart-card">
         <div class="chart-card-header">
-          <h3>Grants by Level &amp; Status</h3>
-          <p>International and national — active vs. completed</p>
+          <h3>Grants by Level and Status</h3>
+          <p>International and national, active vs. completed</p>
+          <p class="chart-hint">Click a bar to filter Grants</p>
         </div>
         <div class="chart-wrap"><canvas id="chart-grants"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="chart-card-header">
-          <h3>Supervision (PhD &amp; Master)</h3>
+          <h3>Supervision (PhD and Master)</h3>
           <p>Graduated and ongoing students across all staff</p>
         </div>
         <div class="chart-wrap"><canvas id="chart-supervision"></canvas></div>
       </div>
     </div>
-
     <div class="section-title">Top Performers</div>
     <div class="chart-card">
       <div class="chart-card-header">
         <h3>Top 15 Staff by Indexed Publications</h3>
         <p>Ranked by number of indexed publications on the Expert portal</p>
+        <p class="chart-hint">Click a bar to open that staff profile</p>
       </div>
       <div class="chart-wrap tall"><canvas id="chart-top-pubs"></canvas></div>
     </div>
@@ -772,17 +952,15 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       <h2>Staff Profiles</h2>
       <p>Click any name to view full profile, publications, and grants</p>
     </div>
-
     <div id="staff-profile" class="profile-drawer" hidden></div>
-
     <div class="tbl-card">
       <div class="toolbar">
         <div class="search-wrap">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="staff-search" placeholder="Search by name…" aria-label="Search staff">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+          <input type="search" id="staff-search" placeholder="Search by name..." aria-label="Search staff">
         </div>
         <select class="filter-select" id="staff-sort" aria-label="Sort by">
-          <option value="name">Name A–Z</option>
+          <option value="name">Name A to Z</option>
           <option value="h_scopus">H-Index (Scopus)</option>
           <option value="pubs_indexed">Indexed Pubs</option>
           <option value="pubs_total">Total Pubs</option>
@@ -790,6 +968,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
           <option value="phd_total">PhD Students</option>
           <option value="master_total">Master Students</option>
         </select>
+        <span id="staff-xf-badge" hidden></span>
         <span class="count-badge" id="staff-count"></span>
       </div>
       <div class="tbl-wrap">
@@ -820,19 +999,27 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   <div id="page-pubs" class="content" hidden>
     <div class="page-header">
       <h2>Publications</h2>
-      <p>All publications recorded on the Expert portal for FKM Shah Alam staff</p>
+      <p>All publications recorded on the Expert portal for FKM Shah Alam staff. Click a title for details.</p>
     </div>
     <div class="tbl-card">
       <div class="toolbar">
         <div class="search-wrap">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="pubs-search" placeholder="Search title or author…" aria-label="Search publications">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+          <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
         </div>
         <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
           <option value="">All types</option>
           <option value="indexed">Indexed only</option>
           <option value="other">Other only</option>
         </select>
+        <div class="year-range" aria-label="Year range">
+          <label for="pubs-year-from" class="sr-only">From year</label>
+          <select class="filter-select" id="pubs-year-from" aria-label="From year"></select>
+          <span class="year-sep" aria-hidden="true">to</span>
+          <label for="pubs-year-to" class="sr-only">To year</label>
+          <select class="filter-select" id="pubs-year-to" aria-label="To year"></select>
+        </div>
+        <span id="pubs-xf-badge" hidden></span>
         <span class="count-badge" id="pubs-count"></span>
       </div>
       <div class="tbl-wrap">
@@ -842,9 +1029,9 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
               <th style="width:46px">#</th>
               <th>Title</th>
               <th>Type</th>
-              <th>Group</th>
+              <th>Category</th>
               <th>Date</th>
-              <th>Staff</th>
+              <th>Author</th>
             </tr>
           </thead>
           <tbody id="pubs-tbody"></tbody>
@@ -858,13 +1045,13 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   <div id="page-grants" class="content" hidden>
     <div class="page-header">
       <h2>Grants</h2>
-      <p>Research grants from the Expert portal — international and national, active and completed</p>
+      <p>Research grants from the Expert portal, international and national, active and completed</p>
     </div>
     <div class="tbl-card">
       <div class="toolbar">
         <div class="search-wrap">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="grants-search" placeholder="Search title, grant name or staff…" aria-label="Search grants">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+          <input type="search" id="grants-search" placeholder="Search title, grant name or staff..." aria-label="Search grants">
         </div>
         <select class="filter-select" id="grants-filter-level" aria-label="Filter by level">
           <option value="">All levels</option>
@@ -876,6 +1063,14 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
           <option value="active">Active</option>
           <option value="completed">Completed</option>
         </select>
+        <div class="year-range" aria-label="Year range">
+          <label for="grants-year-from" class="sr-only">From year</label>
+          <select class="filter-select" id="grants-year-from" aria-label="From year"></select>
+          <span class="year-sep" aria-hidden="true">to</span>
+          <label for="grants-year-to" class="sr-only">To year</label>
+          <select class="filter-select" id="grants-year-to" aria-label="To year"></select>
+        </div>
+        <span id="grants-xf-badge" hidden></span>
         <span class="count-badge" id="grants-count"></span>
       </div>
       <div class="tbl-wrap">
@@ -914,26 +1109,56 @@ const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
 
+// Cross-filter state
+const xf = {
+  staff_hindex: null,   // { label, min, max }
+  pubs_type:    null,   // 'indexed' | 'other'
+  grants_key:   null,   // 'intl_active' | 'intl_completed' | 'natl_active' | 'natl_completed'
+};
+
 // ── Helpers ────────────────────────────────────────────────────────────────
 const esc = s => (s == null ? '' : String(s))
   .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const num   = (v, fb='—') => v == null ? fb : Number(v).toLocaleString('en-MY');
-const fmtRM = v => v == null ? '—' : 'RM ' + Number(v).toLocaleString('en-MY');
+const num   = (v, fb='--') => v == null ? fb : Number(v).toLocaleString('en-MY');
+const fmtRM = v => v == null ? '--' : 'RM ' + Number(v).toLocaleString('en-MY');
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const nice = s => s ? s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase()) : '';
 const initials = name => (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
-function kpi(label, value, sub, color, icon) {
+// F-01: SVG icons tied to data domain — each icon is chosen for content relevance
+const SVG = {
+  staff:    `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 17a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z"/></svg>`,
+  chart:    `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M15.5 2A1.5 1.5 0 0 0 14 3.5v13a1.5 1.5 0 0 0 3 0v-13A1.5 1.5 0 0 0 15.5 2ZM9.5 7A1.5 1.5 0 0 0 8 8.5v8a1.5 1.5 0 0 0 3 0v-8A1.5 1.5 0 0 0 9.5 7ZM3.5 12A1.5 1.5 0 0 0 2 13.5v3a1.5 1.5 0 0 0 3 0v-3A1.5 1.5 0 0 0 3.5 12Z"/></svg>`,
+  doc:      `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h4.586A2 2 0 0 1 12 2.586L15.414 6A2 2 0 0 1 16 7.414V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm2 6a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H7Z" clip-rule="evenodd"/></svg>`,
+  docs:     `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z"/><path d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z"/></svg>`,
+  sum:      `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd"/></svg>`,
+  beaker:   `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M8.5 3.528v4.644c0 .507-.199.994-.551 1.352l-3.3 3.42A1.067 1.067 0 0 0 5.4 14.6h9.2a1.067 1.067 0 0 0 .75-1.456l-3.3-3.42A1.927 1.927 0 0 1 11.5 8.17V3.528a9.372 9.372 0 0 1-3 0Z" clip-rule="evenodd"/><path d="M5.5 2.5a1 1 0 0 0 0 2h9a1 1 0 1 0 0-2h-9Z"/></svg>`,
+  money:    `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.798 7.45c.512-.67 1.135-1.2 1.927-1.2.68 0 1.212.405 1.555.952.343.546.47 1.233.47 1.798 0 .68-.262 1.37-.752 1.86a3.45 3.45 0 0 1-.673.502v.138a1 1 0 1 1-2 0v-.6a1 1 0 0 1 1-1 1.45 1.45 0 0 0 .88-.316c.198-.194.345-.484.345-.784 0-.365-.077-.712-.22-.946-.143-.228-.295-.304-.405-.304-.277 0-.609.235-1.021.77a1 1 0 0 1-1.606-1.17ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/></svg>`,
+  cap:      `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M10.394 2.08a1 1 0 0 0-.788 0l-7 3a1 1 0 0 0 0 1.84L5.25 8.051a.999.999 0 0 1 .356-.257l4-1.714a1 1 0 1 1 .788 1.838L7.667 9.088l1.94.831a1 1 0 0 0 .787 0l7-3a1 1 0 0 0 0-1.838l-7-3ZM3.31 9.397 5 10.12v4.102a8.969 8.969 0 0 0-1.05-.174 1 1 0 0 1-.89-.89 11.115 11.115 0 0 1 .01-2.258A6.986 6.986 0 0 1 3.31 9.397Zm5.99 1.9L7.638 10.5l-1.313.562-.3.128A1 1 0 0 0 5.5 12.14v3.72a4.9 4.9 0 0 0 4.5 0v-3.72a1 1 0 0 0-.524-.92L8.5 10.84l.8-.343Z"/><path d="M5.595 15.964A6.964 6.964 0 0 0 10 17.5a6.964 6.964 0 0 0 4.405-1.536V12.14a1 1 0 0 0-.524-.92l-3.351-1.437a1 1 0 0 0-.788 0L6.595 11.22a1 1 0 0 0-.524.92v3.824Z"/></svg>`,
+  handshake:`<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M11.983 1.907a.75.75 0 0 0-1.292-.657l-8.5 9.5A.75.75 0 0 0 2.75 12h6.572l-1.305 6.093a.75.75 0 0 0 1.292.657l8.5-9.5A.75.75 0 0 0 17.25 8h-6.572l1.305-6.093Z"/></svg>`,
+};
+
+function kpi(label, value, sub, color, iconKey) {
   return `<div class="kpi" style="--kpi-color:${color}">
-    <span class="kpi-icon">${icon}</span>
+    ${SVG[iconKey] || ''}
     <div class="kpi-value num">${esc(String(value))}</div>
     <div class="kpi-label">${esc(label)}</div>
     <div class="kpi-sub">${esc(sub)}</div>
   </div>`;
 }
 
+// ── Year selects ──────────────────────────────────────────────────────────
+function buildYearSelects(elFrom, elTo, minY, maxY) {
+  const all = `<option value="">All years</option>`;
+  const opts = Array.from({length: maxY-minY+1}, (_,i)=>maxY-i)
+    .map(y=>`<option value="${y}">${y}</option>`).join('');
+  elFrom.innerHTML = all + opts;
+  elTo.innerHTML   = all + opts;
+}
+
 // ── Load ───────────────────────────────────────────────────────────────────
 async function loadData() {
+  const overlay = document.getElementById('load-overlay');
   try {
     const [sumRes, staffRes, pubsRes, grantsRes] = await Promise.all([
       fetch('data/expert_summary.json'),
@@ -941,25 +1166,39 @@ async function loadData() {
       fetch('data/expert_pubs.json'),
       fetch('data/expert_grants.json'),
     ]);
+    if (!sumRes.ok || !staffRes.ok || !pubsRes.ok || !grantsRes.ok) {
+      throw new Error('One or more data files failed to load.');
+    }
     const summary = await sumRes.json();
     STAFF  = await staffRes.json();
     PUBS   = await pubsRes.json();
     GRANTS = await grantsRes.json();
     STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
 
-    const dateStr = summary.generated || '—';
+    const dateStr = summary.generated || '--';
     document.getElementById('sidebar-updated').textContent = dateStr;
     document.getElementById('data-pill').textContent = 'Data: ' + dateStr;
+
+    // Build year range selects
+    const pubYears   = PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(Boolean);
+    const grantYears = GRANTS.map(g => g.year_start).filter(Boolean).map(Number);
+    const pubMin = Math.min(...pubYears),   pubMax = Math.max(...pubYears);
+    const gMin   = Math.min(...grantYears), gMax   = Math.max(...grantYears);
+    buildYearSelects(document.getElementById('pubs-year-from'),   document.getElementById('pubs-year-to'),   pubMin, pubMax);
+    buildYearSelects(document.getElementById('grants-year-from'), document.getElementById('grants-year-to'), gMin, gMax);
 
     renderOverview(summary);
     renderStaffTable();
     renderPubsTable();
     renderGrantsTable();
+
+    overlay.hidden = true;
   } catch(e) {
     console.error(e);
-    document.querySelectorAll('.content').forEach(el =>
-      el.innerHTML = `<p style="color:var(--text2);padding:40px">Failed to load data: ${esc(e.message)}</p>`
-    );
+    overlay.innerHTML = `<div class="error-banner" role="alert">
+      <strong>Failed to load dashboard data.</strong><br>${esc(e.message)}<br>
+      <small>Make sure the local server is running and data files exist in docs/data/.</small>
+    </div>`;
   }
 }
 
@@ -971,25 +1210,41 @@ function renderOverview(s) {
   const totalPubs = (s.pubs_indexed_total||0) + (s.pubs_other_total||0);
 
   document.getElementById('kpi-row1').innerHTML = [
-    kpi('Staff scraped',          s.staff_count,             'Shah Alam academic staff',     '#2563eb', '👥'),
-    kpi('Avg H-Index (Scopus)',   s.h_scopus_avg ?? '—',     `Max: ${hMax} · Median: ${hMedian}`, '#7c3aed', '📊'),
-    kpi('Indexed publications',   num(s.pubs_indexed_total), 'Scopus / WoS / ERA etc.',       '#0891b2', '📄'),
-    kpi('Other publications',     num(s.pubs_other_total),   'Non-indexed / proceedings',     '#059669', '📋'),
-    kpi('Total publications',     num(totalPubs),            'All publication types',          '#d97706', '📚'),
+    kpi('Staff scraped',         s.staff_count,            'Shah Alam academic staff',    '#2563eb', 'staff'),
+    kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--',   `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
+    kpi('Indexed publications',  num(s.pubs_indexed_total),'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
+    kpi('Other publications',    num(s.pubs_other_total),  'Non-indexed / proceedings',    '#059669', 'docs'),
+    kpi('Total publications',    num(totalPubs),           'All publication types',         '#d97706', 'sum'),
   ].join('');
 
   document.getElementById('kpi-row2').innerHTML = [
-    kpi('Active grants',    num(s.grants_active),  `of ${num(s.grants_total)} total`,   '#16a34a', '🔬'),
-    kpi('Total grants',     num(s.grants_total),   'All levels and statuses',           '#dc2626', '💰'),
-    kpi('PhD supervision',  num(s.phd_total),      'Graduated + ongoing',               '#7c3aed', '🎓'),
-    kpi('Master supervision',num(s.master_total),  'Graduated + ongoing',               '#2563eb', '🎓'),
-    kpi('Consultancy',      num(s.consultancy_total),'Completed appointments',           '#059669', '🤝'),
+    kpi('Active grants',     num(s.grants_active),    `of ${num(s.grants_total)} total`, '#16a34a', 'beaker'),
+    kpi('Total grants',      num(s.grants_total),     'All levels and statuses',         '#dc2626', 'money'),
+    kpi('PhD supervision',   num(s.phd_total),        'Graduated and ongoing',           '#7c3aed', 'cap'),
+    kpi('Master supervision',num(s.master_total),     'Graduated and ongoing',           '#2563eb', 'cap'),
+    kpi('Consultancy',       num(s.consultancy_total),'Completed appointments',           '#059669', 'handshake'),
   ].join('');
 
   drawCharts();
 }
 
 // ── CHARTS ─────────────────────────────────────────────────────────────────
+const HINDEX_BINS = [
+  { label: '0 / N/A', min: null, max: 0 },
+  { label: '1 to 5',  min: 1,    max: 5 },
+  { label: '6 to 10', min: 6,    max: 10 },
+  { label: '11 to 15',min: 11,   max: 15 },
+  { label: '16 to 20',min: 16,   max: 20 },
+  { label: '21+',     min: 21,   max: Infinity },
+];
+const GRANT_SEGMENTS = ['Intl Active','Intl Completed','Natl Active','Natl Completed'];
+const GRANT_KEYS     = ['intl_active','intl_completed','natl_active','natl_completed'];
+
+function getActiveHIndexBin() {
+  if (!xf.staff_hindex) return -1;
+  return HINDEX_BINS.findIndex(b => b.label === xf.staff_hindex.label);
+}
+
 function drawCharts() {
   Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
   Chart.defaults.font.size   = 12;
@@ -997,36 +1252,69 @@ function drawCharts() {
   Chart.defaults.borderColor = cssVar('--grid');
 
   // H-index distribution
-  const bins = [0,0,0,0,0,0];
-  STAFF.forEach(s => {
-    const h = s.h_scopus;
-    if (h == null || h === 0) bins[0]++;
-    else if (h <= 5)  bins[1]++;
-    else if (h <= 10) bins[2]++;
-    else if (h <= 15) bins[3]++;
-    else if (h <= 20) bins[4]++;
-    else              bins[5]++;
+  const activeBin = getActiveHIndexBin();
+  const bins = HINDEX_BINS.map((b,i) => {
+    if (b.min === null) return STAFF.filter(s => !s.h_scopus || s.h_scopus === 0).length;
+    return STAFF.filter(s => s.h_scopus >= b.min && s.h_scopus <= b.max).length;
   });
-  barChart('chart-hindex', ['0 / N/A','1–5','6–10','11–15','16–20','21+'], bins,
-    ['#cbd5e1','#93c5fd','#60a5fa','#3b82f6','#2563eb','#1d4ed8']);
+  const hColors = bins.map((_,i) => i === activeBin ? '#1d4ed8' : '#93c5fd');
+  barChart('chart-hindex', HINDEX_BINS.map(b=>b.label), bins, hColors, true, (idx) => {
+    const b = HINDEX_BINS[idx];
+    xf.staff_hindex = (xf.staff_hindex && xf.staff_hindex.label === b.label) ? null : { label: b.label, min: b.min, max: b.max };
+    pageState.staff = 1;
+    renderStaffTable();
+    updateXfBadge('staff-xf-badge', xf.staff_hindex ? `H-Index: ${b.label}` : null, () => {
+      xf.staff_hindex = null; pageState.staff=1; renderStaffTable(); drawCharts();
+    });
+    drawCharts();
+  });
 
   // Publications donut
   const idx   = STAFF.reduce((a,s) => a+(s.pubs_indexed||0), 0);
-  const other = STAFF.reduce((a,s) => a+(s.pubs_other||0), 0);
-  donutChart('chart-pubs-type', ['Indexed','Other'], [idx, other], ['#2563eb','#f59e0b']);
+  const other = STAFF.reduce((a,s) => a+(s.pubs_other||0),   0);
+  donutChart('chart-pubs-type', ['Indexed','Other'], [idx, other], ['#2563eb','#f59e0b'], (segIdx) => {
+    const val = segIdx === 0 ? 'indexed' : 'other';
+    xf.pubs_type = xf.pubs_type === val ? null : val;
+    document.getElementById('pubs-filter-type').value = xf.pubs_type || '';
+    pageState.pubs = 1;
+    renderPubsTable();
+    updateXfBadge('pubs-xf-badge', xf.pubs_type ? `Type: ${xf.pubs_type}` : null, () => {
+      xf.pubs_type=null; document.getElementById('pubs-filter-type').value=''; pageState.pubs=1; renderPubsTable();
+    });
+    showPage('pubs');
+  });
 
-  // Grants
-  const iA = STAFF.reduce((a,s) => a+(s.grants_intl_active||0), 0);
-  const iC = STAFF.reduce((a,s) => a+(s.grants_intl_completed||0), 0);
-  const nA = STAFF.reduce((a,s) => a+(s.grants_natl_active||0), 0);
-  const nC = STAFF.reduce((a,s) => a+(s.grants_natl_completed||0), 0);
-  barChart('chart-grants',
-    ['Intl Active','Intl Completed','Natl Active','Natl Completed'],
-    [iA, iC, nA, nC],
-    ['#2563eb','#93c5fd','#f59e0b','#fcd34d']
-  );
+  // Grants bar
+  const gVals = [
+    STAFF.reduce((a,s) => a+(s.grants_intl_active||0), 0),
+    STAFF.reduce((a,s) => a+(s.grants_intl_completed||0), 0),
+    STAFF.reduce((a,s) => a+(s.grants_natl_active||0), 0),
+    STAFF.reduce((a,s) => a+(s.grants_natl_completed||0), 0),
+  ];
+  const gColors = gVals.map((_,i) => GRANT_KEYS[i] === xf.grants_key ? '#1d4ed8' :
+    ['#2563eb','#93c5fd','#f59e0b','#fcd34d'][i]);
+  barChart('chart-grants', GRANT_SEGMENTS, gVals, gColors, true, (idx) => {
+    const key = GRANT_KEYS[idx];
+    xf.grants_key = xf.grants_key === key ? null : key;
+    if (xf.grants_key) {
+      document.getElementById('grants-filter-level').value  = xf.grants_key.startsWith('intl') ? 'international' : 'national';
+      document.getElementById('grants-filter-status').value = xf.grants_key.endsWith('active') ? 'active' : 'completed';
+    } else {
+      document.getElementById('grants-filter-level').value  = '';
+      document.getElementById('grants-filter-status').value = '';
+    }
+    pageState.grants = 1;
+    renderGrantsTable();
+    updateXfBadge('grants-xf-badge', xf.grants_key ? GRANT_SEGMENTS[idx] : null, () => {
+      xf.grants_key = null;
+      document.getElementById('grants-filter-level').value  = '';
+      document.getElementById('grants-filter-status').value = '';
+      pageState.grants=1; renderGrantsTable(); drawCharts();
+    });
+    showPage('grants');
+  });
 
-  // Supervision
+  // Supervision bar
   const pg = STAFF.reduce((a,s) => a+(s.phd_graduated||0), 0);
   const po = STAFF.reduce((a,s) => a+(s.phd_ongoing||0), 0);
   const mg = STAFF.reduce((a,s) => a+(s.master_graduated||0), 0);
@@ -1034,39 +1322,59 @@ function drawCharts() {
   barChart('chart-supervision',
     ['PhD Graduated','PhD Ongoing','Master Graduated','Master Ongoing'],
     [pg, po, mg, mo],
-    ['#2563eb','#93c5fd','#f59e0b','#fcd34d']
-  );
+    ['#2563eb','#93c5fd','#f59e0b','#fcd34d'],
+    false, null);
 
-  // Top 15 staff by indexed pubs
+  // Top 15 horizontal bar — click opens staff profile
   const top15 = [...STAFF].filter(s => s.pubs_indexed > 0)
     .sort((a,b) => (b.pubs_indexed||0) - (a.pubs_indexed||0)).slice(0,15);
   const labels = top15.map(s => {
     const p = (s.name||'').split(' ').filter(Boolean);
     return p.length > 2 ? p[0] + ' ' + p[p.length-1] : s.name;
   });
-  hbarChart('chart-top-pubs', labels, top15.map(s => s.pubs_indexed||0), '#2563eb');
+  hbarChart('chart-top-pubs', labels, top15.map(s => s.pubs_indexed||0), '#2563eb', (idx) => {
+    showPage('staff');
+    setTimeout(() => openStaffProfile(top15[idx].slug), 60);
+  });
 }
 
-function barChart(id, labels, data, colors) {
+function updateXfBadge(id, label, onClear) {
+  const el = document.getElementById(id);
+  if (!label) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false;
+  el.className = 'cross-filter-active';
+  el.innerHTML = `${esc(label)} <button class="cross-filter-clear" aria-label="Clear filter">&times;</button>`;
+  el.querySelector('button').addEventListener('click', (e) => { e.stopPropagation(); onClear(); });
+}
+
+function barChart(id, labels, data, colors, clickable, onClick) {
   const el = document.getElementById(id); if (!el) return;
-  const c   = charts.get(id);
-  const bg  = Array.isArray(colors) ? colors : data.map(() => colors);
+  const bg = Array.isArray(colors) ? colors : data.map(() => colors);
+  const existing = charts.get(id);
   const cfg = {
     type: 'bar',
     data: { labels, datasets: [{ data, backgroundColor: bg, borderRadius: 5, maxBarThickness: 52 }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}` } } },
-      scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } }
+      scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } },
+      onClick: clickable && onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
   };
-  if (c) { c.data.labels = labels; c.data.datasets[0].data = data; c.data.datasets[0].backgroundColor = bg; c.update('none'); }
-  else   charts.set(id, new Chart(el, cfg));
+  if (clickable) el.style.cursor = 'pointer'; else el.style.cursor = '';
+  if (existing) {
+    existing.data.labels = labels;
+    existing.data.datasets[0].data = data;
+    existing.data.datasets[0].backgroundColor = bg;
+    existing.update('none');
+  } else {
+    charts.set(id, new Chart(el, cfg));
+  }
 }
 
-function donutChart(id, labels, data, colors) {
+function donutChart(id, labels, data, colors, onClick) {
   const el = document.getElementById(id); if (!el) return;
-  const c   = charts.get(id);
+  const existing = charts.get(id);
   const lbl = labels.map((l,i) => `${l} (${data[i].toLocaleString('en-MY')})`);
   const cfg = {
     type: 'doughnut',
@@ -1076,36 +1384,54 @@ function donutChart(id, labels, data, colors) {
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, color: cssVar('--text') } },
         tooltip: { callbacks: { label: c => ` ${c.raw.toLocaleString('en-MY')}` } }
-      }
+      },
+      onClick: onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
   };
-  if (c) { c.data.labels = lbl; c.data.datasets[0].data = data; c.update('none'); }
-  else   charts.set(id, new Chart(el, cfg));
+  if (onClick) el.style.cursor = 'pointer';
+  if (existing) {
+    existing.data.labels = lbl;
+    existing.data.datasets[0].data = data;
+    existing.update('none');
+  } else {
+    charts.set(id, new Chart(el, cfg));
+  }
 }
 
-function hbarChart(id, labels, data, color) {
+function hbarChart(id, labels, data, color, onClick) {
   const el = document.getElementById(id); if (!el) return;
-  const c   = charts.get(id);
+  const existing = charts.get(id);
   const cfg = {
     type: 'bar',
     data: { labels, datasets: [{ data, backgroundColor: color, borderRadius: 4, maxBarThickness: 20 }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false, indexAxis: 'y',
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw} indexed pubs` } } },
-      scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } }
+      scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } },
+      onClick: onClick ? (_e, elements) => { if (elements.length) onClick(elements[0].index); } : undefined,
     }
   };
-  if (c) { c.data.labels = labels; c.data.datasets[0].data = data; c.update('none'); }
-  else   charts.set(id, new Chart(el, cfg));
+  if (onClick) el.style.cursor = 'pointer';
+  if (existing) {
+    existing.data.labels = labels;
+    existing.data.datasets[0].data = data;
+    existing.update('none');
+  } else {
+    charts.set(id, new Chart(el, cfg));
+  }
 }
 
 // ── STAFF ──────────────────────────────────────────────────────────────────
-let selectedSlug = null;
-
 function getStaffList() {
   const q   = document.getElementById('staff-search').value.trim().toLowerCase();
   const key = document.getElementById('staff-sort').value;
-  let rows  = q ? STAFF.filter(s => (s.name||'').toLowerCase().includes(q)) : [...STAFF];
+  let rows  = [...STAFF];
+  if (xf.staff_hindex) {
+    const { min, max } = xf.staff_hindex;
+    if (min === null) rows = rows.filter(s => !s.h_scopus || s.h_scopus === 0);
+    else rows = rows.filter(s => s.h_scopus >= min && s.h_scopus <= max);
+  }
+  if (q) rows = rows.filter(s => (s.name||'').toLowerCase().includes(q));
   rows.sort((a,b) => {
     if (key==='name')         return (a.name||'').localeCompare(b.name||'');
     if (key==='h_scopus')     return (b.h_scopus||0)-(a.h_scopus||0);
@@ -1126,18 +1452,24 @@ function renderStaffTable() {
   pageState.staff = Math.min(pageState.staff, total);
   const start = (pageState.staff-1)*PAGE_SIZE;
   const page  = rows.slice(start, start+PAGE_SIZE);
-
+  const filterDesc = xf.staff_hindex ? ` with H-Index ${xf.staff_hindex.label}` : '';
   document.getElementById('staff-count').textContent =
-    `${rows.length} staff${q ? ` matching "${q}"` : ''}`;
+    `${rows.length} staff${filterDesc}${q ? ` matching "${q}"` : ''}`;
   document.getElementById('staff-pagination').innerHTML = paginHTML(total, pageState.staff, 'staff');
 
-  const hc = v => v == null ? '<span class="muted">—</span>' : `<span class="num">${v}</span>`;
+  const hc = v => v == null ? '<span style="color:var(--text3)">--</span>' : `<span class="num">${v}</span>`;
   const nc = v => !v ? '<span style="color:var(--text3)">0</span>' : `<span class="num">${v}</span>`;
 
-  const avatarCell = s => s.photo
-    ? `<img class="row-thumb" src="${esc(s.photo)}" alt="" loading="lazy"
-         onerror="this.outerHTML='<span class=\'row-initials\'>${esc(initials(s.name))}</span>'">`
-    : `<span class="row-initials">${esc(initials(s.name))}</span>`;
+  // F-03: aria-hidden="true" on avatar placeholders; img alt="" for decorative
+  const avatarCell = s => {
+    const ini = esc(initials(s.name));
+    if (s.photo) {
+      return `<img class="row-thumb" src="${esc(s.photo)}" alt=""
+        loading="lazy"
+        onerror="this.outerHTML='<span class=\\'row-initials\\' aria-hidden=\\'true\\'>${ini}</span>'">`;
+    }
+    return `<span class="row-initials" aria-hidden="true">${ini}</span>`;
+  };
 
   document.getElementById('staff-tbody').innerHTML = page.length
     ? page.map(s => `
@@ -1154,14 +1486,11 @@ function renderStaffTable() {
         <td class="r">${nc(s.master_ongoing)}</td>
         <td class="r">${nc(s.consultancy_completed)}</td>
       </tr>`).join('')
-    : `<tr><td class="empty" colspan="11">No staff match the search.</td></tr>`;
+    : `<tr><td class="empty" colspan="11">No staff match the current filters.</td></tr>`;
 }
 
 function openStaffProfile(slug) {
   const s = STAFF_BY_SLUG.get(slug); if (!s) return;
-  selectedSlug = slug;
-  renderStaffTable();
-
   const staffPubs   = PUBS.filter(p => p.slug === slug);
   const staffGrants = GRANTS.filter(g => g.slug === slug);
   const idxPubs     = staffPubs.filter(p => p.indexed);
@@ -1171,31 +1500,32 @@ function openStaffProfile(slug) {
     s.h_scopus != null ? `Scopus: <strong>${s.h_scopus}</strong>` : null,
     s.h_wos    != null ? `WoS: <strong>${s.h_wos}</strong>` : null,
     s.h_gs     != null ? `GS: <strong>${s.h_gs}</strong>` : null,
-  ].filter(Boolean).join(' &nbsp;·&nbsp; ') || '—';
+  ].filter(Boolean).join(' &nbsp;&middot;&nbsp; ') || '--';
 
   const expertUrl = `https://expert.uitm.edu.my/expert/${slug}`;
   const links = [
-    `<a class="profile-link" href="${expertUrl}" target="_blank" rel="noopener">Expert Portal ↗</a>`,
-    s.scopus_id  ? `<a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=${esc(s.scopus_id)}" target="_blank" rel="noopener">Scopus ↗</a>` : '',
-    s.scholar_id ? `<a class="profile-link" href="https://scholar.google.com/citations?user=${esc(s.scholar_id)}" target="_blank" rel="noopener">Google Scholar ↗</a>` : '',
-    s.orcid      ? `<a class="profile-link" href="https://orcid.org/${esc(s.orcid)}" target="_blank" rel="noopener">ORCID ↗</a>` : '',
+    `<a class="profile-link" href="${expertUrl}" target="_blank" rel="noopener">Expert Portal</a>`,
+    s.scopus_id  ? `<a class="profile-link" href="https://www.scopus.com/authid/detail.uri?authorId=${esc(s.scopus_id)}" target="_blank" rel="noopener">Scopus</a>` : '',
+    s.scholar_id ? `<a class="profile-link" href="https://scholar.google.com/citations?user=${esc(s.scholar_id)}" target="_blank" rel="noopener">Google Scholar</a>` : '',
+    s.orcid      ? `<a class="profile-link" href="https://orcid.org/${esc(s.orcid)}" target="_blank" rel="noopener">ORCID</a>` : '',
   ].join('');
 
+  const ini = esc(initials(s.name));
   const avatarHTML = s.photo
     ? `<img class="profile-photo" src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy"
-         onerror="this.outerHTML='<div class=\'profile-initials-avatar\'>${esc(initials(s.name))}</div>'">`
-    : `<div class="profile-initials-avatar">${esc(initials(s.name))}</div>`;
+         onerror="this.outerHTML='<div class=\\'profile-initials-avatar\\' aria-hidden=\\'true\\'>${ini}</div>'">`
+    : `<div class="profile-initials-avatar" aria-hidden="true">${ini}</div>`;
 
   const pubsHTML = idxPubs.slice(0,10).map((p,i) => `
     <tr>
       <td class="muted">${i+1}</td>
-      <td class="clip wide">${esc(p.title||'(no title)')}</td>
+      <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
       <td>${esc(p.type||'')}</td>
       <td>${esc(p.date||'')}</td>
     </tr>`).join('');
 
   const grantsHTML = staffGrants.slice(0,10).map((g,i) => {
-    const isIntl = (g.level||'').toUpperCase().includes('INT');
+    const isIntl   = (g.level||'').toUpperCase().includes('INT');
     const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
     return `<tr>
       <td class="muted">${i+1}</td>
@@ -1210,11 +1540,11 @@ function openStaffProfile(slug) {
   panel.hidden = false;
   panel.innerHTML = `
     <div class="profile-banner">
-      <button class="profile-banner-close" id="profile-close-btn" aria-label="Close profile">×</button>
+      <button class="profile-banner-close" id="profile-close-btn" aria-label="Close profile">&times;</button>
       ${avatarHTML}
       <div class="profile-banner-info">
         <h2>${esc(s.name||slug)}</h2>
-        <p>${esc(s.position||'')}${s.department ? ' &nbsp;·&nbsp; ' + esc(s.department) : ''}</p>
+        <p>${esc(s.position||'')}${s.department ? ' &middot; ' + esc(s.department) : ''}</p>
         <p style="margin-top:4px">H-Index: ${hStr}</p>
       </div>
     </div>
@@ -1244,22 +1574,22 @@ function openStaffProfile(slug) {
         </table></div>` : ''}
     </div>`;
 
-  panel.scrollIntoView({ block:'nearest', behavior:'smooth' });
-  document.getElementById('profile-close-btn').addEventListener('click', () => {
-    panel.hidden = true;
-    selectedSlug = null;
-    renderStaffTable();
-  });
+  panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  document.getElementById('profile-close-btn').addEventListener('click', () => { panel.hidden = true; });
 }
 
 // ── PUBLICATIONS ───────────────────────────────────────────────────────────
 function getPubsList() {
-  const q = document.getElementById('pubs-search').value.trim().toLowerCase();
-  const f = document.getElementById('pubs-filter-type').value;
+  const q  = document.getElementById('pubs-search').value.trim().toLowerCase();
+  const ft = document.getElementById('pubs-filter-type').value || (xf.pubs_type || '');
+  const yf = +document.getElementById('pubs-year-from').value || null;
+  const yt = +document.getElementById('pubs-year-to').value   || null;
   let rows = [...PUBS];
-  if (f === 'indexed') rows = rows.filter(p => p.indexed);
-  if (f === 'other')   rows = rows.filter(p => !p.indexed);
-  if (q) rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
+  if (ft === 'indexed') rows = rows.filter(p =>  p.indexed);
+  if (ft === 'other')   rows = rows.filter(p => !p.indexed);
+  if (yf) rows = rows.filter(p => p.date && +p.date.slice(0,4) >= yf);
+  if (yt) rows = rows.filter(p => p.date && +p.date.slice(0,4) <= yt);
+  if (q)  rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
   return rows;
 }
 
@@ -1270,7 +1600,6 @@ function renderPubsTable() {
   pageState.pubs = Math.min(pageState.pubs, total);
   const start = (pageState.pubs-1)*PAGE_SIZE;
   const page  = rows.slice(start, start+PAGE_SIZE);
-
   document.getElementById('pubs-count').textContent =
     `${rows.length.toLocaleString()} publications${q?` matching "${q}"`:''}`;
   document.getElementById('pubs-pagination').innerHTML = paginHTML(total, pageState.pubs, 'pubs');
@@ -1279,7 +1608,7 @@ function renderPubsTable() {
     ? page.map((p,i) => `
       <tr>
         <td class="muted">${start+i+1}</td>
-        <td class="clip wide" title="${esc(p.title)}">${esc(p.title||'(no title)')}</td>
+        <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}" title="${esc(p.title)}">${esc(p.title||'(no title)')}</button></td>
         <td>${esc(nice(p.type))}</td>
         <td>${p.indexed ? '<span class="badge badge-indexed">Indexed</span>' : '<span class="badge badge-other">Other</span>'}</td>
         <td style="white-space:nowrap">${esc(p.date||'')}</td>
@@ -1288,17 +1617,78 @@ function renderPubsTable() {
     : `<tr><td class="empty" colspan="6">No publications match the current filters.</td></tr>`;
 }
 
+// ── PUB DETAIL DRAWER ──────────────────────────────────────────────────────
+function openPubDrawer(pubIdx) {
+  const p = PUBS[pubIdx]; if (!p) return;
+  const staff = STAFF_BY_SLUG.get(p.slug);
+
+  document.getElementById('pub-drawer-title').textContent = p.title || '(no title)';
+  document.getElementById('pub-drawer-body').innerHTML = `
+    <dl class="pub-meta">
+      <dt>Reference</dt>
+      <dd>${esc(p.ref || '--')}</dd>
+      <dt>Date</dt>
+      <dd>${esc(p.date || '--')}</dd>
+      <dt>Type</dt>
+      <dd>${esc(nice(p.type))}</dd>
+      <dt>Category</dt>
+      <dd>${p.indexed ? '<span class="badge badge-indexed">Indexed Publication</span>' : '<span class="badge badge-other">Other Publication</span>'}</dd>
+      <dt>Group</dt>
+      <dd>${esc(p.group || '--')}</dd>
+      <dt>Author</dt>
+      <dd><button class="name-btn" data-slug="${esc(p.slug)}" style="font-size:13px">${esc(p.name || '--')}</button></dd>
+      ${staff ? `
+      <dt>Position</dt>
+      <dd>${esc(staff.position || '--')}</dd>
+      <dt>Department</dt>
+      <dd>${esc(staff.department || '--')}</dd>
+      ` : ''}
+    </dl>`;
+
+  const actions = document.getElementById('pub-drawer-actions');
+  actions.innerHTML = '';
+  if (p.url) {
+    const a = document.createElement('a');
+    a.href = p.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.className = 'btn-primary'; a.textContent = 'View in database';
+    actions.appendChild(a);
+  }
+  if (p.slug) {
+    const b = document.createElement('button');
+    b.className = 'btn-secondary'; b.textContent = 'View author profile';
+    b.addEventListener('click', () => { closePubDrawer(); showPage('staff'); setTimeout(() => openStaffProfile(p.slug), 60); });
+    actions.appendChild(b);
+  }
+
+  document.getElementById('pub-drawer').classList.add('open');
+  document.getElementById('pub-backdrop').classList.add('open');
+  document.getElementById('pub-drawer-close').focus();
+}
+
+function closePubDrawer() {
+  document.getElementById('pub-drawer').classList.remove('open');
+  document.getElementById('pub-backdrop').classList.remove('open');
+}
+
+document.getElementById('pub-drawer-close').addEventListener('click', closePubDrawer);
+document.getElementById('pub-backdrop').addEventListener('click', closePubDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePubDrawer(); });
+
 // ── GRANTS ─────────────────────────────────────────────────────────────────
 function getGrantsList() {
   const q  = document.getElementById('grants-search').value.trim().toLowerCase();
   const fl = document.getElementById('grants-filter-level').value;
   const fs = document.getElementById('grants-filter-status').value;
+  const yf = +document.getElementById('grants-year-from').value || null;
+  const yt = +document.getElementById('grants-year-to').value   || null;
   let rows = [...GRANTS];
   if (fl==='international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
   if (fl==='national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
   if (fs==='active')        rows = rows.filter(g => (g.status||'').toUpperCase()==='ACTIVE');
   if (fs==='completed')     rows = rows.filter(g => (g.status||'').toUpperCase()!=='ACTIVE');
-  if (q) rows = rows.filter(g => ((g.title||'')+(g.name||'')+(g.grant_name||'')).toLowerCase().includes(q));
+  if (yf) rows = rows.filter(g => g.year_start && +g.year_start >= yf);
+  if (yt) rows = rows.filter(g => g.year_start && +g.year_start <= yt);
+  if (q)  rows = rows.filter(g => ((g.title||'')+(g.name||'')+(g.grant_name||'')).toLowerCase().includes(q));
   return rows;
 }
 
@@ -1309,7 +1699,6 @@ function renderGrantsTable() {
   pageState.grants = Math.min(pageState.grants, total);
   const start = (pageState.grants-1)*PAGE_SIZE;
   const page  = rows.slice(start, start+PAGE_SIZE);
-
   document.getElementById('grants-count').textContent =
     `${rows.length.toLocaleString()} grants${q?` matching "${q}"`:''}`;
   document.getElementById('grants-pagination').innerHTML = paginHTML(total, pageState.grants, 'grants');
@@ -1326,7 +1715,7 @@ function renderGrantsTable() {
           <td>${esc(g.role||'')}</td>
           <td style="white-space:nowrap">${esc(String(g.year_start||''))}</td>
           <td style="white-space:nowrap">${esc(String(g.year_end||''))}</td>
-          <td class="r" style="white-space:nowrap">${g.cost ? fmtRM(g.cost) : '<span style="color:var(--text3)">—</span>'}</td>
+          <td class="r" style="white-space:nowrap">${g.cost ? fmtRM(g.cost) : '<span style="color:var(--text3)">--</span>'}</td>
           <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
           <td style="white-space:nowrap">${esc(g.name||'')}</td>
         </tr>`;
@@ -1347,12 +1736,7 @@ function paginHTML(total, current, key) {
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
-const PAGE_TITLES = {
-  overview: 'Overview',
-  staff:    'Staff Profiles',
-  pubs:     'Publications',
-  grants:   'Grants',
-};
+const PAGE_TITLES = { overview:'Overview', staff:'Staff Profiles', pubs:'Publications', grants:'Grants' };
 
 function showPage(id) {
   document.querySelectorAll('.nav-item').forEach(b => {
@@ -1370,7 +1754,7 @@ document.querySelectorAll('.nav-item').forEach(b => {
   b.addEventListener('click', () => showPage(b.dataset.page));
 });
 
-// ── MOBILE SIDEBAR ─────────────────────────────────────────────────────────
+// ── MOBILE ─────────────────────────────────────────────────────────────────
 function closeSidebar() {
   if (window.innerWidth <= 768) {
     document.getElementById('sidebar').classList.remove('open');
@@ -1385,11 +1769,25 @@ document.getElementById('hamburger').addEventListener('click', () => {
 });
 document.getElementById('overlay').addEventListener('click', closeSidebar);
 
-// ── GLOBAL EVENTS ──────────────────────────────────────────────────────────
+// ── GLOBAL DELEGATION ──────────────────────────────────────────────────────
 document.addEventListener('click', e => {
+  // Staff name button (not inside pub drawer)
   const nb = e.target.closest('[data-slug]');
-  if (nb) return openStaffProfile(nb.dataset.slug);
+  if (nb && !nb.closest('#pub-drawer-body')) {
+    return openStaffProfile(nb.dataset.slug);
+  }
+  if (nb && nb.closest('#pub-drawer-body')) {
+    closePubDrawer();
+    showPage('staff');
+    setTimeout(() => openStaffProfile(nb.dataset.slug), 80);
+    return;
+  }
 
+  // Publication title button
+  const tb = e.target.closest('[data-pubidx]');
+  if (tb) return openPubDrawer(+tb.dataset.pubidx);
+
+  // Pagination
   const pb = e.target.closest('[data-page]');
   if (pb && pb.closest('.pagination')) {
     const [key, p] = pb.dataset.page.split(':');
@@ -1401,13 +1799,18 @@ document.addEventListener('click', e => {
   }
 });
 
-document.getElementById('staff-search').addEventListener('input',  () => { pageState.staff=1;  renderStaffTable(); });
-document.getElementById('staff-sort').addEventListener('change',   () => { pageState.staff=1;  renderStaffTable(); });
-document.getElementById('pubs-search').addEventListener('input',   () => { pageState.pubs=1;   renderPubsTable(); });
-document.getElementById('pubs-filter-type').addEventListener('change', () => { pageState.pubs=1; renderPubsTable(); });
-document.getElementById('grants-search').addEventListener('input',     () => { pageState.grants=1; renderGrantsTable(); });
-document.getElementById('grants-filter-level').addEventListener('change',  () => { pageState.grants=1; renderGrantsTable(); });
-document.getElementById('grants-filter-status').addEventListener('change', () => { pageState.grants=1; renderGrantsTable(); });
+// ── FILTER EVENTS ──────────────────────────────────────────────────────────
+document.getElementById('staff-search').addEventListener('input',          () => { pageState.staff=1;  renderStaffTable(); });
+document.getElementById('staff-sort').addEventListener('change',           () => { pageState.staff=1;  renderStaffTable(); });
+document.getElementById('pubs-search').addEventListener('input',           () => { pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('pubs-filter-type').addEventListener('change',     () => { xf.pubs_type=null;  pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('pubs-year-from').addEventListener('change',       () => { pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('pubs-year-to').addEventListener('change',         () => { pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('grants-search').addEventListener('input',         () => { pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-filter-level').addEventListener('change',  () => { xf.grants_key=null; pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-filter-status').addEventListener('change', () => { xf.grants_key=null; pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-year-from').addEventListener('change',     () => { pageState.grants=1; renderGrantsTable(); });
+document.getElementById('grants-year-to').addEventListener('change',       () => { pageState.grants=1; renderGrantsTable(); });
 
 // ── BOOT ───────────────────────────────────────────────────────────────────
 loadData();
