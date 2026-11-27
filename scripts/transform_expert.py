@@ -12,6 +12,7 @@ Usage:
 """
 
 import json
+import sys
 from pathlib import Path
 from datetime import date
 
@@ -21,11 +22,11 @@ OUT       = REPO / "docs" / "data"
 PHOTO_DIR = REPO / "docs" / "images" / "staff"
 OUT.mkdir(parents=True, exist_ok=True)
 
-DEFAULT_PHOTO = "https://expert.uitm.edu.my/assets/images/profile_default.png"
+INDEXED_TYPES = {"JOURNAL", "PROCEEDING"}
+SWE_INDEXES   = {"SCOPUS", "WEB OF SCIENCE", "ERA"}
 
 
 def photo_path(slug: str, photo_url: str) -> str:
-    """Return the local path (relative to docs/) if downloaded, else empty string."""
     for ext in (".jpg", ".jpeg", ".png", ".gif", ".webp"):
         f = PHOTO_DIR / f"{slug}{ext}"
         if f.exists():
@@ -33,38 +34,66 @@ def photo_path(slug: str, photo_url: str) -> str:
     return ""
 
 
+def infer_index_name(url: str) -> str:
+    """Infer the database index (Scopus/WoS/MyCite/ERA) from a publication URL."""
+    u = (url or "").lower()
+    if "scopus" in u:
+        return "SCOPUS"
+    if "webofscience" in u or "/wos/" in u:
+        return "WEB OF SCIENCE"
+    if any(x in u for x in ("mysitasi", "mycite", "myjms.mohe", "gaexcellence",
+                             "msocialsciences", "advanced-jes.com", "aijbes", "ijemp", "ijriss")):
+        return "MYCITE"
+    if any(x in u for x in ("/era", "eraportal", "hrmars.com", "aiaer.net",
+                             "online.library.uitm.edu.my/era",
+                             "library.uitm.edu.my/research/scholar-legitimate")):
+        return "ERA"
+    return "OTHER"
+
+
 def main():
     if not RAW.exists():
-        print(f"ERROR: {RAW} not found. Run scraper_expert.py first.")
+        _print(f"ERROR: {RAW} not found. Run scraper_expert.py first.")
         return
 
     profiles: list[dict] = json.loads(RAW.read_text(encoding="utf-8"))
-    print(f"Loaded {len(profiles)} profiles")
+    _print(f"Loaded {len(profiles)} profiles")
 
-    INDEXED_TYPES = {"JOURNAL", "PROCEEDING"}
-
-    staff_rows  = []
-    pub_rows    = []
-    grant_rows  = []
-    sv_rows     = []
-    con_rows    = []
+    staff_rows = []
+    pub_rows   = []
+    grant_rows = []
+    sv_rows    = []
+    con_rows   = []
 
     for p in profiles:
         slug = p.get("slug", "")
 
-        # ── staff record ──────────────────────────────────────────────────
-        # Count unique journal+proceeding titles only (exclude books, dedup co-authored)
-        pubs = p.get("publications", [])
+        # ── publications list ─────────────────────────────────────────────
+        raw_pubs = p.get("publications", [])
+
+        # Count unique journal+proceeding titles (dedup co-authored, exclude books)
         indexed_titles = {
             pub.get("title", "").strip().lower()
-            for pub in pubs
+            for pub in raw_pubs
             if "INDEXED" in pub.get("group", "").upper()
             and pub.get("type", "").upper() in INDEXED_TYPES
             and pub.get("title", "").strip()
         }
         indexed_count = len(indexed_titles)
-        other_count   = p.get("pubs_other", 0)
 
+        # Scopus/WoS/ERA only — matches PRIME methodology (excludes MyCite)
+        swe_titles = {
+            pub.get("title", "").strip().lower()
+            for pub in raw_pubs
+            if "INDEXED" in pub.get("group", "").upper()
+            and pub.get("type", "").upper() in INDEXED_TYPES
+            and pub.get("title", "").strip()
+            and infer_index_name(pub.get("url", "")) in SWE_INDEXES
+        }
+        swe_count   = len(swe_titles)
+        other_count = p.get("pubs_other", 0)
+
+        # ── staff record ──────────────────────────────────────────────────
         staff_rows.append({
             "slug":               slug,
             "name":               p.get("name", ""),
@@ -79,36 +108,38 @@ def main():
             "scholar_id":         p.get("scholar_id", ""),
             "orcid":              p.get("orcid", ""),
             "photo":              photo_path(slug, p.get("photo_url", "")),
-            "grants_intl_active":      p.get("grants_intl_active", 0),
-            "grants_intl_completed":   p.get("grants_intl_completed", 0),
-            "grants_natl_active":      p.get("grants_natl_active", 0),
-            "grants_natl_completed":   p.get("grants_natl_completed", 0),
-            "grants_total":       len(p.get("grants", [])),
-            "grants_active":      sum(1 for g in p.get("grants", []) if g.get("status", "").upper() == "ACTIVE"),
-            "pubs_indexed":       indexed_count,
-            "pubs_other":         other_count,
-            "pubs_total":         indexed_count + other_count,
-            "phd_graduated":      p.get("phd_graduated", 0),
-            "phd_ongoing":        p.get("phd_ongoing", 0),
-            "master_graduated":   p.get("master_graduated", 0),
-            "master_ongoing":     p.get("master_ongoing", 0),
+            "grants_intl_active":    p.get("grants_intl_active", 0),
+            "grants_intl_completed": p.get("grants_intl_completed", 0),
+            "grants_natl_active":    p.get("grants_natl_active", 0),
+            "grants_natl_completed": p.get("grants_natl_completed", 0),
+            "grants_total":          len(p.get("grants", [])),
+            "grants_active":         sum(1 for g in p.get("grants", []) if g.get("status", "").upper() == "ACTIVE"),
+            "pubs_indexed":          indexed_count,
+            "pubs_scopus_wos_era":   swe_count,
+            "pubs_other":            other_count,
+            "pubs_total":            indexed_count + other_count,
+            "phd_graduated":         p.get("phd_graduated", 0),
+            "phd_ongoing":           p.get("phd_ongoing", 0),
+            "master_graduated":      p.get("master_graduated", 0),
+            "master_ongoing":        p.get("master_ongoing", 0),
             "consultancy_appointed": p.get("consultancy_appointed", 0),
             "consultancy_completed": p.get("consultancy_completed", 0),
         })
 
         # ── publications ──────────────────────────────────────────────────
-        for pub in p.get("publications", []):
+        for pub in raw_pubs:
             group = pub.get("group", "")
             pub_rows.append({
-                "slug":    slug,
-                "name":    p.get("name", ""),
-                "ref":     pub.get("ref", ""),
-                "title":   pub.get("title", ""),
-                "date":    pub.get("date", ""),
-                "type":    pub.get("type", ""),
-                "group":   group,
-                "indexed": "INDEXED" in group.upper(),
-                "url":     pub.get("url", ""),
+                "slug":       slug,
+                "name":       p.get("name", ""),
+                "ref":        pub.get("ref", ""),
+                "title":      pub.get("title", ""),
+                "date":       pub.get("date", ""),
+                "type":       pub.get("type", ""),
+                "group":      group,
+                "indexed":    "INDEXED" in group.upper(),
+                "index_name": infer_index_name(pub.get("url", "")),
+                "url":        pub.get("url", ""),
             })
 
         # ── supervision ───────────────────────────────────────────────────
@@ -118,7 +149,7 @@ def main():
                 sv_rows.append({
                     "slug":          slug,
                     "staff_name":    p.get("name", ""),
-                    "category":      category,  # phd_graduated / phd_ongoing / master_graduated / master_ongoing
+                    "category":      category,
                     "matric":        e.get("matric", ""),
                     "student_name":  e.get("name", ""),
                     "programme":     e.get("programme", ""),
@@ -137,7 +168,7 @@ def main():
                 con_rows.append({
                     "slug":       slug,
                     "staff_name": p.get("name", ""),
-                    "category":   category,  # appointed / completed
+                    "category":   category,
                     "file_no":    e.get("file_no", ""),
                     "title":      e.get("title", ""),
                     "client":     e.get("client", ""),
@@ -167,24 +198,32 @@ def main():
             })
 
     # ── summary ───────────────────────────────────────────────────────────
-    # Count unique journal+proceeding titles across ALL pubs (not sum of per-staff)
+    # Global unique counts (not sum of per-staff — avoids co-author double-counting)
     all_indexed_titles = {
         r["title"].strip().lower()
         for r in pub_rows
         if r.get("indexed") and r.get("type", "").upper() in INDEXED_TYPES
         and r.get("title", "").strip()
     }
+    all_swe_titles = {
+        r["title"].strip().lower()
+        for r in pub_rows
+        if r.get("indexed") and r.get("type", "").upper() in INDEXED_TYPES
+        and r.get("title", "").strip()
+        and r.get("index_name", "") in SWE_INDEXES
+    }
     summary = {
-        "generated":          date.today().isoformat(),
-        "staff_count":        len(staff_rows),
-        "pubs_indexed_total": len(all_indexed_titles),
-        "pubs_other_total":   sum(s["pubs_other"]   for s in staff_rows),
-        "grants_active":      sum(s["grants_active"] for s in staff_rows),
-        "grants_total":       sum(s["grants_total"]  for s in staff_rows),
-        "h_scopus_avg":       _avg([s["h_scopus"] for s in staff_rows if s["h_scopus"] is not None]),
-        "phd_total":          sum(s["phd_graduated"] + s["phd_ongoing"] for s in staff_rows),
-        "master_total":       sum(s["master_graduated"] + s["master_ongoing"] for s in staff_rows),
-        "consultancy_total":  sum(s["consultancy_completed"] for s in staff_rows),
+        "generated":                 date.today().isoformat(),
+        "staff_count":               len(staff_rows),
+        "pubs_indexed_total":        len(all_indexed_titles),
+        "pubs_scopus_wos_era_total": len(all_swe_titles),
+        "pubs_other_total":          sum(s["pubs_other"]   for s in staff_rows),
+        "grants_active":             sum(s["grants_active"] for s in staff_rows),
+        "grants_total":              sum(s["grants_total"]  for s in staff_rows),
+        "h_scopus_avg":              _avg([s["h_scopus"] for s in staff_rows if s["h_scopus"] is not None]),
+        "phd_total":                 sum(s["phd_graduated"] + s["phd_ongoing"] for s in staff_rows),
+        "master_total":              sum(s["master_graduated"] + s["master_ongoing"] for s in staff_rows),
+        "consultancy_total":         sum(s["consultancy_completed"] for s in staff_rows),
     }
 
     # ── write ─────────────────────────────────────────────────────────────
@@ -195,18 +234,23 @@ def main():
     _write("expert_consultancy.json",  con_rows)
     _write("expert_summary.json",      summary)
 
-    print(f"expert_staff.json       : {len(staff_rows)} records")
-    print(f"expert_pubs.json        : {len(pub_rows)} records")
-    print(f"expert_grants.json      : {len(grant_rows)} records")
-    print(f"expert_supervision.json : {len(sv_rows)} records")
-    print(f"expert_consultancy.json : {len(con_rows)} records")
-    print(f"expert_summary.json     : {summary}")
+    _print(f"expert_staff.json       : {len(staff_rows)} records")
+    _print(f"expert_pubs.json        : {len(pub_rows)} records")
+    _print(f"expert_grants.json      : {len(grant_rows)} records")
+    _print(f"expert_supervision.json : {len(sv_rows)} records")
+    _print(f"expert_consultancy.json : {len(con_rows)} records")
+    _print(f"expert_summary.json     : {json.dumps(summary)}")
 
 
 def _write(filename: str, data):
     path = OUT / filename
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"-> {path}")
+    _print(f"-> {path}")
+
+
+def _print(s: str):
+    sys.stdout.buffer.write((s + "\n").encode("utf-8", errors="replace"))
+    sys.stdout.buffer.flush()
 
 
 def _avg(values: list) -> float | None:

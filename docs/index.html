@@ -1891,9 +1891,12 @@ function renderOverview(s) {
   const { filteredPubs, filteredGrants } = getOvFilteredData();
   // deduplicate by ref to count unique papers (a pub shared by multiple authors = 1 paper)
   const uniqueRefs    = p => p.ref || p.title; // fall back to title if no ref
+  const SWE_IDX = new Set(['SCOPUS', 'WEB OF SCIENCE', 'ERA']);
   const uniqIndexed   = new Set(filteredPubs.filter(p =>  p.indexed).map(uniqueRefs));
+  const uniqSWE       = new Set(filteredPubs.filter(p =>  p.indexed && SWE_IDX.has(p.index_name)).map(uniqueRefs));
   const uniqOther     = new Set(filteredPubs.filter(p => !p.indexed).map(uniqueRefs));
   const indexedCount  = uniqIndexed.size;
+  const sweCount      = uniqSWE.size;
   const otherCount    = uniqOther.size;
   const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
   const totalAcquisition = filteredGrants.reduce((sum, g) => sum + (g.cost ? +g.cost : 0), 0);
@@ -1923,7 +1926,7 @@ function renderOverview(s) {
     document.getElementById('kpi-row1').innerHTML = [
       kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
       kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
-      kpi('Indexed publications',  num(indexedCount),      'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
+      kpi('Indexed publications',  num(sweCount),          `Scopus/WoS/ERA · ${num(indexedCount)} incl. MyCite`, '#0891b2', 'doc'),
       kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
       kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
     ].join('');
