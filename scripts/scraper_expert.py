@@ -93,7 +93,58 @@ def scrape_profile(slug: str) -> dict | None:
             "url":      p.get("URL", ""),
         })
 
-    print(f"  pubs: {pub.get('index_count', 0)}i + {pub.get('other_count', 0)}o | grants: {len(grants)}", flush=True)
+    # Build supervision lists
+    def parse_supervision(entries):
+        result = []
+        for e in (entries or []):
+            result.append({
+                "matric":       e.get("IP_STUD_MATRIC", ""),
+                "name":         e.get("IP_STUD_NAME", "").strip(),
+                "programme":    e.get("PROGDESC", "").strip(),
+                "level":        e.get("PROGLEVELDESC", "").strip(),
+                "title":        (e.get("IP_STUD_RESEARCH_TITLE2") or e.get("IP_STUD_RESEARCH_TITLE1") or "").strip(),
+                "intake":       e.get("INTAKE", ""),
+                "intake_sem":   e.get("IP_STUD_SEM_INTAKE", ""),
+                "role":         "MAIN" if e.get("IP_STAFF_ID_MAIN_SUPERV") == e.get("IP_STAFF_ID_MAIN_SUPERV") else "CO",
+                "main_supervisor": e.get("IP_STAFF_NAME_MAIN_SUPERV", "").strip(),
+                "status":       e.get("IP_STUD_ACA_STATUS", ""),
+                "graduated_sem": e.get("GRADUATE_SEM_DESC", ""),
+            })
+        return result
+
+    supervision = {
+        "phd_graduated":    parse_supervision(sv.get("phd_grad")),
+        "phd_ongoing":      parse_supervision(sv.get("phd_ongoing")),
+        "master_graduated": parse_supervision(sv.get("master_grad")),
+        "master_ongoing":   parse_supervision(sv.get("master_ongoing")),
+    }
+
+    # Build consultancy lists
+    def parse_consultancy(entries):
+        result = []
+        for e in (entries or []):
+            result.append({
+                "file_no":   e.get("ProjekFileNo", ""),
+                "title":     e.get("TajukProjek", "").strip(),
+                "client":    e.get("NamaPelanggan", "").strip(),
+                "type":      e.get("ConType", ""),
+                "role":      e.get("PositionCon", ""),
+                "cost_rm":   e.get("KosProjekRM"),
+                "year_start":e.get("TarikhMula"),
+                "year_end":  e.get("TarikhSiap"),
+                "status":    e.get("statusCon", ""),
+            })
+        return result
+
+    consultancy = {
+        "appointed":  parse_consultancy(con.get("appointed")),
+        "completed":  parse_consultancy(con.get("completed")),
+    }
+
+    sv_counts = (len(supervision["phd_graduated"]) + len(supervision["phd_ongoing"]) +
+                 len(supervision["master_graduated"]) + len(supervision["master_ongoing"]))
+    con_counts = len(consultancy["appointed"]) + len(consultancy["completed"])
+    print(f"  pubs: {pub.get('index_count', 0)}i + {pub.get('other_count', 0)}o | grants: {len(grants)} | sv: {sv_counts} | con: {con_counts}", flush=True)
 
     return {
         "slug":              slug,
@@ -121,8 +172,10 @@ def scrape_profile(slug: str) -> dict | None:
         "master_ongoing":    sv.get("master_ongoing_count", 0),
         "consultancy_appointed":  con.get("appointed_count", 0),
         "consultancy_completed":  con.get("completed_count", 0),
-        "grants":       grants,
-        "publications": pubs,
+        "grants":        grants,
+        "publications":  pubs,
+        "supervision":   supervision,
+        "consultancy":   consultancy,
     }
 
 

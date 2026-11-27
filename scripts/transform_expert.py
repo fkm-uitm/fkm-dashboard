@@ -41,9 +41,11 @@ def main():
     profiles: list[dict] = json.loads(RAW.read_text(encoding="utf-8"))
     print(f"Loaded {len(profiles)} profiles")
 
-    staff_rows = []
-    pub_rows   = []
-    grant_rows = []
+    staff_rows  = []
+    pub_rows    = []
+    grant_rows  = []
+    sv_rows     = []
+    con_rows    = []
 
     for p in profiles:
         slug = p.get("slug", "")
@@ -98,6 +100,44 @@ def main():
                 "url":     pub.get("url", ""),
             })
 
+        # ── supervision ───────────────────────────────────────────────────
+        sv = p.get("supervision", {})
+        for category, entries in sv.items():
+            for e in (entries or []):
+                sv_rows.append({
+                    "slug":          slug,
+                    "staff_name":    p.get("name", ""),
+                    "category":      category,  # phd_graduated / phd_ongoing / master_graduated / master_ongoing
+                    "matric":        e.get("matric", ""),
+                    "student_name":  e.get("name", ""),
+                    "programme":     e.get("programme", ""),
+                    "level":         e.get("level", ""),
+                    "title":         e.get("title", ""),
+                    "intake":        e.get("intake", ""),
+                    "main_supervisor": e.get("main_supervisor", ""),
+                    "status":        e.get("status", ""),
+                    "graduated_sem": e.get("graduated_sem", ""),
+                })
+
+        # ── consultancy ───────────────────────────────────────────────────
+        con = p.get("consultancy", {})
+        for category, entries in con.items():
+            for e in (entries or []):
+                con_rows.append({
+                    "slug":       slug,
+                    "staff_name": p.get("name", ""),
+                    "category":   category,  # appointed / completed
+                    "file_no":    e.get("file_no", ""),
+                    "title":      e.get("title", ""),
+                    "client":     e.get("client", ""),
+                    "type":       e.get("type", ""),
+                    "role":       e.get("role", ""),
+                    "cost_rm":    e.get("cost_rm"),
+                    "year_start": e.get("year_start"),
+                    "year_end":   e.get("year_end"),
+                    "status":     e.get("status", ""),
+                })
+
         # ── grants ────────────────────────────────────────────────────────
         for g in p.get("grants", []):
             grant_rows.append({
@@ -130,15 +170,19 @@ def main():
     }
 
     # ── write ─────────────────────────────────────────────────────────────
-    _write("expert_staff.json",   staff_rows)
-    _write("expert_pubs.json",    pub_rows)
-    _write("expert_grants.json",  grant_rows)
-    _write("expert_summary.json", summary)
+    _write("expert_staff.json",        staff_rows)
+    _write("expert_pubs.json",         pub_rows)
+    _write("expert_grants.json",       grant_rows)
+    _write("expert_supervision.json",  sv_rows)
+    _write("expert_consultancy.json",  con_rows)
+    _write("expert_summary.json",      summary)
 
-    print(f"expert_staff.json  : {len(staff_rows)} records")
-    print(f"expert_pubs.json   : {len(pub_rows)} records")
-    print(f"expert_grants.json : {len(grant_rows)} records")
-    print(f"expert_summary.json: {summary}")
+    print(f"expert_staff.json       : {len(staff_rows)} records")
+    print(f"expert_pubs.json        : {len(pub_rows)} records")
+    print(f"expert_grants.json      : {len(grant_rows)} records")
+    print(f"expert_supervision.json : {len(sv_rows)} records")
+    print(f"expert_consultancy.json : {len(con_rows)} records")
+    print(f"expert_summary.json     : {summary}")
 
 
 def _write(filename: str, data):

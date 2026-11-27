@@ -662,6 +662,30 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   letter-spacing: .2px;
 }
 
+/* ── STAFF SUBPAGE TABS ─────────────────────────────────────────────── */
+.staff-subpage-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0;
+}
+.staff-subpage-tab {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.staff-subpage-tab:hover { color: var(--text); }
+.staff-subpage-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
 /* ── STAFF AVATAR (table row, legacy) ──────────────────────────────── */
 .row-thumb {
   width: 30px; height: 30px;
@@ -926,6 +950,27 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 }
 .profile-expert-tab:hover { color: var(--text); }
 .profile-expert-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.prof-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 0 2px;
+}
+.prof-pag-btn {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.prof-pag-btn:hover:not(:disabled) { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.prof-pag-btn:disabled { opacity: .4; cursor: default; }
+
 .profile-tab-count {
   display: inline-block;
   background: var(--accent-soft);
@@ -1354,32 +1399,75 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
   <div id="page-staff" class="content" hidden>
     <div class="page-header">
       <h2>Staff Profiles</h2>
-      <p>FKM academic staff — as scraped from Expert Portal. Click any card to view full profile.</p>
+      <p>FKM academic staff — as scraped from Expert Portal.</p>
     </div>
-    <div id="staff-profile" class="profile-drawer" hidden></div>
-    <div class="tbl-card">
-      <div class="toolbar">
-        <div class="search-wrap">
-          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="staff-search" placeholder="Search by name..." aria-label="Search staff">
+    <!-- Subpage tabs -->
+    <div class="staff-subpage-tabs" role="tablist">
+      <button class="staff-subpage-tab active" data-stafftab="profiles" role="tab" aria-selected="true">Profiles</button>
+      <button class="staff-subpage-tab" data-stafftab="matrix" role="tab" aria-selected="false">Matrix</button>
+    </div>
+
+    <!-- Profiles subpage -->
+    <div id="staff-subpage-profiles">
+      <div id="staff-profile" class="profile-drawer" hidden></div>
+      <div class="tbl-card">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+            <input type="search" id="staff-search" placeholder="Search by name..." aria-label="Search staff">
+          </div>
+          <select class="filter-select" id="staff-position" aria-label="Filter by position">
+            <option value="all">All Positions</option>
+          </select>
+          <select class="filter-select" id="staff-sort" aria-label="Sort by">
+            <option value="name">Name A to Z</option>
+            <option value="h_scopus">H-Index (Scopus)</option>
+            <option value="pubs_indexed">Indexed Pubs</option>
+            <option value="pubs_total">Total Pubs</option>
+            <option value="grants_total">Total Grants</option>
+            <option value="phd_total">PhD Students</option>
+            <option value="master_total">Master Students</option>
+          </select>
+          <span id="staff-xf-badge" hidden></span>
+          <span class="count-badge" id="staff-count"></span>
         </div>
-        <select class="filter-select" id="staff-position" aria-label="Filter by position">
-          <option value="all">All Positions</option>
-        </select>
-        <select class="filter-select" id="staff-sort" aria-label="Sort by">
-          <option value="name">Name A to Z</option>
-          <option value="h_scopus">H-Index (Scopus)</option>
-          <option value="pubs_indexed">Indexed Pubs</option>
-          <option value="pubs_total">Total Pubs</option>
-          <option value="grants_total">Total Grants</option>
-          <option value="phd_total">PhD Students</option>
-          <option value="master_total">Master Students</option>
-        </select>
-        <span id="staff-xf-badge" hidden></span>
-        <span class="count-badge" id="staff-count"></span>
+        <div id="staff-grid" class="staff-grid"></div>
+        <div class="pagination" id="staff-pagination" style="padding:0 20px 16px"></div>
       </div>
-      <div id="staff-grid" class="staff-grid"></div>
-      <div class="pagination" id="staff-pagination" style="padding:0 20px 16px"></div>
+    </div>
+
+    <!-- Matrix subpage -->
+    <div id="staff-subpage-matrix" hidden>
+      <div class="tbl-card">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+            <input type="search" id="matrix-search" placeholder="Search by name..." aria-label="Search matrix">
+          </div>
+          <span class="count-badge" id="matrix-count"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead id="matrix-thead">
+              <tr>
+                <th class="sortable" data-sort="name">Name <span class="sort-icon">↕</span></th>
+                <th class="c sortable" data-sort="h_scopus">H-Index<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">Sc / WoS / GS</span> <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="pubs_indexed">Indexed<br>Pubs <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="pubs_other">Other<br>Pubs <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="grants_active">Active<br>Grants <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="grants_total">Total<br>Grants <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="phd_grad">PhD<br>Grad <span class="sort-icon">↕</span></th>
+                <th class="r">PhD<br>Active</th>
+                <th class="r sortable" data-sort="msc_grad">MSc<br>Grad <span class="sort-icon">↕</span></th>
+                <th class="r">MSc<br>Active</th>
+                <th class="r sortable" data-sort="consultancy">Consultancy<br>Done <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="matrix-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="matrix-pagination"></div>
+      </div>
     </div>
   </div>
 
@@ -1561,7 +1649,7 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 'use strict';
 
 // ── State ──────────────────────────────────────────────────────────────────
-let STAFF = [], PUBS = [], GRANTS = [];
+let STAFF = [], PUBS = [], GRANTS = [], SUPERVISION = [], CONSULTANCY = [];
 let STAFF_BY_SLUG = new Map();
 let SUMMARY = {};
 let PRIME_BENCH = null;
@@ -1711,20 +1799,24 @@ function buildYearSelects(elFrom, elTo, minY, maxY) {
 async function loadData() {
   const overlay = document.getElementById('load-overlay');
   try {
-    const [sumRes, staffRes, pubsRes, grantsRes, primeRes] = await Promise.all([
+    const [sumRes, staffRes, pubsRes, grantsRes, svRes, conRes, primeRes] = await Promise.all([
       fetch('data/expert_summary.json'),
       fetch('data/expert_staff.json'),
       fetch('data/expert_pubs.json'),
       fetch('data/expert_grants.json'),
+      fetch('data/expert_supervision.json').catch(() => null),
+      fetch('data/expert_consultancy.json').catch(() => null),
       fetch('data/prime_benchmark.json').catch(() => null),
     ]);
     if (!sumRes.ok || !staffRes.ok || !pubsRes.ok || !grantsRes.ok) {
       throw new Error('One or more data files failed to load.');
     }
     const summary = await sumRes.json();
-    STAFF  = await staffRes.json();
-    PUBS   = await pubsRes.json();
-    GRANTS = await grantsRes.json();
+    STAFF      = await staffRes.json();
+    PUBS       = await pubsRes.json();
+    GRANTS     = await grantsRes.json();
+    SUPERVISION  = (svRes  && svRes.ok)  ? await svRes.json()  : [];
+    CONSULTANCY  = (conRes && conRes.ok) ? await conRes.json() : [];
     // Load PRIME benchmark: prefer localStorage (user-uploaded) over committed JSON
     let filePrime = null;
     if (primeRes && primeRes.ok) filePrime = await primeRes.json();
@@ -2155,10 +2247,209 @@ function renderStaffTable() {
     : `<p style="padding:40px;color:var(--text3);text-align:center;width:100%">No staff match the current filters.</p>`;
 }
 
+// ── STAFF MATRIX ───────────────────────────────────────────────────────────
+const matrixSort = { key: null, dir: 1 };
+let   matrixPage = 1;
+
+function getMatrixList() {
+  const q = document.getElementById('matrix-search').value.trim().toLowerCase();
+  let rows = [...STAFF];
+  if (q) rows = rows.filter(s => (s.name||'').toLowerCase().includes(q));
+  if (matrixSort.key) {
+    const { key, dir } = matrixSort;
+    rows.sort((a, b) => {
+      let av, bv;
+      if (key === 'h_scopus')    { av = a.h_scopus||0;      bv = b.h_scopus||0; }
+      else if (key === 'pubs_indexed') { av = a.pubs_indexed||0; bv = b.pubs_indexed||0; }
+      else if (key === 'pubs_other')   { av = a.pubs_other||0;   bv = b.pubs_other||0; }
+      else if (key === 'grants_active'){ av = a.grants_active||0;bv = b.grants_active||0; }
+      else if (key === 'grants_total') { av = a.grants_total||0; bv = b.grants_total||0; }
+      else if (key === 'phd_grad')     { av = a.phd_graduated||0;bv = b.phd_graduated||0; }
+      else if (key === 'msc_grad')     { av = a.master_graduated||0;bv = b.master_graduated||0; }
+      else if (key === 'consultancy')  { av = a.consultancy_completed||0;bv = b.consultancy_completed||0; }
+      else { av = String(a[key]||''); bv = String(b[key]||''); return dir * av.localeCompare(bv); }
+      return dir * (av - bv);
+    });
+  } else {
+    rows.sort((a, b) => (a.name||'').localeCompare(b.name||''));
+  }
+  return rows;
+}
+
+function renderMatrixTable() {
+  const rows  = getMatrixList();
+  const total = Math.max(1, Math.ceil(rows.length/PAGE_SIZE));
+  matrixPage  = Math.min(matrixPage, total);
+  const start = (matrixPage-1)*PAGE_SIZE;
+  const page  = rows.slice(start, start+PAGE_SIZE);
+  document.getElementById('matrix-count').textContent = `${rows.length} staff`;
+  document.getElementById('matrix-pagination').innerHTML = paginHTML(total, matrixPage, 'matrix');
+
+  const hc = v => v == null ? '<span style="color:var(--text3)">--</span>' : `<span class="num">${v}</span>`;
+  const nc = v => !v ? '<span style="color:var(--text3)">0</span>' : `<span class="num">${v}</span>`;
+
+  const avatarCell = s => {
+    const ini = esc(initials(s.name));
+    if (s.photo) {
+      return `<img class="row-thumb" src="${esc(s.photo)}" alt="" loading="lazy"
+        onerror="this.outerHTML='<span class=\\'row-initials\\' aria-hidden=\\'true\\'>${ini}</span>'">`;
+    }
+    return `<span class="row-initials" aria-hidden="true">${ini}</span>`;
+  };
+
+  // Update sort icons
+  const thead = document.getElementById('matrix-thead');
+  thead.querySelectorAll('th.sortable').forEach(th => {
+    const isActive = th.dataset.sort === matrixSort.key;
+    th.setAttribute('aria-sort', isActive ? (matrixSort.dir === 1 ? 'ascending' : 'descending') : 'none');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = isActive ? (matrixSort.dir === 1 ? '↑' : '↓') : '↕';
+  });
+
+  document.getElementById('matrix-tbody').innerHTML = page.length
+    ? page.map(s => `
+      <tr>
+        <td><div class="name-cell">${avatarCell(s)}<button class="name-btn" data-slug="${esc(s.slug)}" onclick="switchToProfile('${esc(s.slug)}')">${esc(s.name||s.slug)}</button></div></td>
+        <td class="c">${hc(s.h_scopus)} / ${hc(s.h_wos)} / ${hc(s.h_gs)}</td>
+        <td class="r">${nc(s.pubs_indexed)}</td>
+        <td class="r">${nc(s.pubs_other)}</td>
+        <td class="r">${nc(s.grants_active)}</td>
+        <td class="r">${nc(s.grants_total)}</td>
+        <td class="r">${nc(s.phd_graduated)}</td>
+        <td class="r">${nc(s.phd_ongoing)}</td>
+        <td class="r">${nc(s.master_graduated)}</td>
+        <td class="r">${nc(s.master_ongoing)}</td>
+        <td class="r">${nc(s.consultancy_completed)}</td>
+      </tr>`).join('')
+    : `<tr><td class="empty" colspan="11">No staff match.</td></tr>`;
+}
+
+function switchToProfile(slug) {
+  // Switch to Profiles tab then open the profile
+  document.querySelectorAll('.staff-subpage-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.stafftab === 'profiles');
+    t.setAttribute('aria-selected', t.dataset.stafftab === 'profiles' ? 'true' : 'false');
+  });
+  document.getElementById('staff-subpage-profiles').hidden = false;
+  document.getElementById('staff-subpage-matrix').hidden = true;
+  openStaffProfile(slug);
+}
+
+// ── PROFILE TAB PAGINATION HELPERS ─────────────────────────────────────────
+const PROF_PAGE_SIZE = 10;
+
+function profilePagedTable(allRows, page, key, rowFn) {
+  const total = Math.max(1, Math.ceil(allRows.length / PROF_PAGE_SIZE));
+  page = Math.min(Math.max(1, page), total);
+  const start = (page - 1) * PROF_PAGE_SIZE;
+  const slice = allRows.slice(start, start + PROF_PAGE_SIZE);
+  const header = rowFn === pubTableRows
+    ? '<tr><th>#</th><th>Title</th><th>Type</th><th>Indexed</th><th>Date</th></tr>'
+    : rowFn === grantTableRows
+    ? '<tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr>'
+    : rowFn === svTableRows
+    ? '<tr><th>#</th><th>Student</th><th>Level</th><th>Title</th><th>Intake</th><th>Status</th></tr>'
+    : '<tr><th>#</th><th>Title</th><th>Client</th><th>Type</th><th>Year</th><th>Status</th></tr>';
+  const rows = slice.map((r, i) => rowFn(r, start + i)).join('');
+  const nav = total > 1 ? profPaginHTML(total, page, key) : '';
+  return `<div class="tbl-wrap"><table><thead>${header}</thead><tbody>${rows}</tbody></table></div>${nav}`;
+}
+
+function profPaginHTML(total, cur, key) {
+  if (total <= 1) return '';
+  let html = `<div class="prof-pagination">`;
+  html += `<button class="prof-pag-btn" data-profpag="${key}:${cur-1}" ${cur<=1?'disabled':''}>‹ Prev</button>`;
+  html += `<span style="font-size:12px;color:var(--text2)">Page ${cur} of ${total}</span>`;
+  html += `<button class="prof-pag-btn" data-profpag="${key}:${cur+1}" ${cur>=total?'disabled':''}>Next ›</button>`;
+  html += `</div>`;
+  return html;
+}
+
+function pubTableRows(p, i) {
+  return `<tr>
+    <td class="muted">${i+1}</td>
+    <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
+    <td>${esc(p.type||'')}</td>
+    <td>${p.indexed ? '<span class="badge badge-active">Yes</span>' : '<span style="color:var(--text3);font-size:11px">—</span>'}</td>
+    <td>${esc(p.date||'')}</td>
+  </tr>`;
+}
+
+function grantTableRows(g, i) {
+  const isIntl   = (g.level||'').toUpperCase().includes('INT');
+  const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
+  return `<tr>
+    <td class="muted">${i+1}</td>
+    <td class="clip wide">${esc(g.title||'(no title)')}</td>
+    <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+    <td>${esc(String(g.year_start||''))}</td>
+    <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+  </tr>`;
+}
+
+function svTableRows(e, i) {
+  const cat = e.category || '';
+  const badge = cat.includes('phd') ? '<span class="badge badge-intl">PhD</span>' : '<span class="badge badge-natl">MSc</span>';
+  return `<tr>
+    <td class="muted">${i+1}</td>
+    <td class="clip">${esc(e.student_name||'')}</td>
+    <td>${badge}</td>
+    <td class="clip wide" style="max-width:220px">${esc(e.title||'—')}</td>
+    <td style="white-space:nowrap">${esc(e.intake||'')}</td>
+    <td><span style="font-size:11px;color:var(--text2)">${esc(e.status||e.graduated_sem||'')}</span></td>
+  </tr>`;
+}
+
+function conTableRows(e, i) {
+  const isDone = (e.status||'').toUpperCase() === 'COMPLETED';
+  return `<tr>
+    <td class="muted">${i+1}</td>
+    <td class="clip wide">${esc(e.title||'(no title)')}</td>
+    <td class="clip">${esc(e.client||'')}</td>
+    <td style="font-size:11px;color:var(--text2)">${esc(e.type||'')}</td>
+    <td>${esc(String(e.year_start||''))}</td>
+    <td>${isDone ? '<span class="badge badge-done">Done</span>' : '<span class="badge badge-active">Appointed</span>'}</td>
+  </tr>`;
+}
+
+// Profile-panel pagination is wired via delegation in the panel click handler below
+function wireProfilePagination(panel, dataSets) {
+  panel.addEventListener('click', e => {
+    const btn = e.target.closest('[data-profpag]');
+    if (!btn || btn.disabled) return;
+    const [key, pageStr] = btn.dataset.profpag.split(':');
+    const page = parseInt(pageStr, 10);
+    const listId = `${key}-paged-list`;
+    const listEl = panel.querySelector(`#${listId}`);
+    if (!listEl) return;
+    const rows = dataSets[key];
+    const rowFn = key === 'pub' ? pubTableRows : key === 'grant' ? grantTableRows : key === 'sv' ? svTableRows : conTableRows;
+    if (rows) listEl.innerHTML = profilePagedTable(rows, page, key, rowFn);
+  });
+}
+
 function openStaffProfile(slug) {
   const s = STAFF_BY_SLUG.get(slug); if (!s) return;
+
+  // Item 3: toggle — clicking open profile again closes it
+  const panel = document.getElementById('staff-profile');
+  if (!panel.hidden && panel.dataset.openSlug === slug) {
+    panel.hidden = true;
+    panel.dataset.openSlug = '';
+    return;
+  }
+  panel.dataset.openSlug = slug;
+
   const staffPubs   = PUBS.filter(p => p.slug === slug);
   const staffGrants = GRANTS.filter(g => g.slug === slug);
+  const staffSv     = SUPERVISION.filter(e => e.slug === slug);
+  const staffCon    = CONSULTANCY.filter(e => e.slug === slug);
+  const svPhdGrad   = staffSv.filter(e => e.category === 'phd_graduated');
+  const svPhdOn     = staffSv.filter(e => e.category === 'phd_ongoing');
+  const svMscGrad   = staffSv.filter(e => e.category === 'master_graduated');
+  const svMscOn     = staffSv.filter(e => e.category === 'master_ongoing');
+  const conDone     = staffCon.filter(e => e.category === 'completed');
+  const conAppt     = staffCon.filter(e => e.category === 'appointed');
   const idxPubs     = staffPubs.filter(p => p.indexed);
   const otherPubs   = staffPubs.filter(p => !p.indexed);
 
@@ -2202,7 +2493,6 @@ function openStaffProfile(slug) {
     </tr>`;
   }).join('');
 
-  const panel = document.getElementById('staff-profile');
   panel.hidden = false;
   panel.innerHTML = `
     <div class="profile-expert">
@@ -2231,7 +2521,8 @@ function openStaffProfile(slug) {
           <button class="profile-expert-tab active" role="tab" data-ptab="overview" aria-selected="true">Overview</button>
           <button class="profile-expert-tab" role="tab" data-ptab="publications" aria-selected="false">Publications <span class="profile-tab-count">${staffPubs.length}</span></button>
           <button class="profile-expert-tab" role="tab" data-ptab="grants" aria-selected="false">Grants <span class="profile-tab-count">${staffGrants.length}</span></button>
-          <button class="profile-expert-tab" role="tab" data-ptab="supervision" aria-selected="false">Supervision</button>
+          <button class="profile-expert-tab" role="tab" data-ptab="supervision" aria-selected="false">Supervision <span class="profile-tab-count">${staffSv.length}</span></button>
+          <button class="profile-expert-tab" role="tab" data-ptab="consultancy" aria-selected="false">Consultancy <span class="profile-tab-count">${staffCon.length}</span></button>
         </div>
         <!-- Overview tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="overview">
@@ -2250,40 +2541,29 @@ function openStaffProfile(slug) {
             <div class="profile-section-title">Recent Indexed Publications</div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
-              <tbody>${pubsHTML}</tbody>
-            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No indexed publications on record.</p>'}
+              <tbody>${idxPubs.slice(0,5).map((p,i) => `<tr>
+                <td class="muted">${i+1}</td>
+                <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
+                <td>${esc(p.type||'')}</td>
+                <td>${esc(p.date||'')}</td>
+              </tr>`).join('')}</tbody>
+            </table></div>
+            ${idxPubs.length > 5 ? `<p style="font-size:12px;color:var(--text3);margin-top:6px">Showing 5 of ${idxPubs.length} — see Publications tab for full list.</p>` : ''}
+            ` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No indexed publications on record.</p>'}
         </div>
         <!-- Publications tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="publications" hidden>
           ${staffPubs.length ? `
-            <div class="tbl-wrap"><table>
-              <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Indexed</th><th>Date</th></tr></thead>
-              <tbody>${staffPubs.map((p,i) => `<tr>
-                <td class="muted">${i+1}</td>
-                <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
-                <td>${esc(p.type||'')}</td>
-                <td>${p.indexed ? '<span class="badge badge-active">Yes</span>' : '<span style="color:var(--text3);font-size:11px">—</span>'}</td>
-                <td>${esc(p.date||'')}</td>
-              </tr>`).join('')}</tbody>
-            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No publications on record.</p>'}
+            <div id="pub-paged-list">
+              ${profilePagedTable(staffPubs, 1, 'pub', pubTableRows)}
+            </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No publications on record.</p>'}
         </div>
         <!-- Grants tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="grants" hidden>
           ${staffGrants.length ? `
-            <div class="tbl-wrap"><table>
-              <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
-              <tbody>${staffGrants.map((g,i) => {
-                const isIntl   = (g.level||'').toUpperCase().includes('INT');
-                const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
-                return `<tr>
-                  <td class="muted">${i+1}</td>
-                  <td class="clip wide">${esc(g.title||'(no title)')}</td>
-                  <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
-                  <td>${esc(String(g.year_start||''))}</td>
-                  <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
-                </tr>`;
-              }).join('')}</tbody>
-            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No grants on record.</p>'}
+            <div id="grant-paged-list">
+              ${profilePagedTable(staffGrants, 1, 'grant', grantTableRows)}
+            </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No grants on record.</p>'}
         </div>
         <!-- Supervision tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="supervision" hidden>
@@ -2292,16 +2572,31 @@ function openStaffProfile(slug) {
             <div class="profile-kpi"><div class="label">PhD Ongoing</div><div class="val num">${s.phd_ongoing||0}</div></div>
             <div class="profile-kpi"><div class="label">Master Graduated</div><div class="val num">${s.master_graduated||0}</div></div>
             <div class="profile-kpi"><div class="label">Master Ongoing</div><div class="val num">${s.master_ongoing||0}</div></div>
-            <div class="profile-kpi"><div class="label">Consultancy Done</div><div class="val num">${s.consultancy_completed||0}</div></div>
-            <div class="profile-kpi"><div class="label">Consultancy Appointed</div><div class="val num">${s.consultancy_appointed||0}</div></div>
           </div>
-          <p style="margin-top:16px;font-size:12px;color:var(--text3)">Supervision data sourced from Expert Portal self-reports. For verified records, check Expert Portal directly.</p>
+          ${staffSv.length ? `
+          <div id="sv-paged-list">
+            ${profilePagedTable(staffSv, 1, 'sv', svTableRows)}
+          </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:12px">No supervision records yet — may appear after next scrape.</p>'}
+        </div>
+        <!-- Consultancy tab -->
+        <div class="profile-expert-tabpanel" data-ptabpanel="consultancy" hidden>
+          <div class="profile-kpi-row" style="margin-top:0">
+            <div class="profile-kpi"><div class="label">Appointed</div><div class="val num">${s.consultancy_appointed||0}</div></div>
+            <div class="profile-kpi"><div class="label">Completed</div><div class="val num">${s.consultancy_completed||0}</div></div>
+          </div>
+          ${staffCon.length ? `
+          <div id="con-paged-list">
+            ${profilePagedTable(staffCon, 1, 'con', conTableRows)}
+          </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:12px">No consultancy records yet — may appear after next scrape.</p>'}
         </div>
       </div>
     </div>`;
 
   panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  document.getElementById('profile-close-btn').addEventListener('click', () => { panel.hidden = true; });
+  document.getElementById('profile-close-btn').addEventListener('click', () => {
+    panel.hidden = true;
+    panel.dataset.openSlug = '';
+  });
 
   // Profile tab switching
   panel.querySelectorAll('.profile-expert-tab').forEach(tab => {
@@ -2312,6 +2607,14 @@ function openStaffProfile(slug) {
       tab.setAttribute('aria-selected','true');
       panel.querySelector(`[data-ptabpanel="${tab.dataset.ptab}"]`).hidden = false;
     });
+  });
+
+  // Wire profile-tab pagination
+  wireProfilePagination(panel, {
+    pub:   staffPubs,
+    grant: staffGrants,
+    sv:    staffSv,
+    con:   staffCon,
   });
 }
 
@@ -2575,6 +2878,7 @@ document.addEventListener('click', e => {
     const [key, p] = pb.dataset.page.split(':');
     pageState[key] = +p;
     if (key==='staff')  renderStaffTable();
+    if (key==='matrix') { matrixPage = +p; renderMatrixTable(); }
     if (key==='pubs')   renderPubsTable();
     if (key==='grants') renderGrantsTable();
     pb.closest('.tbl-card')?.scrollIntoView({ block:'start' });
@@ -2585,6 +2889,32 @@ document.addEventListener('click', e => {
 document.getElementById('staff-search').addEventListener('input',          () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('staff-sort').addEventListener('change',           () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('staff-position').addEventListener('change',       () => { pageState.staff=1;  renderStaffTable(); });
+
+// Staff subpage tabs
+document.querySelector('.staff-subpage-tabs').addEventListener('click', e => {
+  const tab = e.target.closest('[data-stafftab]'); if (!tab) return;
+  const key = tab.dataset.stafftab;
+  document.querySelectorAll('.staff-subpage-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.stafftab === key);
+    t.setAttribute('aria-selected', t.dataset.stafftab === key ? 'true' : 'false');
+  });
+  document.getElementById('staff-subpage-profiles').hidden = key !== 'profiles';
+  document.getElementById('staff-subpage-matrix').hidden   = key !== 'matrix';
+  if (key === 'matrix') renderMatrixTable();
+});
+
+// Matrix search + sort header
+document.getElementById('matrix-search').addEventListener('input', () => { matrixPage=1; renderMatrixTable(); });
+document.getElementById('matrix-thead').addEventListener('click', e => {
+  const th = e.target.closest('th.sortable'); if (!th) return;
+  const key = th.dataset.sort;
+  if (matrixSort.key === key) matrixSort.dir *= -1;
+  else { matrixSort.key = key; matrixSort.dir = 1; }
+  matrixPage = 1;
+  renderMatrixTable();
+});
+
+// Matrix pagination (delegated via global click handler below)
 document.getElementById('pubs-search').addEventListener('input',           () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-from').addEventListener('change',       () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-to').addEventListener('change',         () => { pageState.pubs=1;   renderPubsTable(); });
