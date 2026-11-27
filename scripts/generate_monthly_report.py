@@ -188,6 +188,11 @@ def main():
         "period":        period,
         "period_label":  period_label,
         "generated":     date.today().isoformat(),
+        "report_type":   "retrospective",
+        "data_note":     (
+            "Calculated from current Expert portal records filtered by publication date. "
+            "Figures may change as staff update their profiles after this report is generated."
+        ),
         "summary": {
             "staff_count":       len(staff),
             "pubs_indexed_swe":  len(swe_titles),
