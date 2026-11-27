@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "report_label": "Data Pencapaian FKM Oktober 2026",
+    "report_month": "Oktober 2026",
+    "report_date": "2026-10-31",
+    "sources": {
+      "publications": "PRIME",
+      "grants": "IRES"
+    },
+    "note": "Official verified data. Update this file each time a new Data Pencapaian report is received."
+  },
+  "publications": {
+    "indexed": 109,
+    "nonindexed_journal": 13,
+    "other_publication": 12,
+    "nonindexed_total": 25,
+    "corresponding_first_author": 49,
+    "q1q2": 30,
+    "mycite": 19,
+    "book_chapter": 9,
+    "total": 134
+  },
+  "grants": {
+    "total_new_period": 12,
+    "pi_total_active": 31,
+    "acquisition_rm": 517918.4
+  }
+}

@@ -286,6 +286,21 @@ button, input, select { font: inherit; color: inherit; }
 .kpi-row.cols-5 { grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); }
 @media (min-width: 900px) { .kpi-row.cols-5 { grid-template-columns: repeat(5, 1fr); } }
 
+.prime-bench-section { margin-bottom: 20px; }
+.prime-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: color-mix(in srgb, var(--surface) 60%, var(--border));
+  border-left: 3px solid #dc2626;
+  border-radius: 4px;
+}
+.prime-bench-section .kpi-row { margin-bottom: 0; }
+
 .kpi {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -847,6 +862,31 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   .pub-drawer { width: 100%; max-width: 100%; }
   .year-range { flex-wrap: wrap; }
 }
+
+/* ── PRINT (PDF export via browser print dialog) ─────────────────────────── */
+@media print {
+  @page { size: A4; margin: 18mm 15mm; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .sidebar, .topbar, .hamburger, .ov-filter-bar, .tbl-toolbar,
+  .btn-primary, .btn-secondary, .pub-drawer, #load-overlay,
+  .kpi-row1, #kpi-row2, #kpi-row-prime,
+  #page-overview, #page-pubs, #page-grants, #page-staff, #page-about { display: none !important; }
+  #page-report { display: block !important; padding: 0 !important; }
+  .page-header { margin-bottom: 12pt; }
+  .page-header h2 { font-size: 18pt; margin: 0; }
+  .page-header p { font-size: 10pt; color: #555; margin: 4pt 0 0; }
+  .rpt-section { break-inside: avoid; margin-bottom: 16pt; }
+  .rpt-section h3 { font-size: 13pt; border-bottom: 1px solid #ccc; padding-bottom: 4pt; margin-bottom: 8pt; }
+  .kpi-row { display: grid !important; grid-template-columns: repeat(4,1fr); gap: 8pt; }
+  .kpi { border: 1px solid #ccc; padding: 8pt; background: #f9f9f9 !important; box-shadow: none !important; }
+  .kpi-val { font-size: 14pt !important; }
+  .kpi-label { font-size: 9pt !important; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th, td { border: 1px solid #ccc; padding: 4pt 6pt; text-align: left; }
+  th { background: #eee !important; font-weight: 600; }
+  tr:nth-child(even) td { background: #f5f5f5 !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+}
 </style>
 </head>
 <body>
@@ -968,6 +1008,10 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
     </div>
     <div id="kpi-row1" class="kpi-row cols-5"></div>
     <div id="kpi-row2" class="kpi-row cols-5"></div>
+    <div id="kpi-row-prime" class="prime-bench-section" hidden>
+      <div class="prime-label"></div>
+      <div id="kpi-prime-cards" class="kpi-row cols-5"></div>
+    </div>
     <div class="section-title">Publications &amp; Grants</div>
     <div class="chart-grid two">
       <div class="chart-card">
@@ -1189,7 +1233,8 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
         <option value="11">November</option><option value="12">December</option>
       </select>
       <button class="btn-primary" id="rpt-generate-btn" style="margin-left:8px">Generate Report</button>
-      <button class="btn-secondary" id="rpt-download-btn" style="margin-left:4px" hidden>Download Excel</button>
+      <button class="btn-secondary" id="rpt-download-btn" style="margin-left:4px" hidden>⬇ Excel</button>
+      <button class="btn-secondary" id="rpt-pdf-btn" style="margin-left:4px" hidden>🖨 Print / PDF</button>
     </div>
     <div id="rpt-output"></div>
   </div>
@@ -1230,6 +1275,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 let STAFF = [], PUBS = [], GRANTS = [];
 let STAFF_BY_SLUG = new Map();
 let SUMMARY = {};
+let PRIME_BENCH = null;
 const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
@@ -1330,11 +1376,12 @@ function buildYearSelects(elFrom, elTo, minY, maxY) {
 async function loadData() {
   const overlay = document.getElementById('load-overlay');
   try {
-    const [sumRes, staffRes, pubsRes, grantsRes] = await Promise.all([
+    const [sumRes, staffRes, pubsRes, grantsRes, primeRes] = await Promise.all([
       fetch('data/expert_summary.json'),
       fetch('data/expert_staff.json'),
       fetch('data/expert_pubs.json'),
       fetch('data/expert_grants.json'),
+      fetch('data/prime_benchmark.json').catch(() => null),
     ]);
     if (!sumRes.ok || !staffRes.ok || !pubsRes.ok || !grantsRes.ok) {
       throw new Error('One or more data files failed to load.');
@@ -1343,6 +1390,7 @@ async function loadData() {
     STAFF  = await staffRes.json();
     PUBS   = await pubsRes.json();
     GRANTS = await grantsRes.json();
+    if (primeRes && primeRes.ok) PRIME_BENCH = await primeRes.json();
     STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
 
     const dateStr = summary.generated || '--';
@@ -1405,10 +1453,32 @@ function renderOverview(s) {
   document.getElementById('kpi-row2').innerHTML = [
     kpi('Active grants',        num(activeGrants),   `of ${num(filteredGrants.length)} total`,   '#16a34a', 'beaker'),
     kpi('Total grants',         num(filteredGrants.length), 'All levels and statuses',           '#dc2626', 'money'),
-    kpi('Grant acquisition',    acqLabel,            'Sum of cost (selected period)',             '#0891b2', 'handshake'),
+    kpi('Grant cost (Expert)',  acqLabel,            'Self-reported, may differ from IRES',       '#0891b2', 'handshake'),
     kpi('PhD supervision',      num(s.phd_total),    'Graduated and ongoing',                    '#7c3aed', 'cap'),
     kpi('Master supervision',   num(s.master_total), 'Graduated and ongoing',                    '#2563eb', 'cap'),
   ].join('');
+
+  // PRIME/IRES official benchmark row
+  const primeRow = document.getElementById('kpi-row-prime');
+  if (PRIME_BENCH) {
+    const pb = PRIME_BENCH;
+    const pmeta = pb._meta || {};
+    const pp = pb.publications || {};
+    const pg = pb.grants || {};
+    const acqRM = pg.acquisition_rm ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2}) : '--';
+    const label = pmeta.report_label || 'Official Data';
+    primeRow.hidden = false;
+    primeRow.querySelector('.prime-label').textContent = `📋 ${label} (PRIME / IRES)`;
+    primeRow.querySelector('#kpi-prime-cards').innerHTML = [
+      kpi('Indexed pubs (PRIME)',   num(pp.indexed),               'Scopus / WoS / ERA — verified',     '#0891b2', 'doc'),
+      kpi('Non-indexed (PRIME)',    num(pp.nonindexed_total),      'Non-indexed journals & proceedings', '#059669', 'docs'),
+      kpi('Q1/Q2 journals (PRIME)', num(pp.q1q2),                 'JCR Q1 or Q2 journals',              '#7c3aed', 'star'),
+      kpi('Grant acquisition (IRES)', acqRM,                       'New grants approved in period',      '#dc2626', 'handshake'),
+      kpi('PI grants (IRES)',       num(pg.pi_total_active),       'All active grants as PI',            '#16a34a', 'money'),
+    ].join('');
+  } else {
+    primeRow.hidden = true;
+  }
 
   drawCharts();
 }
@@ -2129,10 +2199,43 @@ function generateReport() {
           <tr><td>Completed</td><td class="r num">${rptGrants.length - activeG.length}</td></tr>
         </tbody></table></div>
       </div>
-    </div>`;
+    </div>
+    ${PRIME_BENCH ? (() => {
+      const pp = PRIME_BENCH.publications || {};
+      const pg = PRIME_BENCH.grants || {};
+      const pmeta = PRIME_BENCH._meta || {};
+      const rows = [
+        ['Indexed Publications',  idxCount,                  pp.indexed,                 'PRIME'],
+        ['Non-indexed Publications', otherCount,             pp.nonindexed_total,        'PRIME'],
+        ['Total Publications',    totalPubs,                 pp.total,                   'PRIME'],
+        ['Q1/Q2 Journals',        '—',                      pp.q1q2,                    'PRIME'],
+        ['MyCite',                '—',                      pp.mycite,                  'PRIME'],
+        ['Book & Chapter',        '—',                      pp.book_chapter,            'PRIME'],
+        ['Grant Acquisition (RM)',totalAcq > 0 ? totalAcq.toLocaleString('en-MY') : '--', pg.acquisition_rm ? pg.acquisition_rm.toLocaleString('en-MY',{minimumFractionDigits:2}) : '--', 'IRES'],
+        ['PI Grants (active)',    piGrants.length,           pg.pi_total_active,         'IRES'],
+      ];
+      return `<div class="tbl-card" style="margin-top:0">
+        <div style="padding:16px 20px 8px">
+          <div style="font-weight:600;font-size:14px">Comparison vs. Official Data</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">${esc(pmeta.report_label||'Data Pencapaian')} (PRIME / IRES)</div>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Metric</th><th class="r">Expert Portal</th><th class="r">PRIME / IRES</th><th>Source</th></tr></thead>
+          <tbody>
+            ${rows.map(([label,dash,prime,src]) => {
+              const diff = typeof dash === 'number' && typeof prime === 'number' ? dash - prime : null;
+              const badge = diff === null ? '' : diff === 0 ? '<span style="color:#16a34a">✓ match</span>'
+                : `<span style="color:${diff>0?'#d97706':'#2563eb'}">${diff>0?'+'+diff:diff}</span>`;
+              return `<tr><td>${esc(label)}</td><td class="r num">${esc(String(dash))} ${badge}</td><td class="r num">${esc(String(prime??'—'))}</td><td style="font-size:11px;color:var(--text3)">${esc(src)}</td></tr>`;
+            }).join('')}
+          </tbody>
+        </table></div>
+      </div>`;
+    })() : ''}`;
 
   document.getElementById('rpt-output').innerHTML = output;
   document.getElementById('rpt-download-btn').hidden = false;
+  document.getElementById('rpt-pdf-btn').hidden = false;
 
   // Store for download
   window._rptData = { year, month, monthName, rptPubs, rptGrants, idxCount, otherCount, totalPubs, piGrants, activeG, totalAcq, hAvg, hMax };
@@ -2175,6 +2278,11 @@ document.getElementById('rpt-download-btn').addEventListener('click', () => {
 
 document.getElementById('rpt-year').addEventListener('change', () => {});
 document.getElementById('rpt-month').addEventListener('change', () => {});
+
+document.getElementById('rpt-pdf-btn').addEventListener('click', () => {
+  const d = window._rptData; if (!d) return;
+  window.print();
+});
 
 // ── ABOUT PAGE — EXCEL EXPORTS ─────────────────────────────────────────────
 function exportToExcel(data, fields, headers, sheetName, filename) {
