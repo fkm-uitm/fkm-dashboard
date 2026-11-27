@@ -567,7 +567,102 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 .name-btn:hover, .title-btn:hover { color: #1d40b0; text-decoration: underline; }
 .title-btn { font-weight: 400; }
 
-/* ── STAFF AVATAR ──────────────────────────────────────────────────── */
+/* ── STAFF CARD GRID ───────────────────────────────────────────────── */
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 20px 20px 8px;
+}
+.staff-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow .15s, border-color .15s, transform .12s;
+  position: relative;
+}
+.staff-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.staff-card:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+.staff-card-photo {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border);
+  background: var(--surface2);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.staff-card-initials {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.staff-card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.3;
+  margin-bottom: 4px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+.staff-card-name:hover { text-decoration: underline; }
+.staff-card-pos {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.staff-card-stats {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  width: 100%;
+  margin-top: auto;
+}
+.staff-card-stat { font-size: 11px; color: var(--text2); }
+.staff-card-stat strong { display: block; font-size: 15px; font-weight: 800; color: var(--text); }
+.staff-card-hindex {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: .2px;
+}
+
+/* ── STAFF AVATAR (table row, legacy) ──────────────────────────────── */
 .row-thumb {
   width: 30px; height: 30px;
   border-radius: 50%;
@@ -701,6 +796,153 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   text-transform: uppercase;
   letter-spacing: .5px;
   margin: 16px 0 10px;
+}
+
+/* ── EXPERT-STYLE PROFILE LAYOUT ───────────────────────────────────── */
+.profile-expert {
+  display: flex;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.profile-expert-sidebar {
+  width: 220px;
+  min-width: 200px;
+  flex-shrink: 0;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding: 28px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+.profile-expert-sidebar .profile-photo {
+  width: 90px; height: 90px;
+  border: 3px solid rgba(255,255,255,.3);
+  margin-bottom: 14px;
+}
+.profile-expert-sidebar .profile-initials-avatar {
+  width: 90px; height: 90px;
+  background: var(--brand-light);
+  color: #fff;
+  border: 3px solid rgba(255,255,255,.2);
+  margin-bottom: 14px;
+}
+.profile-expert-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+.profile-expert-titles {
+  font-size: 11px;
+  color: var(--brand-ink2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  margin: 0 0 14px;
+  line-height: 1.4;
+}
+.profile-expert-meta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.profile-expert-meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 11px;
+  color: rgba(255,255,255,.8);
+  line-height: 1.4;
+}
+.profile-expert-meta-row svg { flex-shrink: 0; margin-top: 1px; opacity: .7; }
+.profile-expert-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 14px;
+}
+.profile-expert-links .profile-link {
+  width: 100%;
+  justify-content: center;
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.2);
+  color: #fff;
+}
+.profile-expert-links .profile-link:hover { background: rgba(255,255,255,.25); }
+.profile-expert-hindex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255,255,255,.15);
+  padding-top: 10px;
+}
+.profile-expert-h-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: rgba(255,255,255,.8);
+}
+.profile-expert-h-row strong { color: #fff; font-size: 13px; }
+.profile-expert-h-label { opacity: .75; }
+.profile-expert-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.profile-expert-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  padding: 0 16px;
+  gap: 2px;
+}
+.profile-expert-tab {
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.profile-expert-tab:hover { color: var(--text); }
+.profile-expert-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.profile-tab-count {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.profile-expert-tabpanel { padding: 20px 24px; overflow-x: auto; }
+@media (max-width: 680px) {
+  .profile-expert { flex-direction: column; }
+  .profile-expert-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; text-align: left; gap: 12px; padding: 16px; }
+  .profile-expert-sidebar .profile-photo,
+  .profile-expert-sidebar .profile-initials-avatar { width: 60px; height: 60px; margin-bottom: 0; }
 }
 
 /* ── PUBLICATION DETAIL DRAWER ─────────────────────────────────────── */
@@ -1112,7 +1354,7 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
   <div id="page-staff" class="content" hidden>
     <div class="page-header">
       <h2>Staff Profiles</h2>
-      <p>Click any name to view full profile, publications, and grants</p>
+      <p>FKM academic staff — as scraped from Expert Portal. Click any card to view full profile.</p>
     </div>
     <div id="staff-profile" class="profile-drawer" hidden></div>
     <div class="tbl-card">
@@ -1121,6 +1363,9 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="staff-search" placeholder="Search by name..." aria-label="Search staff">
         </div>
+        <select class="filter-select" id="staff-position" aria-label="Filter by position">
+          <option value="all">All Positions</option>
+        </select>
         <select class="filter-select" id="staff-sort" aria-label="Sort by">
           <option value="name">Name A to Z</option>
           <option value="h_scopus">H-Index (Scopus)</option>
@@ -1133,27 +1378,8 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
         <span id="staff-xf-badge" hidden></span>
         <span class="count-badge" id="staff-count"></span>
       </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead id="staff-thead">
-            <tr>
-              <th class="sortable" data-sort="name">Name <span class="sort-icon">↕</span></th>
-              <th class="c sortable" data-sort="h_scopus">H-Index<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">Sc / WoS / GS</span> <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="pubs_indexed">Indexed<br>Pubs <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="pubs_other">Other<br>Pubs <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="grants_active">Active<br>Grants <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="grants_total">Total<br>Grants <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="phd_grad">PhD<br>Grad <span class="sort-icon">↕</span></th>
-              <th class="r">PhD<br>Active</th>
-              <th class="r sortable" data-sort="msc_grad">MSc<br>Grad <span class="sort-icon">↕</span></th>
-              <th class="r">MSc<br>Active</th>
-              <th class="r sortable" data-sort="consultancy">Consultancy<br>Done <span class="sort-icon">↕</span></th>
-            </tr>
-          </thead>
-          <tbody id="staff-tbody"></tbody>
-        </table>
-      </div>
-      <div class="pagination" id="staff-pagination"></div>
+      <div id="staff-grid" class="staff-grid"></div>
+      <div class="pagination" id="staff-pagination" style="padding:0 20px 16px"></div>
     </div>
   </div>
 
@@ -1534,6 +1760,7 @@ async function loadData() {
     buildYearSelects(document.getElementById('grants-year-from'), document.getElementById('grants-year-to'), gMin, gMax);
 
     renderOverview(summary);
+    populatePositionFilter();
     renderStaffTable();
     renderPubsTable();
     renderGrantsTable();
@@ -1821,12 +2048,14 @@ function hbarChart(id, labels, data, color, onClick) {
 // ── STAFF ──────────────────────────────────────────────────────────────────
 function getStaffList() {
   const q   = document.getElementById('staff-search').value.trim().toLowerCase();
+  const pos = document.getElementById('staff-position').value;
   let rows  = [...STAFF];
   if (xf.staff_hindex) {
     const { min, max } = xf.staff_hindex;
     if (min === null) rows = rows.filter(s => !s.h_scopus || s.h_scopus === 0);
     else rows = rows.filter(s => s.h_scopus >= min && s.h_scopus <= max);
   }
+  if (pos !== 'all') rows = rows.filter(s => normalisePosition(s.position) === pos);
   if (q) rows = rows.filter(s => (s.name||'').toLowerCase().includes(q));
   // Column header sort takes precedence; fall back to dropdown
   const colKey = tblSort.staff.key;
@@ -1861,48 +2090,69 @@ function getStaffList() {
   return rows;
 }
 
+function populatePositionFilter() {
+  const sel = document.getElementById('staff-position');
+  const positions = [...new Set(STAFF.map(s => normalisePosition(s.position)).filter(Boolean))].sort();
+  sel.innerHTML = `<option value="all">All Positions</option>` +
+    positions.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
+}
+
+function normalisePosition(pos) {
+  if (!pos) return '';
+  const p = pos.toUpperCase().trim();
+  if (p.includes('PROFESOR MADYA')) return 'Profesor Madya';
+  if (p.includes('PROFESOR')) return 'Profesor';
+  if (p.includes('PENSYARAH KANAN')) return 'Pensyarah Kanan';
+  if (p.includes('PENSYARAH')) return 'Pensyarah';
+  if (p.includes('TUTOR')) return 'Tutor';
+  if (p.includes('FELO')) return 'Felo';
+  return pos.charAt(0).toUpperCase() + pos.slice(1).toLowerCase();
+}
+
 function renderStaffTable() {
   const rows  = getStaffList();
   const q     = document.getElementById('staff-search').value.trim();
-  const total = Math.max(1, Math.ceil(rows.length/PAGE_SIZE));
+  const CARD_PAGE = 24;
+  const total = Math.max(1, Math.ceil(rows.length/CARD_PAGE));
   pageState.staff = Math.min(pageState.staff, total);
-  const start = (pageState.staff-1)*PAGE_SIZE;
-  const page  = rows.slice(start, start+PAGE_SIZE);
+  const start = (pageState.staff-1)*CARD_PAGE;
+  const page  = rows.slice(start, start+CARD_PAGE);
   const filterDesc = xf.staff_hindex ? ` with H-Index ${xf.staff_hindex.label}` : '';
   document.getElementById('staff-count').textContent =
     `${rows.length} staff${filterDesc}${q ? ` matching "${q}"` : ''}`;
   document.getElementById('staff-pagination').innerHTML = paginHTML(total, pageState.staff, 'staff');
 
-  const hc = v => v == null ? '<span style="color:var(--text3)">--</span>' : `<span class="num">${v}</span>`;
-  const nc = v => !v ? '<span style="color:var(--text3)">0</span>' : `<span class="num">${v}</span>`;
-
-  // F-03: aria-hidden="true" on avatar placeholders; img alt="" for decorative
-  const avatarCell = s => {
+  const avatarHTML = s => {
     const ini = esc(initials(s.name));
     if (s.photo) {
-      return `<img class="row-thumb" src="${esc(s.photo)}" alt=""
+      return `<img class="staff-card-photo" src="${esc(s.photo)}" alt=""
         loading="lazy"
-        onerror="this.outerHTML='<span class=\\'row-initials\\' aria-hidden=\\'true\\'>${ini}</span>'">`;
+        onerror="this.outerHTML='<div class=\\'staff-card-initials\\' aria-hidden=\\'true\\'>${ini}</div>'">`;
     }
-    return `<span class="row-initials" aria-hidden="true">${ini}</span>`;
+    return `<div class="staff-card-initials" aria-hidden="true">${ini}</div>`;
   };
 
-  document.getElementById('staff-tbody').innerHTML = page.length
-    ? page.map(s => `
-      <tr>
-        <td><div class="name-cell">${avatarCell(s)}<button class="name-btn" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button></div></td>
-        <td class="c">${hc(s.h_scopus)} / ${hc(s.h_wos)} / ${hc(s.h_gs)}</td>
-        <td class="r">${nc(s.pubs_indexed)}</td>
-        <td class="r">${nc(s.pubs_other)}</td>
-        <td class="r">${nc(s.grants_active)}</td>
-        <td class="r">${nc(s.grants_total)}</td>
-        <td class="r">${nc(s.phd_graduated)}</td>
-        <td class="r">${nc(s.phd_ongoing)}</td>
-        <td class="r">${nc(s.master_graduated)}</td>
-        <td class="r">${nc(s.master_ongoing)}</td>
-        <td class="r">${nc(s.consultancy_completed)}</td>
-      </tr>`).join('')
-    : `<tr><td class="empty" colspan="11">No staff match the current filters.</td></tr>`;
+  const hBadge = s => {
+    if (s.h_scopus == null) return '';
+    return `<span class="staff-card-hindex">H ${s.h_scopus}</span>`;
+  };
+
+  document.getElementById('staff-grid').innerHTML = page.length
+    ? page.map(s => {
+        const pos = normalisePosition(s.position);
+        return `<div class="staff-card" role="button" tabindex="0" data-slug="${esc(s.slug)}" aria-label="Open profile for ${esc(s.name||s.slug)}">
+          ${hBadge(s)}
+          ${avatarHTML(s)}
+          <button class="staff-card-name" data-slug="${esc(s.slug)}">${esc(s.name||s.slug)}</button>
+          <div class="staff-card-pos">${esc(pos)}</div>
+          <div class="staff-card-stats">
+            <div class="staff-card-stat"><strong>${s.pubs_indexed||0}</strong>Indexed</div>
+            <div class="staff-card-stat"><strong>${s.grants_active||0}</strong>Active Grants</div>
+            <div class="staff-card-stat"><strong>${(s.phd_graduated||0)+(s.master_graduated||0)}</strong>Grads</div>
+          </div>
+        </div>`;
+      }).join('')
+    : `<p style="padding:40px;color:var(--text3);text-align:center;width:100%">No staff match the current filters.</p>`;
 }
 
 function openStaffProfile(slug) {
@@ -1955,43 +2205,114 @@ function openStaffProfile(slug) {
   const panel = document.getElementById('staff-profile');
   panel.hidden = false;
   panel.innerHTML = `
-    <div class="profile-banner">
+    <div class="profile-expert">
       <button class="profile-banner-close" id="profile-close-btn" aria-label="Close profile">&times;</button>
-      ${avatarHTML}
-      <div class="profile-banner-info">
-        <h2>${esc(s.name||slug)}</h2>
-        <p>${esc(s.position||'')}${s.department ? ' &middot; ' + esc(s.department) : ''}</p>
-        <p style="margin-top:4px">H-Index: ${hStr}</p>
+      <!-- LEFT SIDEBAR — mirrors Expert Portal layout -->
+      <div class="profile-expert-sidebar">
+        ${avatarHTML}
+        <h2 class="profile-expert-name">${esc(s.name||slug)}</h2>
+        <p class="profile-expert-titles">${esc(s.position||'')}</p>
+        <div class="profile-expert-meta">
+          ${s.email ? `<div class="profile-expert-meta-row"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="13" height="13"><path d="M3 4a2 2 0 0 0-2 2v.217l9 5.25 9-5.25V6a2 2 0 0 0-2-2H3Zm16 3.133-8.264 4.821a1 1 0 0 1-1.472 0L1 7.133V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7.133Z"/></svg><span>${esc(s.email)}</span></div>` : ''}
+          ${s.department ? `<div class="profile-expert-meta-row"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="13" height="13"><path fill-rule="evenodd" d="M4 16.5v-13h-.25a.75.75 0 0 1 0-1.5h12.5a.75.75 0 0 1 0 1.5H16v13h.25a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1-.75-.75v-2.5a.75.75 0 0 0-.75-.75h-2.5a.75.75 0 0 0-.75.75v2.5a.75.75 0 0 1-.75.75h-3.5a.75.75 0 0 1 0-1.5H4Z" clip-rule="evenodd"/></svg><span>${esc(s.department)}</span></div>` : ''}
+          ${s.service_date ? `<div class="profile-expert-meta-row"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="13" height="13"><path fill-rule="evenodd" d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" clip-rule="evenodd"/></svg><span>Since ${esc(s.service_date)}</span></div>` : ''}
+        </div>
+        <div class="profile-expert-links">${links}</div>
+        <div class="profile-expert-hindex">
+          ${s.h_scopus != null ? `<div class="profile-expert-h-row"><span class="profile-expert-h-label">Scopus H-Index</span><strong>${s.h_scopus}</strong></div>` : ''}
+          ${s.h_wos    != null ? `<div class="profile-expert-h-row"><span class="profile-expert-h-label">WoS H-Index</span><strong>${s.h_wos}</strong></div>` : ''}
+          ${s.h_gs     != null ? `<div class="profile-expert-h-row"><span class="profile-expert-h-label">Google Scholar H</span><strong>${s.h_gs}</strong></div>` : ''}
+          ${s.scopus_id ? `<div class="profile-expert-h-row"><span class="profile-expert-h-label">Scopus ID</span><a href="https://www.scopus.com/authid/detail.uri?authorId=${esc(s.scopus_id)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(s.scopus_id)}</a></div>` : ''}
+        </div>
       </div>
-    </div>
-    <div class="profile-body">
-      <div class="profile-links">${links}</div>
-      <div class="profile-kpi-row">
-        <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
-        <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
-        <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
-        <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
-        <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
-        <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
-        <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
+      <!-- RIGHT CONTENT — tabbed -->
+      <div class="profile-expert-main">
+        <div class="profile-expert-tabs" role="tablist">
+          <button class="profile-expert-tab active" role="tab" data-ptab="overview" aria-selected="true">Overview</button>
+          <button class="profile-expert-tab" role="tab" data-ptab="publications" aria-selected="false">Publications <span class="profile-tab-count">${staffPubs.length}</span></button>
+          <button class="profile-expert-tab" role="tab" data-ptab="grants" aria-selected="false">Grants <span class="profile-tab-count">${staffGrants.length}</span></button>
+          <button class="profile-expert-tab" role="tab" data-ptab="supervision" aria-selected="false">Supervision</button>
+        </div>
+        <!-- Overview tab -->
+        <div class="profile-expert-tabpanel" data-ptabpanel="overview">
+          <div class="profile-kpi-row" style="margin-top:0">
+            <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
+            <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
+            <div class="profile-kpi"><div class="label">Total pubs</div><div class="val num">${s.pubs_total||0}</div></div>
+            <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
+            <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
+            <div class="profile-kpi"><div class="label">Intl grants</div><div class="val num">${(s.grants_intl_active||0)+(s.grants_intl_completed||0)}</div></div>
+            <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
+            <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
+            <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
+          </div>
+          ${idxPubs.length ? `
+            <div class="profile-section-title">Recent Indexed Publications</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
+              <tbody>${pubsHTML}</tbody>
+            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No indexed publications on record.</p>'}
+        </div>
+        <!-- Publications tab -->
+        <div class="profile-expert-tabpanel" data-ptabpanel="publications" hidden>
+          ${staffPubs.length ? `
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Indexed</th><th>Date</th></tr></thead>
+              <tbody>${staffPubs.map((p,i) => `<tr>
+                <td class="muted">${i+1}</td>
+                <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
+                <td>${esc(p.type||'')}</td>
+                <td>${p.indexed ? '<span class="badge badge-active">Yes</span>' : '<span style="color:var(--text3);font-size:11px">—</span>'}</td>
+                <td>${esc(p.date||'')}</td>
+              </tr>`).join('')}</tbody>
+            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No publications on record.</p>'}
+        </div>
+        <!-- Grants tab -->
+        <div class="profile-expert-tabpanel" data-ptabpanel="grants" hidden>
+          ${staffGrants.length ? `
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
+              <tbody>${staffGrants.map((g,i) => {
+                const isIntl   = (g.level||'').toUpperCase().includes('INT');
+                const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
+                return `<tr>
+                  <td class="muted">${i+1}</td>
+                  <td class="clip wide">${esc(g.title||'(no title)')}</td>
+                  <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
+                  <td>${esc(String(g.year_start||''))}</td>
+                  <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
+                </tr>`;
+              }).join('')}</tbody>
+            </table></div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No grants on record.</p>'}
+        </div>
+        <!-- Supervision tab -->
+        <div class="profile-expert-tabpanel" data-ptabpanel="supervision" hidden>
+          <div class="profile-kpi-row" style="margin-top:0">
+            <div class="profile-kpi"><div class="label">PhD Graduated</div><div class="val num">${s.phd_graduated||0}</div></div>
+            <div class="profile-kpi"><div class="label">PhD Ongoing</div><div class="val num">${s.phd_ongoing||0}</div></div>
+            <div class="profile-kpi"><div class="label">Master Graduated</div><div class="val num">${s.master_graduated||0}</div></div>
+            <div class="profile-kpi"><div class="label">Master Ongoing</div><div class="val num">${s.master_ongoing||0}</div></div>
+            <div class="profile-kpi"><div class="label">Consultancy Done</div><div class="val num">${s.consultancy_completed||0}</div></div>
+            <div class="profile-kpi"><div class="label">Consultancy Appointed</div><div class="val num">${s.consultancy_appointed||0}</div></div>
+          </div>
+          <p style="margin-top:16px;font-size:12px;color:var(--text3)">Supervision data sourced from Expert Portal self-reports. For verified records, check Expert Portal directly.</p>
+        </div>
       </div>
-      ${idxPubs.length ? `
-        <div class="profile-section-title">Indexed Publications (${idxPubs.length}${idxPubs.length>10?' — top 10 shown':''})</div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
-          <tbody>${pubsHTML}</tbody>
-        </table></div>` : ''}
-      ${otherPubs.length ? `<p style="margin-top:12px;font-size:12px;color:var(--text3)">Other publications: ${otherPubs.length}</p>` : ''}
-      ${staffGrants.length ? `
-        <div class="profile-section-title">Grants (${staffGrants.length}${staffGrants.length>10?' — top 10 shown':''})</div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>#</th><th>Title</th><th>Level</th><th>Start</th><th>Status</th></tr></thead>
-          <tbody>${grantsHTML}</tbody>
-        </table></div>` : ''}
     </div>`;
 
   panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   document.getElementById('profile-close-btn').addEventListener('click', () => { panel.hidden = true; });
+
+  // Profile tab switching
+  panel.querySelectorAll('.profile-expert-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      panel.querySelectorAll('.profile-expert-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      panel.querySelectorAll('.profile-expert-tabpanel').forEach(p => p.hidden = true);
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      panel.querySelector(`[data-ptabpanel="${tab.dataset.ptab}"]`).hidden = false;
+    });
+  });
 }
 
 // ── PUBLICATIONS ───────────────────────────────────────────────────────────
@@ -2263,6 +2584,7 @@ document.addEventListener('click', e => {
 // ── FILTER EVENTS ──────────────────────────────────────────────────────────
 document.getElementById('staff-search').addEventListener('input',          () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('staff-sort').addEventListener('change',           () => { pageState.staff=1;  renderStaffTable(); });
+document.getElementById('staff-position').addEventListener('change',       () => { pageState.staff=1;  renderStaffTable(); });
 document.getElementById('pubs-search').addEventListener('input',           () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-from').addEventListener('change',       () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-to').addEventListener('change',         () => { pageState.pubs=1;   renderPubsTable(); });
@@ -2272,9 +2594,19 @@ document.getElementById('grants-filter-status').addEventListener('change', () =>
 document.getElementById('grants-year-from').addEventListener('change',     () => { pageState.grants=1; renderGrantsTable(); });
 document.getElementById('grants-year-to').addEventListener('change',       () => { pageState.grants=1; renderGrantsTable(); });
 
-// Sortable table headers
-document.getElementById('staff-thead').addEventListener('click',
-  makeSortHandler('staff', 'staff-thead', () => { pageState.staff=1; renderStaffTable(); }));
+// Staff card grid click handler
+document.getElementById('staff-grid').addEventListener('click', e => {
+  const card = e.target.closest('[data-slug]');
+  if (card) openStaffProfile(card.dataset.slug);
+});
+document.getElementById('staff-grid').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const card = e.target.closest('.staff-card');
+    if (card) { e.preventDefault(); openStaffProfile(card.dataset.slug); }
+  }
+});
+
+// Sortable table headers (pubs + grants only now)
 document.getElementById('pubs-thead').addEventListener('click',
   makeSortHandler('pubs', 'pubs-thead', () => { pageState.pubs=1; renderPubsTable(); }));
 document.getElementById('grants-thead').addEventListener('click',
