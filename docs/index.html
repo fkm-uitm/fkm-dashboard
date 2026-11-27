@@ -1711,6 +1711,8 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
           <button class="btn-primary" id="about-dl-staff">Download Staff Data</button>
           <button class="btn-primary" id="about-dl-pubs">Download Publications</button>
           <button class="btn-primary" id="about-dl-grants">Download Grants</button>
+          <button class="btn-primary" id="about-dl-supervision">Download Supervision</button>
+          <button class="btn-primary" id="about-dl-consultancy">Download Consultancy</button>
         </div>
         <h3 style="color:var(--text);margin:24px 0 12px">Technology</h3>
         <p>Built with vanilla HTML/CSS/JS, Chart.js, and GitHub Actions for automated scraping. Hosted on GitHub Pages.</p>
@@ -2006,7 +2008,6 @@ function renderOverview(s) {
     ].join('');
   } else {
     document.getElementById('kpi-row1').innerHTML = [
-      kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
       kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
       kpi('Indexed publications',  num(sweCount),          `Scopus/WoS/ERA · ${num(indexedCount)} incl. MyCite`, '#0891b2', 'doc'),
       kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
@@ -3593,6 +3594,18 @@ document.getElementById('about-dl-grants').addEventListener('click', () => {
     ['name','title','level','grant_name','grant_code','role','year_start','year_end','cost','status'],
     ['Author','Title','Level','Grant Name','Grant Code','Role','Year Start','Year End','Cost (RM)','Status'],
     'Grants', 'FKM_Grants.xlsx');
+});
+document.getElementById('about-dl-supervision').addEventListener('click', () => {
+  exportToExcel(SUPERVISION,
+    ['staff_name','student_name','level','programme','title','intake','main_supervisor','status','graduated_sem'],
+    ['Supervisor','Student Name','Level','Programme','Thesis Title','Intake','Main Supervisor','Status','Graduated Sem'],
+    'Supervision', 'FKM_Supervision.xlsx');
+});
+document.getElementById('about-dl-consultancy').addEventListener('click', () => {
+  exportToExcel(CONSULTANCY,
+    ['staff_name','title','client','type','role','cost_rm','year_start','year_end','status'],
+    ['Staff','Title','Client','Type','Role','Cost (RM)','Year Start','Year End','Status'],
+    'Consultancy', 'FKM_Consultancy.xlsx');
 });
 
 // ── DATA PENCAPAIAN UPLOAD & EXTRACTION ───────────────────────────────────
