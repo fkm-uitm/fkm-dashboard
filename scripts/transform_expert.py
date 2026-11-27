@@ -41,6 +41,8 @@ def main():
     profiles: list[dict] = json.loads(RAW.read_text(encoding="utf-8"))
     print(f"Loaded {len(profiles)} profiles")
 
+    INDEXED_TYPES = {"JOURNAL", "PROCEEDING"}
+
     staff_rows  = []
     pub_rows    = []
     grant_rows  = []
@@ -51,7 +53,16 @@ def main():
         slug = p.get("slug", "")
 
         # ── staff record ──────────────────────────────────────────────────
-        indexed_count = p.get("pubs_indexed", 0)
+        # Count unique journal+proceeding titles only (exclude books, dedup co-authored)
+        pubs = p.get("publications", [])
+        indexed_titles = {
+            pub.get("title", "").strip().lower()
+            for pub in pubs
+            if "INDEXED" in pub.get("group", "").upper()
+            and pub.get("type", "").upper() in INDEXED_TYPES
+            and pub.get("title", "").strip()
+        }
+        indexed_count = len(indexed_titles)
         other_count   = p.get("pubs_other", 0)
 
         staff_rows.append({
@@ -156,10 +167,17 @@ def main():
             })
 
     # ── summary ───────────────────────────────────────────────────────────
+    # Count unique journal+proceeding titles across ALL pubs (not sum of per-staff)
+    all_indexed_titles = {
+        r["title"].strip().lower()
+        for r in pub_rows
+        if r.get("indexed") and r.get("type", "").upper() in INDEXED_TYPES
+        and r.get("title", "").strip()
+    }
     summary = {
         "generated":          date.today().isoformat(),
         "staff_count":        len(staff_rows),
-        "pubs_indexed_total": sum(s["pubs_indexed"] for s in staff_rows),
+        "pubs_indexed_total": len(all_indexed_titles),
         "pubs_other_total":   sum(s["pubs_other"]   for s in staff_rows),
         "grants_active":      sum(s["grants_active"] for s in staff_rows),
         "grants_total":       sum(s["grants_total"]  for s in staff_rows),

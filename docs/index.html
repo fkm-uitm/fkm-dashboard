@@ -1486,6 +1486,13 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
           <option value="indexed">Indexed (Scopus / WoS / ERA)</option>
           <option value="nonindexed">Non-Indexed</option>
         </select>
+        <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
+          <option value="all">All Types</option>
+          <option value="JOURNAL">Journal</option>
+          <option value="PROCEEDING">Proceeding</option>
+          <option value="CHAPTER IN RESEARCH BOOK">Chapter in Book</option>
+          <option value="RESEARCH BOOK">Research Book</option>
+        </select>
         <div class="search-wrap">
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
@@ -1672,6 +1679,7 @@ const tblSort = {
 };
 // pubTab / grantTab now driven by filter selects; kept as helpers
 function getPubCat()   { const el = document.getElementById('pubs-filter-cat');   return el ? el.value : 'all'; }
+function getPubType()  { const el = document.getElementById('pubs-filter-type');  return el ? el.value : 'all'; }
 function getGrantRole(){ const el = document.getElementById('grants-filter-role'); return el ? el.value : 'pi'; }
 
 // Apply column sort to a row array in-place
@@ -2628,6 +2636,8 @@ function getPubsList() {
   else if (xf.pubs_type === 'other')   rows = rows.filter(p => !p.indexed);
   else if (cat === 'indexed')          rows = rows.filter(p =>  p.indexed);
   else if (cat === 'nonindexed')       rows = rows.filter(p => !p.indexed);
+  const type = getPubType();
+  if (type !== 'all') rows = rows.filter(p => (p.type||'').toUpperCase() === type.toUpperCase());
   if (yf) rows = rows.filter(p => p.date && +p.date.slice(0,4) >= yf);
   if (yt) rows = rows.filter(p => p.date && +p.date.slice(0,4) <= yt);
   if (q)  rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
@@ -2992,6 +3002,7 @@ document.getElementById('matrix-thead').addEventListener('click', e => {
 
 // Matrix pagination (delegated via global click handler below)
 document.getElementById('pubs-search').addEventListener('input',           () => { pageState.pubs=1;   renderPubsTable(); });
+document.getElementById('pubs-filter-type').addEventListener('change',     () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-from').addEventListener('change',       () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('pubs-year-to').addEventListener('change',         () => { pageState.pubs=1;   renderPubsTable(); });
 document.getElementById('grants-search').addEventListener('input',         () => { pageState.grants=1; renderGrantsTable(); });
