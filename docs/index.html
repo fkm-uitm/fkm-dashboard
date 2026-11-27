@@ -1189,6 +1189,31 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 .pov-table-card td { padding: 9px 14px; border-top: 1px solid var(--border); color: var(--text2); }
 .pov-table-card td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
 .pov-table-card tr:hover td { background: var(--surface2); }
+.pov-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.pov-filter-label { font-size: 12px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+.pov-filter-sep   { font-size: 13px; color: var(--text3); }
+.pov-filter-note  { font-size: 11px; color: var(--text3); margin-left: auto; }
+.pov-reset-btn {
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background .15s;
+}
+.pov-reset-btn:hover { background: var(--surface2); }
 .pov-insight {
   background: color-mix(in srgb, var(--brand, #1e3a5f) 5%, var(--surface));
   border: 1px solid var(--border);
@@ -2770,24 +2795,34 @@ function getPubsList() {
 
 // ── PUBLICATIONS OVERVIEW ─────────────────────────────────────────────────
 let _pubsOvCharts = {};
+let _pubsOvFrom = 0, _pubsOvTo = 0; // 0 = all time
 
 function renderPubsOverview() {
   const el = document.getElementById('pubs-ov-content');
   if (!el || !PUBS.length) return;
 
+  // Build year list from data
+  const allYears = [...new Set(PUBS.map(p => (p.date||'').slice(0,4)).filter(y => y >= '2000'))].sort();
+  const minY = +allYears[0] || 2000;
+  const maxY = +allYears[allYears.length-1] || new Date().getFullYear();
+  if (!_pubsOvFrom) _pubsOvFrom = minY;
+  if (!_pubsOvTo)   _pubsOvTo   = maxY;
+
   const SWE = new Set(['SCOPUS', 'WEB OF SCIENCE', 'ERA']);
-  const indexed = PUBS.filter(p => p.indexed);
+  const inRange = p => { const y = +(p.date||'').slice(0,4); return y >= _pubsOvFrom && y <= _pubsOvTo; };
+  const pubs    = PUBS.filter(inRange);
+  const indexed = pubs.filter(p => p.indexed);
   const swe     = indexed.filter(p => SWE.has(p.index_name));
-  const nonIdx  = PUBS.filter(p => !p.indexed);
-  const totalUq = new Set(PUBS.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
+  const nonIdx  = pubs.filter(p => !p.indexed);
+  const totalUq = new Set(pubs.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
   const sweUq   = new Set(swe.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
   const idxUq   = new Set(indexed.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
 
-  // by year (2015+)
+  // by year
   const byYear = {};
-  for (const p of PUBS) {
+  for (const p of pubs) {
     const y = (p.date||'').slice(0,4);
-    if (!y || y < '2015') continue;
+    if (!y) continue;
     if (!byYear[y]) byYear[y] = {swe:0, idx:0, other:0};
     if (SWE.has(p.index_name)) byYear[y].swe++;
     else if (p.indexed)        byYear[y].idx++;
@@ -2805,14 +2840,14 @@ function renderPubsOverview() {
 
   // by type
   const byType = {};
-  for (const p of PUBS) {
+  for (const p of pubs) {
     const t = (p.type||'Unknown').toUpperCase();
     byType[t] = (byType[t]||0) + 1;
   }
 
   // top authors by pub count
   const byAuthor = {};
-  for (const p of PUBS) {
+  for (const p of pubs) {
     if (!p.slug) continue;
     const s = STAFF_BY_SLUG.get(p.slug);
     const name = s?.name || p.name || p.slug;
@@ -2836,9 +2871,22 @@ function renderPubsOverview() {
       })()
     : '';
   const topIdx = idxEntries[0];
+  const rangeLabel = _pubsOvFrom === minY && _pubsOvTo === maxY ? 'all time' : `${_pubsOvFrom}–${_pubsOvTo}`;
+
+  // year options for filter bar
+  const yrOpts = y => Array.from({length: maxY - minY + 1}, (_,i) => minY + i)
+    .map(yr => `<option value="${yr}"${yr===y?' selected':''}>${yr}</option>`).join('');
 
   el.innerHTML = `
-  <div class="pov-insight">${growthStr ? growthStr + ' ' : ''}<b>${num(sweUq.size)}</b> unique Scopus/WoS/ERA titles all-time across <b>${STAFF.length}</b> academic staff. ${topIdx ? `Most-used index: <b>${esc(topIdx[0])}</b> (${num(topIdx[1])} entries).` : ''}</div>
+  <div class="pov-filter-bar">
+    <span class="pov-filter-label">Year range:</span>
+    <select class="filter-select pov-yr-from" id="pubs-ov-from" aria-label="From year">${yrOpts(_pubsOvFrom)}</select>
+    <span class="pov-filter-sep">–</span>
+    <select class="filter-select pov-yr-to" id="pubs-ov-to" aria-label="To year">${yrOpts(_pubsOvTo)}</select>
+    <button class="pov-reset-btn" id="pubs-ov-reset">All time</button>
+    <span class="pov-filter-note">${num(pubs.length)} records</span>
+  </div>
+  <div class="pov-insight">${growthStr ? growthStr + ' ' : ''}<b>${num(sweUq.size)}</b> unique Scopus/WoS/ERA titles (${rangeLabel}) across <b>${STAFF.length}</b> staff. ${topIdx ? `Most-used index: <b>${esc(topIdx[0])}</b> (${num(topIdx[1])} entries).` : ''}</div>
 
   <div class="pov-kpis">
     <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(sweUq.size)}</div><div class="pk-k">Scopus / WoS / ERA</div><div class="pk-s">Unique titles, all-time</div></div>
@@ -2915,6 +2963,14 @@ function renderPubsOverview() {
     data: { labels: typeKeys.map(k=>k.replace(/ IN /,' in ')), datasets: [{ data: typeKeys.map(k=>byType[k]), backgroundColor: typePalette, borderWidth: 2 }] },
     options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:10,font:{size:11},color:textColor}}, datalabels:{display:false} } }
   });
+
+  // wire filter bar events (replace after innerHTML re-render)
+  const fromSel = document.getElementById('pubs-ov-from');
+  const toSel   = document.getElementById('pubs-ov-to');
+  const resetBtn = document.getElementById('pubs-ov-reset');
+  if (fromSel) fromSel.addEventListener('change', () => { _pubsOvFrom = +fromSel.value; if (_pubsOvFrom > _pubsOvTo) _pubsOvTo = _pubsOvFrom; renderPubsOverview(); });
+  if (toSel)   toSel.addEventListener('change',   () => { _pubsOvTo   = +toSel.value;   if (_pubsOvTo < _pubsOvFrom) _pubsOvFrom = _pubsOvTo; renderPubsOverview(); });
+  if (resetBtn) resetBtn.addEventListener('click', () => { _pubsOvFrom = minY; _pubsOvTo = maxY; renderPubsOverview(); });
 }
 
 function renderPubsTable() {
@@ -3096,25 +3152,36 @@ function getGrantsList() {
 
 // ── GRANTS OVERVIEW ───────────────────────────────────────────────────────
 let _grantsOvCharts = {};
+let _grantsOvFrom = 0, _grantsOvTo = 0;
 
 function renderGrantsOverview() {
   const el = document.getElementById('grants-ov-content');
   if (!el || !GRANTS.length) return;
 
-  const active    = GRANTS.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
+  // Build year list from year_start
+  const allGYears = [...new Set(GRANTS.map(g => String(g.year_start||'')).filter(y => y >= '2000'))].sort();
+  const minGY = +(allGYears[0]) || 2000;
+  const maxGY = +(allGYears[allGYears.length-1]) || new Date().getFullYear();
+  if (!_grantsOvFrom) _grantsOvFrom = minGY;
+  if (!_grantsOvTo)   _grantsOvTo   = maxGY;
+
+  const inGRange = g => { const y = +(g.year_start||0); return y >= _grantsOvFrom && y <= _grantsOvTo; };
+  const grants   = GRANTS.filter(inGRange);
+
   const isIntl    = g => (g.level||'').toUpperCase().includes('INT');
-  const intlTotal = GRANTS.filter(isIntl).length;
-  const natTotal  = GRANTS.filter(g => !isIntl(g)).length;
+  const active    = grants.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
+  const intlTotal = grants.filter(isIntl).length;
+  const natTotal  = grants.filter(g => !isIntl(g)).length;
   const intlAct   = active.filter(isIntl).length;
   const natAct    = active.filter(g => !isIntl(g)).length;
-  const totalCost = GRANTS.reduce((s,g) => s + (g.cost ? +g.cost : 0), 0);
-  const uniquePIs = new Set(GRANTS.filter(g => (g.role||'').toUpperCase() === 'PRINCIPAL INVESTIGATOR').map(g => g.slug).filter(Boolean)).size;
+  const totalCost = grants.reduce((s,g) => s + (g.cost ? +g.cost : 0), 0);
+  const uniquePIs = new Set(grants.filter(g => (g.role||'').toUpperCase() === 'PRINCIPAL INVESTIGATOR').map(g => g.slug).filter(Boolean)).size;
 
   // by start year
   const byYear = {};
-  for (const g of GRANTS) {
+  for (const g of grants) {
     const y = String(g.year_start||'');
-    if (!y || y < '2010') continue;
+    if (!y) continue;
     if (!byYear[y]) byYear[y] = {active:0, completed:0};
     if ((g.status||'').toUpperCase() === 'ACTIVE') byYear[y].active++;
     else byYear[y].completed++;
@@ -3123,7 +3190,7 @@ function renderGrantsOverview() {
 
   // by level (4 segments)
   const seg = {ia:0, ic:0, na:0, nc:0};
-  for (const g of GRANTS) {
+  for (const g of grants) {
     const intl = isIntl(g);
     const act  = (g.status||'').toUpperCase() === 'ACTIVE';
     if (intl && act)  seg.ia++;
@@ -3134,7 +3201,7 @@ function renderGrantsOverview() {
 
   // top grant schemes
   const byScheme = {};
-  for (const g of GRANTS) {
+  for (const g of grants) {
     const k = (g.grant_name||'Unknown').trim();
     byScheme[k] = (byScheme[k]||0) + 1;
   }
@@ -3142,7 +3209,7 @@ function renderGrantsOverview() {
 
   // top PIs
   const piMap = {};
-  for (const g of GRANTS) {
+  for (const g of grants) {
     if (!g.slug || (g.role||'').toUpperCase() !== 'PRINCIPAL INVESTIGATOR') continue;
     const s = STAFF_BY_SLUG.get(g.slug);
     const name = s?.name || g.name || g.slug;
@@ -3154,12 +3221,23 @@ function renderGrantsOverview() {
   const topPIs = Object.values(piMap).sort((a,b) => b.active - a.active || b.total - a.total).slice(0, 10);
 
   const costFmt = totalCost > 0 ? 'RM ' + totalCost.toLocaleString('en-MY', {maximumFractionDigits:0}) : '—';
+  const rangeGLabel = _grantsOvFrom === minGY && _grantsOvTo === maxGY ? 'all time' : `${_grantsOvFrom}–${_grantsOvTo}`;
+  const gyrOpts = y => Array.from({length: maxGY - minGY + 1}, (_,i) => minGY + i)
+    .map(yr => `<option value="${yr}"${yr===y?' selected':''}>${yr}</option>`).join('');
 
   el.innerHTML = `
-  <div class="pov-insight"><b>${num(GRANTS.length)}</b> grant records across <b>${num(uniquePIs)}</b> principal investigators — <b>${num(intlTotal)}</b> international, <b>${num(natTotal)}</b> national. Self-reported total acquisition: <b>${esc(costFmt)}</b>.</div>
+  <div class="pov-filter-bar">
+    <span class="pov-filter-label">Year range:</span>
+    <select class="filter-select pov-yr-from" id="grants-ov-from" aria-label="From year">${gyrOpts(_grantsOvFrom)}</select>
+    <span class="pov-filter-sep">–</span>
+    <select class="filter-select pov-yr-to" id="grants-ov-to" aria-label="To year">${gyrOpts(_grantsOvTo)}</select>
+    <button class="pov-reset-btn" id="grants-ov-reset">All time</button>
+    <span class="pov-filter-note">${num(grants.length)} records</span>
+  </div>
+  <div class="pov-insight"><b>${num(grants.length)}</b> grant records (${rangeGLabel}) across <b>${num(uniquePIs)}</b> principal investigators — <b>${num(intlTotal)}</b> international, <b>${num(natTotal)}</b> national. Total acquisition: <b>${esc(costFmt)}</b>.</div>
 
   <div class="pov-kpis">
-    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(GRANTS.length)}</div><div class="pk-k">Total Grants</div><div class="pk-s">All time, all statuses</div></div>
+    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(grants.length)}</div><div class="pk-k">Total Grants</div><div class="pk-s">${rangeGLabel}</div></div>
     <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(intlTotal)}</div><div class="pk-k">International</div><div class="pk-s">${num(intlAct)} currently active</div></div>
     <div class="pov-kpi" style="--kpi-color:#059669"><div class="pk-v">${num(natTotal)}</div><div class="pk-k">National</div><div class="pk-s">${num(natAct)} currently active</div></div>
     <div class="pov-kpi" style="--kpi-color:#7c3aed"><div class="pk-v">${num(uniquePIs)}</div><div class="pk-k">Principal Investigators</div><div class="pk-s">Staff who led grants</div></div>
@@ -3233,6 +3311,14 @@ function renderGrantsOverview() {
     },
     options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}} } }
   });
+
+  // wire filter bar events
+  const gFromSel  = document.getElementById('grants-ov-from');
+  const gToSel    = document.getElementById('grants-ov-to');
+  const gResetBtn = document.getElementById('grants-ov-reset');
+  if (gFromSel)  gFromSel.addEventListener('change',  () => { _grantsOvFrom = +gFromSel.value; if (_grantsOvFrom > _grantsOvTo) _grantsOvTo = _grantsOvFrom; renderGrantsOverview(); });
+  if (gToSel)    gToSel.addEventListener('change',    () => { _grantsOvTo   = +gToSel.value;   if (_grantsOvTo < _grantsOvFrom) _grantsOvFrom = _grantsOvTo; renderGrantsOverview(); });
+  if (gResetBtn) gResetBtn.addEventListener('click',  () => { _grantsOvFrom = minGY; _grantsOvTo = maxGY; renderGrantsOverview(); });
 }
 
 function renderGrantsTable() {
