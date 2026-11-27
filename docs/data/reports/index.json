@@ -3,5 +3,10 @@
     "period": "2026-11",
     "period_label": "November 2026",
     "generated": "2026-11-27"
+  },
+  {
+    "period": "2026-10",
+    "period_label": "October 2026",
+    "generated": "2026-11-27"
   }
 ]

@@ -80,6 +80,18 @@ def main():
     pubs_by_month_ytd = [{"month": m, "swe": len(mo_swe[m]), "all": len(mo_all[m])}
                          for m in sorted(set(mo_swe) | set(mo_all))]
 
+    # ── same-period YTD comparison across years ────────────────────────────
+    ytd_by_year: dict[str, int] = {}
+    for y_comp in range(max(2020, year - 5), year + 1):
+        ys = str(y_comp)
+        start_m_comp = f"{ys}-01"
+        end_m_comp   = f"{ys}-{month:02d}"
+        swe_set = {p["title"].strip().lower() for p in indexed
+                   if start_m_comp <= pub_month(p) <= end_m_comp
+                   and p.get("index_name", "") in SWE
+                   and p["title"].strip()}
+        ytd_by_year[ys] = len(swe_set)
+
     # ── index breakdown (unique titles) ───────────────────────────────────
     idx_titles: dict[str,set] = defaultdict(set)
     for p in indexed:
@@ -190,6 +202,7 @@ def main():
         },
         "pubs_ytd_swe":       pubs_ytd_swe,
         "pubs_ytd_all":       pubs_ytd_all,
+        "ytd_by_year":        ytd_by_year,
         "pubs_by_year":       pubs_by_year,
         "pubs_by_month_ytd":  pubs_by_month_ytd,
         "index_breakdown":    index_breakdown,
