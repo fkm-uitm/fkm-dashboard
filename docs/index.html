@@ -289,20 +289,6 @@ button, input, select { font: inherit; color: inherit; }
 .kpi-row.cols-5 { grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); }
 @media (min-width: 900px) { .kpi-row.cols-5 { grid-template-columns: repeat(5, 1fr); } }
 
-.prime-bench-section { margin-bottom: 20px; }
-.prime-label {
-  font-size: .75rem;
-  font-weight: 600;
-  letter-spacing: .04em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  padding: 6px 10px;
-  background: color-mix(in srgb, var(--surface) 60%, var(--border));
-  border-left: 3px solid #dc2626;
-  border-radius: 4px;
-}
-.prime-bench-section .kpi-row { margin-bottom: 0; }
 
 .kpi {
   background: var(--surface);
@@ -1114,42 +1100,6 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   font-weight: 600;
   color: var(--text3);
 }
-/* Source toggle (Expert / PRIME) */
-.src-toggle {
-  display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.src-btn {
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  border: 0;
-  background: var(--surface);
-  color: var(--text3);
-  cursor: pointer;
-  transition: background .15s, color .15s;
-}
-.src-btn:disabled { opacity: .45; cursor: not-allowed; }
-.src-btn.active { background: var(--accent); color: #fff; }
-.src-btn:not(:last-child) { border-right: 1px solid var(--border); }
-
-/* Data Pencapaian upload zone */
-.upload-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 20px;
-  border: 2px dashed var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  color: var(--text2);
-  font-size: 14px;
-  transition: border-color .2s, background .2s;
-}
-.upload-label:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
-.upload-label.dragover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
 
 /* Sortable column headers */
 th.sortable {
@@ -1288,20 +1238,73 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 
 /* ── PRINT ────────────────────────────────────────────────────────────────── */
 @media print {
-  @page { size: A4; margin: 16mm 14mm; }
-  body { background:#fff !important; color:#000 !important; font-size:11pt; }
+  @page { size: A4; margin: 18mm 16mm; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { background:#fff !important; color:#111 !important; font-size:10pt; font-family:'Inter',system-ui,sans-serif; }
   .sidebar, .topbar, .hamburger, .ov-filter-bar, .tbl-toolbar,
   .btn-primary, .btn-secondary, .pub-drawer, #load-overlay,
-  .kpi-row1, #kpi-row2, #kpi-row-prime,
+  #kpi-row1, #kpi-row2,
   #page-overview, #page-pubs, #page-grants, #page-staff, #page-about { display:none !important; }
+  .main { margin:0 !important; padding:0 !important; }
   #page-report { display:block !important; padding:0 !important; }
-  .rpt-toolbar { display:none !important; }
-  .rpt-comments-area, .rpt-print-btn { display:none !important; }
-  .rpt-sec { break-inside:avoid; }
-  table { width:100%; border-collapse:collapse; font-size:9pt; }
-  th, td { border:1px solid #ccc; padding:4pt 6pt; text-align:left; }
-  th { background:#eee !important; font-weight:600; }
-  a { color:#000 !important; text-decoration:none !important; }
+  .rpt-toolbar, .rpt-comments-area, .rpt-print-btn { display:none !important; }
+
+  /* Hero */
+  .rpt-hero { background:#1e3a5f !important; color:#fff !important; padding:16pt 18pt !important; border-radius:0 !important; }
+  .rpt-hero h1 { color:#fff !important; font-size:20pt !important; margin-bottom:4pt !important; }
+  .rpt-hero p, .rpt-hero .eb { color:#a8bdd6 !important; font-size:9pt !important; }
+  .rpt-hero .rpt-tiles { display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:8pt !important; margin-top:12pt !important; }
+  .rpt-tile { background:#2a4a6e !important; border-radius:6pt !important; padding:10pt 12pt !important; }
+  .rpt-tile .v { color:#fff !important; font-size:18pt !important; font-weight:700 !important; }
+  .rpt-tile .k { color:#a8bdd6 !important; font-size:8pt !important; font-weight:600 !important; margin-top:3pt !important; }
+  .rpt-tile .s { color:#7897b8 !important; font-size:7.5pt !important; }
+
+  /* Strip */
+  .rpt-strip { background:#f0f4f8 !important; border:1pt solid #ccd6e0 !important; padding:6pt 10pt !important; font-size:8.5pt !important; break-inside:avoid; }
+
+  /* Section layout */
+  .rpt-sec { break-inside:avoid; padding:12pt 0 !important; border-bottom:1pt solid #e0e7ef !important; }
+  .rpt-sec:last-child { border-bottom:none !important; }
+  .rpt-sh { margin-bottom:8pt !important; }
+  .rpt-sh .no { font-size:22pt !important; color:#1e3a5f !important; min-width:28pt !important; }
+  .rpt-sh h2 { font-size:13pt !important; color:#111 !important; margin:0 !important; }
+  .rpt-sh p { font-size:8pt !important; color:#555 !important; margin:0 !important; }
+  .rpt-lede { font-size:8.5pt !important; color:#444 !important; margin-bottom:8pt !important; }
+
+  /* Stat tiles */
+  .rpt-stiles { display:grid !important; grid-template-columns:repeat(4,1fr) !important; gap:6pt !important; margin-bottom:10pt !important; }
+  .rpt-stile { border:1pt solid #ccd6e0 !important; border-radius:5pt !important; padding:8pt !important; background:#f8fafc !important; }
+  .rpt-stile .v { font-size:16pt !important; font-weight:700 !important; color:#1e3a5f !important; }
+  .rpt-stile .k { font-size:7.5pt !important; font-weight:600 !important; color:#222 !important; margin-top:3pt !important; }
+  .rpt-stile .s { font-size:7pt !important; color:#666 !important; margin-top:2pt !important; }
+  .rpt-stiles .rpt-stile:first-child { border-left:3pt solid #1e3a5f !important; background:#eef3fa !important; }
+
+  /* 2-col grid */
+  .rpt-g2 { display:grid !important; grid-template-columns:1fr 1fr !important; gap:8pt !important; }
+  .rpt-g3 { display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:8pt !important; }
+  .rpt-card { border:1pt solid #ccd6e0 !important; border-radius:5pt !important; padding:8pt !important; background:#fff !important; break-inside:avoid; }
+  .rpt-card h4 { font-size:9pt !important; font-weight:600 !important; margin:0 0 4pt !important; color:#111 !important; }
+  .rpt-card .cs { font-size:7.5pt !important; color:#666 !important; margin:0 0 6pt !important; }
+
+  /* Bar charts */
+  .rpt-bars { display:flex !important; flex-direction:column !important; gap:3pt !important; }
+  .rpt-bar { display:grid !important; grid-template-columns:40pt 1fr 28pt !important; align-items:center !important; gap:4pt !important; }
+  .rpt-bar .lab { font-size:7.5pt !important; color:#444 !important; white-space:nowrap !important; }
+  .rpt-bar .track { background:#e5eaf0 !important; border-radius:2pt !important; height:9pt !important; overflow:hidden !important; }
+  .rpt-bar .track span { display:block !important; height:100% !important; border-radius:2pt !important; background:#1e3a5f !important; }
+  .rpt-bar .num { font-size:7.5pt !important; color:#444 !important; text-align:right !important; font-variant-numeric:tabular-nums !important; }
+
+  /* Tables */
+  table { width:100% !important; border-collapse:collapse !important; font-size:8pt !important; }
+  th, td { border:0.5pt solid #ccc !important; padding:3pt 5pt !important; text-align:left !important; }
+  th { background:#edf2f7 !important; font-weight:600 !important; color:#1e3a5f !important; }
+
+  /* Key findings */
+  .rpt-sec--accent { background:#eef3fa !important; padding:10pt !important; border-radius:5pt !important; border:1pt solid #c5d5e8 !important; break-inside:avoid; }
+  .rpt-findings-list { padding-left:14pt !important; }
+  .rpt-findings-list li { font-size:8.5pt !important; color:#222 !important; margin-bottom:4pt !important; }
+
+  a { color:#1e3a5f !important; text-decoration:none !important; }
 }
 </style>
 </head>
@@ -1409,10 +1412,6 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       <p id="ov-subtitle">Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
     <div class="ov-filter-bar">
-      <div class="src-toggle" id="ov-src-toggle" role="group" aria-label="Data source">
-        <button class="src-btn active" data-src="expert">Expert Portal</button>
-        <button class="src-btn" data-src="prime" id="ov-prime-btn" disabled>PRIME / IRES</button>
-      </div>
       <span id="ov-date-filters" style="display:contents">
         <span class="ov-filter-label">Year:</span>
         <select class="filter-select" id="ov-year" aria-label="Select year"></select>
@@ -1704,7 +1703,7 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
         <h3 style="color:var(--text);margin:0 0 12px">Data Source</h3>
         <p>All data is scraped from <strong>expert.uitm.edu.my</strong> — the UiTM Expert Portal where academic staff self-report their publications, grants, supervision and consultancy records. The scraper runs weekly (Monday 3 AM MYT) and updates the JSON files in this repository automatically.</p>
-        <p><strong>Note:</strong> This dashboard reflects what staff have entered into the Expert Portal. It may differ from PRIME (the official UiTM reporting system) due to: different data sources, duplicate entries per co-author, or staff not having updated their Expert profile.</p>
+        <p><strong>Note:</strong> This dashboard reflects what staff have entered into the Expert Portal. Figures may differ from official university reporting systems due to different data sources, duplicate entries per co-author, or staff not having updated their Expert profile.</p>
         <h3 style="color:var(--text);margin:16px 0 12px">Export Data</h3>
         <p>Download the raw data as Excel files for offline analysis or reporting.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
@@ -1719,19 +1718,6 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       </div>
     </div>
 
-    <!-- Data Pencapaian upload -->
-    <div class="tbl-card" style="max-width:720px;margin-top:20px">
-      <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
-        <h3 style="color:var(--text);margin:0 0 8px">Upload Data Pencapaian (PRIME / IRES)</h3>
-        <p style="margin:0 0 16px">Upload the official <em>Data Pencapaian</em> Excel file (.xlsx) to update the PRIME/IRES benchmark numbers shown on the Overview. Data is extracted in-browser and stored locally — nothing is sent to any server.</p>
-        <label class="upload-label" id="prime-upload-label">
-          <svg viewBox="0 0 20 20" fill="currentColor" width="22" height="22" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" d="M13.75 7h-3V3.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0L6.2 4.74a.75.75 0 0 0 1.1 1.02l1.95-2.1V7h-3A2.25 2.25 0 0 0 4 9.25v7.5A2.25 2.25 0 0 0 6.25 19h7.5A2.25 2.25 0 0 0 16 16.75v-7.5A2.25 2.25 0 0 0 13.75 7Zm-3 0h-1.5v3.75a.75.75 0 0 0 1.5 0V7Z" clip-rule="evenodd"/></svg>
-          <span id="prime-upload-label-text">Choose Data Pencapaian .xlsx file…</span>
-          <input type="file" id="prime-file-input" accept=".xlsx,.xls" style="display:none">
-        </label>
-        <div id="prime-upload-status" style="display:none;margin-top:16px"></div>
-      </div>
-    </div>
   </div>
 
 </div><!-- /.main -->
@@ -1746,7 +1732,6 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 let STAFF = [], PUBS = [], GRANTS = [], SUPERVISION = [], CONSULTANCY = [];
 let STAFF_BY_SLUG = new Map();
 let SUMMARY = {};
-let PRIME_BENCH = null;
 const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
@@ -1754,7 +1739,6 @@ const charts = new Map();
 // Overview date filter state (default: this month)
 let ovYear  = new Date().getFullYear();   // 0 = all time
 let ovMonth = new Date().getMonth() + 1; // 1-12, up-to-month
-let ovSource = 'expert'; // 'expert' | 'prime'
 
 // Column sort state for tables
 const tblSort = {
@@ -1894,14 +1878,13 @@ function buildYearSelects(elFrom, elTo, minY, maxY) {
 async function loadData() {
   const overlay = document.getElementById('load-overlay');
   try {
-    const [sumRes, staffRes, pubsRes, grantsRes, svRes, conRes, primeRes] = await Promise.all([
+    const [sumRes, staffRes, pubsRes, grantsRes, svRes, conRes] = await Promise.all([
       fetch('data/expert_summary.json'),
       fetch('data/expert_staff.json'),
       fetch('data/expert_pubs.json'),
       fetch('data/expert_grants.json'),
       fetch('data/expert_supervision.json').catch(() => null),
       fetch('data/expert_consultancy.json').catch(() => null),
-      fetch('data/prime_benchmark.json').catch(() => null),
     ]);
     if (!sumRes.ok || !staffRes.ok || !pubsRes.ok || !grantsRes.ok) {
       throw new Error('One or more data files failed to load.');
@@ -1912,26 +1895,6 @@ async function loadData() {
     GRANTS     = await grantsRes.json();
     SUPERVISION  = (svRes  && svRes.ok)  ? await svRes.json()  : [];
     CONSULTANCY  = (conRes && conRes.ok) ? await conRes.json() : [];
-    // Load PRIME benchmark: prefer localStorage (user-uploaded) over committed JSON
-    let filePrime = null;
-    if (primeRes && primeRes.ok) filePrime = await primeRes.json();
-    let storedPrime = null;
-    try {
-      const raw = localStorage.getItem('fkm_prime_benchmark');
-      if (raw) storedPrime = JSON.parse(raw);
-    } catch(e) {}
-    // Pick newer: compare uploaded_at > report_date
-    if (storedPrime && filePrime) {
-      const sDate = storedPrime._meta?.uploaded_at || storedPrime._meta?.report_date || '';
-      const fDate = filePrime._meta?.uploaded_at   || filePrime._meta?.report_date   || '';
-      PRIME_BENCH = sDate >= fDate ? storedPrime : filePrime;
-    } else {
-      PRIME_BENCH = storedPrime || filePrime || null;
-    }
-    if (PRIME_BENCH) {
-      const primeBtn = document.getElementById('ov-prime-btn');
-      if (primeBtn) primeBtn.disabled = false;
-    }
     STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
 
     const dateStr = summary.generated || '--';
@@ -1985,44 +1948,21 @@ function renderOverview(s) {
   const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
   const totalAcquisition = filteredGrants.reduce((sum, g) => sum + (g.cost ? +g.cost : 0), 0);
 
-  if (ovSource === 'prime' && PRIME_BENCH) {
-    const pp = PRIME_BENCH.publications || {};
-    const pg = PRIME_BENCH.grants || {};
-    const pmeta = PRIME_BENCH._meta || {};
-    const acqRM = pg.acquisition_rm
-      ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2})
-      : '--';
-    document.getElementById('kpi-row1').innerHTML = [
-      kpi('Indexed pubs',      num(pp.indexed),           'Scopus / WoS / ERA — verified',     '#0891b2', 'doc'),
-      kpi('Non-indexed pubs',  num(pp.nonindexed_total),  'Non-indexed journals & proceedings', '#059669', 'docs'),
-      kpi('Q1/Q2 journals',    num(pp.q1q2),              'JCR Q1 or Q2 journals',              '#7c3aed', 'star'),
-      kpi('MyCite',            num(pp.mycite),            'MyCite indexed',                     '#d97706', 'doc'),
-      kpi('Book & Chapter',    num(pp.book_chapter),      'Books and book chapters',            '#2563eb', 'docs'),
-    ].join('');
-    document.getElementById('kpi-row2').innerHTML = [
-      kpi('Grant acquisition', acqRM,                     `New grants — ${pmeta.report_month||''}`, '#dc2626', 'handshake'),
-      kpi('PI grants (active)',num(pg.pi_total_active),   'All active grants as PI',            '#16a34a', 'money'),
-      kpi('Total grants',      num(pg.total_new_period),  `New in ${pmeta.report_month||'period'}`, '#0891b2', 'beaker'),
-      kpi('Staff (academic)',  num(s.staff_count),        'Shah Alam academic staff',           '#2563eb', 'staff'),
-      kpi('Avg H-Index (Sc)',  s.h_scopus_avg ?? '--',    `Max: ${hMax}, Median: ${hMedian}`,   '#7c3aed', 'chart'),
-    ].join('');
-  } else {
-    document.getElementById('kpi-row1').innerHTML = [
-      kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
-      kpi('Indexed publications',  num(sweCount),          `Scopus/WoS/ERA · ${num(indexedCount)} incl. MyCite`, '#0891b2', 'doc'),
-      kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
-      kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
-    ].join('');
+  document.getElementById('kpi-row1').innerHTML = [
+    kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
+    kpi('Indexed publications',  num(sweCount),          `Scopus/WoS/ERA · ${num(indexedCount)} incl. MyCite`, '#0891b2', 'doc'),
+    kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
+    kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
+  ].join('');
 
-    const acqLabel = totalAcquisition > 0 ? 'RM ' + totalAcquisition.toLocaleString('en-MY') : '--';
-    document.getElementById('kpi-row2').innerHTML = [
-      kpi('Active grants',        num(activeGrants),   `of ${num(filteredGrants.length)} total`,   '#16a34a', 'beaker'),
-      kpi('Total grants',         num(filteredGrants.length), 'All levels and statuses',           '#dc2626', 'money'),
-      kpi('Grant cost (Expert)',  acqLabel,            'Self-reported, may differ from IRES',       '#0891b2', 'handshake'),
-      kpi('PhD supervision',      num(s.phd_total),    'Graduated and ongoing',                    '#7c3aed', 'cap'),
-      kpi('Master supervision',   num(s.master_total), 'Graduated and ongoing',                    '#2563eb', 'cap'),
-    ].join('');
-  }
+  const acqLabel = totalAcquisition > 0 ? 'RM ' + totalAcquisition.toLocaleString('en-MY') : '--';
+  document.getElementById('kpi-row2').innerHTML = [
+    kpi('Active grants',      num(activeGrants),              `of ${num(filteredGrants.length)} total`, '#16a34a', 'beaker'),
+    kpi('Total grants',       num(filteredGrants.length),     'All levels and statuses',                '#dc2626', 'money'),
+    kpi('Grant cost',         acqLabel,                       'Self-reported total acquisition',        '#0891b2', 'handshake'),
+    kpi('PhD supervision',    num(s.phd_total),               'Graduated and ongoing',                  '#7c3aed', 'cap'),
+    kpi('Master supervision', num(s.master_total),            'Graduated and ongoing',                  '#2563eb', 'cap'),
+  ].join('');
 
   drawCharts();
 }
@@ -2963,7 +2903,7 @@ function showPage(id) {
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
   if (id === 'overview') setTimeout(drawCharts, 50);
   if (id === 'report')   initReportPage();
-  if (id === 'about') { showAboutPrimeStatus(); showAboutStats(); }
+  if (id === 'about') { showAboutStats(); }
   closeSidebar();
 }
 
@@ -2976,7 +2916,7 @@ function showAboutStats() {
   }
   const kpis = [
     { v: num(SUMMARY.staff_count),              k: 'Academic Staff',           s: 'UiTM Expert records' },
-    { v: num(SUMMARY.pubs_scopus_wos_era_total),k: 'Scopus / WoS / ERA',      s: 'All-time unique publications (PRIME)' },
+    { v: num(SUMMARY.pubs_scopus_wos_era_total),k: 'Scopus / WoS / ERA',      s: 'All-time unique publications' },
     { v: num(SUMMARY.grants_active),            k: 'Active Grants',            s: `of ${num(SUMMARY.grants_total)} total` },
     { v: SUMMARY.h_scopus_avg ?? '—',           k: 'Mean Scopus h-index',      s: 'Staff with Scopus profiles' },
     { v: num(SUMMARY.phd_total),                k: 'PhD Students',             s: 'Graduated and ongoing' },
@@ -2992,41 +2932,6 @@ function showAboutStats() {
     </div>`).join('') +
     `</div>` +
     `<p style="margin:12px 0 0;font-size:12px;color:var(--text3)">Last updated ${esc(SUMMARY.generated || 'unknown')}. Source: UiTM Expert Portal.</p>`;
-}
-
-function showAboutPrimeStatus() {
-  if (!window._cachedPrime) return;
-  const cached = window._cachedPrime;
-  const status = document.getElementById('prime-upload-status');
-  if (status.style.display !== 'none' && status.innerHTML !== '') return; // already shown by upload
-  const label  = cached._meta?.report_label || 'Data Pencapaian';
-  const date   = cached._meta?.uploaded_at?.slice(0,10) || cached._meta?.report_date || '';
-  status.style.display = 'block';
-  document.getElementById('prime-upload-label-text').textContent = `✓ ${label} (loaded from browser storage)`;
-  status.innerHTML = `
-    <div style="background:color-mix(in srgb,var(--surface) 60%,#2563eb 6%);border:1px solid var(--border);border-radius:8px;padding:14px 18px">
-      <div style="font-weight:600;color:var(--text);margin-bottom:6px">📋 ${esc(label)}</div>
-      <p style="margin:0 0 10px;font-size:13px;color:var(--text3)">Previously uploaded${date ? ` on ${date}` : ''} and stored in this browser. Upload a new file to replace it.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn-primary" id="prime-dl-json">⬇ Download as JSON</button>
-        <button class="btn-secondary" id="prime-clear-btn">✕ Clear uploaded data</button>
-      </div>
-    </div>`;
-
-  document.getElementById('prime-dl-json').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify(cached, null, 2)], {type:'application/json'});
-    const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'prime_benchmark.json'});
-    a.click(); URL.revokeObjectURL(a.href);
-  });
-  document.getElementById('prime-clear-btn').addEventListener('click', () => {
-    try { localStorage.removeItem('fkm_prime_benchmark'); } catch(e) {}
-    window._cachedPrime = null;
-    PRIME_BENCH = null;
-    document.getElementById('ov-prime-btn').disabled = true;
-    if (ovSource === 'prime') { ovSource = 'expert'; document.querySelector('[data-src="expert"]').classList.add('active'); document.querySelector('[data-src="prime"]').classList.remove('active'); renderOverview(SUMMARY); }
-    status.style.display = 'none';
-    document.getElementById('prime-upload-label-text').textContent = 'Choose Data Pencapaian .xlsx file…';
-  });
 }
 
 document.querySelectorAll('.nav-item').forEach(b => {
@@ -3157,28 +3062,6 @@ document.getElementById('ov-month').addEventListener('change', () => {
   renderOverview(SUMMARY);
 });
 
-// Source toggle: Expert Portal / PRIME
-document.getElementById('ov-src-toggle').addEventListener('click', e => {
-  const btn = e.target.closest('[data-src]'); if (!btn) return;
-  const src = btn.dataset.src;
-  if (src === ovSource) return;
-  ovSource = src;
-  document.querySelectorAll('#ov-src-toggle .src-btn').forEach(b => b.classList.toggle('active', b.dataset.src === src));
-  const dateFilters = document.getElementById('ov-date-filters');
-  const periodNote  = document.getElementById('ov-period-note');
-  const subtitle = document.getElementById('ov-subtitle');
-  if (src === 'prime') {
-    dateFilters.style.display = 'none';
-    periodNote.textContent = PRIME_BENCH?._meta?.report_label ? `Fixed: ${PRIME_BENCH._meta.report_label}` : 'Fixed dataset';
-    if (subtitle) subtitle.textContent = `Official verified data — ${PRIME_BENCH?._meta?.report_label || 'PRIME / IRES'}`;
-  } else {
-    dateFilters.style.display = 'contents';
-    renderOvPeriodNote();
-    if (subtitle) subtitle.textContent = 'Aggregated figures from UiTM Expert portal, Shah Alam academic staff';
-  }
-  renderOverview(SUMMARY);
-});
-
 // Publications category filter
 document.getElementById('pubs-filter-cat').addEventListener('change', () => {
   xf.pubs_type = null;
@@ -3259,7 +3142,7 @@ function renderReport(d) {
 
   // ── hero tiles ─────────────────────────────────────────────────────────
   const heroTiles = [
-    { v: rptNum(s.pubs_indexed_swe),  k: 'Indexed Publications', s: 'Scopus / WoS / ERA (PRIME-aligned)' },
+    { v: rptNum(s.pubs_indexed_swe),  k: 'Indexed Publications', s: 'Scopus / WoS / ERA' },
     { v: rptNum(s.pubs_indexed_all),  k: 'Incl. MyCite',         s: 'All indexed types' },
     { v: rptNum(s.grants_active),     k: 'Active Grants',        s: `of ${rptNum(s.grants_total)} total` },
     { v: s.h_scopus_avg ?? '—',       k: 'Mean h-index',         s: 'Scopus, staff with profile' },
@@ -3396,7 +3279,7 @@ function renderReport(d) {
     <!-- §1 Research Output -->
     <div class="rpt-sec" id="rpt-sec-1">
       <div class="rpt-sh"><a class="no" href="#rpt-sec-1">1</a><div><h2>Research Output</h2><p>Publication counts by index database and year.</p></div></div>
-      <p class="rpt-lede">Indexed publications are unique titles deduped across co-authors. The primary PRIME-aligned metric counts only Scopus, Web of Science and ERA.</p>
+      <p class="rpt-lede">Indexed publications are unique titles deduped across co-authors. The primary metric counts only Scopus, Web of Science and ERA.</p>
       <div class="rpt-stiles">
         <div class="rpt-stile"><div class="v">${rptNum(s.pubs_indexed_swe)}</div><div class="k">Scopus / WoS / ERA</div><div class="s">All years, unique titles</div></div>
         <div class="rpt-stile"><div class="v">${rptNum(s.pubs_indexed_all)}</div><div class="k">Indexed (incl. MyCite)</div><div class="s">All years, unique titles</div></div>
@@ -3607,217 +3490,6 @@ document.getElementById('about-dl-consultancy').addEventListener('click', () => 
     ['Staff','Title','Client','Type','Role','Cost (RM)','Year Start','Year End','Status'],
     'Consultancy', 'FKM_Consultancy.xlsx');
 });
-
-// ── DATA PENCAPAIAN UPLOAD & EXTRACTION ───────────────────────────────────
-
-function extractPrimeBench(wb) {
-  // Reads a summary value from a "Sumber data" row (last numeric in that row)
-  function getSummaryVal(sheetName) {
-    const ws = wb.Sheets[sheetName]; if (!ws) return null;
-    const rows = XLSX.utils.sheet_to_array_of_arrays(ws, { defval: null });
-    for (const row of rows) {
-      if (row[0] && String(row[0]).includes('Sumber data')) {
-        for (let i = row.length - 1; i >= 1; i--) {
-          if (typeof row[i] === 'number') return row[i];
-        }
-      }
-    }
-    return null;
-  }
-
-  // Finds the data rows after the "NO. FAIL" header and sums a numeric column
-  function parseGrantSheet(sheetName) {
-    const ws = wb.Sheets[sheetName]; if (!ws) return { count: 0, totalRM: 0 };
-    const rows = XLSX.utils.sheet_to_array_of_arrays(ws, { defval: null });
-    const hIdx = rows.findIndex(r => r && String(r[0]).trim() === 'NO. FAIL');
-    if (hIdx < 0) return { count: 0, totalRM: 0 };
-    const headers = rows[hIdx];
-    // Find cost column: look for PERUNTUK in header
-    let costCol = -1;
-    for (let i = 0; i < headers.length; i++) {
-      if (headers[i] && String(headers[i]).toUpperCase().includes('PERUNTUK')) { costCol = i; break; }
-    }
-    const dataRows = rows.slice(hIdx + 1).filter(r => r && r[0]);
-    const totalRM = costCol >= 0
-      ? dataRows.reduce((s, r) => s + (typeof r[costCol] === 'number' ? r[costCol] : 0), 0)
-      : 0;
-    return { count: dataRows.length, totalRM };
-  }
-
-  const indexed    = getSummaryVal('Indexed Journal & Proceedin (2)');
-  const nonidx     = getSummaryVal('Non Index Journal & Proceeding');
-  const otherPub   = getSummaryVal('Other Publication');
-  const corr       = getSummaryVal('Corresponding Author');
-  const q1q2       = getSummaryVal('Q1Q2');
-  const mycite     = getSummaryVal('MyCite');
-  const bookChap   = getSummaryVal('Book & Chap in Book');
-
-  const ga  = parseGrantSheet('Grant Acquisition');
-  const piGA = parseGrantSheet('Principal Investigator');
-  const piCount = getSummaryVal('Principal Investigator') || piGA.count;
-
-  // Detect report month/year from the filename stored on the workbook props
-  const props = wb.Props || {};
-  const reportLabel = 'Data Pencapaian FKM';
-
-  return {
-    _meta: {
-      report_label: reportLabel,
-      report_month: 'Uploaded',
-      report_date: new Date().toISOString().slice(0, 10),
-      uploaded_at: new Date().toISOString(),
-      sources: { publications: 'PRIME', grants: 'IRES' },
-    },
-    publications: {
-      indexed:                   indexed  ?? 0,
-      nonindexed_journal:        nonidx   ?? 0,
-      other_publication:         otherPub ?? 0,
-      nonindexed_total:          (nonidx ?? 0) + (otherPub ?? 0),
-      corresponding_first_author: corr    ?? 0,
-      q1q2:                      q1q2    ?? 0,
-      mycite:                    mycite  ?? 0,
-      book_chapter:              bookChap ?? 0,
-      total:                     (indexed ?? 0) + (nonidx ?? 0) + (otherPub ?? 0),
-    },
-    grants: {
-      total_new_period:  ga.count,
-      pi_total_active:   piCount ?? 0,
-      acquisition_rm:    Math.round(ga.totalRM * 100) / 100,
-    },
-  };
-}
-
-function applyPrimeBench(data, filename) {
-  PRIME_BENCH = data;
-  // Persist to localStorage
-  try { localStorage.setItem('fkm_prime_benchmark', JSON.stringify(data)); } catch(e) {}
-  // Enable toggle
-  const btn = document.getElementById('ov-prime-btn');
-  if (btn) btn.disabled = false;
-  // If currently viewing PRIME mode, refresh overview
-  if (ovSource === 'prime') renderOverview(SUMMARY);
-
-  // Build status card
-  const pp = data.publications || {};
-  const pg = data.grants       || {};
-  const acqFmt = pg.acquisition_rm
-    ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2})
-    : '--';
-  const rows = [
-    ['Indexed pubs (PRIME)',   pp.indexed],
-    ['Non-indexed pubs',       pp.nonindexed_total],
-    ['Q1/Q2 journals',         pp.q1q2],
-    ['MyCite',                 pp.mycite],
-    ['Book & Chapter',         pp.book_chapter],
-    ['Grant acquisition (IRES)', acqFmt],
-    ['PI grants (active)',     pg.pi_total_active],
-    ['New grants in period',   pg.total_new_period],
-  ];
-  const tableRows = rows.map(([k,v]) =>
-    `<tr><td style="padding:4px 10px 4px 0;color:var(--text3);font-size:13px">${esc(k)}</td><td style="padding:4px 0;font-weight:600;font-size:13px" class="num">${esc(String(v ?? '--'))}</td></tr>`
-  ).join('');
-
-  document.getElementById('prime-upload-status').style.display = 'block';
-  document.getElementById('prime-upload-status').innerHTML = `
-    <div style="background:color-mix(in srgb,var(--surface) 60%,#16a34a 8%);border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px">
-      <div style="font-weight:600;color:#15803d;margin-bottom:10px">✓ Extracted from ${esc(filename)}</div>
-      <table style="border-collapse:collapse"><tbody>${tableRows}</tbody></table>
-      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn-primary" id="prime-dl-json">⬇ Download extracted JSON</button>
-        <button class="btn-secondary" id="prime-clear-btn">✕ Clear uploaded data</button>
-      </div>
-      <p style="font-size:11px;color:var(--text3);margin:10px 0 0">Stored in this browser only. Switch to <strong>PRIME/IRES</strong> on the Overview to see these numbers. To share with others, download the JSON and commit it to the repo as <code>docs/data/prime_benchmark.json</code>.</p>
-    </div>`;
-
-  document.getElementById('prime-dl-json').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-    const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'prime_benchmark.json'});
-    a.click(); URL.revokeObjectURL(a.href);
-  });
-
-  document.getElementById('prime-clear-btn').addEventListener('click', () => {
-    try { localStorage.removeItem('fkm_prime_benchmark'); } catch(e) {}
-    // Revert to file-based benchmark if any
-    fetch('data/prime_benchmark.json').then(r => r.ok ? r.json() : null).then(j => {
-      PRIME_BENCH = j;
-      if (!PRIME_BENCH) { document.getElementById('ov-prime-btn').disabled = true; ovSource = 'expert'; }
-      if (ovSource === 'prime') renderOverview(SUMMARY);
-    }).catch(() => { PRIME_BENCH = null; });
-    document.getElementById('prime-upload-status').style.display = 'none';
-    document.getElementById('prime-upload-label-text').textContent = 'Choose Data Pencapaian .xlsx file…';
-    document.getElementById('prime-file-input').value = '';
-  });
-}
-
-function handlePrimeFile(file) {
-  if (!file) return;
-  if (typeof XLSX === 'undefined') {
-    alert('Excel library not loaded yet — try again in a moment.'); return;
-  }
-  const labelText = document.getElementById('prime-upload-label-text');
-  const status    = document.getElementById('prime-upload-status');
-  labelText.textContent = `Reading ${file.name}…`;
-  status.style.display = 'none';
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const wb   = XLSX.read(e.target.result, { type: 'array' });
-      const data = extractPrimeBench(wb);
-      // Try to detect report month from filename e.g. "Data Pencapaian - FKM (Okt 2026).xlsx"
-      const monthMatch = file.name.match(/\(([^)]+)\)/);
-      if (monthMatch) {
-        data._meta.report_month = monthMatch[1];
-        data._meta.report_label = `Data Pencapaian FKM ${monthMatch[1]}`;
-      }
-      labelText.textContent = `✓ ${file.name}`;
-      applyPrimeBench(data, file.name);
-    } catch(err) {
-      console.error(err);
-      labelText.textContent = 'Choose Data Pencapaian .xlsx file…';
-      status.style.display = 'block';
-      status.innerHTML = `<div style="color:#dc2626;padding:12px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px">
-        ✕ Could not extract data: ${esc(err.message)}<br>
-        <small>Make sure this is an official Data Pencapaian Excel file with the standard sheet names.</small>
-      </div>`;
-    }
-  };
-  reader.onerror = () => { labelText.textContent = 'Choose Data Pencapaian .xlsx file…'; };
-  reader.readAsArrayBuffer(file);
-}
-
-// File input change
-document.getElementById('prime-file-input').addEventListener('change', e => {
-  handlePrimeFile(e.target.files[0]);
-});
-
-// Click-through label → file input
-document.getElementById('prime-upload-label').addEventListener('click', e => {
-  if (e.target.tagName !== 'INPUT') document.getElementById('prime-file-input').click();
-});
-
-// Drag-and-drop onto the upload zone
-const uploadLabel = document.getElementById('prime-upload-label');
-uploadLabel.addEventListener('dragover',  e => { e.preventDefault(); uploadLabel.classList.add('dragover'); });
-uploadLabel.addEventListener('dragleave', ()  => uploadLabel.classList.remove('dragover'));
-uploadLabel.addEventListener('drop',      e  => {
-  e.preventDefault();
-  uploadLabel.classList.remove('dragover');
-  handlePrimeFile(e.dataTransfer.files[0]);
-});
-
-// On load, if localStorage has data already, show its status
-try {
-  const raw = localStorage.getItem('fkm_prime_benchmark');
-  if (raw) {
-    const cached = JSON.parse(raw);
-    const uploaded = cached._meta?.uploaded_at || cached._meta?.report_date || '';
-    if (uploaded) {
-      // We'll show a "loaded from cache" note once About page is visited
-      window._cachedPrime = cached;
-    }
-  }
-} catch(e) {}
 
 loadData();
 </script>
