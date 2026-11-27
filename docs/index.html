@@ -822,6 +822,37 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   font-weight: 600;
   color: var(--text3);
 }
+/* Source toggle (Expert / PRIME) */
+.src-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.src-btn {
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 0;
+  background: var(--surface);
+  color: var(--text3);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.src-btn:disabled { opacity: .45; cursor: not-allowed; }
+.src-btn.active { background: var(--accent); color: #fff; }
+.src-btn:not(:last-child) { border-right: 1px solid var(--border); }
+
+/* Sortable column headers */
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+th.sortable:hover { background: color-mix(in srgb, var(--surface-alt) 80%, var(--accent) 20%); }
+th.sortable .sort-icon { margin-left: 4px; opacity: .35; font-size: 10px; }
+th.sortable[aria-sort="ascending"] .sort-icon,
+th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 /* sub-tabs for Publications and Grants pages */
 .sub-tabs {
   display: flex;
@@ -990,28 +1021,30 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   <div id="page-overview" class="content">
     <div class="page-header">
       <h2>Research Overview</h2>
-      <p>Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
+      <p id="ov-subtitle">Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
     <div class="ov-filter-bar">
-      <span class="ov-filter-label">Year:</span>
-      <select class="filter-select" id="ov-year" aria-label="Select year"></select>
-      <span class="ov-filter-label" id="ov-month-lbl">Up to month:</span>
-      <select class="filter-select" id="ov-month" aria-label="Up to month">
-        <option value="1">January</option><option value="2">February</option>
-        <option value="3">March</option><option value="4">April</option>
-        <option value="5">May</option><option value="6">June</option>
-        <option value="7">July</option><option value="8">August</option>
-        <option value="9">September</option><option value="10">October</option>
-        <option value="11">November</option><option value="12">December</option>
-      </select>
+      <div class="src-toggle" id="ov-src-toggle" role="group" aria-label="Data source">
+        <button class="src-btn active" data-src="expert">Expert Portal</button>
+        <button class="src-btn" data-src="prime" id="ov-prime-btn" disabled>PRIME / IRES</button>
+      </div>
+      <span id="ov-date-filters" style="display:contents">
+        <span class="ov-filter-label">Year:</span>
+        <select class="filter-select" id="ov-year" aria-label="Select year"></select>
+        <span class="ov-filter-label" id="ov-month-lbl">Up to month:</span>
+        <select class="filter-select" id="ov-month" aria-label="Up to month">
+          <option value="1">January</option><option value="2">February</option>
+          <option value="3">March</option><option value="4">April</option>
+          <option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option>
+          <option value="9">September</option><option value="10">October</option>
+          <option value="11">November</option><option value="12">December</option>
+        </select>
+      </span>
       <span class="ov-period-note" id="ov-period-note"></span>
     </div>
     <div id="kpi-row1" class="kpi-row cols-5"></div>
     <div id="kpi-row2" class="kpi-row cols-5"></div>
-    <div id="kpi-row-prime" class="prime-bench-section" hidden>
-      <div class="prime-label"></div>
-      <div id="kpi-prime-cards" class="kpi-row cols-5"></div>
-    </div>
     <div class="section-title">Publications &amp; Grants</div>
     <div class="chart-grid two">
       <div class="chart-card">
@@ -1086,19 +1119,19 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       </div>
       <div class="tbl-wrap">
         <table>
-          <thead>
+          <thead id="staff-thead">
             <tr>
-              <th>Name</th>
-              <th class="c">H-Index<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">Sc / WoS / GS</span></th>
-              <th class="r">Indexed<br>Pubs</th>
-              <th class="r">Other<br>Pubs</th>
-              <th class="r">Active<br>Grants</th>
-              <th class="r">Total<br>Grants</th>
-              <th class="r">PhD<br>Grad</th>
+              <th class="sortable" data-sort="name">Name <span class="sort-icon">↕</span></th>
+              <th class="c sortable" data-sort="h_scopus">H-Index<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">Sc / WoS / GS</span> <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="pubs_indexed">Indexed<br>Pubs <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="pubs_other">Other<br>Pubs <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="grants_active">Active<br>Grants <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="grants_total">Total<br>Grants <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="phd_grad">PhD<br>Grad <span class="sort-icon">↕</span></th>
               <th class="r">PhD<br>Active</th>
-              <th class="r">MSc<br>Grad</th>
+              <th class="r sortable" data-sort="msc_grad">MSc<br>Grad <span class="sort-icon">↕</span></th>
               <th class="r">MSc<br>Active</th>
-              <th class="r">Consultancy<br>Done</th>
+              <th class="r sortable" data-sort="consultancy">Consultancy<br>Done <span class="sort-icon">↕</span></th>
             </tr>
           </thead>
           <tbody id="staff-tbody"></tbody>
@@ -1140,11 +1173,11 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
           <thead id="pubs-thead">
             <tr>
               <th style="width:46px">#</th>
-              <th>Title</th>
-              <th>Type</th>
-              <th id="pubs-th-cat">Category</th>
-              <th>Date</th>
-              <th>Author</th>
+              <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="type">Type <span class="sort-icon">↕</span></th>
+              <th class="sortable" id="pubs-th-cat" data-sort="indexed">Category <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="date">Date <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="name">Author <span class="sort-icon">↕</span></th>
             </tr>
           </thead>
           <tbody id="pubs-tbody"></tbody>
@@ -1193,18 +1226,18 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       </div>
       <div class="tbl-wrap">
         <table>
-          <thead>
+          <thead id="grants-thead">
             <tr>
               <th style="width:46px">#</th>
-              <th>Title</th>
-              <th>Level</th>
-              <th>Grant / Scheme</th>
-              <th>Role</th>
-              <th>Start</th>
-              <th>End</th>
-              <th class="r">Cost (RM)</th>
-              <th>Status</th>
-              <th>Staff</th>
+              <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="level">Level <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="grant_name">Grant / Scheme <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="role">Role <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="year_start">Start <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="year_end">End <span class="sort-icon">↕</span></th>
+              <th class="r sortable" data-sort="cost">Cost (RM) <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="status">Status <span class="sort-icon">↕</span></th>
+              <th class="sortable" data-sort="name">Staff <span class="sort-icon">↕</span></th>
             </tr>
           </thead>
           <tbody id="grants-tbody"></tbody>
@@ -1283,9 +1316,54 @@ const charts = new Map();
 // Overview date filter state (default: this month)
 let ovYear  = new Date().getFullYear();   // 0 = all time
 let ovMonth = new Date().getMonth() + 1; // 1-12, up-to-month
+let ovSource = 'expert'; // 'expert' | 'prime'
+
+// Column sort state for tables
+const tblSort = {
+  pubs:   { key: null, dir: 1 },
+  grants: { key: null, dir: 1 },
+  staff:  { key: null, dir: 1 },
+};
 // pubTab / grantTab now driven by filter selects; kept as helpers
 function getPubCat()   { const el = document.getElementById('pubs-filter-cat');   return el ? el.value : 'all'; }
 function getGrantRole(){ const el = document.getElementById('grants-filter-role'); return el ? el.value : 'pi'; }
+
+// Apply column sort to a row array in-place
+function applySort(rows, tbl) {
+  const { key, dir } = tblSort[tbl];
+  if (!key) return rows;
+  return [...rows].sort((a, b) => {
+    let av = a[key], bv = b[key];
+    if (key === 'indexed') { av = a.indexed ? 1 : 0; bv = b.indexed ? 1 : 0; }
+    if (key === 'cost')    { av = +(av||0); bv = +(bv||0); }
+    if (typeof av === 'number' || typeof bv === 'number') return dir * ((+av||0) - (+bv||0));
+    return dir * String(av||'').localeCompare(String(bv||''));
+  });
+}
+
+// Update aria-sort on a thead after sort state changes
+function updateSortHeaders(theadId, tbl) {
+  const thead = document.getElementById(theadId); if (!thead) return;
+  const { key, dir } = tblSort[tbl];
+  thead.querySelectorAll('th.sortable').forEach(th => {
+    const isActive = th.dataset.sort === key;
+    th.setAttribute('aria-sort', isActive ? (dir === 1 ? 'ascending' : 'descending') : 'none');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = isActive ? (dir === 1 ? '↑' : '↓') : '↕';
+  });
+}
+
+// Click handler for sortable headers — returns a handler bound to tbl
+function makeSortHandler(tbl, theadId, renderFn) {
+  return e => {
+    const th = e.target.closest('th.sortable'); if (!th) return;
+    const key = th.dataset.sort;
+    if (tblSort[tbl].key === key) tblSort[tbl].dir *= -1;
+    else { tblSort[tbl].key = key; tblSort[tbl].dir = 1; }
+    updateSortHeaders(theadId, tbl);
+    renderFn();
+  };
+}
 
 // Cross-filter state
 const xf = {
@@ -1390,7 +1468,11 @@ async function loadData() {
     STAFF  = await staffRes.json();
     PUBS   = await pubsRes.json();
     GRANTS = await grantsRes.json();
-    if (primeRes && primeRes.ok) PRIME_BENCH = await primeRes.json();
+    if (primeRes && primeRes.ok) {
+      PRIME_BENCH = await primeRes.json();
+      const primeBtn = document.getElementById('ov-prime-btn');
+      if (primeBtn) primeBtn.disabled = false;
+    }
     STAFF_BY_SLUG = new Map(STAFF.map(s => [s.slug, s]));
 
     const dateStr = summary.generated || '--';
@@ -1441,43 +1523,44 @@ function renderOverview(s) {
   const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
   const totalAcquisition = filteredGrants.reduce((sum, g) => sum + (g.cost ? +g.cost : 0), 0);
 
-  document.getElementById('kpi-row1').innerHTML = [
-    kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
-    kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
-    kpi('Indexed publications',  num(indexedCount),      'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
-    kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
-    kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
-  ].join('');
-
-  const acqLabel = totalAcquisition > 0 ? 'RM ' + totalAcquisition.toLocaleString('en-MY') : '--';
-  document.getElementById('kpi-row2').innerHTML = [
-    kpi('Active grants',        num(activeGrants),   `of ${num(filteredGrants.length)} total`,   '#16a34a', 'beaker'),
-    kpi('Total grants',         num(filteredGrants.length), 'All levels and statuses',           '#dc2626', 'money'),
-    kpi('Grant cost (Expert)',  acqLabel,            'Self-reported, may differ from IRES',       '#0891b2', 'handshake'),
-    kpi('PhD supervision',      num(s.phd_total),    'Graduated and ongoing',                    '#7c3aed', 'cap'),
-    kpi('Master supervision',   num(s.master_total), 'Graduated and ongoing',                    '#2563eb', 'cap'),
-  ].join('');
-
-  // PRIME/IRES official benchmark row
-  const primeRow = document.getElementById('kpi-row-prime');
-  if (PRIME_BENCH) {
-    const pb = PRIME_BENCH;
-    const pmeta = pb._meta || {};
-    const pp = pb.publications || {};
-    const pg = pb.grants || {};
-    const acqRM = pg.acquisition_rm ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2}) : '--';
-    const label = pmeta.report_label || 'Official Data';
-    primeRow.hidden = false;
-    primeRow.querySelector('.prime-label').textContent = `📋 ${label} (PRIME / IRES)`;
-    primeRow.querySelector('#kpi-prime-cards').innerHTML = [
-      kpi('Indexed pubs (PRIME)',   num(pp.indexed),               'Scopus / WoS / ERA — verified',     '#0891b2', 'doc'),
-      kpi('Non-indexed (PRIME)',    num(pp.nonindexed_total),      'Non-indexed journals & proceedings', '#059669', 'docs'),
-      kpi('Q1/Q2 journals (PRIME)', num(pp.q1q2),                 'JCR Q1 or Q2 journals',              '#7c3aed', 'star'),
-      kpi('Grant acquisition (IRES)', acqRM,                       'New grants approved in period',      '#dc2626', 'handshake'),
-      kpi('PI grants (IRES)',       num(pg.pi_total_active),       'All active grants as PI',            '#16a34a', 'money'),
+  if (ovSource === 'prime' && PRIME_BENCH) {
+    const pp = PRIME_BENCH.publications || {};
+    const pg = PRIME_BENCH.grants || {};
+    const pmeta = PRIME_BENCH._meta || {};
+    const acqRM = pg.acquisition_rm
+      ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2})
+      : '--';
+    document.getElementById('kpi-row1').innerHTML = [
+      kpi('Indexed pubs',      num(pp.indexed),           'Scopus / WoS / ERA — verified',     '#0891b2', 'doc'),
+      kpi('Non-indexed pubs',  num(pp.nonindexed_total),  'Non-indexed journals & proceedings', '#059669', 'docs'),
+      kpi('Q1/Q2 journals',    num(pp.q1q2),              'JCR Q1 or Q2 journals',              '#7c3aed', 'star'),
+      kpi('MyCite',            num(pp.mycite),            'MyCite indexed',                     '#d97706', 'doc'),
+      kpi('Book & Chapter',    num(pp.book_chapter),      'Books and book chapters',            '#2563eb', 'docs'),
+    ].join('');
+    document.getElementById('kpi-row2').innerHTML = [
+      kpi('Grant acquisition', acqRM,                     `New grants — ${pmeta.report_month||''}`, '#dc2626', 'handshake'),
+      kpi('PI grants (active)',num(pg.pi_total_active),   'All active grants as PI',            '#16a34a', 'money'),
+      kpi('Total grants',      num(pg.total_new_period),  `New in ${pmeta.report_month||'period'}`, '#0891b2', 'beaker'),
+      kpi('Staff (academic)',  num(s.staff_count),        'Shah Alam academic staff',           '#2563eb', 'staff'),
+      kpi('Avg H-Index (Sc)',  s.h_scopus_avg ?? '--',    `Max: ${hMax}, Median: ${hMedian}`,   '#7c3aed', 'chart'),
     ].join('');
   } else {
-    primeRow.hidden = true;
+    document.getElementById('kpi-row1').innerHTML = [
+      kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
+      kpi('Avg H-Index (Scopus)',  s.h_scopus_avg ?? '--', `Max: ${hMax}, Median: ${hMedian}`, '#7c3aed', 'chart'),
+      kpi('Indexed publications',  num(indexedCount),      'Scopus / WoS / ERA etc.',      '#0891b2', 'doc'),
+      kpi('Other publications',    num(otherCount),        'Non-indexed / proceedings',    '#059669', 'docs'),
+      kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
+    ].join('');
+
+    const acqLabel = totalAcquisition > 0 ? 'RM ' + totalAcquisition.toLocaleString('en-MY') : '--';
+    document.getElementById('kpi-row2').innerHTML = [
+      kpi('Active grants',        num(activeGrants),   `of ${num(filteredGrants.length)} total`,   '#16a34a', 'beaker'),
+      kpi('Total grants',         num(filteredGrants.length), 'All levels and statuses',           '#dc2626', 'money'),
+      kpi('Grant cost (Expert)',  acqLabel,            'Self-reported, may differ from IRES',       '#0891b2', 'handshake'),
+      kpi('PhD supervision',      num(s.phd_total),    'Graduated and ongoing',                    '#7c3aed', 'cap'),
+      kpi('Master supervision',   num(s.master_total), 'Graduated and ongoing',                    '#2563eb', 'cap'),
+    ].join('');
   }
 
   drawCharts();
@@ -1692,7 +1775,6 @@ function hbarChart(id, labels, data, color, onClick) {
 // ── STAFF ──────────────────────────────────────────────────────────────────
 function getStaffList() {
   const q   = document.getElementById('staff-search').value.trim().toLowerCase();
-  const key = document.getElementById('staff-sort').value;
   let rows  = [...STAFF];
   if (xf.staff_hindex) {
     const { min, max } = xf.staff_hindex;
@@ -1700,16 +1782,36 @@ function getStaffList() {
     else rows = rows.filter(s => s.h_scopus >= min && s.h_scopus <= max);
   }
   if (q) rows = rows.filter(s => (s.name||'').toLowerCase().includes(q));
-  rows.sort((a,b) => {
-    if (key==='name')         return (a.name||'').localeCompare(b.name||'');
-    if (key==='h_scopus')     return (b.h_scopus||0)-(a.h_scopus||0);
-    if (key==='pubs_indexed') return (b.pubs_indexed||0)-(a.pubs_indexed||0);
-    if (key==='pubs_total')   return (b.pubs_total||0)-(a.pubs_total||0);
-    if (key==='grants_total') return (b.grants_total||0)-(a.grants_total||0);
-    if (key==='phd_total')    return ((b.phd_graduated||0)+(b.phd_ongoing||0))-((a.phd_graduated||0)+(a.phd_ongoing||0));
-    if (key==='master_total') return ((b.master_graduated||0)+(b.master_ongoing||0))-((a.master_graduated||0)+(a.master_ongoing||0));
-    return 0;
-  });
+  // Column header sort takes precedence; fall back to dropdown
+  const colKey = tblSort.staff.key;
+  if (colKey) {
+    const dir = tblSort.staff.dir;
+    rows.sort((a, b) => {
+      let av, bv;
+      if (colKey === 'h_scopus')    { av = a.h_scopus||0;      bv = b.h_scopus||0; }
+      else if (colKey === 'pubs_indexed') { av = a.pubs_indexed||0; bv = b.pubs_indexed||0; }
+      else if (colKey === 'pubs_other')   { av = a.pubs_other||0;   bv = b.pubs_other||0; }
+      else if (colKey === 'grants_active'){ av = a.grants_active||0;bv = b.grants_active||0; }
+      else if (colKey === 'grants_total') { av = a.grants_total||0; bv = b.grants_total||0; }
+      else if (colKey === 'phd_grad')     { av = a.phd_graduated||0;bv = b.phd_graduated||0; }
+      else if (colKey === 'msc_grad')     { av = a.master_graduated||0;bv = b.master_graduated||0; }
+      else if (colKey === 'consultancy')  { av = a.consultancy_completed||0;bv = b.consultancy_completed||0; }
+      else { av = String(a[colKey]||''); bv = String(b[colKey]||''); return dir * av.localeCompare(bv); }
+      return dir * (av - bv);
+    });
+  } else {
+    const key = document.getElementById('staff-sort').value;
+    rows.sort((a,b) => {
+      if (key==='name')         return (a.name||'').localeCompare(b.name||'');
+      if (key==='h_scopus')     return (b.h_scopus||0)-(a.h_scopus||0);
+      if (key==='pubs_indexed') return (b.pubs_indexed||0)-(a.pubs_indexed||0);
+      if (key==='pubs_total')   return (b.pubs_total||0)-(a.pubs_total||0);
+      if (key==='grants_total') return (b.grants_total||0)-(a.grants_total||0);
+      if (key==='phd_total')    return ((b.phd_graduated||0)+(b.phd_ongoing||0))-((a.phd_graduated||0)+(a.phd_ongoing||0));
+      if (key==='master_total') return ((b.master_graduated||0)+(b.master_ongoing||0))-((a.master_graduated||0)+(a.master_ongoing||0));
+      return 0;
+    });
+  }
   return rows;
 }
 
@@ -1860,7 +1962,7 @@ function getPubsList() {
   if (yf) rows = rows.filter(p => p.date && +p.date.slice(0,4) >= yf);
   if (yt) rows = rows.filter(p => p.date && +p.date.slice(0,4) <= yt);
   if (q)  rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
-  return rows;
+  return applySort(rows, 'pubs');
 }
 
 function renderPubsTable() {
@@ -1966,7 +2068,7 @@ function getGrantsList() {
   if (yf) rows = rows.filter(g => g.year_start && +g.year_start >= yf);
   if (yt) rows = rows.filter(g => g.year_start && +g.year_start <= yt);
   if (q)  rows = rows.filter(g => ((g.title||'')+(g.name||'')+(g.grant_name||'')).toLowerCase().includes(q));
-  return rows;
+  return applySort(rows, 'grants');
 }
 
 function renderGrantsTable() {
@@ -2088,6 +2190,14 @@ document.getElementById('grants-filter-status').addEventListener('change', () =>
 document.getElementById('grants-year-from').addEventListener('change',     () => { pageState.grants=1; renderGrantsTable(); });
 document.getElementById('grants-year-to').addEventListener('change',       () => { pageState.grants=1; renderGrantsTable(); });
 
+// Sortable table headers
+document.getElementById('staff-thead').addEventListener('click',
+  makeSortHandler('staff', 'staff-thead', () => { pageState.staff=1; renderStaffTable(); }));
+document.getElementById('pubs-thead').addEventListener('click',
+  makeSortHandler('pubs', 'pubs-thead', () => { pageState.pubs=1; renderPubsTable(); }));
+document.getElementById('grants-thead').addEventListener('click',
+  makeSortHandler('grants', 'grants-thead', () => { pageState.grants=1; renderGrantsTable(); }));
+
 // ── BOOT ───────────────────────────────────────────────────────────────────
 Chart.register(ChartDataLabels);
 
@@ -2099,6 +2209,28 @@ document.getElementById('ov-year').addEventListener('change', () => {
 });
 document.getElementById('ov-month').addEventListener('change', () => {
   ovMonth = +document.getElementById('ov-month').value;
+  renderOverview(SUMMARY);
+});
+
+// Source toggle: Expert Portal / PRIME
+document.getElementById('ov-src-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('[data-src]'); if (!btn) return;
+  const src = btn.dataset.src;
+  if (src === ovSource) return;
+  ovSource = src;
+  document.querySelectorAll('#ov-src-toggle .src-btn').forEach(b => b.classList.toggle('active', b.dataset.src === src));
+  const dateFilters = document.getElementById('ov-date-filters');
+  const periodNote  = document.getElementById('ov-period-note');
+  const subtitle = document.getElementById('ov-subtitle');
+  if (src === 'prime') {
+    dateFilters.style.display = 'none';
+    periodNote.textContent = PRIME_BENCH?._meta?.report_label ? `Fixed: ${PRIME_BENCH._meta.report_label}` : 'Fixed dataset';
+    if (subtitle) subtitle.textContent = `Official verified data — ${PRIME_BENCH?._meta?.report_label || 'PRIME / IRES'}`;
+  } else {
+    dateFilters.style.display = 'contents';
+    renderOvPeriodNote();
+    if (subtitle) subtitle.textContent = 'Aggregated figures from UiTM Expert portal, Shah Alam academic staff';
+  }
   renderOverview(SUMMARY);
 });
 
