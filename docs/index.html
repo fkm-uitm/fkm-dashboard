@@ -2857,7 +2857,7 @@ document.getElementById('overlay').addEventListener('click', closeSidebar);
 // ── GLOBAL DELEGATION ──────────────────────────────────────────────────────
 document.addEventListener('click', e => {
   // Staff name button (not inside pub drawer)
-  const nb = e.target.closest('[data-slug]');
+  const nb = e.target.closest('.staff-card-name[data-slug]');
   if (nb && !nb.closest('#pub-drawer-body')) {
     return openStaffProfile(nb.dataset.slug);
   }
