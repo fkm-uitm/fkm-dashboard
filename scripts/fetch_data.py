@@ -16,6 +16,7 @@ import pandas as pd
 import json
 import re
 import os
+import sys
 from datetime import datetime
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
@@ -60,15 +61,27 @@ def safe_str(val):
     return str(val).strip() if val and str(val).strip() not in ("-", "#REF!", "#N/A", "########", "#######") else ""
 
 # ── FETCH ALL SHEETS ──────────────────────────────────────────────────────────
+# Minimum row counts that must be met before any file is written.
+# These are intentionally conservative — they catch a total outage, not normal variation.
+MIN_ROWS = {"staff": 50, "pub": 50, "pi": 1}
+
 print("Fetching sheets from Google Sheets...")
 dfs = {}
+fetch_errors = []
 for name in SHEET_URLS:
     try:
         dfs[name] = fetch_sheet(name)
         print(f"    ✓ {name}: {len(dfs[name])} rows, {len(dfs[name].columns)} cols")
     except Exception as e:
-        print(f"    ✗ {name}: {e}")
+        fetch_errors.append(f"  ✗ {name}: {e}")
         dfs[name] = pd.DataFrame()
+
+if fetch_errors:
+    print("\nERROR: One or more sheets could not be fetched:", file=sys.stderr)
+    for msg in fetch_errors:
+        print(msg, file=sys.stderr)
+    print("Aborting — existing published data is unchanged.", file=sys.stderr)
+    sys.exit(1)
 
 # ── PROCESS: PI AND GRANT ─────────────────────────────────────────────────────
 # The two sheets overlap: a newly acquired grant usually also appears in the PI sheet.
@@ -224,6 +237,20 @@ summary = {
         "by_designation":    staff_by_designation,
     },
 }
+
+# ── ROW COUNT GUARD ───────────────────────────────────────────────────────────
+count_errors = []
+for sheet_name, minimum in MIN_ROWS.items():
+    actual = len(dfs.get(sheet_name, pd.DataFrame()))
+    if actual < minimum:
+        count_errors.append(
+            f"  ✗ sheet '{sheet_name}': {actual} rows (expected ≥ {minimum})"
+        )
+if count_errors:
+    print("\nERROR: Implausible row counts — aborting to protect published data:", file=sys.stderr)
+    for msg in count_errors:
+        print(msg, file=sys.stderr)
+    sys.exit(1)
 
 # ── WRITE JSON FILES ──────────────────────────────────────────────────────────
 def write_json(filename, data):

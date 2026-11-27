@@ -54,10 +54,14 @@ def infer_index_name(url: str) -> str:
 def main():
     if not RAW.exists():
         _print(f"ERROR: {RAW} not found. Run scraper_expert.py first.")
-        return
+        sys.exit(1)
 
     profiles: list[dict] = json.loads(RAW.read_text(encoding="utf-8"))
     _print(f"Loaded {len(profiles)} profiles")
+
+    if len(profiles) < 10:
+        _print(f"ERROR: Only {len(profiles)} profiles in raw data (expected ≥ 10) — aborting to protect published data.")
+        sys.exit(1)
 
     staff_rows = []
     pub_rows   = []
@@ -225,6 +229,11 @@ def main():
         "master_total":              sum(s["master_graduated"] + s["master_ongoing"] for s in staff_rows),
         "consultancy_total":         sum(s["consultancy_completed"] for s in staff_rows),
     }
+
+    # ── row count guard ───────────────────────────────────────────────────
+    if len(staff_rows) < 10:
+        _print(f"ERROR: Only {len(staff_rows)} staff records produced (expected ≥ 10) — aborting.")
+        sys.exit(1)
 
     # ── write ─────────────────────────────────────────────────────────────
     _write("expert_staff.json",        staff_rows)

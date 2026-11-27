@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Test / scratch data outputs — never commit these
+docs/data/*_test.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp

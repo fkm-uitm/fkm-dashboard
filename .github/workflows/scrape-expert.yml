@@ -30,6 +30,9 @@ jobs:
       - name: Transform raw data → dashboard JSON
         run: python scripts/transform_expert.py
 
+      - name: Validate output
+        run: python scripts/validate_data.py
+
       - name: Commit updated data
         run: |
           git config user.name  "github-actions[bot]"

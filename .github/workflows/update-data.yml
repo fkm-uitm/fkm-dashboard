@@ -29,6 +29,9 @@ jobs:
       - name: Fetch data from Google Sheets
         run: python scripts/fetch_data.py
 
+      - name: Validate output
+        run: python scripts/validate_data.py
+
       - name: Commit updated data
         run: |
           git config user.name  "github-actions[bot]"
