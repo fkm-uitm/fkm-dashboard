@@ -3102,11 +3102,13 @@ function renderGrantsOverview() {
   if (!el || !GRANTS.length) return;
 
   const active    = GRANTS.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
-  const completed = GRANTS.filter(g => (g.status||'').toUpperCase() !== 'ACTIVE');
   const isIntl    = g => (g.level||'').toUpperCase().includes('INT');
+  const intlTotal = GRANTS.filter(isIntl).length;
+  const natTotal  = GRANTS.filter(g => !isIntl(g)).length;
   const intlAct   = active.filter(isIntl).length;
   const natAct    = active.filter(g => !isIntl(g)).length;
   const totalCost = GRANTS.reduce((s,g) => s + (g.cost ? +g.cost : 0), 0);
+  const uniquePIs = new Set(GRANTS.filter(g => (g.role||'').toUpperCase() === 'PRINCIPAL INVESTIGATOR').map(g => g.slug).filter(Boolean)).size;
 
   // by start year
   const byYear = {};
@@ -3154,14 +3156,14 @@ function renderGrantsOverview() {
   const costFmt = totalCost > 0 ? 'RM ' + totalCost.toLocaleString('en-MY', {maximumFractionDigits:0}) : '—';
 
   el.innerHTML = `
-  <div class="pov-insight"><b>${num(active.length)}</b> active grants (${num(intlAct)} international, ${num(natAct)} national) out of <b>${num(GRANTS.length)}</b> total. Self-reported total acquisition: <b>${esc(costFmt)}</b>.</div>
+  <div class="pov-insight"><b>${num(GRANTS.length)}</b> grant records across <b>${num(uniquePIs)}</b> principal investigators — <b>${num(intlTotal)}</b> international, <b>${num(natTotal)}</b> national. Self-reported total acquisition: <b>${esc(costFmt)}</b>.</div>
 
   <div class="pov-kpis">
-    <div class="pov-kpi" style="--kpi-color:#16a34a"><div class="pk-v">${num(active.length)}</div><div class="pk-k">Active Grants</div><div class="pk-s">Currently running</div></div>
-    <div class="pov-kpi" style="--kpi-color:#6b7280"><div class="pk-v">${num(completed.length)}</div><div class="pk-k">Completed</div><div class="pk-s">Closed projects</div></div>
-    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(intlAct)}</div><div class="pk-k">International Active</div><div class="pk-s">Intl level, active</div></div>
-    <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(natAct)}</div><div class="pk-k">National Active</div><div class="pk-s">Natl level, active</div></div>
-    <div class="pov-kpi" style="--kpi-color:#d97706"><div class="pk-v">${esc(costFmt)}</div><div class="pk-k">Total Acquisition</div><div class="pk-s">Self-reported</div></div>
+    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(GRANTS.length)}</div><div class="pk-k">Total Grants</div><div class="pk-s">All time, all statuses</div></div>
+    <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(intlTotal)}</div><div class="pk-k">International</div><div class="pk-s">${num(intlAct)} currently active</div></div>
+    <div class="pov-kpi" style="--kpi-color:#059669"><div class="pk-v">${num(natTotal)}</div><div class="pk-k">National</div><div class="pk-s">${num(natAct)} currently active</div></div>
+    <div class="pov-kpi" style="--kpi-color:#7c3aed"><div class="pk-v">${num(uniquePIs)}</div><div class="pk-k">Principal Investigators</div><div class="pk-s">Staff who led grants</div></div>
+    <div class="pov-kpi" style="--kpi-color:#d97706"><div class="pk-v">${esc(costFmt)}</div><div class="pk-k">Total Acquisition</div><div class="pk-s">Self-reported, all grants</div></div>
   </div>
 
   <div class="pov-charts">
