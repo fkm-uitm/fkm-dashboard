@@ -1509,19 +1509,11 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       <p id="ov-subtitle">Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
     <div class="ov-filter-bar">
-      <span id="ov-date-filters" style="display:contents">
-        <span class="ov-filter-label">Year:</span>
-        <select class="filter-select" id="ov-year" aria-label="Select year"></select>
-        <span class="ov-filter-label" id="ov-month-lbl">Up to month:</span>
-        <select class="filter-select" id="ov-month" aria-label="Up to month">
-          <option value="1">January</option><option value="2">February</option>
-          <option value="3">March</option><option value="4">April</option>
-          <option value="5">May</option><option value="6">June</option>
-          <option value="7">July</option><option value="8">August</option>
-          <option value="9">September</option><option value="10">October</option>
-          <option value="11">November</option><option value="12">December</option>
-        </select>
-      </span>
+      <span class="ov-filter-label">From:</span>
+      <select class="filter-select" id="ov-from-ym" aria-label="From month and year"></select>
+      <span class="ov-filter-label">To:</span>
+      <select class="filter-select" id="ov-to-ym" aria-label="To month and year"></select>
+      <button class="pov-reset-btn" id="ov-reset-range">All time</button>
       <span class="ov-period-note" id="ov-period-note"></span>
     </div>
     <div id="kpi-row1" class="kpi-row cols-5"></div>
@@ -1859,9 +1851,8 @@ const PAGE_SIZE = 50;
 const pageState = { staff: 1, pubs: 1, grants: 1 };
 const charts = new Map();
 
-// Overview date filter state (default: this month)
-let ovYear  = new Date().getFullYear();   // 0 = all time
-let ovMonth = new Date().getMonth() + 1; // 1-12, up-to-month
+// Overview date filter state — YYYYMM integers, 0 = all time
+let ovFromYM = 0, ovToYM = 0;
 
 // Column sort state for tables
 const tblSort = {
@@ -1927,42 +1918,48 @@ const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(
 const nice = s => s ? s.replace(/_/g,' ').toLowerCase().replace(/\b\w/g, c=>c.toUpperCase()) : '';
 const initials = name => (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
-// Overview date filtering — returns filtered PUBS and GRANTS for selected year+month
+// Overview date filtering — returns filtered PUBS and GRANTS for selected range
 function getOvFilteredData() {
-  if (!ovYear) {
+  if (!ovFromYM || !ovToYM) {
     return { filteredPubs: [...PUBS], filteredGrants: [...GRANTS] };
   }
   const filteredPubs = PUBS.filter(p => {
     if (!p.date) return false;
-    const y = +p.date.slice(0,4);
-    const m = +p.date.slice(5,7);
-    return y === ovYear && m <= ovMonth;
+    const ym = +p.date.slice(0,4)*100 + +p.date.slice(5,7);
+    return ym >= ovFromYM && ym <= ovToYM;
   });
-  const filteredGrants = GRANTS.filter(g => g.year_start && +g.year_start === ovYear);
+  const fromY = Math.floor(ovFromYM/100), toY = Math.floor(ovToYM/100);
+  const filteredGrants = GRANTS.filter(g => g.year_start && +g.year_start >= fromY && +g.year_start <= toY);
   return { filteredPubs, filteredGrants };
 }
 
-function buildOvYearSelect() {
-  const years = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(Boolean))].sort((a,b)=>b-a);
-  const el = document.getElementById('ov-year');
-  el.innerHTML = '<option value="0">All time</option>' +
-    years.map(y => `<option value="${y}"${y===ovYear?' selected':''}>${y}</option>`).join('');
-  document.getElementById('ov-month').value = String(ovMonth);
-  toggleOvMonth();
-}
+const _MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function _ymLabel(ym) { const y = Math.floor(ym/100), m = ym%100; return `${_MON[m-1]} ${y}`; }
 
-function toggleOvMonth() {
-  const show = ovYear > 0;
-  document.getElementById('ov-month').style.display = show ? '' : 'none';
-  document.getElementById('ov-month-lbl').style.display = show ? '' : 'none';
+function buildOvRangeSelects() {
+  const ymSet = new Set();
+  for (const p of PUBS) {
+    if (!p.date) continue;
+    const y = +p.date.slice(0,4), m = +p.date.slice(5,7);
+    if (y >= 2000 && m >= 1 && m <= 12) ymSet.add(y*100+m);
+  }
+  const ymList = [...ymSet].sort((a,b)=>a-b);
+  if (!ymList.length) return;
+  const minYM = ymList[0], maxYM = ymList[ymList.length-1];
+  if (!ovFromYM) ovFromYM = minYM;
+  if (!ovToYM)   ovToYM   = maxYM;
+  const opts = sel => ['<option value="0">All time</option>',
+    ...ymList.map(ym => `<option value="${ym}"${ym===sel?' selected':''}>${_ymLabel(ym)}</option>`)
+  ].join('');
+  document.getElementById('ov-from-ym').innerHTML = opts(ovFromYM);
+  document.getElementById('ov-to-ym').innerHTML   = opts(ovToYM);
 }
 
 function renderOvPeriodNote() {
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const note = ovYear
-    ? `Publications Jan–${months[ovMonth-1]} ${ovYear} · Grants started ${ovYear}`
+  const note = (ovFromYM && ovToYM)
+    ? `Publications &amp; Grants: ${_ymLabel(ovFromYM)} – ${_ymLabel(ovToYM)}`
     : 'All publications and grants (no date filter)';
-  document.getElementById('ov-period-note').textContent = note;
+  document.getElementById('ov-period-note').innerHTML = note;
 }
 
 // F-01: SVG icons tied to data domain — each icon is chosen for content relevance
@@ -2051,7 +2048,7 @@ async function loadData() {
 // ── OVERVIEW ───────────────────────────────────────────────────────────────
 function renderOverview(s) {
   SUMMARY = s;
-  if (PUBS.length) buildOvYearSelect();
+  if (PUBS.length) buildOvRangeSelects();
   renderOvPeriodNote();
 
   const hVals   = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
@@ -2795,21 +2792,31 @@ function getPubsList() {
 
 // ── PUBLICATIONS OVERVIEW ─────────────────────────────────────────────────
 let _pubsOvCharts = {};
-let _pubsOvFrom = 0, _pubsOvTo = 0; // 0 = all time
+let _pubsOvFromYM = 0, _pubsOvToYM = 0; // 0 = all time, format YYYYMM
 
 function renderPubsOverview() {
   const el = document.getElementById('pubs-ov-content');
   if (!el || !PUBS.length) return;
 
-  // Build year list from data
-  const allYears = [...new Set(PUBS.map(p => (p.date||'').slice(0,4)).filter(y => y >= '2000'))].sort();
-  const minY = +allYears[0] || 2000;
-  const maxY = +allYears[allYears.length-1] || new Date().getFullYear();
-  if (!_pubsOvFrom) _pubsOvFrom = minY;
-  if (!_pubsOvTo)   _pubsOvTo   = maxY;
+  // Build month+year list from data
+  const ymSet = new Set();
+  for (const p of PUBS) {
+    if (!p.date) continue;
+    const y = +p.date.slice(0,4), m = +p.date.slice(5,7);
+    if (y >= 2000 && m >= 1 && m <= 12) ymSet.add(y*100+m);
+  }
+  const ymList = [...ymSet].sort((a,b)=>a-b);
+  const minYM  = ymList[0]                  || new Date().getFullYear()*100+1;
+  const maxYM  = ymList[ymList.length-1]    || new Date().getFullYear()*100+12;
+  if (!_pubsOvFromYM) _pubsOvFromYM = minYM;
+  if (!_pubsOvToYM)   _pubsOvToYM   = maxYM;
 
   const SWE = new Set(['SCOPUS', 'WEB OF SCIENCE', 'ERA']);
-  const inRange = p => { const y = +(p.date||'').slice(0,4); return y >= _pubsOvFrom && y <= _pubsOvTo; };
+  const inRange = p => {
+    if (!p.date) return false;
+    const ym = +p.date.slice(0,4)*100 + +p.date.slice(5,7);
+    return ym >= _pubsOvFromYM && ym <= _pubsOvToYM;
+  };
   const pubs    = PUBS.filter(inRange);
   const indexed = pubs.filter(p => p.indexed);
   const swe     = indexed.filter(p => SWE.has(p.index_name));
@@ -2871,18 +2878,17 @@ function renderPubsOverview() {
       })()
     : '';
   const topIdx = idxEntries[0];
-  const rangeLabel = _pubsOvFrom === minY && _pubsOvTo === maxY ? 'all time' : `${_pubsOvFrom}–${_pubsOvTo}`;
+  const rangeLabel = _pubsOvFromYM === minYM && _pubsOvToYM === maxYM ? 'all time' : `${_ymLabel(_pubsOvFromYM)}–${_ymLabel(_pubsOvToYM)}`;
 
-  // year options for filter bar
-  const yrOpts = y => Array.from({length: maxY - minY + 1}, (_,i) => minY + i)
-    .map(yr => `<option value="${yr}"${yr===y?' selected':''}>${yr}</option>`).join('');
+  // month+year options for filter bar
+  const ymPubOpts = sel => ymList.map(ym => `<option value="${ym}"${ym===sel?' selected':''}>${_ymLabel(ym)}</option>`).join('');
 
   el.innerHTML = `
   <div class="pov-filter-bar">
-    <span class="pov-filter-label">Year range:</span>
-    <select class="filter-select pov-yr-from" id="pubs-ov-from" aria-label="From year">${yrOpts(_pubsOvFrom)}</select>
+    <span class="pov-filter-label">From:</span>
+    <select class="filter-select pov-yr-from" id="pubs-ov-from" aria-label="From month and year">${ymPubOpts(_pubsOvFromYM)}</select>
     <span class="pov-filter-sep">–</span>
-    <select class="filter-select pov-yr-to" id="pubs-ov-to" aria-label="To year">${yrOpts(_pubsOvTo)}</select>
+    <select class="filter-select pov-yr-to" id="pubs-ov-to" aria-label="To month and year">${ymPubOpts(_pubsOvToYM)}</select>
     <button class="pov-reset-btn" id="pubs-ov-reset">All time</button>
     <span class="pov-filter-note">${num(pubs.length)} records</span>
   </div>
@@ -2965,12 +2971,12 @@ function renderPubsOverview() {
   });
 
   // wire filter bar events (replace after innerHTML re-render)
-  const fromSel = document.getElementById('pubs-ov-from');
-  const toSel   = document.getElementById('pubs-ov-to');
+  const fromSel  = document.getElementById('pubs-ov-from');
+  const toSel    = document.getElementById('pubs-ov-to');
   const resetBtn = document.getElementById('pubs-ov-reset');
-  if (fromSel) fromSel.addEventListener('change', () => { _pubsOvFrom = +fromSel.value; if (_pubsOvFrom > _pubsOvTo) _pubsOvTo = _pubsOvFrom; renderPubsOverview(); });
-  if (toSel)   toSel.addEventListener('change',   () => { _pubsOvTo   = +toSel.value;   if (_pubsOvTo < _pubsOvFrom) _pubsOvFrom = _pubsOvTo; renderPubsOverview(); });
-  if (resetBtn) resetBtn.addEventListener('click', () => { _pubsOvFrom = minY; _pubsOvTo = maxY; renderPubsOverview(); });
+  if (fromSel)  fromSel.addEventListener('change',  () => { _pubsOvFromYM = +fromSel.value; if (_pubsOvFromYM > _pubsOvToYM) _pubsOvToYM = _pubsOvFromYM; renderPubsOverview(); });
+  if (toSel)    toSel.addEventListener('change',    () => { _pubsOvToYM   = +toSel.value;   if (_pubsOvToYM < _pubsOvFromYM) _pubsOvFromYM = _pubsOvToYM; renderPubsOverview(); });
+  if (resetBtn) resetBtn.addEventListener('click',  () => { _pubsOvFromYM = minYM; _pubsOvToYM = maxYM; renderPubsOverview(); });
 }
 
 function renderPubsTable() {
@@ -3152,20 +3158,20 @@ function getGrantsList() {
 
 // ── GRANTS OVERVIEW ───────────────────────────────────────────────────────
 let _grantsOvCharts = {};
-let _grantsOvFrom = 0, _grantsOvTo = 0;
+let _grantsOvFromY = 0, _grantsOvToY = 0; // year integers, 0 = all time
 
 function renderGrantsOverview() {
   const el = document.getElementById('grants-ov-content');
   if (!el || !GRANTS.length) return;
 
   // Build year list from year_start
-  const allGYears = [...new Set(GRANTS.map(g => String(g.year_start||'')).filter(y => y >= '2000'))].sort();
-  const minGY = +(allGYears[0]) || 2000;
-  const maxGY = +(allGYears[allGYears.length-1]) || new Date().getFullYear();
-  if (!_grantsOvFrom) _grantsOvFrom = minGY;
-  if (!_grantsOvTo)   _grantsOvTo   = maxGY;
+  const allGYears = [...new Set(GRANTS.map(g => +(g.year_start||0)).filter(y => y >= 2000))].sort((a,b)=>a-b);
+  const minGY = allGYears[0] || 2000;
+  const maxGY = allGYears[allGYears.length-1] || new Date().getFullYear();
+  if (!_grantsOvFromY) _grantsOvFromY = minGY;
+  if (!_grantsOvToY)   _grantsOvToY   = maxGY;
 
-  const inGRange = g => { const y = +(g.year_start||0); return y >= _grantsOvFrom && y <= _grantsOvTo; };
+  const inGRange = g => { const y = +(g.year_start||0); return y >= _grantsOvFromY && y <= _grantsOvToY; };
   const grants   = GRANTS.filter(inGRange);
 
   const isIntl    = g => (g.level||'').toUpperCase().includes('INT');
@@ -3221,16 +3227,15 @@ function renderGrantsOverview() {
   const topPIs = Object.values(piMap).sort((a,b) => b.active - a.active || b.total - a.total).slice(0, 10);
 
   const costFmt = totalCost > 0 ? 'RM ' + totalCost.toLocaleString('en-MY', {maximumFractionDigits:0}) : '—';
-  const rangeGLabel = _grantsOvFrom === minGY && _grantsOvTo === maxGY ? 'all time' : `${_grantsOvFrom}–${_grantsOvTo}`;
-  const gyrOpts = y => Array.from({length: maxGY - minGY + 1}, (_,i) => minGY + i)
-    .map(yr => `<option value="${yr}"${yr===y?' selected':''}>${yr}</option>`).join('');
+  const rangeGLabel = _grantsOvFromY === minGY && _grantsOvToY === maxGY ? 'all time' : `${_grantsOvFromY}–${_grantsOvToY}`;
+  const gyrOpts = sel => allGYears.map(yr => `<option value="${yr}"${yr===sel?' selected':''}>${yr}</option>`).join('');
 
   el.innerHTML = `
   <div class="pov-filter-bar">
-    <span class="pov-filter-label">Year range:</span>
-    <select class="filter-select pov-yr-from" id="grants-ov-from" aria-label="From year">${gyrOpts(_grantsOvFrom)}</select>
+    <span class="pov-filter-label">From:</span>
+    <select class="filter-select pov-yr-from" id="grants-ov-from" aria-label="From year">${gyrOpts(_grantsOvFromY)}</select>
     <span class="pov-filter-sep">–</span>
-    <select class="filter-select pov-yr-to" id="grants-ov-to" aria-label="To year">${gyrOpts(_grantsOvTo)}</select>
+    <select class="filter-select pov-yr-to" id="grants-ov-to" aria-label="To year">${gyrOpts(_grantsOvToY)}</select>
     <button class="pov-reset-btn" id="grants-ov-reset">All time</button>
     <span class="pov-filter-note">${num(grants.length)} records</span>
   </div>
@@ -3316,9 +3321,9 @@ function renderGrantsOverview() {
   const gFromSel  = document.getElementById('grants-ov-from');
   const gToSel    = document.getElementById('grants-ov-to');
   const gResetBtn = document.getElementById('grants-ov-reset');
-  if (gFromSel)  gFromSel.addEventListener('change',  () => { _grantsOvFrom = +gFromSel.value; if (_grantsOvFrom > _grantsOvTo) _grantsOvTo = _grantsOvFrom; renderGrantsOverview(); });
-  if (gToSel)    gToSel.addEventListener('change',    () => { _grantsOvTo   = +gToSel.value;   if (_grantsOvTo < _grantsOvFrom) _grantsOvFrom = _grantsOvTo; renderGrantsOverview(); });
-  if (gResetBtn) gResetBtn.addEventListener('click',  () => { _grantsOvFrom = minGY; _grantsOvTo = maxGY; renderGrantsOverview(); });
+  if (gFromSel)  gFromSel.addEventListener('change',  () => { _grantsOvFromY = +gFromSel.value; if (_grantsOvFromY > _grantsOvToY) _grantsOvToY = _grantsOvFromY; renderGrantsOverview(); });
+  if (gToSel)    gToSel.addEventListener('change',    () => { _grantsOvToY   = +gToSel.value;   if (_grantsOvToY < _grantsOvFromY) _grantsOvFromY = _grantsOvToY; renderGrantsOverview(); });
+  if (gResetBtn) gResetBtn.addEventListener('click',  () => { _grantsOvFromY = minGY; _grantsOvToY = maxGY; renderGrantsOverview(); });
 }
 
 function renderGrantsTable() {
@@ -3547,14 +3552,22 @@ document.getElementById('grants-thead').addEventListener('click',
 // ── BOOT ───────────────────────────────────────────────────────────────────
 Chart.register(ChartDataLabels);
 
-// Overview year+month filter
-document.getElementById('ov-year').addEventListener('change', () => {
-  ovYear = +document.getElementById('ov-year').value;
-  toggleOvMonth();
+// Overview range filter
+document.getElementById('ov-from-ym').addEventListener('change', () => {
+  ovFromYM = +document.getElementById('ov-from-ym').value;
+  if (ovFromYM && ovToYM && ovFromYM > ovToYM) ovToYM = ovFromYM;
+  if (ovToYM) document.getElementById('ov-to-ym').value = String(ovToYM);
   renderOverview(SUMMARY);
 });
-document.getElementById('ov-month').addEventListener('change', () => {
-  ovMonth = +document.getElementById('ov-month').value;
+document.getElementById('ov-to-ym').addEventListener('change', () => {
+  ovToYM = +document.getElementById('ov-to-ym').value;
+  if (ovFromYM && ovToYM && ovToYM < ovFromYM) ovFromYM = ovToYM;
+  if (ovFromYM) document.getElementById('ov-from-ym').value = String(ovFromYM);
+  renderOverview(SUMMARY);
+});
+document.getElementById('ov-reset-range').addEventListener('click', () => {
+  ovFromYM = 0; ovToYM = 0;
+  buildOvRangeSelects();
   renderOverview(SUMMARY);
 });
 
