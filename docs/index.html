@@ -1133,6 +1133,78 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 }
 .sub-tab:hover { color: var(--text); }
 .sub-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Page overview sections (pubs / grants) ─────────────────────────── */
+.pov-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pov-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  border-top: 3px solid var(--kpi-color, var(--accent));
+}
+.pov-kpi .pk-v {
+  font: 700 26px/1 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 5px;
+}
+.pov-kpi .pk-k { font-size: 12px; font-weight: 600; color: var(--text2); }
+.pov-kpi .pk-s { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.pov-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.pov-charts.three { grid-template-columns: repeat(3, 1fr); }
+.pov-chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.pov-chart-card h4 { font-size: 13px; font-weight: 600; margin: 0 0 4px; color: var(--text); }
+.pov-chart-card .pov-sub { font-size: 11.5px; color: var(--text3); margin: 0 0 14px; }
+.pov-chart-wrap { position: relative; height: 220px; }
+.pov-chart-wrap.tall { height: 300px; }
+.pov-table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.pov-table-card h4 {
+  font-size: 13px; font-weight: 600; padding: 14px 18px 12px;
+  margin: 0; border-bottom: 1px solid var(--border); color: var(--text);
+}
+.pov-table-card table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pov-table-card th { padding: 8px 14px; background: var(--surface2); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text3); text-align: left; }
+.pov-table-card td { padding: 9px 14px; border-top: 1px solid var(--border); color: var(--text2); }
+.pov-table-card td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
+.pov-table-card tr:hover td { background: var(--surface2); }
+.pov-insight {
+  background: color-mix(in srgb, var(--brand, #1e3a5f) 5%, var(--surface));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.pov-insight b { color: var(--text); }
+@media (max-width: 768px) {
+  .pov-charts, .pov-charts.three { grid-template-columns: 1fr; }
+  .pov-kpis { grid-template-columns: repeat(2, 1fr); }
+}
 .ov-period-note {
   font-size: 12px;
   color: var(--text3);
@@ -1556,52 +1628,65 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
   <div id="page-pubs" class="content" hidden>
     <div class="page-header">
       <h2>Publications</h2>
-      <p>Publications from the Expert portal for FKM Shah Alam academic staff. Click a title for details.</p>
+      <p>Publications from the Expert portal for FKM Shah Alam academic staff.</p>
     </div>
-    <div class="tbl-card">
-      <div class="toolbar">
-        <select class="filter-select" id="pubs-filter-cat" aria-label="Filter by category">
-          <option value="all">All Publications</option>
-          <option value="indexed">Indexed (Scopus / WoS / ERA)</option>
-          <option value="nonindexed">Non-Indexed</option>
-        </select>
-        <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
-          <option value="all">All Types</option>
-          <option value="JOURNAL">Journal</option>
-          <option value="PROCEEDING">Proceeding</option>
-          <option value="CHAPTER IN RESEARCH BOOK">Chapter in Book</option>
-          <option value="RESEARCH BOOK">Research Book</option>
-        </select>
-        <div class="search-wrap">
-          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
+    <div class="sub-tabs" role="tablist" aria-label="Publications view">
+      <button class="sub-tab active" role="tab" data-subtab="pubs-overview" aria-selected="true">Overview</button>
+      <button class="sub-tab" role="tab" data-subtab="pubs-list" aria-selected="false">List</button>
+    </div>
+
+    <!-- Overview sub-page -->
+    <div id="pubs-overview" role="tabpanel">
+      <div id="pubs-ov-content"><!-- filled by renderPubsOverview() --></div>
+    </div>
+
+    <!-- List sub-page -->
+    <div id="pubs-list" role="tabpanel" hidden>
+      <div class="tbl-card">
+        <div class="toolbar">
+          <select class="filter-select" id="pubs-filter-cat" aria-label="Filter by category">
+            <option value="all">All Publications</option>
+            <option value="indexed">Indexed (Scopus / WoS / ERA)</option>
+            <option value="nonindexed">Non-Indexed</option>
+          </select>
+          <select class="filter-select" id="pubs-filter-type" aria-label="Filter by type">
+            <option value="all">All Types</option>
+            <option value="JOURNAL">Journal</option>
+            <option value="PROCEEDING">Proceeding</option>
+            <option value="CHAPTER IN RESEARCH BOOK">Chapter in Book</option>
+            <option value="RESEARCH BOOK">Research Book</option>
+          </select>
+          <div class="search-wrap">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+            <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
+          </div>
+          <div class="year-range" aria-label="Year range">
+            <label for="pubs-year-from" class="sr-only">From year</label>
+            <select class="filter-select" id="pubs-year-from" aria-label="From year"></select>
+            <span class="year-sep" aria-hidden="true">to</span>
+            <label for="pubs-year-to" class="sr-only">To year</label>
+            <select class="filter-select" id="pubs-year-to" aria-label="To year"></select>
+          </div>
+          <span id="pubs-xf-badge" hidden></span>
+          <span class="count-badge" id="pubs-count"></span>
         </div>
-        <div class="year-range" aria-label="Year range">
-          <label for="pubs-year-from" class="sr-only">From year</label>
-          <select class="filter-select" id="pubs-year-from" aria-label="From year"></select>
-          <span class="year-sep" aria-hidden="true">to</span>
-          <label for="pubs-year-to" class="sr-only">To year</label>
-          <select class="filter-select" id="pubs-year-to" aria-label="To year"></select>
+        <div class="tbl-wrap">
+          <table>
+            <thead id="pubs-thead">
+              <tr>
+                <th style="width:46px">#</th>
+                <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="type">Type <span class="sort-icon">↕</span></th>
+                <th class="sortable" id="pubs-th-cat" data-sort="indexed">Category <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="date">Date <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="name">Author <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="pubs-tbody"></tbody>
+          </table>
         </div>
-        <span id="pubs-xf-badge" hidden></span>
-        <span class="count-badge" id="pubs-count"></span>
+        <div class="pagination" id="pubs-pagination"></div>
       </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead id="pubs-thead">
-            <tr>
-              <th style="width:46px">#</th>
-              <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="type">Type <span class="sort-icon">↕</span></th>
-              <th class="sortable" id="pubs-th-cat" data-sort="indexed">Category <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="date">Date <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="name">Author <span class="sort-icon">↕</span></th>
-            </tr>
-          </thead>
-          <tbody id="pubs-tbody"></tbody>
-        </table>
-      </div>
-      <div class="pagination" id="pubs-pagination"></div>
     </div>
   </div>
 
@@ -1609,59 +1694,72 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
   <div id="page-grants" class="content" hidden>
     <div class="page-header">
       <h2>Grants</h2>
-      <p>Research grants from the Expert portal, international and national, active and completed</p>
+      <p>Research grants from the Expert portal, international and national, active and completed.</p>
     </div>
-    <div class="tbl-card">
-      <div class="toolbar">
-        <select class="filter-select" id="grants-filter-role" aria-label="Filter by role">
-          <option value="pi">As Principal Investigator</option>
-          <option value="all">All Grants</option>
-          <option value="member">As Project Member</option>
-        </select>
-        <div class="search-wrap">
-          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
-          <input type="search" id="grants-search" placeholder="Search title, grant name or staff..." aria-label="Search grants">
+    <div class="sub-tabs" role="tablist" aria-label="Grants view">
+      <button class="sub-tab active" role="tab" data-subtab="grants-overview" aria-selected="true">Overview</button>
+      <button class="sub-tab" role="tab" data-subtab="grants-list" aria-selected="false">List</button>
+    </div>
+
+    <!-- Overview sub-page -->
+    <div id="grants-overview" role="tabpanel">
+      <div id="grants-ov-content"><!-- filled by renderGrantsOverview() --></div>
+    </div>
+
+    <!-- List sub-page -->
+    <div id="grants-list" role="tabpanel" hidden>
+      <div class="tbl-card">
+        <div class="toolbar">
+          <select class="filter-select" id="grants-filter-role" aria-label="Filter by role">
+            <option value="pi">As Principal Investigator</option>
+            <option value="all">All Grants</option>
+            <option value="member">As Project Member</option>
+          </select>
+          <div class="search-wrap">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
+            <input type="search" id="grants-search" placeholder="Search title, grant name or staff..." aria-label="Search grants">
+          </div>
+          <select class="filter-select" id="grants-filter-level" aria-label="Filter by level">
+            <option value="">All levels</option>
+            <option value="international">International</option>
+            <option value="national">National</option>
+          </select>
+          <select class="filter-select" id="grants-filter-status" aria-label="Filter by status">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
+          <div class="year-range" aria-label="Year range">
+            <label for="grants-year-from" class="sr-only">From year</label>
+            <select class="filter-select" id="grants-year-from" aria-label="From year"></select>
+            <span class="year-sep" aria-hidden="true">to</span>
+            <label for="grants-year-to" class="sr-only">To year</label>
+            <select class="filter-select" id="grants-year-to" aria-label="To year"></select>
+          </div>
+          <span id="grants-xf-badge" hidden></span>
+          <span class="count-badge" id="grants-count"></span>
         </div>
-        <select class="filter-select" id="grants-filter-level" aria-label="Filter by level">
-          <option value="">All levels</option>
-          <option value="international">International</option>
-          <option value="national">National</option>
-        </select>
-        <select class="filter-select" id="grants-filter-status" aria-label="Filter by status">
-          <option value="">All statuses</option>
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-        </select>
-        <div class="year-range" aria-label="Year range">
-          <label for="grants-year-from" class="sr-only">From year</label>
-          <select class="filter-select" id="grants-year-from" aria-label="From year"></select>
-          <span class="year-sep" aria-hidden="true">to</span>
-          <label for="grants-year-to" class="sr-only">To year</label>
-          <select class="filter-select" id="grants-year-to" aria-label="To year"></select>
+        <div class="tbl-wrap">
+          <table>
+            <thead id="grants-thead">
+              <tr>
+                <th style="width:46px">#</th>
+                <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="level">Level <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="grant_name">Grant / Scheme <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="role">Role <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="year_start">Start <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="year_end">End <span class="sort-icon">↕</span></th>
+                <th class="r sortable" data-sort="cost">Cost (RM) <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="status">Status <span class="sort-icon">↕</span></th>
+                <th class="sortable" data-sort="name">Staff <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="grants-tbody"></tbody>
+          </table>
         </div>
-        <span id="grants-xf-badge" hidden></span>
-        <span class="count-badge" id="grants-count"></span>
+        <div class="pagination" id="grants-pagination"></div>
       </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead id="grants-thead">
-            <tr>
-              <th style="width:46px">#</th>
-              <th class="sortable" data-sort="title">Title <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="level">Level <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="grant_name">Grant / Scheme <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="role">Role <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="year_start">Start <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="year_end">End <span class="sort-icon">↕</span></th>
-              <th class="r sortable" data-sort="cost">Cost (RM) <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="status">Status <span class="sort-icon">↕</span></th>
-              <th class="sortable" data-sort="name">Staff <span class="sort-icon">↕</span></th>
-            </tr>
-          </thead>
-          <tbody id="grants-tbody"></tbody>
-        </table>
-      </div>
-      <div class="pagination" id="grants-pagination"></div>
     </div>
   </div>
 
@@ -2670,6 +2768,155 @@ function getPubsList() {
   return applySort(rows, 'pubs');
 }
 
+// ── PUBLICATIONS OVERVIEW ─────────────────────────────────────────────────
+let _pubsOvCharts = {};
+
+function renderPubsOverview() {
+  const el = document.getElementById('pubs-ov-content');
+  if (!el || !PUBS.length) return;
+
+  const SWE = new Set(['SCOPUS', 'WEB OF SCIENCE', 'ERA']);
+  const indexed = PUBS.filter(p => p.indexed);
+  const swe     = indexed.filter(p => SWE.has(p.index_name));
+  const nonIdx  = PUBS.filter(p => !p.indexed);
+  const totalUq = new Set(PUBS.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
+  const sweUq   = new Set(swe.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
+  const idxUq   = new Set(indexed.map(p => p.title?.trim().toLowerCase()).filter(Boolean));
+
+  // by year (2015+)
+  const byYear = {};
+  for (const p of PUBS) {
+    const y = (p.date||'').slice(0,4);
+    if (!y || y < '2015') continue;
+    if (!byYear[y]) byYear[y] = {swe:0, idx:0, other:0};
+    if (SWE.has(p.index_name)) byYear[y].swe++;
+    else if (p.indexed)        byYear[y].idx++;
+    else                       byYear[y].other++;
+  }
+  const years = Object.keys(byYear).sort();
+
+  // by index database (top 8)
+  const byIdx = {};
+  for (const p of indexed) {
+    const k = p.index_name || 'Other';
+    byIdx[k] = (byIdx[k]||0) + 1;
+  }
+  const idxEntries = Object.entries(byIdx).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  // by type
+  const byType = {};
+  for (const p of PUBS) {
+    const t = (p.type||'Unknown').toUpperCase();
+    byType[t] = (byType[t]||0) + 1;
+  }
+
+  // top authors by pub count
+  const byAuthor = {};
+  for (const p of PUBS) {
+    if (!p.slug) continue;
+    const s = STAFF_BY_SLUG.get(p.slug);
+    const name = s?.name || p.name || p.slug;
+    if (!byAuthor[p.slug]) byAuthor[p.slug] = {name, swe:0, idx:0, total:0};
+    byAuthor[p.slug].total++;
+    if (p.indexed) byAuthor[p.slug].idx++;
+    if (SWE.has(p.index_name)) byAuthor[p.slug].swe++;
+  }
+  const topAuthors = Object.values(byAuthor).sort((a,b)=>b.swe-a.swe||b.idx-a.idx).slice(0,10);
+
+  // insightful commentary
+  const latestYear = years[years.length-1] || '';
+  const prevYear   = years[years.length-2] || '';
+  const growthStr  = (latestYear && prevYear && byYear[prevYear]?.swe > 0)
+    ? (() => {
+        const d = byYear[latestYear].swe - byYear[prevYear].swe;
+        const pct = ((d/byYear[prevYear].swe)*100).toFixed(0);
+        return d >= 0
+          ? `Scopus/WoS/ERA output in ${latestYear} is <b>${byYear[latestYear].swe}</b>, up <b>+${pct}%</b> vs ${prevYear}.`
+          : `Scopus/WoS/ERA output in ${latestYear} is <b>${byYear[latestYear].swe}</b>, down <b>${pct}%</b> vs ${prevYear}.`;
+      })()
+    : '';
+  const topIdx = idxEntries[0];
+
+  el.innerHTML = `
+  <div class="pov-insight">${growthStr ? growthStr + ' ' : ''}<b>${num(sweUq.size)}</b> unique Scopus/WoS/ERA titles all-time across <b>${STAFF.length}</b> academic staff. ${topIdx ? `Most-used index: <b>${esc(topIdx[0])}</b> (${num(topIdx[1])} entries).` : ''}</div>
+
+  <div class="pov-kpis">
+    <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(sweUq.size)}</div><div class="pk-k">Scopus / WoS / ERA</div><div class="pk-s">Unique titles, all-time</div></div>
+    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(idxUq.size)}</div><div class="pk-k">All Indexed</div><div class="pk-s">Incl. MyCite &amp; others</div></div>
+    <div class="pov-kpi" style="--kpi-color:#059669"><div class="pk-v">${num(nonIdx.length)}</div><div class="pk-k">Non-Indexed</div><div class="pk-s">Proceedings, books, etc.</div></div>
+    <div class="pov-kpi" style="--kpi-color:#d97706"><div class="pk-v">${num(totalUq.size)}</div><div class="pk-k">Total Unique</div><div class="pk-s">All types combined</div></div>
+  </div>
+
+  <div class="pov-charts">
+    <div class="pov-chart-card" style="grid-column:span 2">
+      <h4>Publications by Year (2015–present)</h4>
+      <p class="pov-sub">Scopus/WoS/ERA vs other indexed entries per year</p>
+      <div class="pov-chart-wrap"><canvas id="pov-pubs-year"></canvas></div>
+    </div>
+  </div>
+  <div class="pov-charts">
+    <div class="pov-chart-card">
+      <h4>By Index Database</h4>
+      <p class="pov-sub">Indexed entries per database (all time)</p>
+      <div class="pov-chart-wrap"><canvas id="pov-pubs-idx"></canvas></div>
+    </div>
+    <div class="pov-chart-card">
+      <h4>By Publication Type</h4>
+      <p class="pov-sub">Distribution across publication types</p>
+      <div class="pov-chart-wrap"><canvas id="pov-pubs-type"></canvas></div>
+    </div>
+  </div>
+
+  <div class="pov-table-card">
+    <h4>Top 10 Staff by Scopus/WoS/ERA Publications</h4>
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Scopus/WoS/ERA</th><th>All Indexed</th><th>Total</th></tr></thead>
+      <tbody>${topAuthors.map((a,i)=>`<tr><td>${i+1}</td><td>${esc(a.name)}</td><td class="num">${num(a.swe)}</td><td class="num">${num(a.idx)}</td><td class="num">${num(a.total)}</td></tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+
+  // destroy old charts
+  Object.values(_pubsOvCharts).forEach(c => c.destroy());
+  _pubsOvCharts = {};
+
+  const dark = document.documentElement.dataset.theme === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const gridColor = dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.07)';
+  const textColor = dark ? '#94a3b8' : '#64748b';
+
+  // year bar chart
+  _pubsOvCharts.year = new Chart(document.getElementById('pov-pubs-year'), {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: [
+        { label: 'Scopus/WoS/ERA', data: years.map(y=>byYear[y].swe), backgroundColor: '#2563eb', stack: 's' },
+        { label: 'Other Indexed',  data: years.map(y=>byYear[y].idx), backgroundColor: '#93c5fd', stack: 's' },
+        { label: 'Non-Indexed',    data: years.map(y=>byYear[y].other), backgroundColor: '#e2e8f0', stack: 's' },
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},color:textColor}}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}},stacked:true} } }
+  });
+
+  // index bar chart
+  _pubsOvCharts.idx = new Chart(document.getElementById('pov-pubs-idx'), {
+    type: 'bar',
+    data: {
+      labels: idxEntries.map(([k])=>k),
+      datasets: [{ data: idxEntries.map(([,v])=>v), backgroundColor: ['#1d4ed8','#2563eb','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#dbeafe','#eff6ff'], borderRadius: 4 }]
+    },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{display:false},ticks:{color:textColor,font:{size:11}}} } }
+  });
+
+  // type donut
+  const typeKeys = Object.keys(byType).sort((a,b)=>byType[b]-byType[a]);
+  const typePalette = ['#2563eb','#059669','#d97706','#7c3aed','#dc2626','#0891b2'];
+  _pubsOvCharts.type = new Chart(document.getElementById('pov-pubs-type'), {
+    type: 'doughnut',
+    data: { labels: typeKeys.map(k=>k.replace(/ IN /,' in ')), datasets: [{ data: typeKeys.map(k=>byType[k]), backgroundColor: typePalette, borderWidth: 2 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:10,font:{size:11},color:textColor}}, datalabels:{display:false} } }
+  });
+}
+
 function renderPubsTable() {
   const rows  = getPubsList();
   const q     = document.getElementById('pubs-search').value.trim();
@@ -2847,6 +3094,145 @@ function getGrantsList() {
   return applySort(rows, 'grants');
 }
 
+// ── GRANTS OVERVIEW ───────────────────────────────────────────────────────
+let _grantsOvCharts = {};
+
+function renderGrantsOverview() {
+  const el = document.getElementById('grants-ov-content');
+  if (!el || !GRANTS.length) return;
+
+  const active    = GRANTS.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
+  const completed = GRANTS.filter(g => (g.status||'').toUpperCase() !== 'ACTIVE');
+  const isIntl    = g => (g.level||'').toUpperCase().includes('INT');
+  const intlAct   = active.filter(isIntl).length;
+  const natAct    = active.filter(g => !isIntl(g)).length;
+  const totalCost = GRANTS.reduce((s,g) => s + (g.cost ? +g.cost : 0), 0);
+
+  // by start year
+  const byYear = {};
+  for (const g of GRANTS) {
+    const y = String(g.year_start||'');
+    if (!y || y < '2010') continue;
+    if (!byYear[y]) byYear[y] = {active:0, completed:0};
+    if ((g.status||'').toUpperCase() === 'ACTIVE') byYear[y].active++;
+    else byYear[y].completed++;
+  }
+  const years = Object.keys(byYear).sort();
+
+  // by level (4 segments)
+  const seg = {ia:0, ic:0, na:0, nc:0};
+  for (const g of GRANTS) {
+    const intl = isIntl(g);
+    const act  = (g.status||'').toUpperCase() === 'ACTIVE';
+    if (intl && act)  seg.ia++;
+    else if (intl)    seg.ic++;
+    else if (act)     seg.na++;
+    else              seg.nc++;
+  }
+
+  // top grant schemes
+  const byScheme = {};
+  for (const g of GRANTS) {
+    const k = (g.grant_name||'Unknown').trim();
+    byScheme[k] = (byScheme[k]||0) + 1;
+  }
+  const topSchemes = Object.entries(byScheme).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  // top PIs
+  const piMap = {};
+  for (const g of GRANTS) {
+    if (!g.slug || (g.role||'').toUpperCase() !== 'PRINCIPAL INVESTIGATOR') continue;
+    const s = STAFF_BY_SLUG.get(g.slug);
+    const name = s?.name || g.name || g.slug;
+    if (!piMap[g.slug]) piMap[g.slug] = {name, active:0, total:0, cost:0};
+    piMap[g.slug].total++;
+    if ((g.status||'').toUpperCase() === 'ACTIVE') piMap[g.slug].active++;
+    piMap[g.slug].cost += g.cost ? +g.cost : 0;
+  }
+  const topPIs = Object.values(piMap).sort((a,b) => b.active - a.active || b.total - a.total).slice(0, 10);
+
+  const costFmt = totalCost > 0 ? 'RM ' + totalCost.toLocaleString('en-MY', {maximumFractionDigits:0}) : '—';
+
+  el.innerHTML = `
+  <div class="pov-insight"><b>${num(active.length)}</b> active grants (${num(intlAct)} international, ${num(natAct)} national) out of <b>${num(GRANTS.length)}</b> total. Self-reported total acquisition: <b>${esc(costFmt)}</b>.</div>
+
+  <div class="pov-kpis">
+    <div class="pov-kpi" style="--kpi-color:#16a34a"><div class="pk-v">${num(active.length)}</div><div class="pk-k">Active Grants</div><div class="pk-s">Currently running</div></div>
+    <div class="pov-kpi" style="--kpi-color:#6b7280"><div class="pk-v">${num(completed.length)}</div><div class="pk-k">Completed</div><div class="pk-s">Closed projects</div></div>
+    <div class="pov-kpi" style="--kpi-color:#2563eb"><div class="pk-v">${num(intlAct)}</div><div class="pk-k">International Active</div><div class="pk-s">Intl level, active</div></div>
+    <div class="pov-kpi" style="--kpi-color:#0891b2"><div class="pk-v">${num(natAct)}</div><div class="pk-k">National Active</div><div class="pk-s">Natl level, active</div></div>
+    <div class="pov-kpi" style="--kpi-color:#d97706"><div class="pk-v">${esc(costFmt)}</div><div class="pk-k">Total Acquisition</div><div class="pk-s">Self-reported</div></div>
+  </div>
+
+  <div class="pov-charts">
+    <div class="pov-chart-card" style="grid-column:span 2">
+      <h4>Grants by Start Year</h4>
+      <p class="pov-sub">Active vs completed grants awarded each year</p>
+      <div class="pov-chart-wrap"><canvas id="pov-grants-year"></canvas></div>
+    </div>
+  </div>
+  <div class="pov-charts">
+    <div class="pov-chart-card">
+      <h4>By Level and Status</h4>
+      <p class="pov-sub">International vs National, Active vs Completed</p>
+      <div class="pov-chart-wrap"><canvas id="pov-grants-seg"></canvas></div>
+    </div>
+    <div class="pov-chart-card">
+      <h4>Top Grant Schemes</h4>
+      <p class="pov-sub">Most common grant sources (all statuses)</p>
+      <div class="pov-chart-wrap"><canvas id="pov-grants-scheme"></canvas></div>
+    </div>
+  </div>
+
+  <div class="pov-table-card">
+    <h4>Top 10 Principal Investigators (by active grants)</h4>
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Active</th><th>Total (PI)</th><th>Total Cost (RM)</th></tr></thead>
+      <tbody>${topPIs.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.name)}</td><td class="num">${num(p.active)}</td><td class="num">${num(p.total)}</td><td class="num">${p.cost>0?p.cost.toLocaleString('en-MY',{maximumFractionDigits:0}):'—'}</td></tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+
+  Object.values(_grantsOvCharts).forEach(c => c.destroy());
+  _grantsOvCharts = {};
+
+  const dark = document.documentElement.dataset.theme === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const gridColor = dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.07)';
+  const textColor = dark ? '#94a3b8' : '#64748b';
+
+  _grantsOvCharts.year = new Chart(document.getElementById('pov-grants-year'), {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: [
+        { label: 'Active',    data: years.map(y=>byYear[y].active),    backgroundColor: '#16a34a', stack: 's' },
+        { label: 'Completed', data: years.map(y=>byYear[y].completed), backgroundColor: '#93c5fd', stack: 's' },
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},color:textColor}}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}},stacked:true} } }
+  });
+
+  _grantsOvCharts.seg = new Chart(document.getElementById('pov-grants-seg'), {
+    type: 'bar',
+    data: {
+      labels: ['International', 'National'],
+      datasets: [
+        { label: 'Active',    data: [seg.ia, seg.na], backgroundColor: '#16a34a', borderRadius: 4 },
+        { label: 'Completed', data: [seg.ic, seg.nc], backgroundColor: '#93c5fd', borderRadius: 4 },
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},color:textColor}}, datalabels:{display:false} }, scales:{ x:{grid:{display:false},ticks:{color:textColor}}, y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}} } }
+  });
+
+  _grantsOvCharts.scheme = new Chart(document.getElementById('pov-grants-scheme'), {
+    type: 'bar',
+    data: {
+      labels: topSchemes.map(([k])=>k.length>30?k.slice(0,28)+'…':k),
+      datasets: [{ data: topSchemes.map(([,v])=>v), backgroundColor: '#3b82f6', borderRadius: 4 }]
+    },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}} } }
+  });
+}
+
 function renderGrantsTable() {
   const rows  = getGrantsList();
   const q     = document.getElementById('grants-search').value.trim();
@@ -2903,7 +3289,9 @@ function showPage(id) {
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
   if (id === 'overview') setTimeout(drawCharts, 50);
   if (id === 'report')   initReportPage();
-  if (id === 'about') { showAboutStats(); }
+  if (id === 'about')    showAboutStats();
+  if (id === 'pubs')   { renderPubsTable(); setTimeout(renderPubsOverview, 50); }
+  if (id === 'grants') { renderGrantsTable(); setTimeout(renderGrantsOverview, 50); }
   closeSidebar();
 }
 
@@ -2988,6 +3376,26 @@ document.addEventListener('click', e => {
     if (key==='grants') renderGrantsTable();
     pb.closest('.tbl-card')?.scrollIntoView({ block:'start' });
   }
+});
+
+// ── SUB-TAB SWITCHING ──────────────────────────────────────────────────────
+document.querySelectorAll('.sub-tabs').forEach(tabs => {
+  tabs.addEventListener('click', e => {
+    const btn = e.target.closest('[data-subtab]');
+    if (!btn) return;
+    const targetId = btn.dataset.subtab;
+    // update tab buttons
+    tabs.querySelectorAll('.sub-tab').forEach(b => {
+      const active = b.dataset.subtab === targetId;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active);
+    });
+    // show/hide panels within the same page
+    const page = tabs.closest('[id^="page-"]');
+    page.querySelectorAll('[role="tabpanel"]').forEach(p => {
+      p.hidden = p.id !== targetId;
+    });
+  });
 });
 
 // ── FILTER EVENTS ──────────────────────────────────────────────────────────
