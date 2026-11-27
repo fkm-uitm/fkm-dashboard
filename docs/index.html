@@ -1206,11 +1206,11 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 .rpt-toolbar { display:flex; justify-content:space-between; align-items:center; padding:14px 0 18px; gap:10px; flex-wrap:wrap; }
 .rpt-toolbar-label { font-size:13px; color:var(--text2); margin-right:4px; }
 .rpt-report { font-family:system-ui,-apple-system,'Segoe UI',sans-serif; }
-.rpt-strip { background:var(--brand-dark); color:#fff; border-radius:10px 10px 0 0; padding:9px 24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
-.rpt-strip b { font-size:14px; }
-.rpt-strip .rpt-asatpill { background:rgba(255,255,255,.18); border-radius:999px; padding:3px 11px; font-size:12px; }
+.rpt-strip { background:var(--surface); border:1px solid var(--border); border-bottom:none; border-radius:10px 10px 0 0; padding:10px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--text2); }
+.rpt-strip b { font-size:13.5px; font-weight:600; color:var(--text); }
+.rpt-strip .rpt-asatpill { background:var(--brand); color:#fff; border-radius:6px; padding:3px 10px; font-size:11.5px; font-weight:600; letter-spacing:.01em; }
 .rpt-hero { background:var(--brand); color:#fff; padding:28px 32px 0; }
-.rpt-hero .eb { font:600 11px/1 system-ui; letter-spacing:.08em; text-transform:uppercase; color:var(--brand-ink2); margin-bottom:8px; }
+.rpt-hero .eb { font:500 12.5px/1 system-ui; color:var(--brand-ink2); margin-bottom:10px; }
 .rpt-hero h1 { font:700 clamp(24px,3.5vw,38px)/1.1 'Inter',system-ui,sans-serif; letter-spacing:-.4px; margin:0 0 8px; }
 .rpt-hero p { font-size:13.5px; color:#c5d5e8; max-width:80ch; margin:0 0 20px; }
 .rpt-tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); border-top:1px solid rgba(255,255,255,.18); }
@@ -1263,6 +1263,29 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 .rpt-tbl-wrap td.n { text-align:right; font-family:monospace; }
 .rpt-empty { text-align:center; padding:60px 24px; color:var(--text2); font-size:14px; }
 .rpt-no-reports { color:var(--text3); font-size:13px; padding:8px 0; }
+
+/* F-06: primary KPI tile emphasis */
+.rpt-stiles .rpt-stile:first-child { border-left:3px solid var(--brand); background:color-mix(in srgb,var(--brand) 5%,var(--surface)); }
+.rpt-stiles .rpt-stile:first-child .v { font-size:28px; }
+
+/* F-07: section rhythm — break uniform pattern */
+.rpt-sec--accent { background:color-mix(in srgb,var(--brand) 4%,var(--surface2)); border-top:2px solid var(--brand); }
+.rpt-sec--commentary { background:var(--surface2); }
+
+/* F-08: section number anchors */
+.rpt-sh .no { text-decoration:none; cursor:pointer; }
+.rpt-sh a.no:hover { opacity:.7; }
+
+/* F-09: responsive layout */
+@media (max-width: 640px) {
+  .rpt-g2 { grid-template-columns:1fr; }
+  .rpt-g3 { grid-template-columns:repeat(2,1fr); }
+  .rpt-stiles { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .rpt-sec { padding:20px 16px; }
+  .rpt-hero { padding:20px 16px 0; }
+  .rpt-strip { padding:9px 16px; }
+}
+
 /* ── PRINT ────────────────────────────────────────────────────────────────── */
 @media print {
   @page { size: A4; margin: 16mm 14mm; }
@@ -1667,6 +1690,16 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       <h2>About This Dashboard</h2>
       <p>FKM Research Analytics — data sourced from the UiTM Expert Portal</p>
     </div>
+
+    <!-- FKM at a Glance -->
+    <div class="tbl-card" style="max-width:720px;margin-bottom:20px">
+      <div style="padding:22px 28px 24px">
+        <h3 style="color:var(--text);margin:0 0 4px;font-size:16px">FKM at a Glance</h3>
+        <p style="margin:0 0 18px;font-size:13px;color:var(--text2)">Key figures from the UiTM Expert Portal, updated automatically every week.</p>
+        <div id="about-stats"><p style="color:var(--text2);font-size:13px">Loading…</p></div>
+      </div>
+    </div>
+
     <div class="tbl-card" style="max-width:720px">
       <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
         <h3 style="color:var(--text);margin:0 0 12px">Data Source</h3>
@@ -2929,8 +2962,35 @@ function showPage(id) {
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
   if (id === 'overview') setTimeout(drawCharts, 50);
   if (id === 'report')   initReportPage();
-  if (id === 'about') showAboutPrimeStatus();
+  if (id === 'about') { showAboutPrimeStatus(); showAboutStats(); }
   closeSidebar();
+}
+
+function showAboutStats() {
+  const el = document.getElementById('about-stats');
+  if (!el) return;
+  if (!SUMMARY.staff_count) {
+    el.innerHTML = '<p style="color:var(--text2);font-size:13px">Data not yet loaded.</p>';
+    return;
+  }
+  const kpis = [
+    { v: num(SUMMARY.staff_count),              k: 'Academic Staff',           s: 'UiTM Expert records' },
+    { v: num(SUMMARY.pubs_scopus_wos_era_total),k: 'Scopus / WoS / ERA',      s: 'All-time unique publications (PRIME)' },
+    { v: num(SUMMARY.grants_active),            k: 'Active Grants',            s: `of ${num(SUMMARY.grants_total)} total` },
+    { v: SUMMARY.h_scopus_avg ?? '—',           k: 'Mean Scopus h-index',      s: 'Staff with Scopus profiles' },
+    { v: num(SUMMARY.phd_total),                k: 'PhD Students',             s: 'Graduated and ongoing' },
+    { v: num(SUMMARY.master_total),             k: "Master's Students",        s: 'Graduated and ongoing' },
+    { v: num(SUMMARY.consultancy_total),        k: 'Consultancy Projects',     s: 'Completed projects' },
+  ];
+  el.innerHTML =
+    `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px">` +
+    kpis.map(k => `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font:700 24px/1 'Inter',system-ui,sans-serif;color:var(--brand);font-variant-numeric:tabular-nums">${esc(String(k.v))}</div>
+      <div style="font-size:12px;font-weight:600;color:var(--text);margin-top:5px;line-height:1.3">${esc(k.k)}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:3px">${esc(k.s)}</div>
+    </div>`).join('') +
+    `</div>` +
+    `<p style="margin:12px 0 0;font-size:12px;color:var(--text3)">Last updated ${esc(SUMMARY.generated || 'unknown')}. Source: UiTM Expert Portal.</p>`;
 }
 
 function showAboutPrimeStatus() {
@@ -3333,8 +3393,8 @@ function renderReport(d) {
   <div class="rpt-sections">
 
     <!-- §1 Research Output -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">1</span><div><h2>Research Output</h2><p>Publication counts by index database and year.</p></div></div>
+    <div class="rpt-sec" id="rpt-sec-1">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-1">1</a><div><h2>Research Output</h2><p>Publication counts by index database and year.</p></div></div>
       <p class="rpt-lede">Indexed publications are unique titles deduped across co-authors. The primary PRIME-aligned metric counts only Scopus, Web of Science and ERA.</p>
       <div class="rpt-stiles">
         <div class="rpt-stile"><div class="v">${rptNum(s.pubs_indexed_swe)}</div><div class="k">Scopus / WoS / ERA</div><div class="s">All years, unique titles</div></div>
@@ -3365,8 +3425,8 @@ function renderReport(d) {
     </div>
 
     <!-- §2 Annual Performance -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">2</span><div><h2>Annual Performance</h2><p>Year-to-date analysis, Jan–${periodMo} ${curYr}.</p></div></div>
+    <div class="rpt-sec" id="rpt-sec-2">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-2">2</a><div><h2>Annual Performance</h2><p>Year-to-date analysis, Jan–${periodMo} ${curYr}.</p></div></div>
       <p class="rpt-lede">Counts unique Scopus/WoS/ERA publications recorded January through ${periodMo} of each year. The same-period view shows how ${curYr} compares to prior years at exactly this point in the calendar.</p>
       <div class="rpt-stiles">
         <div class="rpt-stile"><div class="v">${rptNum(ytdCur)}</div><div class="k">${curYr} YTD — SWE</div><div class="s">Jan–${periodMo}, unique titles</div></div>
@@ -3389,8 +3449,8 @@ function renderReport(d) {
     </div>
 
     <!-- §3 Grants -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">3</span><div><h2>Research Grants</h2><p>All grants in UiTM Expert, regardless of period.</p></div></div>
+    <div class="rpt-sec" id="rpt-sec-3">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-3">3</a><div><h2>Research Grants</h2><p>All grants in UiTM Expert, regardless of period.</p></div></div>
       <div class="rpt-stiles">
         <div class="rpt-stile"><div class="v">${rptNum(s.grants_active)}</div><div class="k">Active Grants</div><div class="s">Currently running</div></div>
         <div class="rpt-stile"><div class="v">${rptNum(intl.active||0)}</div><div class="k">International Active</div><div class="s">${rptNum(intl.completed||0)} completed</div></div>
@@ -3407,8 +3467,8 @@ function renderReport(d) {
     </div>
 
     <!-- §4 By Department -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">4</span><div><h2>By Department</h2><p>Breakdown of publication and grant counts by academic department.</p></div></div>
+    <div class="rpt-sec" id="rpt-sec-4">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-4">4</a><div><h2>By Department</h2><p>Breakdown of publication and grant counts by academic department.</p></div></div>
       <div class="rpt-tbl-wrap">
         <table>
           <thead><tr><th>Department</th><th class="n">Staff</th><th class="n">Scopus/WoS/ERA</th><th class="n">All indexed</th><th class="n">Active grants</th></tr></thead>
@@ -3418,8 +3478,8 @@ function renderReport(d) {
     </div>
 
     <!-- §5 Top Contributors -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">5</span><div><h2>Top Contributors</h2><p>Top 10 staff by cumulative Scopus/WoS/ERA publications.</p></div></div>
+    <div class="rpt-sec" id="rpt-sec-5">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-5">5</a><div><h2>Top Contributors</h2><p>Top 10 staff by cumulative Scopus/WoS/ERA publications.</p></div></div>
       <div class="rpt-g2">
         <div class="rpt-card">
           <h4>Publications (Scopus/WoS/ERA)</h4>
@@ -3439,14 +3499,14 @@ function renderReport(d) {
     </div>
 
     <!-- §6 Key Findings -->
-    <div class="rpt-sec">
-      <div class="rpt-sh"><span class="no">6</span><div><h2>Key Findings</h2><p>Auto-generated summary from the figures in this report.</p></div></div>
+    <div class="rpt-sec rpt-sec--accent" id="rpt-sec-6">
+      <div class="rpt-sh"><a class="no" href="#rpt-sec-6">6</a><div><h2>Key Findings</h2><p>Auto-generated summary from the figures in this report.</p></div></div>
       <ul class="rpt-findings">${findingsHtml}</ul>
     </div>
 
     <!-- §7 Commentary -->
-    <div class="rpt-sec rpt-comments-area" id="rpt-comments-sec">
-      <div class="rpt-sh"><span class="no">7</span><div><h2>Commentary</h2><p>Notes and observations from the research office.</p></div></div>
+    <div class="rpt-sec rpt-sec--commentary rpt-comments-area" id="rpt-comments-sec">
+      <div class="rpt-sh"><a class="no" href="#rpt-comments-sec">7</a><div><h2>Commentary</h2><p>Notes and observations from the research office.</p></div></div>
       <div id="rpt-comments-list" class="rpt-comments-list" style="display:grid;gap:12px;margin-bottom:16px"></div>
       <div class="rpt-comment-form">
         <label for="rpt-comment-text" class="sr-only">Comment</label>
