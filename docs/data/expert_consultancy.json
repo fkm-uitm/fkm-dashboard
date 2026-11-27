@@ -2730,48 +2730,6 @@
     "status": "COMPLETED"
   },
   {
-    "slug": "azman028",
-    "staff_name": "MOHD AZMAN BIN YAHAYA",
-    "category": "completed",
-    "file_no": "20241016001",
-    "title": "DISASTER MANAGEMENT COURSE",
-    "client": "FWF INTERNATIONAL SDN BHD",
-    "type": "TRAINING",
-    "role": "HEAD",
-    "cost_rm": 6372,
-    "year_start": 2024,
-    "year_end": 2024,
-    "status": "COMPLETED"
-  },
-  {
-    "slug": "azman028",
-    "staff_name": "MOHD AZMAN BIN YAHAYA",
-    "category": "completed",
-    "file_no": "20151221016",
-    "title": "FINITE ELEMENT SIMULATION OF AXIAL CRUSHING OF CYLINDRICAL TUBE",
-    "client": "UNIVERSITI PERTAHANAN NASIONAL MALAYSIA",
-    "type": "PROFESSIONAL SERVICES",
-    "role": "HEAD",
-    "cost_rm": 4000,
-    "year_start": 2015,
-    "year_end": 2015,
-    "status": "COMPLETED"
-  },
-  {
-    "slug": "azman028",
-    "staff_name": "MOHD AZMAN BIN YAHAYA",
-    "category": "completed",
-    "file_no": "20150303005",
-    "title": "HIGH STRAIN RATE SIMULATION CONSULTANCY",
-    "client": "UNIVERSITY PERTAHANAN NASIONAL MALAYSIA",
-    "type": "PROFESSIONAL SERVICES",
-    "role": "HEAD",
-    "cost_rm": 10000,
-    "year_start": 2015,
-    "year_end": 2015,
-    "status": "COMPLETED"
-  },
-  {
     "slug": "mayunus",
     "staff_name": "MOHD AZMI BIN YUNUS",
     "category": "completed",

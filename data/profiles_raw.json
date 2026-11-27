@@ -36556,7 +36556,7 @@
         "file_no": "100-TNCPI/PRI 16/6/2 (098/2024)",
         "title": "ANALYSIS OF JV AUTO LUBE TRANSMISSION & LUBRICATION PRODUCT CHARACTERISTIC & ADVISING ON GRANT APPLICATION FOR ATF TREATMENT DEVELOPMENT AND TRANSMISSION RIF FOR EDUCATION",
         "year_start": 2025,
-        "year_end": 2026,
+        "year_end": 2027,
         "grant_name": "OTHER GRANTS",
         "grant_code": "OTHER GRANTS",
         "role": "Principal Investigator",
@@ -39048,569 +39048,6 @@
     }
   },
   {
-    "slug": "azman028",
-    "name": "MOHD AZMAN BIN YAHAYA",
-    "email": "azman028@uitm.edu.my",
-    "position": "PROFESOR MADYA",
-    "department": "FAKULTI KEJURUTERAAN MEKANIKAL",
-    "service_date": "10-January-2005",
-    "h_scopus": 3,
-    "h_wos": 4,
-    "h_gs": 5,
-    "scopus_id": null,
-    "scholar_id": "https://scholar.google.com/citations?user=cGMV-_UAAAAJ&hl=en&oi=sra",
-    "orcid": null,
-    "photo_url": "https://expert.uitm.edu.my/assets/images/profile_default.png",
-    "grants_intl_completed": 0,
-    "grants_intl_active": 0,
-    "grants_natl_completed": 9,
-    "grants_natl_active": 1,
-    "pubs_indexed": 17,
-    "pubs_other": 15,
-    "phd_graduated": 3,
-    "phd_ongoing": 0,
-    "master_graduated": 3,
-    "master_ongoing": 0,
-    "consultancy_appointed": 0,
-    "consultancy_completed": 3,
-    "grants": [
-      {
-        "file_no": "600-RMC/CE-SIR 5/3 (006/2023)",
-        "title": "KEDAI BUKU DIGITAL AKADEMIA (KEBDA)",
-        "year_start": 2023,
-        "year_end": 2024,
-        "grant_name": "COMMUNITY ENGAGEMENT-SOCIAL INNOVATION RESEARCH GRANT",
-        "grant_code": "CE-SIR",
-        "role": "Project Member",
-        "cost": "20000.00",
-        "status": "Completed",
-        "level": "University"
-      },
-      {
-        "file_no": "600-IRMI/FRGS 5/3 (161/2019)",
-        "title": "NEW INTERLAMINAR AND INTRALAMINAR DELAMINATION MODEL OF CARBON FIBER REINFORCED PLASTICS WITH TOUGHENED INTERLAYERS SUBJECTED TO IMPACT LOADING",
-        "year_start": 2019,
-        "year_end": 2021,
-        "grant_name": "FUNDAMENTAL RESEARCH GRANT SCHEME",
-        "grant_code": "FRGS",
-        "role": "Project Member",
-        "cost": "97500.00",
-        "status": "Completed",
-        "level": "National"
-      },
-      {
-        "file_no": "600-IRMI/FRGS 5/3 (102/2017)",
-        "title": "DYNAMIC STRESS PREDICTION MODEL OF SKIN (BOVINE) AND SYNTHETIC SKIN (SILICONE) UNDER LOW IMPACT LOADING",
-        "year_start": 2017,
-        "year_end": 2020,
-        "grant_name": "FUNDAMENTAL RESEARCH GRANT SCHEME",
-        "grant_code": "FRGS",
-        "role": "Principal Investigator",
-        "cost": "106000.00",
-        "status": "Completed (Conditional)",
-        "level": "National"
-      },
-      {
-        "file_no": "600-IRMI/MyRA 5/3/BESTARI (012/2017)",
-        "title": "CHARACTERIZATION OF MULTIWALLED CARBON NANO-TUBE (MWCNT) CAPACITANCE BEHAVIOR ON INTER-DIGITAL ELECTRODE (IDE) SEMICONDUCTOR PLATFORM FOR HUMIDITY SENSOR",
-        "year_start": 2017,
-        "year_end": 2020,
-        "grant_name": "BESTARI",
-        "grant_code": "BESTARI",
-        "role": "Project Member",
-        "cost": "35000.00",
-        "status": "Completed",
-        "level": "University"
-      },
-      {
-        "file_no": "100-IRMI/PRI 16/6/2 (016/2017)",
-        "title": "FORMULATION AND SYSTEM SOLUTION FOR ROASTED PEANUT",
-        "year_start": 2017,
-        "year_end": 2017,
-        "grant_name": "OTHER GRANTS",
-        "grant_code": "OTHER GRANTS",
-        "role": "Project Member",
-        "cost": "24500.00",
-        "status": "Completed (Conditional)",
-        "level": "Private"
-      },
-      {
-        "file_no": "600-IRMI/DANA 5/3/BESTARI (0004/2016)",
-        "title": "FUNDAMENTAL STUDY OF COMPOSITE HIP IMPLANT TO IMPROVE FATIGUE LIFE AND IMPACT RESISTANCE",
-        "year_start": 2016,
-        "year_end": 2018,
-        "grant_name": "BESTARI",
-        "grant_code": "BESTARI",
-        "role": "Project Member",
-        "cost": "35000.00",
-        "status": "Completed",
-        "level": "University"
-      },
-      {
-        "file_no": "600-RMI/DANA 5/3/LESTARI (43/2015)",
-        "title": "FINITE ELEMENT MODELING OF UNCEMENTED HIP STEM PRIMARY FIXATION: THE EFFECT OF BONE VISCO-ELASTIC PROPERTIES TO THE INTERFERENCE FIT",
-        "year_start": 2015,
-        "year_end": 2017,
-        "grant_name": "LESTARI",
-        "grant_code": "LESTARI",
-        "role": "Principal Investigator",
-        "cost": "20000.00",
-        "status": "Completed (Conditional)",
-        "level": "University"
-      },
-      {
-        "file_no": "600-RMI/DANA 5/3/LESTARI (68/2015)",
-        "title": "DEVELOPMENT OF HIGHLY INTER-CONNECTED OF POROUS TITANIUM IMPLANT MIX WITH PALM STEARIN BINDER BY METAL INJECTION MOLDING TECHNIQUE",
-        "year_start": 2015,
-        "year_end": 2017,
-        "grant_name": "LESTARI",
-        "grant_code": "LESTARI",
-        "role": "Project Member",
-        "cost": "20000.00",
-        "status": "Completed",
-        "level": "University"
-      },
-      {
-        "file_no": "600- IRDC/ ST/5/3/1359",
-        "title": "A Comparison Study Between Theoretical, Finite Element And Testing Of Auxetic Composite Plate Using Unidirectional Carbon Fibre Ufc385/polyester Resin",
-        "year_start": 2007,
-        "year_end": 2007,
-        "grant_name": "SELF-FUNDED",
-        "grant_code": "SELF FUNDED",
-        "role": "Principal Investigator",
-        "cost": "0.00",
-        "status": "Completed",
-        "level": "Self-Funded"
-      },
-      {
-        "file_no": "100-TNCPI/PRI 16/6/2 (024/2024)",
-        "title": "KAJIAN KEBERKESANAN PROGRAM DAN INISIATIF PERALIHAN TENAGA DAN KELESTARIAN ALAM TNB-UITM-2024",
-        "year_start": 2024,
-        "year_end": 2025,
-        "grant_name": "OTHER GRANTS",
-        "grant_code": "OTHER GRANTS",
-        "role": "Project Member",
-        "cost": "50000.00",
-        "status": "Active",
-        "level": "Private"
-      }
-    ],
-    "publications": [
-      {
-        "pub_id": 1492490,
-        "ref": "PB/2024/006311",
-        "title": "University Students’ Stages of Engagement and Levels of Impact in Adopting Environmentally Sustainable Practices",
-        "date": "2024-07-08",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://online.library.uitm.edu.my/era/default?keyword=International%2bJournal%2bof%2bAcademic%2bResearch%2bin%2bProgressive%2bEducation%2band%2bDevelopment&filterby=rbTitle&year=2023"
-      },
-      {
-        "pub_id": 1491695,
-        "ref": "PB/2024/005517",
-        "title": "Minds and Megawatts: University Students' Engagement with Energy Efficiency and Sustainability Practices",
-        "date": "2024-06-09",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "http://dx.doi.org/10.6007/IJARBSS/v14-i6/21739"
-      },
-      {
-        "pub_id": 1449453,
-        "ref": "PB/2022/140089",
-        "title": "Tensile properties of silicone biocomposite reinforced with waste material (Hevea brasiliensis sawdust): Experimental and numerical approach",
-        "date": "2022-06-14",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.webofscience.com/wos/woscc/full-record/WOS:000850346900044"
-      },
-      {
-        "pub_id": 1140101,
-        "ref": "PB/2019/102322",
-        "title": "Misalignment effect of Split Hopkinson Pressure Bar (SHPB)",
-        "date": "2019-12-31",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85077848451&origin=resultslist&sort=plf-f&src=s&sid=20354c048ad2b48f2130e0d9564b38f9&sot=autdocs&sdt=autdocs&sl=18&s=AU-ID%2857200674664%29&relpos=10&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1127728,
-        "ref": "PB/2018/089949",
-        "title": "Quantifying and Comparing the Hyperelastic Properties of Skin, Leather and Silicone",
-        "date": "2018-11-30",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85056728825&origin=resultslist&sort=plf-f&src=s&st1=Quantifying+and+Comparing+the+Hyperelastic+Properties+of+Skin%2c+Leather+and+Silicone&st2=&sid=6199848a0a2b06b3f0f2e6d6416d950e&sot=b&sdt=b&sl=98&s=TITLE-ABS-KEY%28Quantifying+and+Comparing+the+Hyperelastic+Properties+of+Skin%2c+Leather+and+Silicone%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1129345,
-        "ref": "PB/2018/091566",
-        "title": "Dynamic stress analysis of skin (Bovine) and synthetic skin (Silicone) under low impact loading: A review and framework",
-        "date": "2018-11-30",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85056721757&origin=resultslist&sort=plf-f&src=s&st1=Mahmud&st2=J&nlo=1&nlr=20&nls=count-f&sid=e60b4c0620bc1c7b5db8c9bcbe9254d9&sot=anl&sdt=cl&cluster=scopubyr%2c%222018%22%2ct&sl=39&s=AU-ID%28%22Mahmud%2c+Jamaluddin%22+57200674664%29&relpos=12&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1129352,
-        "ref": "PB/2018/091573",
-        "title": "Quantifying tensile properties of bamboo silicone biocomposite using Yeoh Model",
-        "date": "2018-11-30",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85056693882&origin=resultslist&sort=plf-f&src=s&st1=Mahmud&st2=J&nlo=1&nlr=20&nls=count-f&sid=e60b4c0620bc1c7b5db8c9bcbe9254d9&sot=anl&sdt=cl&cluster=scopubyr%2c%222018%22%2ct&sl=39&s=AU-ID%28%22Mahmud%2c+Jamaluddin%22+57200674664%29&relpos=5&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1127726,
-        "ref": "PB/2018/089947",
-        "title": "Characterisation of Skin Biomechanical Properties via Experiment-Numerical Integration",
-        "date": "2018-11-30",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85056692307&origin=resultslist&sort=plf-f&src=s&st1=Characterisation+of+Skin+Biomechanical+Properties+via+Experiment-Numerical+Integration&st2=&sid=6199848a0a2b06b3f0f2e6d6416d950e&sot=b&sdt=b&sl=101&s=TITLE-ABS-KEY%28Characterisation+of+Skin+Biomechanical+Properties+via+Experiment-Numerical+Integration%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1127130,
-        "ref": "PB/2018/089351",
-        "title": "Finite Element Analysis of Uncemented Total Hip Replacement: the Effect of Bone-Implant Interface",
-        "date": "2018-11-16",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": ""
-      },
-      {
-        "pub_id": 1127727,
-        "ref": "PB/2018/089948",
-        "title": "Factors Influencing Graduate Unemployment: English Proficiency",
-        "date": "2018-09-20",
-        "type": "PROCEEDING",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85055445103&origin=resultslist&sort=plf-f&src=s&st1=remeli&st2=&sid=50813372218500abd8b4797b050cec52&sot=b&sdt=b&sl=19&s=AUTHOR-NAME%28remeli%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1127725,
-        "ref": "PB/2018/089946",
-        "title": "Optimizing Sintering Process to Produce Highest Density of Porous Ti-6Al-4V",
-        "date": "2018-05-15",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85052596240&origin=resultslist&sort=plf-f&src=s&st1=Optimizing+Sintering+Process+to+Produce+Highest+Density+of+Porous&st2=&sid=3c067afd27410442651af4eabf95f6f1&sot=b&sdt=b&sl=80&s=TITLE-ABS-KEY%28Optimizing+Sintering+Process+to+Produce+Highest+Density+of+Porous%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1439212,
-        "ref": "PB/2017/078494",
-        "title": "Modelling Kerf Width in WEDM Titanium Alloy Using Response Surface Methodology",
-        "date": "2017-06-01",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-85027048552&origin=resultslist&sort=plf-f&src=s&st1=Modelling+Kerf+Width+in+WEDM+Titanium+Alloy+Using+Response+Surface+Methodology&st2=&sid=38a1d74d44d840e846d13845cc81fb83&sot=b&sdt=b&sl=93&s=TITLE-ABS-KEY%28Modelling+Kerf+Width+in+WEDM+Titanium+Alloy+Using+Response+Surface+Methodology%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1439218,
-        "ref": "PB/2016/078500",
-        "title": "Characteristics of Machining Parameters on WEDM Titanium Alloy",
-        "date": "2016-12-01",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-84988666415&origin=resultslist&sort=plf-f&src=s&st1=Characteristics+of+Machining+Parameters+on+WEDM+Titanium+Alloy&st2=&sid=c933b3d5ec474845013782ff8129d271&sot=b&sdt=b&sl=77&s=TITLE-ABS-KEY%28Characteristics+of+Machining+Parameters+on+WEDM+Titanium+Alloy%29&relpos=15&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1422657,
-        "ref": "PB/2015/061939",
-        "title": "EFFECT OF RELATIVE DENSITY AND VELOCITY TOWARDS DYNAMIC RESPONSE OF METAL FOAM",
-        "date": "2015-05-31",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-84943274707&origin=resultslist&sort=plf-f&src=s&st1=EFFECT+OF+RELATIVE+DENSITY+AND+VELOCITY+TOWARDS+DYNAMIC+RESPONSE+OF+METAL+FOAM&st2=&sid=C63A26BCE70E1125FB83F19B4062E33E.wsnAw8kcdt7IPYLO0V48gA%3a10&sot=b&sdt=b&sl=93&s=TITLE-ABS-KEY%28EFFECT+OF+RELATIVE+DENSITY+AND+VELOCITY+TOWARDS+DYNAMIC+RESPONSE+OF+METAL+FOAM%29&relpos=0&citeCnt=0&searchTerm="
-      },
-      {
-        "pub_id": 1434003,
-        "ref": "PB/2015/073285",
-        "title": "MULTI-OBJECTIVE OPTIMIZATION IN WIRE-ELECTRICAL DISCHARGE MACHINING (WEDM) OF TITANIUM ALLOY",
-        "date": "2015-05-31",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "https://www.scopus.com/record/display.uri?eid=2-s2.0-84943327579&origin=resultslist&sort=plf-f&src=s&st1=SAEDON&nlo=&nlr=&nls=&sid=AABEC490A67939467686FE64DEC10C91.wsnAw8kcdt7IPYLO0V48gA%3a340&sot=b&sdt=sisr&sl=19&s=AUTHOR-NAME%28SAEDON%29&ref=%28SAEDON%29&relpos=9&citeCnt=2&searchTerm="
-      },
-      {
-        "pub_id": 1422650,
-        "ref": "PB/2015/061932",
-        "title": "Response of aluminium honeycomb sandwich panels subjected to foam projectile impact - An experimental study",
-        "date": "2015-01-25",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "http://www.scopus.com/record/display.uri?eid=2-s2.0-84906875670&origin=resultslist&sort=plf-f&src=s&st1=Response+of+aluminium+honeycomb+sandwich+panels+subjected+to+foam+projectile+impact+-+An+experimental+study&st2=&sid=E9FE6D5674987FB6BAA4D1A6502818EF.WlW7NKKC52nnQNxjqAQrlA%3a20&sot=b&sdt=b&sl=122&s=TITLE-ABS-KEY%28Response+of+aluminium+honeycomb+sandwich+panels+subjected+to+foam+projectile+impact+-+An+experimental+study%29&relpos=0&citeCnt=5&searchTerm=TITLE-ABS-KEY%28Response+of+aluminium+honeycomb+sandwich+panels+subjected+to+foam+projectile+impact+-+An+experimental+study%29"
-      },
-      {
-        "pub_id": 1416416,
-        "ref": "PB/2014/055698",
-        "title": "Influence of Depth of Cut on Contact Phenomenon in Micromachining",
-        "date": "2014-11-19",
-        "type": "JOURNAL",
-        "group": "INDEXED PUBLICATION",
-        "url": "http://www.scientific.net/AMM.660.8"
-      },
-      {
-        "pub_id": 1539882,
-        "ref": "PB/2026/007103",
-        "title": "MODEL PEMERKASAAN MAHASISWA UNIVERSITI TEKNOLOGI MARA",
-        "date": "2025-12-01",
-        "type": "BOOK",
-        "group": "OTHER PUBLICATIONS",
-        "url": null
-      },
-      {
-        "pub_id": 1465041,
-        "ref": "PB/2022/155565",
-        "title": "Pengurusan Covid-19 Pengalaman HEP UiTM Mendepani Krisis",
-        "date": "2022-12-13",
-        "type": "BOOK",
-        "group": "OTHER PUBLICATIONS",
-        "url": null
-      },
-      {
-        "pub_id": 1455690,
-        "ref": "PB/2022/146303",
-        "title": "Kesatria I",
-        "date": "2022-10-21",
-        "type": "BOOK",
-        "group": "OTHER PUBLICATIONS",
-        "url": null
-      },
-      {
-        "pub_id": 1170988,
-        "ref": "PB/2021/133209",
-        "title": "Covid-19 Kita Jaga Kita: Pengurusan Kebajikan & Keselamatan Pelajar",
-        "date": "2021-11-16",
-        "type": "BOOK",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1144667,
-        "ref": "PB/2019/106888",
-        "title": "Real-Time Visualization Of Machine Performance",
-        "date": "2019-09-14",
-        "type": "EXHIBITION",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1130756,
-        "ref": "PB/2018/092977",
-        "title": "BaSiC: Bamboo Silicone Biocomposite",
-        "date": "2018-09-24",
-        "type": "EXHIBITION",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1416518,
-        "ref": "PB/2014/055800",
-        "title": "Multi-objective Optimization of Titanium Alloy through Orthogonal Array and Grey Relational Analysis in WEDM",
-        "date": "2014-12-30",
-        "type": "JOURNAL",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1417657,
-        "ref": "PB/2014/056939",
-        "title": "Selection of Densification Strain to Predict Dynamic Crushing Stress at High Impact Velocity of ALPORAS Aluminium Foam",
-        "date": "2014-09-01",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1417660,
-        "ref": "PB/2014/056942",
-        "title": "Selection of Densification Strain to Predict Dynamic Crushing Stress at High Impact Velocity of ALPORAS Aluminium Foam",
-        "date": "2014-08-01",
-        "type": "JOURNAL",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1439219,
-        "ref": "PB/2014/078501",
-        "title": "Investigation of Cutting Edge Radius Effect in Macro-machining and Micro-machining",
-        "date": "2014-06-05",
-        "type": "JOURNAL",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1396199,
-        "ref": "PB/2011/035481",
-        "title": "University-Industry Collaborations To Improve Stucents� Soft-Skills",
-        "date": "2011-12-25",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1314579,
-        "ref": "PB/2008/007124",
-        "title": "Improvement of Students' Soft-Skills Through University-Industry Collaborations",
-        "date": "2008-11-21",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1316057,
-        "ref": "PB/2007/008602",
-        "title": "University - Industry International Linkage at Faculty of Mechanical Engineering UiTM Shah Alam -Method, Implementation and Experiences",
-        "date": "2007-12-03",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1314539,
-        "ref": "PB/2007/007084",
-        "title": "Soft-Skills Development Through University-Industry Collaborations",
-        "date": "2007-12-03",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      },
-      {
-        "pub_id": 1316055,
-        "ref": "PB/2007/008600",
-        "title": "DEVELOPMENT OF AN INTELLIGENT AND LOW-COST OPTICAL CALIBRATION SYSTEM FOR ROBOT MANIPULATOR",
-        "date": "2007-10-25",
-        "type": "PROCEEDING",
-        "group": "OTHER PUBLICATIONS",
-        "url": ""
-      }
-    ],
-    "supervision": {
-      "phd_graduated": [
-        {
-          "matric": "2015571113",
-          "name": "NURUL EMI NOR AIN BINTI MOHAMMAD",
-          "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
-          "level": "PHD",
-          "title": "DAMAGE TOLERANCE OF NANOSILICA FILLED BASALT FRP-AL FOAM SANDWICH PANEL",
-          "intake": "SESI 2 2015/2016",
-          "intake_sem": "20162",
-          "role": "MAIN",
-          "main_supervisor": "PROFESOR DR AIDAH BINTI JUMAHAT",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2021/2022"
-        },
-        {
-          "matric": "2015752509",
-          "name": "UMMU RAIHANAH BINTI HAJI HASHIM",
-          "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
-          "level": "PHD",
-          "title": "MECHANICAL PROPERTIES OF HYBRID GRAPHENE NANOPLATELET- NANOSILICA FILLED BASALT FIBRE REINFORCED POLYMER COMPOSITES",
-          "intake": "SESI 2 2015/2016",
-          "intake_sem": "20162",
-          "role": "MAIN",
-          "main_supervisor": "PROFESOR DR AIDAH BINTI JUMAHAT",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2019/2020"
-        },
-        {
-          "matric": "2016877184",
-          "name": "NUR FAIQA BINTI ISMAIL",
-          "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
-          "level": "PHD",
-          "title": "DEVELOPMENT OF EPOXYCOATED BAMBOO COMPOSITE POLYMER REINFORCED\r\nPROSTHESIS FOR UNCEMENTED HIP REPLACEMENT (THR)",
-          "intake": "SESI 1 2016/2017",
-          "intake_sem": "20164",
-          "role": "MAIN",
-          "main_supervisor": "P.MADYA IR.TS.DR SOLEHUDDIN BIN SHUIB",
-          "status": "APC",
-          "graduated_sem": "Sesi 1 2019/2020"
-        }
-      ],
-      "phd_ongoing": [],
-      "master_graduated": [
-        {
-          "matric": "2019958987",
-          "name": "NOORAINOL FAIZ BIN NOOR HARIS",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "EXPERIMENTAL AND NUMERICAL STUDY OF HEVEA BRASILIENSIS – SILICONE BIOCOMPOSITE",
-          "intake": "SESI 2 2018/2019",
-          "intake_sem": "20192",
-          "role": "MAIN",
-          "main_supervisor": "PROF MADYA DR MOHD AZMAN BIN YAHAYA",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2020/2021"
-        },
-        {
-          "matric": "2013264938",
-          "name": "NORKAMAL BIN JAAFAR",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "CUTTING QUALITY INVESTIGATION OF Ti-6Al-4V USING WIRE ELECTRIC DISCHARGE MACHINE",
-          "intake": "Semester 1 2013/2014",
-          "intake_sem": "20134",
-          "role": "MAIN",
-          "main_supervisor": "DR. JURI BIN SAEDON",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2018/2019"
-        },
-        {
-          "matric": "2013823106",
-          "name": "NOOR ANIZA BINTI NORRDIN",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "THREE DIMENSIONAL CUTTING FORCE AND TOOL DEFLECTION IN MICRO-END MILLING AISI D2",
-          "intake": "Semester 1 2013/2014",
-          "intake_sem": "20134",
-          "role": "MAIN",
-          "main_supervisor": "JURI BIN SAEDON (DR)",
-          "status": "TM",
-          "graduated_sem": "Sesi 1 2016/2017"
-        }
-      ],
-      "master_ongoing": []
-    },
-    "consultancy": {
-      "appointed": [],
-      "completed": [
-        {
-          "file_no": "20241016001",
-          "title": "DISASTER MANAGEMENT COURSE",
-          "client": "FWF INTERNATIONAL SDN BHD",
-          "type": "TRAINING",
-          "role": "HEAD",
-          "cost_rm": 6372,
-          "year_start": 2024,
-          "year_end": 2024,
-          "status": "COMPLETED"
-        },
-        {
-          "file_no": "20151221016",
-          "title": "FINITE ELEMENT SIMULATION OF AXIAL CRUSHING OF CYLINDRICAL TUBE",
-          "client": "UNIVERSITI PERTAHANAN NASIONAL MALAYSIA",
-          "type": "PROFESSIONAL SERVICES",
-          "role": "HEAD",
-          "cost_rm": 4000,
-          "year_start": 2015,
-          "year_end": 2015,
-          "status": "COMPLETED"
-        },
-        {
-          "file_no": "20150303005",
-          "title": "HIGH STRAIN RATE SIMULATION CONSULTANCY",
-          "client": "UNIVERSITY PERTAHANAN NASIONAL MALAYSIA",
-          "type": "PROFESSIONAL SERVICES",
-          "role": "HEAD",
-          "cost_rm": 10000,
-          "year_start": 2015,
-          "year_end": 2015,
-          "status": "COMPLETED"
-        }
-      ]
-    }
-  },
-  {
     "slug": "mayunus",
     "name": "MOHD AZMI BIN YUNUS",
     "email": "mayunus@uitm.edu.my",
@@ -41004,19 +40441,6 @@
           "graduated_sem": "Sesi 1 2018/2019"
         },
         {
-          "matric": "2014605354",
-          "name": "NOR AZELA BINTI TORMODI",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "CHARACTERIZATION AND MODEL UPDATING OF MODAL PARAMETERS OF A RIVETED JOINTS STRUCTURE",
-          "intake": "SESI 1 2014/2015",
-          "intake_sem": "20144",
-          "role": "MAIN",
-          "main_supervisor": "MOHD AZMI BIN YUNUS (IR)(DR.)",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2017/2018"
-        },
-        {
           "matric": "2013729015",
           "name": "NOR IRWAN BIN ABD HALIM",
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
@@ -41056,17 +40480,17 @@
           "graduated_sem": "Sesi 1 2017/2018"
         },
         {
-          "matric": "2013614178",
-          "name": "AHMAD IDZWAN BIN YUSUF",
-          "programme": "MASTER OF SCIENCE (CIVIL ENGINEERING)",
+          "matric": "2014605354",
+          "name": "NOR AZELA BINTI TORMODI",
+          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
           "level": "MASTERS",
-          "title": "Evaluation of Rayleigh Damping Coefficients for Laminated Rubber Bearing Using Modal Analysis",
-          "intake": "Semester 1 2013/2014",
-          "intake_sem": "20134",
+          "title": "CHARACTERIZATION AND MODEL UPDATING OF MODAL PARAMETERS OF A RIVETED JOINTS STRUCTURE",
+          "intake": "SESI 1 2014/2015",
+          "intake_sem": "20144",
           "role": "MAIN",
-          "main_supervisor": "NORLIYATI BINTI HAJI MOHD AMIN (DR)",
+          "main_supervisor": "MOHD AZMI BIN YUNUS (IR)(DR.)",
           "status": "TM",
-          "graduated_sem": "Sesi 1 2016/2017"
+          "graduated_sem": "Sesi 2 2017/2018"
         },
         {
           "matric": "2015497232",
@@ -41106,6 +40530,19 @@
           "main_supervisor": "MOHD AZMI BIN YUNUS (IR)(DR.)",
           "status": "TM",
           "graduated_sem": "Sesi 1 2017/2018"
+        },
+        {
+          "matric": "2013614178",
+          "name": "AHMAD IDZWAN BIN YUSUF",
+          "programme": "MASTER OF SCIENCE (CIVIL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "Evaluation of Rayleigh Damping Coefficients for Laminated Rubber Bearing Using Modal Analysis",
+          "intake": "Semester 1 2013/2014",
+          "intake_sem": "20134",
+          "role": "MAIN",
+          "main_supervisor": "NORLIYATI BINTI HAJI MOHD AMIN (DR)",
+          "status": "TM",
+          "graduated_sem": "Sesi 1 2016/2017"
         }
       ],
       "master_ongoing": []
@@ -41935,19 +41372,6 @@
           "graduated_sem": null
         },
         {
-          "matric": "2026611708",
-          "name": "MOHD HANIF BIN MAT @ MUHAMMAD",
-          "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
-          "level": "PHD",
-          "title": "PEDESTRIAN WIND COMFORT AROUND A TWO TALL BUILDING WITH AN ELEVATED PEDESTRIAN PLATFORM DIRECTIONALLY RESOLVED CFD ASSESSMENT USING MALAYSIAN WIND ROSE STATISTICS",
-          "intake": "SESSION 1 2026/2027",
-          "intake_sem": "20264",
-          "role": "MAIN",
-          "main_supervisor": "MOHD FAIZAL BIN MOHAMAD",
-          "status": null,
-          "graduated_sem": null
-        },
-        {
           "matric": "2025254064",
           "name": "ROSMAWATI ZAHARI",
           "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
@@ -41971,6 +41395,19 @@
           "role": "MAIN",
           "main_supervisor": "WAN AHMAD NAJMI BIN WAN MOHAMED",
           "status": "SM",
+          "graduated_sem": null
+        },
+        {
+          "matric": "2026611708",
+          "name": "MOHD HANIF BIN MAT @ MUHAMMAD",
+          "programme": "DOCTOR OF PHILOSOPHY (MECHANICAL ENGINEERING)",
+          "level": "PHD",
+          "title": "PEDESTRIAN WIND COMFORT AROUND A TWO TALL BUILDING WITH AN ELEVATED PEDESTRIAN PLATFORM DIRECTIONALLY RESOLVED CFD ASSESSMENT USING MALAYSIAN WIND ROSE STATISTICS",
+          "intake": "SESSION 1 2026/2027",
+          "intake_sem": "20264",
+          "role": "MAIN",
+          "main_supervisor": "MOHD FAIZAL BIN MOHAMAD",
+          "status": null,
           "graduated_sem": null
         }
       ],
@@ -44432,6 +43869,19 @@
       ],
       "master_ongoing": [
         {
+          "matric": "2024462676",
+          "name": "NUR AZAREENA BINTI AZMAN",
+          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "TRAJECTORY PLANNING AND CONTROL FOR SUPPRESSING TWO-DIMENSIONAL VIBRATIONS IN MECHATRONICS SYSTEMS",
+          "intake": "SESSION 1 2024/2025",
+          "intake_sem": "20244",
+          "role": "MAIN",
+          "main_supervisor": "MUHAMMAD ZAIYAD BIN MUDA @ ISMAIL",
+          "status": "SM",
+          "graduated_sem": null
+        },
+        {
           "matric": "2024812976",
           "name": "AHMAD ZAIM BIN AHMAD ZAIREL",
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
@@ -44454,19 +43904,6 @@
           "intake_sem": "20244",
           "role": "MAIN",
           "main_supervisor": "MOHD HANIF BIN MOHD RAMLI",
-          "status": "SM",
-          "graduated_sem": null
-        },
-        {
-          "matric": "2024462676",
-          "name": "NUR AZAREENA BINTI AZMAN",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "TRAJECTORY PLANNING AND CONTROL FOR SUPPRESSING TWO-DIMENSIONAL VIBRATIONS IN MECHATRONICS SYSTEMS",
-          "intake": "SESSION 1 2024/2025",
-          "intake_sem": "20244",
-          "role": "MAIN",
-          "main_supervisor": "MUHAMMAD ZAIYAD BIN MUDA @ ISMAIL",
           "status": "SM",
           "graduated_sem": null
         },
@@ -53000,19 +52437,6 @@
       "phd_ongoing": [],
       "master_graduated": [
         {
-          "matric": "2017655626",
-          "name": "NUR AAINAA BINTI ZAINAL",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "MICRO-DEFECTS DETECTION ON METAL SCREW SURFACES BASED ON ALGORITHM OF FASTER- REGION CONVOLUTIONAL NEURAL NETWORK OVER INTERNET OF THINGS",
-          "intake": "SESI 1 2017/2018",
-          "intake_sem": "20174",
-          "role": "MAIN",
-          "main_supervisor": "PROF. IR. DR MUHAMMAD AZMI BIN AYUB",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2021/2022"
-        },
-        {
           "matric": "2020431854",
           "name": "IR. TS. MOHD RAFAL BIN SAHUDIN",
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
@@ -53024,6 +52448,19 @@
           "main_supervisor": "DR. SITI RABIZAH BINTI MAKHSIN",
           "status": "TM",
           "graduated_sem": "Sesi 1 2022/2023"
+        },
+        {
+          "matric": "2017655626",
+          "name": "NUR AAINAA BINTI ZAINAL",
+          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "MICRO-DEFECTS DETECTION ON METAL SCREW SURFACES BASED ON ALGORITHM OF FASTER- REGION CONVOLUTIONAL NEURAL NETWORK OVER INTERNET OF THINGS",
+          "intake": "SESI 1 2017/2018",
+          "intake_sem": "20174",
+          "role": "MAIN",
+          "main_supervisor": "PROF. IR. DR MUHAMMAD AZMI BIN AYUB",
+          "status": "TM",
+          "graduated_sem": "Sesi 2 2021/2022"
         },
         {
           "matric": "2017371777",
@@ -53953,11 +53390,11 @@
       ],
       "master_graduated": [
         {
-          "matric": "2019851242",
-          "name": "MUHAMMAD DZULFARHI BIN AHMAD",
+          "matric": "2019691444",
+          "name": "MUHAMMAD KHALID BIN CHE ABD AZIZ",
           "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
           "level": "MASTERS",
-          "title": "AIR CONDITIONING AND MECHANICAL VENTILATION (ACMV) SYSTEM COST ESTIMATION USING BUILDING INFORMATION MODELING (BIM)",
+          "title": "COMPUTATIONAL FLUID DYNAMICS SIMULATION USING MODEL FROM  BUILDING INFORMATION MODELING SOFTWARE",
           "intake": "SESI 1 2019/2020",
           "intake_sem": "20194",
           "role": "MAIN",
@@ -53966,11 +53403,11 @@
           "graduated_sem": "Sesi 2 2020/2021"
         },
         {
-          "matric": "2019691444",
-          "name": "MUHAMMAD KHALID BIN CHE ABD AZIZ",
+          "matric": "2019851242",
+          "name": "MUHAMMAD DZULFARHI BIN AHMAD",
           "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
           "level": "MASTERS",
-          "title": "COMPUTATIONAL FLUID DYNAMICS SIMULATION USING MODEL FROM  BUILDING INFORMATION MODELING SOFTWARE",
+          "title": "AIR CONDITIONING AND MECHANICAL VENTILATION (ACMV) SYSTEM COST ESTIMATION USING BUILDING INFORMATION MODELING (BIM)",
           "intake": "SESI 1 2019/2020",
           "intake_sem": "20194",
           "role": "MAIN",
@@ -72014,19 +71451,6 @@
           "graduated_sem": "Sesi 2 2019/2020"
         },
         {
-          "matric": "2016292826",
-          "name": "MOHAMAD ZULFAZLI ARIEF BIN ABD LATIF",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "THE EFFECT OF TAIL SWEEP ANGLE TO THE AERODYNAMICS AND STABILITY OF A BLENDED WING BODY AIRCRAFT (BASELINE V)",
-          "intake": "SESI 1 2016/2017",
-          "intake_sem": "20164",
-          "role": "MAIN",
-          "main_supervisor": "DR. RIZAL EFFENDY BIN MOHD NASIR",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2018/2019"
-        },
-        {
           "matric": "2017999813",
           "name": "ATIKAH BASYIRAH BINTI ABDUL MUTA'ALI",
           "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
@@ -72045,6 +71469,19 @@
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
           "level": "MASTERS",
           "title": "THE EFFECT OF MULTIPLE-ELEVON DEFLECTION ON THE AERODYNAMIC AND MOMENT COEFFICIENT OF A TAIL-LESS BWB",
+          "intake": "SESI 1 2016/2017",
+          "intake_sem": "20164",
+          "role": "MAIN",
+          "main_supervisor": "DR. RIZAL EFFENDY BIN MOHD NASIR",
+          "status": "TM",
+          "graduated_sem": "Sesi 2 2018/2019"
+        },
+        {
+          "matric": "2016292826",
+          "name": "MOHAMAD ZULFAZLI ARIEF BIN ABD LATIF",
+          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "THE EFFECT OF TAIL SWEEP ANGLE TO THE AERODYNAMICS AND STABILITY OF A BLENDED WING BODY AIRCRAFT (BASELINE V)",
           "intake": "SESI 1 2016/2017",
           "intake_sem": "20164",
           "role": "MAIN",
@@ -74628,7 +74065,7 @@
         "file_no": "100-TNCPI/PRI 16/6/2 (098/2024)",
         "title": "ANALYSIS OF JV AUTO LUBE TRANSMISSION & LUBRICATION PRODUCT CHARACTERISTIC & ADVISING ON GRANT APPLICATION FOR ATF TREATMENT DEVELOPMENT AND TRANSMISSION RIF FOR EDUCATION",
         "year_start": 2025,
-        "year_end": 2026,
+        "year_end": 2027,
         "grant_name": "OTHER GRANTS",
         "grant_code": "OTHER GRANTS",
         "role": "Project Member",
@@ -82562,19 +81999,6 @@
       ],
       "master_ongoing": [
         {
-          "matric": "2026121797",
-          "name": "FAREEZ BIN AHMAD TAUPIQ NASRI",
-          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "MULTI-LEVEL OPTIMIZATION OF LOCAL AND GLOBAL MOTION PLANNING FOR AUTONOMOUS NAVIGATION IN OIL PALM PLANTATION",
-          "intake": "SESI 2 2025/2026",
-          "intake_sem": "20262",
-          "role": "MAIN",
-          "main_supervisor": "WAN NURSHAZWANI BINTI WAN ZAKARIA",
-          "status": "SM",
-          "graduated_sem": null
-        },
-        {
           "matric": "2026928549",
           "name": "WAN ZAHRA' MARDIAH BINTI AMRAN",
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
@@ -82608,6 +82032,19 @@
           "title": "SLAM BASED AUTONMOUS LOCALIZATION AND NAVIGATION FOR LOOSE FRUIT COLLECTOR IN OIL PALM PLANTATION",
           "intake": "SESSION 2 2023/2024",
           "intake_sem": "20242",
+          "role": "MAIN",
+          "main_supervisor": "WAN NURSHAZWANI BINTI WAN ZAKARIA",
+          "status": "SM",
+          "graduated_sem": null
+        },
+        {
+          "matric": "2026121797",
+          "name": "FAREEZ BIN AHMAD TAUPIQ NASRI",
+          "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "MULTI-LEVEL OPTIMIZATION OF LOCAL AND GLOBAL MOTION PLANNING FOR AUTONOMOUS NAVIGATION IN OIL PALM PLANTATION",
+          "intake": "SESI 2 2025/2026",
+          "intake_sem": "20262",
           "role": "MAIN",
           "main_supervisor": "WAN NURSHAZWANI BINTI WAN ZAKARIA",
           "status": "SM",
@@ -85485,19 +84922,6 @@
           "graduated_sem": "Semester 1 2013/2014"
         },
         {
-          "matric": "2009608922",
-          "name": "PUTERI ZIRWATUL NADILA BINTI MEGAT ZAMANHURI",
-          "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
-          "level": "MASTERS",
-          "title": "IMAGE PROCESSING FOR WELDING DISCONTINUITIES USING DIGITAL RADIOGRAPHY AND MATLAB GUI\r\n\r\n*Development of Application Tool for Welding Discontinuities Captured by Digital Radiography Using MATLAB GUI (Graphical User Interface)",
-          "intake": null,
-          "intake_sem": "20094",
-          "role": "MAIN",
-          "main_supervisor": "YUPITER HARANGAN PRASADA MANURUNG (DR)",
-          "status": "TM",
-          "graduated_sem": "Semester 1 2012/2013"
-        },
-        {
           "matric": "2007131345",
           "name": "NORHIDAYAH BINTI MOHAMAD",
           "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
@@ -85520,6 +84944,19 @@
           "intake_sem": "20084",
           "role": "MAIN",
           "main_supervisor": "YA'KUB B MD TAIB",
+          "status": "TM",
+          "graduated_sem": "Semester 1 2012/2013"
+        },
+        {
+          "matric": "2009608922",
+          "name": "PUTERI ZIRWATUL NADILA BINTI MEGAT ZAMANHURI",
+          "programme": "MASTER OF SCIENCE IN MECHANICAL ENGINEERING",
+          "level": "MASTERS",
+          "title": "IMAGE PROCESSING FOR WELDING DISCONTINUITIES USING DIGITAL RADIOGRAPHY AND MATLAB GUI\r\n\r\n*Development of Application Tool for Welding Discontinuities Captured by Digital Radiography Using MATLAB GUI (Graphical User Interface)",
+          "intake": null,
+          "intake_sem": "20094",
+          "role": "MAIN",
+          "main_supervisor": "YUPITER HARANGAN PRASADA MANURUNG (DR)",
           "status": "TM",
           "graduated_sem": "Semester 1 2012/2013"
         }
@@ -90562,19 +89999,6 @@
           "graduated_sem": "Sesi 2 2022/2023"
         },
         {
-          "matric": "2016420738",
-          "name": "NURUL SYAZMIMI BINTI HAMZAH",
-          "programme": "MASTER OF SCIENCE (CHEMICAL ENGINEERING)",
-          "level": "MASTERS",
-          "title": "THERMAL BEHAVIOUR OF CO-UTILISATION OF SILANTEK COAL AND EMPTY FRUIT BUNCH USING THERMOGRAVIMETRIC ANALYSIS",
-          "intake": "SESI 1 2016/2017",
-          "intake_sem": "20164",
-          "role": "MAIN",
-          "main_supervisor": "PROF.MADYA IR DR SITI SHAWALLIAH BINTI IDRIS",
-          "status": "TM",
-          "graduated_sem": "Sesi 2 2021/2022"
-        },
-        {
           "matric": "2018457108",
           "name": "MUHAMMAD SYAFIQ BIN MD.NOR",
           "programme": "MASTER OF SCIENCE (MECHANICAL ENGINEERING)",
@@ -90584,6 +90008,19 @@
           "intake_sem": "20184",
           "role": "MAIN",
           "main_supervisor": "PROF.MADYA TS. DR. ZURAIDAH BT SALLEH",
+          "status": "TM",
+          "graduated_sem": "Sesi 2 2021/2022"
+        },
+        {
+          "matric": "2016420738",
+          "name": "NURUL SYAZMIMI BINTI HAMZAH",
+          "programme": "MASTER OF SCIENCE (CHEMICAL ENGINEERING)",
+          "level": "MASTERS",
+          "title": "THERMAL BEHAVIOUR OF CO-UTILISATION OF SILANTEK COAL AND EMPTY FRUIT BUNCH USING THERMOGRAVIMETRIC ANALYSIS",
+          "intake": "SESI 1 2016/2017",
+          "intake_sem": "20164",
+          "role": "MAIN",
+          "main_supervisor": "PROF.MADYA IR DR SITI SHAWALLIAH BINTI IDRIS",
           "status": "TM",
           "graduated_sem": "Sesi 2 2021/2022"
         },
