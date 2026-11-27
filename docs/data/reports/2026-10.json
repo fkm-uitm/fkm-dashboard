@@ -1,0 +1,304 @@
+{
+  "period": "2026-10",
+  "period_label": "October 2026",
+  "generated": "2026-11-27",
+  "summary": {
+    "staff_count": 116,
+    "pubs_indexed_swe": 1672,
+    "pubs_indexed_all": 2094,
+    "pubs_other": 2554,
+    "grants_active": 242,
+    "grants_total": 1573,
+    "h_scopus_avg": 6.6,
+    "phd_total": 283,
+    "master_total": 420,
+    "consultancy_total": 517
+  },
+  "pubs_ytd_swe": 112,
+  "pubs_ytd_all": 133,
+  "ytd_by_year": {
+    "2021": 81,
+    "2022": 134,
+    "2023": 127,
+    "2024": 135,
+    "2025": 147,
+    "2026": 112
+  },
+  "pubs_by_year": {
+    "2015": {
+      "swe": 113,
+      "all": 145
+    },
+    "2016": {
+      "swe": 52,
+      "all": 63
+    },
+    "2017": {
+      "swe": 108,
+      "all": 122
+    },
+    "2018": {
+      "swe": 158,
+      "all": 182
+    },
+    "2019": {
+      "swe": 104,
+      "all": 121
+    },
+    "2020": {
+      "swe": 122,
+      "all": 135
+    },
+    "2021": {
+      "swe": 109,
+      "all": 125
+    },
+    "2022": {
+      "swe": 159,
+      "all": 164
+    },
+    "2023": {
+      "swe": 151,
+      "all": 163
+    },
+    "2024": {
+      "swe": 162,
+      "all": 175
+    },
+    "2025": {
+      "swe": 175,
+      "all": 211
+    },
+    "2026": {
+      "swe": 112,
+      "all": 133
+    }
+  },
+  "pubs_by_month_ytd": [
+    {
+      "month": "2026-01",
+      "swe": 11,
+      "all": 11
+    },
+    {
+      "month": "2026-02",
+      "swe": 10,
+      "all": 10
+    },
+    {
+      "month": "2026-03",
+      "swe": 10,
+      "all": 16
+    },
+    {
+      "month": "2026-04",
+      "swe": 12,
+      "all": 14
+    },
+    {
+      "month": "2026-05",
+      "swe": 13,
+      "all": 13
+    },
+    {
+      "month": "2026-06",
+      "swe": 18,
+      "all": 24
+    },
+    {
+      "month": "2026-07",
+      "swe": 14,
+      "all": 15
+    },
+    {
+      "month": "2026-08",
+      "swe": 9,
+      "all": 9
+    },
+    {
+      "month": "2026-09",
+      "swe": 8,
+      "all": 11
+    },
+    {
+      "month": "2026-10",
+      "swe": 7,
+      "all": 10
+    }
+  ],
+  "index_breakdown": {
+    "SCOPUS": 1386,
+    "WEB OF SCIENCE": 273,
+    "MYCITE": 48,
+    "OTHER": 378,
+    "ERA": 14
+  },
+  "grants_by_level": {
+    "International": {
+      "active": 37,
+      "completed": 43
+    },
+    "National": {
+      "active": 205,
+      "completed": 1288
+    }
+  },
+  "by_dept": [
+    {
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "staff": 116,
+      "indexed_swe": 1672,
+      "indexed_all": 2094,
+      "grants_active": 242
+    }
+  ],
+  "top_staff": [
+    {
+      "slug": "jm",
+      "name": "JAMALUDDIN BIN MAHMUD",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 18,
+      "pubs_scopus_wos_era": 153
+    },
+    {
+      "slug": "mnarani",
+      "name": "MUHAMAD NORHISHAM BIN ABDUL RANI",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 16,
+      "pubs_scopus_wos_era": 83
+    },
+    {
+      "slug": "aidahjumahat",
+      "name": "AIDAH BINTI JUMAHAT",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 24,
+      "pubs_scopus_wos_era": 79
+    },
+    {
+      "slug": "mayunus",
+      "name": "MOHD AZMI BIN YUNUS",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 16,
+      "pubs_scopus_wos_era": 78
+    },
+    {
+      "slug": "halim471",
+      "name": "ABDUL HALIM BIN ABDULLAH",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 13,
+      "pubs_scopus_wos_era": 77
+    },
+    {
+      "slug": "yupiter.manurung",
+      "name": "YUPITER HARANGAN PRASADA MANURUNG",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 14,
+      "pubs_scopus_wos_era": 77
+    },
+    {
+      "slug": "hussein",
+      "name": "AHMAD HUSSEIN BIN ABDUL HAMID",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 11,
+      "pubs_scopus_wos_era": 56
+    },
+    {
+      "slug": "salmiahk",
+      "name": "SALMIAH BINTI KASOLANG",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 18,
+      "pubs_scopus_wos_era": 54
+    },
+    {
+      "slug": "wanajmi",
+      "name": "WAN AHMAD NAJMI BIN WAN MOHAMED",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 20,
+      "pubs_scopus_wos_era": 52
+    },
+    {
+      "slug": "jurisaedon41",
+      "name": "JURI BIN SAEDON",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 10,
+      "pubs_scopus_wos_era": 51
+    },
+    {
+      "slug": "rizal524",
+      "name": "RIZAL EFFENDY BIN MOHD NASIR",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 8,
+      "pubs_scopus_wos_era": 51
+    },
+    {
+      "slug": "msukrihadi",
+      "name": "MUHAMAD SUKRI BIN HADI",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 8,
+      "pubs_scopus_wos_era": 50
+    },
+    {
+      "slug": "azlirazak",
+      "name": "AZLI BIN ABD RAZAK",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 10,
+      "pubs_scopus_wos_era": 47
+    },
+    {
+      "slug": "rozina7370",
+      "name": "ROZINA BINTI ABDUL RANI",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 24,
+      "pubs_scopus_wos_era": 47
+    },
+    {
+      "slug": "norsalwa071",
+      "name": "NOR SALWA BINTI DAMANHURI",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 11,
+      "pubs_scopus_wos_era": 41
+    },
+    {
+      "slug": "hayatihalim",
+      "name": "NURUL HAYATI BINTI ABDUL HALIM",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 8,
+      "pubs_scopus_wos_era": 37
+    },
+    {
+      "slug": "azlan253",
+      "name": "NOR AZLAN BIN OTHMAN",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 8,
+      "pubs_scopus_wos_era": 36
+    },
+    {
+      "slug": "azlinazmi",
+      "name": "AZLIN BINTI MOHD AZMI",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 10,
+      "pubs_scopus_wos_era": 35
+    },
+    {
+      "slug": "zulkifli127",
+      "name": "ZULKIFLI BIN MOHAMED",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 9,
+      "pubs_scopus_wos_era": 35
+    },
+    {
+      "slug": "nikrozlin",
+      "name": "NIK ROZLIN BINTI NIK MOHD MASDEK",
+      "dept": "FAKULTI KEJURUTERAAN MEKANIKAL",
+      "h_scopus": 6,
+      "pubs_scopus_wos_era": 34
+    }
+  ],
+  "key_findings": [
+    "<b>112</b> unique Scopus/WoS/ERA papers recorded in 2026 up to October 2026 (133 total indexed, including MyCite).",
+    "Cumulative all-time total of <b>1,672</b> unique Scopus/WoS/ERA publications — the primary PRIME-aligned indexed count.",
+    "<b>242</b> active grants (37 international, 205 national) across 116 staff members.",
+    "Mean Scopus h-index is <b>6.6</b> across 116 staff with Scopus profiles; highest individual h-index is <b>24</b>.",
+    "<b>283</b> PhD and <b>420</b> Master's students supervised (graduated and ongoing combined)."
+  ]
+}
