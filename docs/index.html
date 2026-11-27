@@ -196,21 +196,23 @@ button, input, select { font: inherit; color: inherit; }
 .hamburger {
   display: none;
   position: fixed;
-  top: 12px; left: 12px;
-  z-index: 300;
-  width: 40px; height: 40px;
+  top: 10px; left: 10px;
+  z-index: 150;
+  width: 32px; height: 32px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   box-shadow: var(--shadow);
+  transition: opacity .15s;
 }
+.hamburger[aria-expanded="true"] { opacity: 0; pointer-events: none; }
 .hamburger span {
   display: block;
-  width: 18px; height: 2px;
+  width: 16px; height: 2px;
   background: var(--text);
   border-radius: 2px;
 }
@@ -886,13 +888,6 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       Overview
     </button>
 
-    <button class="nav-item" data-page="staff">
-      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 17a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z"/>
-      </svg>
-      Staff Profiles
-    </button>
-
     <button class="nav-item" data-page="pubs">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h4.586A2 2 0 0 1 12 2.586L15.414 6A2 2 0 0 1 16 7.414V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm2 6a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H7Z" clip-rule="evenodd"/>
@@ -905,6 +900,29 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
         <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.798 7.45c.512-.67 1.135-1.2 1.927-1.2.68 0 1.212.405 1.555.952.343.546.47 1.233.47 1.798 0 .68-.262 1.37-.752 1.86a3.45 3.45 0 0 1-.673.502v.138a1 1 0 1 1-2 0v-.6a1 1 0 0 1 1-1 1.45 1.45 0 0 0 .88-.316c.198-.194.345-.484.345-.784 0-.365-.077-.712-.22-.946-.143-.228-.295-.304-.405-.304-.277 0-.609.235-1.021.77a1 1 0 0 1-1.606-1.17ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
       </svg>
       Grants
+    </button>
+
+    <button class="nav-item" data-page="staff">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 17a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z"/>
+      </svg>
+      Staff Profiles
+    </button>
+
+    <div class="nav-label" style="margin-top:8px">Reports</div>
+
+    <button class="nav-item" data-page="report">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.414A2 2 0 0 0 15.414 6L12 2.586A2 2 0 0 0 10.586 2H6Zm5 6a1 1 0 1 0-2 0v3.586l-1.293-1.293a1 1 0 1 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0l3-3a1 1 0 0 0-1.414-1.414L11 11.586V8Z" clip-rule="evenodd"/>
+      </svg>
+      Progress Report
+    </button>
+
+    <button class="nav-item" data-page="about">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd"/>
+      </svg>
+      About
     </button>
   </nav>
 
@@ -1052,13 +1070,13 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       <h2>Publications</h2>
       <p>Publications from the Expert portal for FKM Shah Alam academic staff. Click a title for details.</p>
     </div>
-    <div class="sub-tabs" role="tablist" aria-label="Publication category">
-      <button class="sub-tab active" role="tab" data-pubtab="all">All Publications</button>
-      <button class="sub-tab" role="tab" data-pubtab="indexed">Indexed (Scopus / WoS / ERA)</button>
-      <button class="sub-tab" role="tab" data-pubtab="nonindexed">Non-Indexed</button>
-    </div>
     <div class="tbl-card">
       <div class="toolbar">
+        <select class="filter-select" id="pubs-filter-cat" aria-label="Filter by category">
+          <option value="all">All Publications</option>
+          <option value="indexed">Indexed (Scopus / WoS / ERA)</option>
+          <option value="nonindexed">Non-Indexed</option>
+        </select>
         <div class="search-wrap">
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="pubs-search" placeholder="Search title or author..." aria-label="Search publications">
@@ -1098,12 +1116,13 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
       <h2>Grants</h2>
       <p>Research grants from the Expert portal, international and national, active and completed</p>
     </div>
-    <div class="sub-tabs" role="tablist" aria-label="Grant role">
-      <button class="sub-tab active" role="tab" data-granttab="pi">As Principal Investigator</button>
-      <button class="sub-tab" role="tab" data-granttab="all">All Grants</button>
-    </div>
     <div class="tbl-card">
       <div class="toolbar">
+        <select class="filter-select" id="grants-filter-role" aria-label="Filter by role">
+          <option value="pi">As Principal Investigator</option>
+          <option value="all">All Grants</option>
+          <option value="member">As Project Member</option>
+        </select>
         <div class="search-wrap">
           <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/></svg>
           <input type="search" id="grants-search" placeholder="Search title, grant name or staff..." aria-label="Search grants">
@@ -1151,10 +1170,59 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
     </div>
   </div>
 
+  <!-- ══ REPORT ═══════════════════════════════════════════════════════ -->
+  <div id="page-report" class="content" hidden>
+    <div class="page-header">
+      <h2>Progress Report</h2>
+      <p>Snapshot of research performance up to a selected month. Useful for comparing against official Data Pencapaian reports.</p>
+    </div>
+    <div class="ov-filter-bar" style="margin-bottom:24px">
+      <span class="ov-filter-label">Year:</span>
+      <select class="filter-select" id="rpt-year" aria-label="Report year"></select>
+      <span class="ov-filter-label">Up to month:</span>
+      <select class="filter-select" id="rpt-month" aria-label="Report month">
+        <option value="1">January</option><option value="2">February</option>
+        <option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option>
+        <option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
+      <button class="btn-primary" id="rpt-generate-btn" style="margin-left:8px">Generate Report</button>
+      <button class="btn-secondary" id="rpt-download-btn" style="margin-left:4px" hidden>Download Excel</button>
+    </div>
+    <div id="rpt-output"></div>
+  </div>
+
+  <!-- ══ ABOUT ═════════════════════════════════════════════════════════ -->
+  <div id="page-about" class="content" hidden>
+    <div class="page-header">
+      <h2>About This Dashboard</h2>
+      <p>FKM Research Analytics — data sourced from the UiTM Expert Portal</p>
+    </div>
+    <div class="tbl-card" style="max-width:720px">
+      <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
+        <h3 style="color:var(--text);margin:0 0 12px">Data Source</h3>
+        <p>All data is scraped from <strong>expert.uitm.edu.my</strong> — the UiTM Expert Portal where academic staff self-report their publications, grants, supervision and consultancy records. The scraper runs weekly (Monday 3 AM MYT) and updates the JSON files in this repository automatically.</p>
+        <p><strong>Note:</strong> This dashboard reflects what staff have entered into the Expert Portal. It may differ from PRIME (the official UiTM reporting system) due to: different data sources, duplicate entries per co-author, or staff not having updated their Expert profile.</p>
+        <h3 style="color:var(--text);margin:16px 0 12px">Export Data</h3>
+        <p>Download the raw data as Excel files for offline analysis or reporting.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+          <button class="btn-primary" id="about-dl-staff">Download Staff Data</button>
+          <button class="btn-primary" id="about-dl-pubs">Download Publications</button>
+          <button class="btn-primary" id="about-dl-grants">Download Grants</button>
+        </div>
+        <h3 style="color:var(--text);margin:24px 0 12px">Technology</h3>
+        <p>Built with vanilla HTML/CSS/JS, Chart.js, and GitHub Actions for automated scraping. Hosted on GitHub Pages.</p>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /.main -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 'use strict';
 
@@ -1169,8 +1237,9 @@ const charts = new Map();
 // Overview date filter state (default: this month)
 let ovYear  = new Date().getFullYear();   // 0 = all time
 let ovMonth = new Date().getMonth() + 1; // 1-12, up-to-month
-let pubTab   = 'all';    // 'all' | 'indexed' | 'nonindexed'
-let grantTab = 'pi';     // 'pi'  | 'all'
+// pubTab / grantTab now driven by filter selects; kept as helpers
+function getPubCat()   { const el = document.getElementById('pubs-filter-cat');   return el ? el.value : 'all'; }
+function getGrantRole(){ const el = document.getElementById('grants-filter-role'); return el ? el.value : 'pi'; }
 
 // Cross-filter state
 const xf = {
@@ -1292,6 +1361,7 @@ async function loadData() {
     renderStaffTable();
     renderPubsTable();
     renderGrantsTable();
+    buildRptYearSelect();
 
     overlay.hidden = true;
   } catch(e) {
@@ -1321,6 +1391,7 @@ function renderOverview(s) {
   const indexedCount  = uniqIndexed.size;
   const otherCount    = uniqOther.size;
   const activeGrants = filteredGrants.filter(g => g.status && g.status.toUpperCase() === 'ACTIVE').length;
+  const totalAcquisition = filteredGrants.reduce((sum, g) => sum + (g.cost ? +g.cost : 0), 0);
 
   document.getElementById('kpi-row1').innerHTML = [
     kpi('Staff scraped',         s.staff_count,          'Shah Alam academic staff',    '#2563eb', 'staff'),
@@ -1330,12 +1401,13 @@ function renderOverview(s) {
     kpi('Total publications',    num(indexedCount+otherCount),'All publication types (unique)',  '#d97706', 'sum'),
   ].join('');
 
+  const acqLabel = totalAcquisition > 0 ? 'RM ' + totalAcquisition.toLocaleString('en-MY') : '--';
   document.getElementById('kpi-row2').innerHTML = [
-    kpi('Active grants',     num(activeGrants),          `of ${num(filteredGrants.length)} total`, '#16a34a', 'beaker'),
-    kpi('Total grants',      num(filteredGrants.length), 'All levels and statuses',     '#dc2626', 'money'),
-    kpi('PhD supervision',   num(s.phd_total),           'Graduated and ongoing',       '#7c3aed', 'cap'),
-    kpi('Master supervision',num(s.master_total),        'Graduated and ongoing',       '#2563eb', 'cap'),
-    kpi('Consultancy',       num(s.consultancy_total),   'Completed appointments',      '#059669', 'handshake'),
+    kpi('Active grants',        num(activeGrants),   `of ${num(filteredGrants.length)} total`,   '#16a34a', 'beaker'),
+    kpi('Total grants',         num(filteredGrants.length), 'All levels and statuses',           '#dc2626', 'money'),
+    kpi('Grant acquisition',    acqLabel,            'Sum of cost (selected period)',             '#0891b2', 'handshake'),
+    kpi('PhD supervision',      num(s.phd_total),    'Graduated and ongoing',                    '#7c3aed', 'cap'),
+    kpi('Master supervision',   num(s.master_total), 'Graduated and ongoing',                    '#2563eb', 'cap'),
   ].join('');
 
   drawCharts();
@@ -1393,8 +1465,8 @@ function drawCharts() {
     renderPubsTable();
     updateXfBadge('pubs-xf-badge', xf.pubs_type ? `Type: ${xf.pubs_type}` : null, () => {
       xf.pubs_type=null; pageState.pubs=1; renderPubsTable();
+      updateXfBadge('pubs-xf-badge', null, null);
     });
-    showPage('pubs');
   });
 
   // Grants bar — uses filtered data
@@ -1423,8 +1495,8 @@ function drawCharts() {
       document.getElementById('grants-filter-level').value  = '';
       document.getElementById('grants-filter-status').value = '';
       pageState.grants=1; renderGrantsTable(); drawCharts();
+      updateXfBadge('grants-xf-badge', null, null);
     });
-    showPage('grants');
   });
 
   // Supervision bar
@@ -1455,7 +1527,7 @@ function drawCharts() {
 
 function updateXfBadge(id, label, onClear) {
   const el = document.getElementById(id);
-  if (!label) { el.hidden = true; el.innerHTML = ''; return; }
+  if (!label) { el.className = ''; el.hidden = true; el.innerHTML = ''; return; }
   el.hidden = false;
   el.className = 'cross-filter-active';
   el.innerHTML = `${esc(label)} <button class="cross-filter-clear" aria-label="Clear filter">&times;</button>`;
@@ -1709,12 +1781,12 @@ function getPubsList() {
   const q  = document.getElementById('pubs-search').value.trim().toLowerCase();
   const yf = +document.getElementById('pubs-year-from').value || null;
   const yt = +document.getElementById('pubs-year-to').value   || null;
-  // start with cross-filter type override or sub-tab
+  const cat = getPubCat();
   let rows = [...PUBS];
   if (xf.pubs_type === 'indexed')      rows = rows.filter(p =>  p.indexed);
   else if (xf.pubs_type === 'other')   rows = rows.filter(p => !p.indexed);
-  else if (pubTab === 'indexed')        rows = rows.filter(p =>  p.indexed);
-  else if (pubTab === 'nonindexed')     rows = rows.filter(p => !p.indexed);
+  else if (cat === 'indexed')          rows = rows.filter(p =>  p.indexed);
+  else if (cat === 'nonindexed')       rows = rows.filter(p => !p.indexed);
   if (yf) rows = rows.filter(p => p.date && +p.date.slice(0,4) >= yf);
   if (yt) rows = rows.filter(p => p.date && +p.date.slice(0,4) <= yt);
   if (q)  rows = rows.filter(p => ((p.title||'')+(p.name||'')).toLowerCase().includes(q));
@@ -1728,9 +1800,10 @@ function renderPubsTable() {
   pageState.pubs = Math.min(pageState.pubs, total);
   const start = (pageState.pubs-1)*PAGE_SIZE;
   const page  = rows.slice(start, start+PAGE_SIZE);
-  const showCatHdr = pubTab === 'all' && !xf.pubs_type;
+  const cat2 = getPubCat();
+  const showCatHdr = cat2 === 'all' && !xf.pubs_type;
   document.getElementById('pubs-th-cat').hidden = !showCatHdr;
-  const tabLabel = pubTab === 'indexed' ? 'indexed publications' : pubTab === 'nonindexed' ? 'non-indexed publications' : 'publications';
+  const tabLabel = cat2 === 'indexed' ? 'indexed publications' : cat2 === 'nonindexed' ? 'non-indexed publications' : 'publications';
   document.getElementById('pubs-count').textContent =
     `${rows.length.toLocaleString()} ${tabLabel}${q?` matching "${q}"`:''}`;
   document.getElementById('pubs-pagination').innerHTML = paginHTML(total, pageState.pubs, 'pubs');
@@ -1812,8 +1885,10 @@ function getGrantsList() {
   const fs = document.getElementById('grants-filter-status').value;
   const yf = +document.getElementById('grants-year-from').value || null;
   const yt = +document.getElementById('grants-year-to').value   || null;
+  const role = getGrantRole();
   let rows = [...GRANTS];
-  if (grantTab === 'pi') rows = rows.filter(g => (g.role||'').toUpperCase().includes('PRINCIPAL'));
+  if (role === 'pi')     rows = rows.filter(g => (g.role||'').toUpperCase().includes('PRINCIPAL'));
+  else if (role === 'member') rows = rows.filter(g => !(g.role||'').toUpperCase().includes('PRINCIPAL'));
   if (fl==='international') rows = rows.filter(g => (g.level||'').toUpperCase().includes('INT'));
   if (fl==='national')      rows = rows.filter(g => !(g.level||'').toUpperCase().includes('INT'));
   if (fs==='active')        rows = rows.filter(g => (g.status||'').toUpperCase()==='ACTIVE');
@@ -1868,7 +1943,7 @@ function paginHTML(total, current, key) {
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
-const PAGE_TITLES = { overview:'Overview', staff:'Staff Profiles', pubs:'Publications', grants:'Grants' };
+const PAGE_TITLES = { overview:'Overview', pubs:'Publications', grants:'Grants', staff:'Staff Profiles', report:'Progress Report', about:'About' };
 
 function showPage(id) {
   document.querySelectorAll('.nav-item').forEach(b => {
@@ -1957,25 +2032,176 @@ document.getElementById('ov-month').addEventListener('change', () => {
   renderOverview(SUMMARY);
 });
 
-// Publications sub-tabs
-document.querySelectorAll('[data-pubtab]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    pubTab = btn.dataset.pubtab;
-    xf.pubs_type = null; // clear cross-filter when switching tabs
-    document.querySelectorAll('[data-pubtab]').forEach(b => b.classList.toggle('active', b === btn));
-    pageState.pubs = 1;
-    renderPubsTable();
-  });
+// Publications category filter
+document.getElementById('pubs-filter-cat').addEventListener('change', () => {
+  xf.pubs_type = null;
+  updateXfBadge('pubs-xf-badge', null, null);
+  pageState.pubs = 1;
+  renderPubsTable();
 });
 
-// Grants sub-tabs
-document.querySelectorAll('[data-granttab]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    grantTab = btn.dataset.granttab;
-    document.querySelectorAll('[data-granttab]').forEach(b => b.classList.toggle('active', b === btn));
-    pageState.grants = 1;
-    renderGrantsTable();
+// Grants role filter
+document.getElementById('grants-filter-role').addEventListener('change', () => {
+  pageState.grants = 1;
+  renderGrantsTable();
+});
+
+// ── REPORT PAGE ────────────────────────────────────────────────────────────
+let rptYear  = new Date().getFullYear();
+let rptMonth = new Date().getMonth() + 1;
+
+function buildRptYearSelect() {
+  const years = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(Boolean))].sort((a,b)=>b-a);
+  const el = document.getElementById('rpt-year');
+  if (!el || el.options.length > 1) return;
+  el.innerHTML = years.map(y => `<option value="${y}"${y===rptYear?' selected':''}>${y}</option>`).join('');
+  document.getElementById('rpt-month').value = String(rptMonth);
+}
+
+function generateReport() {
+  const year  = +document.getElementById('rpt-year').value;
+  const month = +document.getElementById('rpt-month').value;
+  if (!year || !month) return;
+  rptYear = year; rptMonth = month;
+
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const monthName = months[month-1];
+
+  const rptPubs   = PUBS.filter(p => {
+    if (!p.date) return false;
+    const y = +p.date.slice(0,4), m = +p.date.slice(5,7);
+    return y === year && m <= month;
   });
+  const rptGrants = GRANTS.filter(g => g.year_start && +g.year_start === year);
+
+  const uniqueRefs  = p => p.ref || p.title;
+  const uniqIdx     = new Set(rptPubs.filter(p =>  p.indexed).map(uniqueRefs));
+  const uniqOther   = new Set(rptPubs.filter(p => !p.indexed).map(uniqueRefs));
+  const idxCount    = uniqIdx.size;
+  const otherCount  = uniqOther.size;
+  const totalPubs   = idxCount + otherCount;
+  const piGrants    = rptGrants.filter(g => (g.role||'').toUpperCase().includes('PRINCIPAL'));
+  const activeG     = rptGrants.filter(g => (g.status||'').toUpperCase() === 'ACTIVE');
+  const totalAcq    = rptGrants.reduce((s,g) => s + (g.cost ? +g.cost : 0), 0);
+  const hVals       = STAFF.map(x => x.h_scopus).filter(v => v != null && v > 0);
+  const hAvg        = hVals.length ? (hVals.reduce((a,b)=>a+b,0)/hVals.length).toFixed(2) : '--';
+  const hMax        = hVals.length ? Math.max(...hVals) : '--';
+
+  const kpiBlock = (label, value, sub) => `
+    <div class="kpi" style="--kpi-color:#2563eb">
+      <div class="kpi-value num">${esc(String(value))}</div>
+      <div class="kpi-label">${esc(label)}</div>
+      <div class="kpi-sub">${esc(sub)}</div>
+    </div>`;
+
+  const pubByType = new Map();
+  for (const p of rptPubs) pubByType.set(p.type||'Other', (pubByType.get(p.type||'Other')||0)+1);
+  const topTypes = [...pubByType.entries()].sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+  const output = `
+    <div class="page-header" style="margin-bottom:16px">
+      <h3 style="margin:0;font-size:18px">Progress Report — ${monthName} ${year}</h3>
+      <p style="margin:4px 0 0;color:var(--text3);font-size:13px">Publications: Jan–${monthName} ${year} &nbsp;·&nbsp; Grants: started in ${year}</p>
+    </div>
+    <div class="kpi-row cols-5" style="margin-bottom:24px">
+      ${kpiBlock('Indexed Publications', idxCount, 'Scopus / WoS / ERA')}
+      ${kpiBlock('Other Publications',   otherCount, 'Non-indexed / proceedings')}
+      ${kpiBlock('Total Publications',   totalPubs, 'Unique papers')}
+      ${kpiBlock('Total Grants',         rptGrants.length, 'Started in '+year)}
+      ${kpiBlock('PI Grants',            piGrants.length, 'Principal Investigator')}
+      ${kpiBlock('Active Grants',        activeG.length, 'of '+rptGrants.length+' total')}
+      ${kpiBlock('Grant Acquisition',    totalAcq > 0 ? 'RM '+totalAcq.toLocaleString('en-MY') : '--', 'Sum of cost')}
+      ${kpiBlock('Avg H-Index (Scopus)', hAvg, 'Max: '+hMax)}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="tbl-card">
+        <div style="padding:16px 20px 0;font-weight:600;font-size:14px">Publication Types</div>
+        <div class="tbl-wrap"><table><thead><tr><th>Type</th><th class="r">Count</th></tr></thead><tbody>
+          ${topTypes.map(([t,c]) => `<tr><td>${esc(nice(t))}</td><td class="r num">${c}</td></tr>`).join('')}
+        </tbody></table></div>
+      </div>
+      <div class="tbl-card">
+        <div style="padding:16px 20px 0;font-weight:600;font-size:14px">Grant Summary</div>
+        <div class="tbl-wrap"><table><thead><tr><th>Category</th><th class="r">Count</th></tr></thead><tbody>
+          <tr><td>International</td><td class="r num">${rptGrants.filter(g=>(g.level||'').toUpperCase().includes('INT')).length}</td></tr>
+          <tr><td>National</td><td class="r num">${rptGrants.filter(g=>!(g.level||'').toUpperCase().includes('INT')).length}</td></tr>
+          <tr><td>Active</td><td class="r num">${activeG.length}</td></tr>
+          <tr><td>Completed</td><td class="r num">${rptGrants.length - activeG.length}</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>`;
+
+  document.getElementById('rpt-output').innerHTML = output;
+  document.getElementById('rpt-download-btn').hidden = false;
+
+  // Store for download
+  window._rptData = { year, month, monthName, rptPubs, rptGrants, idxCount, otherCount, totalPubs, piGrants, activeG, totalAcq, hAvg, hMax };
+}
+
+document.getElementById('rpt-generate-btn').addEventListener('click', generateReport);
+
+document.getElementById('rpt-download-btn').addEventListener('click', () => {
+  const d = window._rptData; if (!d || typeof XLSX === 'undefined') return;
+  const wb = XLSX.utils.book_new();
+
+  const summaryRows = [
+    ['Progress Report', `${d.monthName} ${d.year}`],
+    [],
+    ['Metric', 'Value'],
+    ['Indexed Publications', d.idxCount],
+    ['Other Publications', d.otherCount],
+    ['Total Publications (unique)', d.totalPubs],
+    ['Total Grants', d.rptGrants.length],
+    ['PI Grants', d.piGrants.length],
+    ['Active Grants', d.activeG.length],
+    ['Grant Acquisition (RM)', d.totalAcq],
+    ['Avg H-Index (Scopus)', d.hAvg],
+    ['Max H-Index (Scopus)', d.hMax],
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(summaryRows), 'Summary');
+
+  const pubRows = [['Title','Type','Category','Date','Author','Ref']].concat(
+    d.rptPubs.map(p => [p.title||'', p.type||'', p.indexed?'Indexed':'Other', p.date||'', p.name||'', p.ref||''])
+  );
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(pubRows), 'Publications');
+
+  const grantRows = [['Title','Level','Grant Name','Role','Year Start','Year End','Cost (RM)','Status','Staff']].concat(
+    d.rptGrants.map(g => [g.title||'', g.level||'', g.grant_name||'', g.role||'', g.year_start||'', g.year_end||'', g.cost||'', g.status||'', g.name||''])
+  );
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(grantRows), 'Grants');
+
+  XLSX.writeFile(wb, `FKM_Progress_Report_${d.monthName}_${d.year}.xlsx`);
+});
+
+document.getElementById('rpt-year').addEventListener('change', () => {});
+document.getElementById('rpt-month').addEventListener('change', () => {});
+
+// ── ABOUT PAGE — EXCEL EXPORTS ─────────────────────────────────────────────
+function exportToExcel(data, fields, headers, sheetName, filename) {
+  if (typeof XLSX === 'undefined') { alert('Excel library not loaded yet, try again in a moment.'); return; }
+  const rows = [headers].concat(data.map(r => fields.map(f => r[f] ?? '')));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), sheetName);
+  XLSX.writeFile(wb, filename);
+}
+
+document.getElementById('about-dl-staff').addEventListener('click', () => {
+  exportToExcel(STAFF,
+    ['name','position','department','h_scopus','h_wos','h_gs','pubs_indexed','pubs_other','grants_active','grants_total','phd_graduated','phd_ongoing','master_graduated','master_ongoing','consultancy_completed'],
+    ['Name','Position','Department','H-Index (Scopus)','H-Index (WoS)','H-Index (GS)','Pubs Indexed','Pubs Other','Grants Active','Grants Total','PhD Graduated','PhD Ongoing','Master Graduated','Master Ongoing','Consultancy'],
+    'Staff', 'FKM_Staff.xlsx');
+});
+document.getElementById('about-dl-pubs').addEventListener('click', () => {
+  exportToExcel(PUBS,
+    ['name','title','type','date','indexed','ref','group'],
+    ['Author','Title','Type','Date','Indexed','Ref','Group'],
+    'Publications', 'FKM_Publications.xlsx');
+});
+document.getElementById('about-dl-grants').addEventListener('click', () => {
+  exportToExcel(GRANTS,
+    ['name','title','level','grant_name','grant_code','role','year_start','year_end','cost','status'],
+    ['Author','Title','Level','Grant Name','Grant Code','Role','Year Start','Year End','Cost (RM)','Status'],
+    'Grants', 'FKM_Grants.xlsx');
 });
 
 loadData();
