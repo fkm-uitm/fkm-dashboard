@@ -731,23 +731,24 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   align-items: flex-end;
   position: relative;
 }
-.profile-banner-close {
+.profile-main-close {
   position: absolute;
-  top: 12px; right: 12px;
-  background: rgba(255,255,255,.15);
-  border: 0;
+  top: 8px; right: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  color: #fff;
-  width: 32px; height: 32px;
-  font-size: 18px;
+  color: var(--text2);
+  width: 28px; height: 28px;
+  font-size: 16px;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background .15s;
+  z-index: 2;
+  transition: border-color .15s, color .15s;
 }
-.profile-banner-close:hover { background: rgba(255,255,255,.28); }
+.profile-main-close:hover { border-color: var(--accent); color: var(--accent); }
 .profile-photo {
   width: 80px; height: 80px;
   border-radius: 50%;
@@ -928,6 +929,7 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
   min-width: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .profile-expert-tabs {
   display: flex;
@@ -2434,13 +2436,7 @@ function wireProfilePagination(panel, dataSets) {
 function openStaffProfile(slug) {
   const s = STAFF_BY_SLUG.get(slug); if (!s) return;
 
-  // Item 3: toggle — clicking open profile again closes it
   const panel = document.getElementById('staff-profile');
-  if (!panel.hidden && panel.dataset.openSlug === slug) {
-    panel.hidden = true;
-    panel.dataset.openSlug = '';
-    return;
-  }
   panel.dataset.openSlug = slug;
 
   const staffPubs   = PUBS.filter(p => p.slug === slug);
@@ -2499,7 +2495,6 @@ function openStaffProfile(slug) {
   panel.hidden = false;
   panel.innerHTML = `
     <div class="profile-expert">
-      <button class="profile-banner-close" id="profile-close-btn" aria-label="Close profile">&times;</button>
       <!-- LEFT SIDEBAR — mirrors Expert Portal layout -->
       <div class="profile-expert-sidebar">
         ${avatarHTML}
@@ -2520,6 +2515,7 @@ function openStaffProfile(slug) {
       </div>
       <!-- RIGHT CONTENT — tabbed -->
       <div class="profile-expert-main">
+        <button class="profile-main-close" id="profile-close-btn" aria-label="Close profile">&times;</button>
         <div class="profile-expert-tabs" role="tablist">
           <button class="profile-expert-tab active" role="tab" data-ptab="overview" aria-selected="true">Overview</button>
           <button class="profile-expert-tab" role="tab" data-ptab="publications" aria-selected="false">Publications <span class="profile-tab-count">${staffPubs.length}</span></button>
