@@ -139,6 +139,10 @@ function drawCharts() {
     ['#2563eb','#93c5fd','#f59e0b','#fcd34d'],
     false, null);
 
+  drawPubTrendChart();
+  drawDeptChart();
+  _wireOvControls();
+
   // Top 15 horizontal bar — uses filtered pubs data
   const pubCountBySlug = new Map();
   for (const p of ovPubs) { if (p.indexed) pubCountBySlug.set(p.slug, (pubCountBySlug.get(p.slug)||0)+1); }
@@ -245,5 +249,142 @@ function hbarChart(id, labels, data, color, onClick) {
     existing.update('none');
   } else {
     charts.set(id, new Chart(el, cfg));
+  }
+}
+
+// ── Publication trend state ─────────────────────────────────────────────────
+let ovTrendMode  = 'swe';  // 'swe' | 'all'
+let deptPerStaff = false;
+let _ovControlsWired = false;
+
+// Wire toggle controls once after the overview DOM is rendered
+function _wireOvControls() {
+  if (_ovControlsWired) return;
+  _ovControlsWired = true;
+
+  document.getElementById('pub-trend-toggle')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-trend]');
+    if (!btn) return;
+    ovTrendMode = btn.dataset.trend;
+    document.querySelectorAll('#pub-trend-toggle .chart-toggle')
+      .forEach(b => b.classList.toggle('active', b.dataset.trend === ovTrendMode));
+    drawPubTrendChart();
+  });
+
+  document.getElementById('dept-per-staff')?.addEventListener('change', e => {
+    deptPerStaff = e.target.checked;
+    drawDeptChart();
+  });
+}
+
+// ── Publication trend by year ───────────────────────────────────────────────
+function drawPubTrendChart() {
+  const SWE = new Set(['SCOPUS', 'WEB OF SCIENCE', 'ERA']);
+  const TYPES = new Set(['JOURNAL', 'PROCEEDING']);
+  const yrSwe = new Map(), yrAll = new Map();
+
+  for (const p of PUBS) {
+    if (!p.indexed || !TYPES.has((p.type||'').toUpperCase())) continue;
+    const title = (p.title||'').trim().toLowerCase();
+    const yr = (p.date||'').slice(0, 4);
+    if (!title || !yr || yr < '2015') continue;
+    if (!yrAll.has(yr)) yrAll.set(yr, new Set());
+    yrAll.get(yr).add(title);
+    if (SWE.has(p.index_name)) {
+      if (!yrSwe.has(yr)) yrSwe.set(yr, new Set());
+      yrSwe.get(yr).add(title);
+    }
+  }
+
+  const years = [...new Set([...yrSwe.keys(), ...yrAll.keys()])].sort();
+  const dataSwe = years.map(y => yrSwe.get(y)?.size || 0);
+  const dataAll = years.map(y => yrAll.get(y)?.size || 0);
+  const data  = ovTrendMode === 'swe' ? dataSwe : dataAll;
+  const color = ovTrendMode === 'swe' ? '#2563eb' : '#7c3aed';
+
+  const id = 'chart-pub-trend';
+  const el = document.getElementById(id); if (!el) return;
+  const existing = charts.get(id);
+  if (existing) {
+    existing.data.labels = years;
+    existing.data.datasets[0].data = data;
+    existing.data.datasets[0].backgroundColor = data.map(() => color);
+    existing.update('none');
+  } else {
+    charts.set(id, new Chart(el, {
+      type: 'bar',
+      data: { labels: years, datasets: [{ data, backgroundColor: color, borderRadius: 4, maxBarThickness: 48 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        layout: { padding: { top: 20 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.raw} unique titles` } },
+          datalabels: { anchor: 'end', align: 'top', color: cssVar('--text2'), font: { size: 11, weight: '600' }, formatter: v => v > 0 ? v : '' },
+        },
+        scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } },
+      }
+    }));
+  }
+}
+
+// ── Department activity ─────────────────────────────────────────────────────
+function drawDeptChart() {
+  const deptMap = new Map();
+  for (const s of STAFF) {
+    const d = s.department || 'Unknown';
+    if (!deptMap.has(d)) deptMap.set(d, { staff: 0, pubs: 0, grants: 0, sv: 0 });
+    const r = deptMap.get(d);
+    r.staff++;
+    r.pubs   += s.pubs_scopus_wos_era || 0;
+    r.grants += s.grants_active || 0;
+    r.sv     += (s.phd_ongoing || 0) + (s.master_ongoing || 0);
+  }
+
+  const depts = [...deptMap.entries()]
+    .filter(([,r]) => r.staff > 0)
+    .sort((a, b) => b[1].pubs - a[1].pubs)
+    .slice(0, 12);
+
+  const labels     = depts.map(([d, r]) => `${d} (${r.staff})`);
+  const pubsData   = depts.map(([, r]) => deptPerStaff ? +(r.pubs   / r.staff).toFixed(1) : r.pubs);
+  const grantsData = depts.map(([, r]) => deptPerStaff ? +(r.grants / r.staff).toFixed(2) : r.grants);
+  const svData     = depts.map(([, r]) => deptPerStaff ? +(r.sv     / r.staff).toFixed(2) : r.sv);
+
+  const id = 'chart-dept';
+  const el = document.getElementById(id); if (!el) return;
+  const existing = charts.get(id);
+
+  if (existing) {
+    existing.data.labels = labels;
+    existing.data.datasets[0].data = pubsData;
+    existing.data.datasets[1].data = grantsData;
+    existing.data.datasets[2].data = svData;
+    existing.update('none');
+  } else {
+    charts.set(id, new Chart(el, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Indexed pubs (SWE)', data: pubsData,   backgroundColor: '#2563eb', borderRadius: 3, maxBarThickness: 14 },
+          { label: 'Active grants',      data: grantsData,  backgroundColor: '#16a34a', borderRadius: 3, maxBarThickness: 14 },
+          { label: 'Students (ongoing)', data: svData,      backgroundColor: '#f59e0b', borderRadius: 3, maxBarThickness: 14 },
+        ],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false, indexAxis: 'y',
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, color: cssVar('--text'), font: { size: 12 } } },
+          tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}` } },
+          datalabels: { display: false },
+        },
+        layout: { padding: { right: 10 } },
+        scales: {
+          x: { beginAtZero: true, ticks: { precision: 0 } },
+          y: { grid: { display: false } },
+        },
+      }
+    }));
   }
 }

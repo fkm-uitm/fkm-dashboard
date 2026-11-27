@@ -350,7 +350,13 @@ button, input, select { font: inherit; color: inherit; }
 .chart-card p  { font-size: 12px; color: var(--text3); margin-top: 2px; }
 .chart-hint    { font-size: 11px; color: var(--accent); margin-top: 4px; }
 .chart-wrap { position: relative; height: 220px; }
-.chart-wrap.tall { height: 300px; }
+.chart-wrap.tall  { height: 300px; }
+.chart-wrap.xtall { height: 420px; }
+.chart-header-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.chart-toggle-row { display:flex; gap:4px; flex-shrink:0; }
+.chart-toggle { padding:4px 12px; font-size:12px; font-weight:600; border:1px solid var(--border); border-radius:6px; background:var(--surface2); color:var(--text2); cursor:pointer; transition:background .15s,color .15s; }
+.chart-toggle.active { background:var(--brand); color:#fff; border-color:var(--brand); }
+.chart-toggle-label { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text2); cursor:pointer; white-space:nowrap; flex-shrink:0; }
 
 /* cross-filter active indicator */
 .cross-filter-active {

@@ -168,6 +168,35 @@
       </div>
       <div class="chart-wrap tall"><canvas id="chart-top-pubs"></canvas></div>
     </div>
+
+    <div class="section-title">Publication Trend</div>
+    <div class="chart-card">
+      <div class="chart-card-header chart-header-row">
+        <div>
+          <h3>Indexed Publications by Year</h3>
+          <p>Unique titles per year, deduplicated across co-authors (2015 onwards)</p>
+        </div>
+        <div class="chart-toggle-row" id="pub-trend-toggle" role="group" aria-label="Index filter">
+          <button class="chart-toggle active" data-trend="swe">Scopus / WoS / ERA</button>
+          <button class="chart-toggle" data-trend="all">All indexed</button>
+        </div>
+      </div>
+      <div class="chart-wrap tall"><canvas id="chart-pub-trend"></canvas></div>
+    </div>
+
+    <div class="section-title">Research by Department</div>
+    <div class="chart-card">
+      <div class="chart-card-header chart-header-row">
+        <div>
+          <h3>Department Activity</h3>
+          <p>Indexed publications (Scopus/WoS/ERA), active grants, and ongoing supervision per department. Staff count shown in brackets.</p>
+        </div>
+        <label class="chart-toggle-label">
+          <input type="checkbox" id="dept-per-staff"> Per staff member
+        </label>
+      </div>
+      <div class="chart-wrap xtall"><canvas id="chart-dept"></canvas></div>
+    </div>
   </div>
 
   <!-- ══ STAFF ══════════════════════════════════════════════════════ -->
