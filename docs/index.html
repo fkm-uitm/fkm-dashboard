@@ -2378,9 +2378,10 @@ function pubTableRows(p, i) {
 function grantTableRows(g, i) {
   const isIntl   = (g.level||'').toUpperCase().includes('INT');
   const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
+  const gIdx     = GRANTS.indexOf(g);
   return `<tr>
     <td class="muted">${i+1}</td>
-    <td class="clip wide">${esc(g.title||'(no title)')}</td>
+    <td class="clip wide"><button class="title-btn" data-grantidx="${gIdx}" title="${esc(g.title)}">${esc(g.title||'(no title)')}</button></td>
     <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
     <td>${esc(String(g.year_start||''))}</td>
     <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
@@ -2388,11 +2389,12 @@ function grantTableRows(g, i) {
 }
 
 function svTableRows(e, i) {
-  const cat = e.category || '';
+  const cat   = e.category || '';
   const badge = cat.includes('phd') ? '<span class="badge badge-intl">PhD</span>' : '<span class="badge badge-natl">MSc</span>';
+  const svIdx = SUPERVISION.indexOf(e);
   return `<tr>
     <td class="muted">${i+1}</td>
-    <td class="clip">${esc(e.student_name||'')}</td>
+    <td class="clip"><button class="title-btn" data-svidx="${svIdx}" title="${esc(e.student_name)}">${esc(e.student_name||'')}</button></td>
     <td>${badge}</td>
     <td class="clip wide" style="max-width:220px">${esc(e.title||'—')}</td>
     <td style="white-space:nowrap">${esc(e.intake||'')}</td>
@@ -2402,9 +2404,10 @@ function svTableRows(e, i) {
 
 function conTableRows(e, i) {
   const isDone = (e.status||'').toUpperCase() === 'COMPLETED';
+  const conIdx = CONSULTANCY.indexOf(e);
   return `<tr>
     <td class="muted">${i+1}</td>
-    <td class="clip wide">${esc(e.title||'(no title)')}</td>
+    <td class="clip wide"><button class="title-btn" data-conidx="${conIdx}" title="${esc(e.title)}">${esc(e.title||'(no title)')}</button></td>
     <td class="clip">${esc(e.client||'')}</td>
     <td style="font-size:11px;color:var(--text2)">${esc(e.type||'')}</td>
     <td>${esc(String(e.year_start||''))}</td>
@@ -2716,6 +2719,77 @@ function closePubDrawer() {
   document.getElementById('pub-backdrop').classList.remove('open');
 }
 
+function openGrantDrawer(grantIdx) {
+  const g = GRANTS[grantIdx]; if (!g) return;
+  const isIntl   = (g.level||'').toUpperCase().includes('INT');
+  const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
+  document.getElementById('pub-drawer-title').textContent = g.title || '(no title)';
+  document.getElementById('pub-drawer-body').innerHTML = `
+    <dl class="pub-meta">
+      <dt>File No.</dt><dd>${esc(g.file_no||'--')}</dd>
+      <dt>Level</dt><dd>${isIntl ? '<span class="badge badge-intl">International</span>' : '<span class="badge badge-natl">National</span>'}</dd>
+      <dt>Grant Name</dt><dd>${esc(g.grant_name||'--')}</dd>
+      <dt>Grant Code</dt><dd>${esc(g.grant_code||'--')}</dd>
+      <dt>Role</dt><dd>${esc(g.role||'--')}</dd>
+      <dt>Cost (RM)</dt><dd>${g.cost != null ? 'RM ' + Number(g.cost).toLocaleString() : '--'}</dd>
+      <dt>Year Start</dt><dd>${esc(String(g.year_start||'--'))}</dd>
+      <dt>Year End</dt><dd>${esc(String(g.year_end||'--'))}</dd>
+      <dt>Status</dt><dd>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Completed</span>'}</dd>
+      <dt>Researcher</dt><dd><button class="name-btn" data-slug="${esc(g.slug)}" style="font-size:13px">${esc(g.name||'--')}</button></dd>
+    </dl>`;
+  document.getElementById('pub-drawer-actions').innerHTML = '';
+  document.getElementById('pub-drawer').classList.add('open');
+  document.getElementById('pub-backdrop').classList.add('open');
+  document.getElementById('pub-drawer-close').focus();
+}
+
+function openSvDrawer(svIdx) {
+  const e = SUPERVISION[svIdx]; if (!e) return;
+  const cat = e.category || '';
+  const level = cat.includes('phd') ? 'PhD' : 'Master';
+  const isGrad = cat.includes('graduated');
+  document.getElementById('pub-drawer-title').textContent = e.student_name || '(no name)';
+  document.getElementById('pub-drawer-body').innerHTML = `
+    <dl class="pub-meta">
+      <dt>Matric No.</dt><dd>${esc(e.matric||'--')}</dd>
+      <dt>Level</dt><dd><span class="badge ${cat.includes('phd') ? 'badge-intl' : 'badge-natl'}">${level}</span></dd>
+      <dt>Status</dt><dd>${isGrad ? '<span class="badge badge-done">Graduated</span>' : '<span class="badge badge-active">Ongoing</span>'}</dd>
+      <dt>Programme</dt><dd>${esc(e.programme||'--')}</dd>
+      <dt>Research Title</dt><dd>${esc(e.title||'--')}</dd>
+      <dt>Intake</dt><dd>${esc(e.intake||'--')}</dd>
+      <dt>Academic Status</dt><dd>${esc(e.status||'--')}</dd>
+      ${e.graduated_sem ? `<dt>Graduated Sem</dt><dd>${esc(e.graduated_sem)}</dd>` : ''}
+      <dt>Main Supervisor</dt><dd>${esc(e.main_supervisor||'--')}</dd>
+      <dt>Supervisor</dt><dd><button class="name-btn" data-slug="${esc(e.slug)}" style="font-size:13px">${esc(e.staff_name||'--')}</button></dd>
+    </dl>`;
+  document.getElementById('pub-drawer-actions').innerHTML = '';
+  document.getElementById('pub-drawer').classList.add('open');
+  document.getElementById('pub-backdrop').classList.add('open');
+  document.getElementById('pub-drawer-close').focus();
+}
+
+function openConDrawer(conIdx) {
+  const e = CONSULTANCY[conIdx]; if (!e) return;
+  const isDone = (e.status||'').toUpperCase() === 'COMPLETED';
+  document.getElementById('pub-drawer-title').textContent = e.title || '(no title)';
+  document.getElementById('pub-drawer-body').innerHTML = `
+    <dl class="pub-meta">
+      <dt>File No.</dt><dd>${esc(e.file_no||'--')}</dd>
+      <dt>Client</dt><dd>${esc(e.client||'--')}</dd>
+      <dt>Type</dt><dd>${esc(e.type||'--')}</dd>
+      <dt>Role</dt><dd>${esc(e.role||'--')}</dd>
+      <dt>Cost (RM)</dt><dd>${e.cost_rm != null ? 'RM ' + Number(e.cost_rm).toLocaleString() : '--'}</dd>
+      <dt>Year Start</dt><dd>${esc(String(e.year_start||'--'))}</dd>
+      <dt>Year End</dt><dd>${esc(String(e.year_end||'--'))}</dd>
+      <dt>Status</dt><dd>${isDone ? '<span class="badge badge-done">Completed</span>' : '<span class="badge badge-active">Appointed</span>'}</dd>
+      <dt>Researcher</dt><dd><button class="name-btn" data-slug="${esc(e.slug)}" style="font-size:13px">${esc(e.staff_name||'--')}</button></dd>
+    </dl>`;
+  document.getElementById('pub-drawer-actions').innerHTML = '';
+  document.getElementById('pub-drawer').classList.add('open');
+  document.getElementById('pub-backdrop').classList.add('open');
+  document.getElementById('pub-drawer-close').focus();
+}
+
 document.getElementById('pub-drawer-close').addEventListener('click', closePubDrawer);
 document.getElementById('pub-backdrop').addEventListener('click', closePubDrawer);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePubDrawer(); });
@@ -2868,9 +2942,15 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // Publication title button
+  // Detail drawer buttons
   const tb = e.target.closest('[data-pubidx]');
   if (tb) return openPubDrawer(+tb.dataset.pubidx);
+  const gb = e.target.closest('[data-grantidx]');
+  if (gb) return openGrantDrawer(+gb.dataset.grantidx);
+  const sb = e.target.closest('[data-svidx]');
+  if (sb) return openSvDrawer(+sb.dataset.svidx);
+  const cb = e.target.closest('[data-conidx]');
+  if (cb) return openConDrawer(+cb.dataset.conidx);
 
   // Pagination
   const pb = e.target.closest('[data-page]');
