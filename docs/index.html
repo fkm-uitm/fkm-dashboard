@@ -843,6 +843,22 @@ td.empty { color: var(--text3); text-align: center; padding: 32px; font-style: i
 .src-btn.active { background: var(--accent); color: #fff; }
 .src-btn:not(:last-child) { border-right: 1px solid var(--border); }
 
+/* Data Pencapaian upload zone */
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 14px;
+  transition: border-color .2s, background .2s;
+}
+.upload-label:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.upload-label.dragover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
 /* Sortable column headers */
 th.sortable {
   cursor: pointer;
@@ -1294,6 +1310,20 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
         <p>Built with vanilla HTML/CSS/JS, Chart.js, and GitHub Actions for automated scraping. Hosted on GitHub Pages.</p>
       </div>
     </div>
+
+    <!-- Data Pencapaian upload -->
+    <div class="tbl-card" style="max-width:720px;margin-top:20px">
+      <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
+        <h3 style="color:var(--text);margin:0 0 8px">Upload Data Pencapaian (PRIME / IRES)</h3>
+        <p style="margin:0 0 16px">Upload the official <em>Data Pencapaian</em> Excel file (.xlsx) to update the PRIME/IRES benchmark numbers shown on the Overview. Data is extracted in-browser and stored locally — nothing is sent to any server.</p>
+        <label class="upload-label" id="prime-upload-label">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="22" height="22" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" d="M13.75 7h-3V3.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0L6.2 4.74a.75.75 0 0 0 1.1 1.02l1.95-2.1V7h-3A2.25 2.25 0 0 0 4 9.25v7.5A2.25 2.25 0 0 0 6.25 19h7.5A2.25 2.25 0 0 0 16 16.75v-7.5A2.25 2.25 0 0 0 13.75 7Zm-3 0h-1.5v3.75a.75.75 0 0 0 1.5 0V7Z" clip-rule="evenodd"/></svg>
+          <span id="prime-upload-label-text">Choose Data Pencapaian .xlsx file…</span>
+          <input type="file" id="prime-file-input" accept=".xlsx,.xls" style="display:none">
+        </label>
+        <div id="prime-upload-status" style="display:none;margin-top:16px"></div>
+      </div>
+    </div>
   </div>
 
 </div><!-- /.main -->
@@ -1430,6 +1460,7 @@ const SVG = {
   money:    `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.798 7.45c.512-.67 1.135-1.2 1.927-1.2.68 0 1.212.405 1.555.952.343.546.47 1.233.47 1.798 0 .68-.262 1.37-.752 1.86a3.45 3.45 0 0 1-.673.502v.138a1 1 0 1 1-2 0v-.6a1 1 0 0 1 1-1 1.45 1.45 0 0 0 .88-.316c.198-.194.345-.484.345-.784 0-.365-.077-.712-.22-.946-.143-.228-.295-.304-.405-.304-.277 0-.609.235-1.021.77a1 1 0 0 1-1.606-1.17ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/></svg>`,
   cap:      `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M10.394 2.08a1 1 0 0 0-.788 0l-7 3a1 1 0 0 0 0 1.84L5.25 8.051a.999.999 0 0 1 .356-.257l4-1.714a1 1 0 1 1 .788 1.838L7.667 9.088l1.94.831a1 1 0 0 0 .787 0l7-3a1 1 0 0 0 0-1.838l-7-3ZM3.31 9.397 5 10.12v4.102a8.969 8.969 0 0 0-1.05-.174 1 1 0 0 1-.89-.89 11.115 11.115 0 0 1 .01-2.258A6.986 6.986 0 0 1 3.31 9.397Zm5.99 1.9L7.638 10.5l-1.313.562-.3.128A1 1 0 0 0 5.5 12.14v3.72a4.9 4.9 0 0 0 4.5 0v-3.72a1 1 0 0 0-.524-.92L8.5 10.84l.8-.343Z"/><path d="M5.595 15.964A6.964 6.964 0 0 0 10 17.5a6.964 6.964 0 0 0 4.405-1.536V12.14a1 1 0 0 0-.524-.92l-3.351-1.437a1 1 0 0 0-.788 0L6.595 11.22a1 1 0 0 0-.524.92v3.824Z"/></svg>`,
   handshake:`<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path d="M11.983 1.907a.75.75 0 0 0-1.292-.657l-8.5 9.5A.75.75 0 0 0 2.75 12h6.572l-1.305 6.093a.75.75 0 0 0 1.292.657l8.5-9.5A.75.75 0 0 0 17.25 8h-6.572l1.305-6.093Z"/></svg>`,
+  star:     `<svg viewBox="0 0 20 20" fill="currentColor" class="kpi-icon" aria-hidden="true"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>`,
 };
 
 function kpi(label, value, sub, color, iconKey) {
@@ -1468,8 +1499,23 @@ async function loadData() {
     STAFF  = await staffRes.json();
     PUBS   = await pubsRes.json();
     GRANTS = await grantsRes.json();
-    if (primeRes && primeRes.ok) {
-      PRIME_BENCH = await primeRes.json();
+    // Load PRIME benchmark: prefer localStorage (user-uploaded) over committed JSON
+    let filePrime = null;
+    if (primeRes && primeRes.ok) filePrime = await primeRes.json();
+    let storedPrime = null;
+    try {
+      const raw = localStorage.getItem('fkm_prime_benchmark');
+      if (raw) storedPrime = JSON.parse(raw);
+    } catch(e) {}
+    // Pick newer: compare uploaded_at > report_date
+    if (storedPrime && filePrime) {
+      const sDate = storedPrime._meta?.uploaded_at || storedPrime._meta?.report_date || '';
+      const fDate = filePrime._meta?.uploaded_at   || filePrime._meta?.report_date   || '';
+      PRIME_BENCH = sDate >= fDate ? storedPrime : filePrime;
+    } else {
+      PRIME_BENCH = storedPrime || filePrime || null;
+    }
+    if (PRIME_BENCH) {
       const primeBtn = document.getElementById('ov-prime-btn');
       if (primeBtn) primeBtn.disabled = false;
     }
@@ -2126,7 +2172,43 @@ function showPage(id) {
   document.querySelectorAll('[id^="page-"]').forEach(p => { p.hidden = p.id !== 'page-' + id; });
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
   if (id === 'overview') setTimeout(drawCharts, 50);
+  if (id === 'about') showAboutPrimeStatus();
   closeSidebar();
+}
+
+function showAboutPrimeStatus() {
+  if (!window._cachedPrime) return;
+  const cached = window._cachedPrime;
+  const status = document.getElementById('prime-upload-status');
+  if (status.style.display !== 'none' && status.innerHTML !== '') return; // already shown by upload
+  const label  = cached._meta?.report_label || 'Data Pencapaian';
+  const date   = cached._meta?.uploaded_at?.slice(0,10) || cached._meta?.report_date || '';
+  status.style.display = 'block';
+  document.getElementById('prime-upload-label-text').textContent = `✓ ${label} (loaded from browser storage)`;
+  status.innerHTML = `
+    <div style="background:color-mix(in srgb,var(--surface) 60%,#2563eb 6%);border:1px solid var(--border);border-radius:8px;padding:14px 18px">
+      <div style="font-weight:600;color:var(--text);margin-bottom:6px">📋 ${esc(label)}</div>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--text3)">Previously uploaded${date ? ` on ${date}` : ''} and stored in this browser. Upload a new file to replace it.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-primary" id="prime-dl-json">⬇ Download as JSON</button>
+        <button class="btn-secondary" id="prime-clear-btn">✕ Clear uploaded data</button>
+      </div>
+    </div>`;
+
+  document.getElementById('prime-dl-json').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(cached, null, 2)], {type:'application/json'});
+    const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'prime_benchmark.json'});
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('prime-clear-btn').addEventListener('click', () => {
+    try { localStorage.removeItem('fkm_prime_benchmark'); } catch(e) {}
+    window._cachedPrime = null;
+    PRIME_BENCH = null;
+    document.getElementById('ov-prime-btn').disabled = true;
+    if (ovSource === 'prime') { ovSource = 'expert'; document.querySelector('[data-src="expert"]').classList.add('active'); document.querySelector('[data-src="prime"]').classList.remove('active'); renderOverview(SUMMARY); }
+    status.style.display = 'none';
+    document.getElementById('prime-upload-label-text').textContent = 'Choose Data Pencapaian .xlsx file…';
+  });
 }
 
 document.querySelectorAll('.nav-item').forEach(b => {
@@ -2443,6 +2525,217 @@ document.getElementById('about-dl-grants').addEventListener('click', () => {
     ['Author','Title','Level','Grant Name','Grant Code','Role','Year Start','Year End','Cost (RM)','Status'],
     'Grants', 'FKM_Grants.xlsx');
 });
+
+// ── DATA PENCAPAIAN UPLOAD & EXTRACTION ───────────────────────────────────
+
+function extractPrimeBench(wb) {
+  // Reads a summary value from a "Sumber data" row (last numeric in that row)
+  function getSummaryVal(sheetName) {
+    const ws = wb.Sheets[sheetName]; if (!ws) return null;
+    const rows = XLSX.utils.sheet_to_array_of_arrays(ws, { defval: null });
+    for (const row of rows) {
+      if (row[0] && String(row[0]).includes('Sumber data')) {
+        for (let i = row.length - 1; i >= 1; i--) {
+          if (typeof row[i] === 'number') return row[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  // Finds the data rows after the "NO. FAIL" header and sums a numeric column
+  function parseGrantSheet(sheetName) {
+    const ws = wb.Sheets[sheetName]; if (!ws) return { count: 0, totalRM: 0 };
+    const rows = XLSX.utils.sheet_to_array_of_arrays(ws, { defval: null });
+    const hIdx = rows.findIndex(r => r && String(r[0]).trim() === 'NO. FAIL');
+    if (hIdx < 0) return { count: 0, totalRM: 0 };
+    const headers = rows[hIdx];
+    // Find cost column: look for PERUNTUK in header
+    let costCol = -1;
+    for (let i = 0; i < headers.length; i++) {
+      if (headers[i] && String(headers[i]).toUpperCase().includes('PERUNTUK')) { costCol = i; break; }
+    }
+    const dataRows = rows.slice(hIdx + 1).filter(r => r && r[0]);
+    const totalRM = costCol >= 0
+      ? dataRows.reduce((s, r) => s + (typeof r[costCol] === 'number' ? r[costCol] : 0), 0)
+      : 0;
+    return { count: dataRows.length, totalRM };
+  }
+
+  const indexed    = getSummaryVal('Indexed Journal & Proceedin (2)');
+  const nonidx     = getSummaryVal('Non Index Journal & Proceeding');
+  const otherPub   = getSummaryVal('Other Publication');
+  const corr       = getSummaryVal('Corresponding Author');
+  const q1q2       = getSummaryVal('Q1Q2');
+  const mycite     = getSummaryVal('MyCite');
+  const bookChap   = getSummaryVal('Book & Chap in Book');
+
+  const ga  = parseGrantSheet('Grant Acquisition');
+  const piGA = parseGrantSheet('Principal Investigator');
+  const piCount = getSummaryVal('Principal Investigator') || piGA.count;
+
+  // Detect report month/year from the filename stored on the workbook props
+  const props = wb.Props || {};
+  const reportLabel = 'Data Pencapaian FKM';
+
+  return {
+    _meta: {
+      report_label: reportLabel,
+      report_month: 'Uploaded',
+      report_date: new Date().toISOString().slice(0, 10),
+      uploaded_at: new Date().toISOString(),
+      sources: { publications: 'PRIME', grants: 'IRES' },
+    },
+    publications: {
+      indexed:                   indexed  ?? 0,
+      nonindexed_journal:        nonidx   ?? 0,
+      other_publication:         otherPub ?? 0,
+      nonindexed_total:          (nonidx ?? 0) + (otherPub ?? 0),
+      corresponding_first_author: corr    ?? 0,
+      q1q2:                      q1q2    ?? 0,
+      mycite:                    mycite  ?? 0,
+      book_chapter:              bookChap ?? 0,
+      total:                     (indexed ?? 0) + (nonidx ?? 0) + (otherPub ?? 0),
+    },
+    grants: {
+      total_new_period:  ga.count,
+      pi_total_active:   piCount ?? 0,
+      acquisition_rm:    Math.round(ga.totalRM * 100) / 100,
+    },
+  };
+}
+
+function applyPrimeBench(data, filename) {
+  PRIME_BENCH = data;
+  // Persist to localStorage
+  try { localStorage.setItem('fkm_prime_benchmark', JSON.stringify(data)); } catch(e) {}
+  // Enable toggle
+  const btn = document.getElementById('ov-prime-btn');
+  if (btn) btn.disabled = false;
+  // If currently viewing PRIME mode, refresh overview
+  if (ovSource === 'prime') renderOverview(SUMMARY);
+
+  // Build status card
+  const pp = data.publications || {};
+  const pg = data.grants       || {};
+  const acqFmt = pg.acquisition_rm
+    ? 'RM ' + pg.acquisition_rm.toLocaleString('en-MY', {minimumFractionDigits:2})
+    : '--';
+  const rows = [
+    ['Indexed pubs (PRIME)',   pp.indexed],
+    ['Non-indexed pubs',       pp.nonindexed_total],
+    ['Q1/Q2 journals',         pp.q1q2],
+    ['MyCite',                 pp.mycite],
+    ['Book & Chapter',         pp.book_chapter],
+    ['Grant acquisition (IRES)', acqFmt],
+    ['PI grants (active)',     pg.pi_total_active],
+    ['New grants in period',   pg.total_new_period],
+  ];
+  const tableRows = rows.map(([k,v]) =>
+    `<tr><td style="padding:4px 10px 4px 0;color:var(--text3);font-size:13px">${esc(k)}</td><td style="padding:4px 0;font-weight:600;font-size:13px" class="num">${esc(String(v ?? '--'))}</td></tr>`
+  ).join('');
+
+  document.getElementById('prime-upload-status').style.display = 'block';
+  document.getElementById('prime-upload-status').innerHTML = `
+    <div style="background:color-mix(in srgb,var(--surface) 60%,#16a34a 8%);border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px">
+      <div style="font-weight:600;color:#15803d;margin-bottom:10px">✓ Extracted from ${esc(filename)}</div>
+      <table style="border-collapse:collapse"><tbody>${tableRows}</tbody></table>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-primary" id="prime-dl-json">⬇ Download extracted JSON</button>
+        <button class="btn-secondary" id="prime-clear-btn">✕ Clear uploaded data</button>
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin:10px 0 0">Stored in this browser only. Switch to <strong>PRIME/IRES</strong> on the Overview to see these numbers. To share with others, download the JSON and commit it to the repo as <code>docs/data/prime_benchmark.json</code>.</p>
+    </div>`;
+
+  document.getElementById('prime-dl-json').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'prime_benchmark.json'});
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById('prime-clear-btn').addEventListener('click', () => {
+    try { localStorage.removeItem('fkm_prime_benchmark'); } catch(e) {}
+    // Revert to file-based benchmark if any
+    fetch('data/prime_benchmark.json').then(r => r.ok ? r.json() : null).then(j => {
+      PRIME_BENCH = j;
+      if (!PRIME_BENCH) { document.getElementById('ov-prime-btn').disabled = true; ovSource = 'expert'; }
+      if (ovSource === 'prime') renderOverview(SUMMARY);
+    }).catch(() => { PRIME_BENCH = null; });
+    document.getElementById('prime-upload-status').style.display = 'none';
+    document.getElementById('prime-upload-label-text').textContent = 'Choose Data Pencapaian .xlsx file…';
+    document.getElementById('prime-file-input').value = '';
+  });
+}
+
+function handlePrimeFile(file) {
+  if (!file) return;
+  if (typeof XLSX === 'undefined') {
+    alert('Excel library not loaded yet — try again in a moment.'); return;
+  }
+  const labelText = document.getElementById('prime-upload-label-text');
+  const status    = document.getElementById('prime-upload-status');
+  labelText.textContent = `Reading ${file.name}…`;
+  status.style.display = 'none';
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb   = XLSX.read(e.target.result, { type: 'array' });
+      const data = extractPrimeBench(wb);
+      // Try to detect report month from filename e.g. "Data Pencapaian - FKM (Okt 2026).xlsx"
+      const monthMatch = file.name.match(/\(([^)]+)\)/);
+      if (monthMatch) {
+        data._meta.report_month = monthMatch[1];
+        data._meta.report_label = `Data Pencapaian FKM ${monthMatch[1]}`;
+      }
+      labelText.textContent = `✓ ${file.name}`;
+      applyPrimeBench(data, file.name);
+    } catch(err) {
+      console.error(err);
+      labelText.textContent = 'Choose Data Pencapaian .xlsx file…';
+      status.style.display = 'block';
+      status.innerHTML = `<div style="color:#dc2626;padding:12px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px">
+        ✕ Could not extract data: ${esc(err.message)}<br>
+        <small>Make sure this is an official Data Pencapaian Excel file with the standard sheet names.</small>
+      </div>`;
+    }
+  };
+  reader.onerror = () => { labelText.textContent = 'Choose Data Pencapaian .xlsx file…'; };
+  reader.readAsArrayBuffer(file);
+}
+
+// File input change
+document.getElementById('prime-file-input').addEventListener('change', e => {
+  handlePrimeFile(e.target.files[0]);
+});
+
+// Click-through label → file input
+document.getElementById('prime-upload-label').addEventListener('click', e => {
+  if (e.target.tagName !== 'INPUT') document.getElementById('prime-file-input').click();
+});
+
+// Drag-and-drop onto the upload zone
+const uploadLabel = document.getElementById('prime-upload-label');
+uploadLabel.addEventListener('dragover',  e => { e.preventDefault(); uploadLabel.classList.add('dragover'); });
+uploadLabel.addEventListener('dragleave', ()  => uploadLabel.classList.remove('dragover'));
+uploadLabel.addEventListener('drop',      e  => {
+  e.preventDefault();
+  uploadLabel.classList.remove('dragover');
+  handlePrimeFile(e.dataTransfer.files[0]);
+});
+
+// On load, if localStorage has data already, show its status
+try {
+  const raw = localStorage.getItem('fkm_prime_benchmark');
+  if (raw) {
+    const cached = JSON.parse(raw);
+    const uploaded = cached._meta?.uploaded_at || cached._meta?.report_date || '';
+    if (uploaded) {
+      // We'll show a "loaded from cache" note once About page is visited
+      window._cachedPrime = cached;
+    }
+  }
+} catch(e) {}
 
 loadData();
 </script>
