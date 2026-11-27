@@ -1509,10 +1509,11 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
       <p id="ov-subtitle">Aggregated figures from UiTM Expert portal, Shah Alam academic staff</p>
     </div>
     <div class="ov-filter-bar">
-      <span class="ov-filter-label">From:</span>
-      <select class="filter-select" id="ov-from-ym" aria-label="From month and year"></select>
-      <span class="ov-filter-label">To:</span>
-      <select class="filter-select" id="ov-to-ym" aria-label="To month and year"></select>
+      <select class="filter-select" id="ov-from-m" aria-label="From month"></select>
+      <select class="filter-select" id="ov-from-y" aria-label="From year"></select>
+      <span class="pov-filter-sep">–</span>
+      <select class="filter-select" id="ov-to-m" aria-label="Until month"></select>
+      <select class="filter-select" id="ov-to-y" aria-label="Until year"></select>
       <button class="pov-reset-btn" id="ov-reset-range">All time</button>
       <span class="ov-period-note" id="ov-period-note"></span>
     </div>
@@ -1935,24 +1936,22 @@ function getOvFilteredData() {
 
 const _MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function _ymLabel(ym) { const y = Math.floor(ym/100), m = ym%100; return `${_MON[m-1]} ${y}`; }
+const _monOpts = sel => _MON.map((n,i) => `<option value="${i+1}"${i+1===sel?' selected':''}>${n}</option>`).join('');
+const _yrOpts  = (years, sel) => years.map(y => `<option value="${y}"${y===sel?' selected':''}>${y}</option>`).join('');
 
 function buildOvRangeSelects() {
-  const ymSet = new Set();
-  for (const p of PUBS) {
-    if (!p.date) continue;
-    const y = +p.date.slice(0,4), m = +p.date.slice(5,7);
-    if (y >= 2000 && m >= 1 && m <= 12) ymSet.add(y*100+m);
-  }
-  const ymList = [...ymSet].sort((a,b)=>a-b);
-  if (!ymList.length) return;
-  const minYM = ymList[0], maxYM = ymList[ymList.length-1];
+  const pubYears = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(y => y >= 2000))].sort((a,b)=>a-b);
+  if (!pubYears.length) return;
+  const minY = pubYears[0], maxY = pubYears[pubYears.length-1];
+  const minYM = minY*100+1, maxYM = maxY*100+12;
   if (!ovFromYM) ovFromYM = minYM;
   if (!ovToYM)   ovToYM   = maxYM;
-  const opts = sel => ['<option value="0">All time</option>',
-    ...ymList.map(ym => `<option value="${ym}"${ym===sel?' selected':''}>${_ymLabel(ym)}</option>`)
-  ].join('');
-  document.getElementById('ov-from-ym').innerHTML = opts(ovFromYM);
-  document.getElementById('ov-to-ym').innerHTML   = opts(ovToYM);
+  const fromY = Math.floor(ovFromYM/100), fromM = ovFromYM%100;
+  const toY   = Math.floor(ovToYM/100),   toM   = ovToYM%100;
+  document.getElementById('ov-from-m').innerHTML = _monOpts(fromM);
+  document.getElementById('ov-from-y').innerHTML = _yrOpts(pubYears, fromY);
+  document.getElementById('ov-to-m').innerHTML   = _monOpts(toM);
+  document.getElementById('ov-to-y').innerHTML   = _yrOpts(pubYears, toY);
 }
 
 function renderOvPeriodNote() {
@@ -2798,16 +2797,11 @@ function renderPubsOverview() {
   const el = document.getElementById('pubs-ov-content');
   if (!el || !PUBS.length) return;
 
-  // Build month+year list from data
-  const ymSet = new Set();
-  for (const p of PUBS) {
-    if (!p.date) continue;
-    const y = +p.date.slice(0,4), m = +p.date.slice(5,7);
-    if (y >= 2000 && m >= 1 && m <= 12) ymSet.add(y*100+m);
-  }
-  const ymList = [...ymSet].sort((a,b)=>a-b);
-  const minYM  = ymList[0]                  || new Date().getFullYear()*100+1;
-  const maxYM  = ymList[ymList.length-1]    || new Date().getFullYear()*100+12;
+  // Build year list for pubs filter
+  const pubYears = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(y => y >= 2000))].sort((a,b)=>a-b);
+  const minPY = pubYears[0]                    || new Date().getFullYear();
+  const maxPY = pubYears[pubYears.length-1]    || new Date().getFullYear();
+  const minYM  = minPY*100+1, maxYM = maxPY*100+12;
   if (!_pubsOvFromYM) _pubsOvFromYM = minYM;
   if (!_pubsOvToYM)   _pubsOvToYM   = maxYM;
 
@@ -2879,16 +2873,17 @@ function renderPubsOverview() {
     : '';
   const topIdx = idxEntries[0];
   const rangeLabel = _pubsOvFromYM === minYM && _pubsOvToYM === maxYM ? 'all time' : `${_ymLabel(_pubsOvFromYM)}–${_ymLabel(_pubsOvToYM)}`;
-
-  // month+year options for filter bar
-  const ymPubOpts = sel => ymList.map(ym => `<option value="${ym}"${ym===sel?' selected':''}>${_ymLabel(ym)}</option>`).join('');
+  const fM = _pubsOvFromYM%100, fY = Math.floor(_pubsOvFromYM/100);
+  const tM = _pubsOvToYM%100,   tY = Math.floor(_pubsOvToYM/100);
+  const pYrOpts = sel => pubYears.map(y => `<option value="${y}"${y===sel?' selected':''}>${y}</option>`).join('');
 
   el.innerHTML = `
   <div class="pov-filter-bar">
-    <span class="pov-filter-label">From:</span>
-    <select class="filter-select pov-yr-from" id="pubs-ov-from" aria-label="From month and year">${ymPubOpts(_pubsOvFromYM)}</select>
+    <select class="filter-select" id="pubs-ov-fm" aria-label="From month">${_monOpts(fM)}</select>
+    <select class="filter-select" id="pubs-ov-fy" aria-label="From year">${pYrOpts(fY)}</select>
     <span class="pov-filter-sep">–</span>
-    <select class="filter-select pov-yr-to" id="pubs-ov-to" aria-label="To month and year">${ymPubOpts(_pubsOvToYM)}</select>
+    <select class="filter-select" id="pubs-ov-tm" aria-label="Until month">${_monOpts(tM)}</select>
+    <select class="filter-select" id="pubs-ov-ty" aria-label="Until year">${pYrOpts(tY)}</select>
     <button class="pov-reset-btn" id="pubs-ov-reset">All time</button>
     <span class="pov-filter-note">${num(pubs.length)} records</span>
   </div>
@@ -2970,13 +2965,22 @@ function renderPubsOverview() {
     options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:10,font:{size:11},color:textColor}}, datalabels:{display:false} } }
   });
 
-  // wire filter bar events (replace after innerHTML re-render)
-  const fromSel  = document.getElementById('pubs-ov-from');
-  const toSel    = document.getElementById('pubs-ov-to');
+  // wire filter bar events (re-wired after each innerHTML re-render)
+  function _readPubsOvSelects() {
+    const fm = +document.getElementById('pubs-ov-fm').value;
+    const fy = +document.getElementById('pubs-ov-fy').value;
+    const tm = +document.getElementById('pubs-ov-tm').value;
+    const ty = +document.getElementById('pubs-ov-ty').value;
+    _pubsOvFromYM = fy*100+fm;
+    _pubsOvToYM   = ty*100+tm;
+    if (_pubsOvFromYM > _pubsOvToYM) _pubsOvToYM = _pubsOvFromYM;
+  }
+  ['pubs-ov-fm','pubs-ov-fy','pubs-ov-tm','pubs-ov-ty'].forEach(id => {
+    const el2 = document.getElementById(id);
+    if (el2) el2.addEventListener('change', () => { _readPubsOvSelects(); renderPubsOverview(); });
+  });
   const resetBtn = document.getElementById('pubs-ov-reset');
-  if (fromSel)  fromSel.addEventListener('change',  () => { _pubsOvFromYM = +fromSel.value; if (_pubsOvFromYM > _pubsOvToYM) _pubsOvToYM = _pubsOvFromYM; renderPubsOverview(); });
-  if (toSel)    toSel.addEventListener('change',    () => { _pubsOvToYM   = +toSel.value;   if (_pubsOvToYM < _pubsOvFromYM) _pubsOvFromYM = _pubsOvToYM; renderPubsOverview(); });
-  if (resetBtn) resetBtn.addEventListener('click',  () => { _pubsOvFromYM = minYM; _pubsOvToYM = maxYM; renderPubsOverview(); });
+  if (resetBtn) resetBtn.addEventListener('click', () => { _pubsOvFromYM = minYM; _pubsOvToYM = maxYM; renderPubsOverview(); });
 }
 
 function renderPubsTable() {
@@ -3552,18 +3556,18 @@ document.getElementById('grants-thead').addEventListener('click',
 // ── BOOT ───────────────────────────────────────────────────────────────────
 Chart.register(ChartDataLabels);
 
-// Overview range filter
-document.getElementById('ov-from-ym').addEventListener('change', () => {
-  ovFromYM = +document.getElementById('ov-from-ym').value;
-  if (ovFromYM && ovToYM && ovFromYM > ovToYM) ovToYM = ovFromYM;
-  if (ovToYM) document.getElementById('ov-to-ym').value = String(ovToYM);
-  renderOverview(SUMMARY);
-});
-document.getElementById('ov-to-ym').addEventListener('change', () => {
-  ovToYM = +document.getElementById('ov-to-ym').value;
-  if (ovFromYM && ovToYM && ovToYM < ovFromYM) ovFromYM = ovToYM;
-  if (ovFromYM) document.getElementById('ov-from-ym').value = String(ovFromYM);
-  renderOverview(SUMMARY);
+// Overview range filter — 4 separate selects
+function _readOvSelects() {
+  const fm = +document.getElementById('ov-from-m').value;
+  const fy = +document.getElementById('ov-from-y').value;
+  const tm = +document.getElementById('ov-to-m').value;
+  const ty = +document.getElementById('ov-to-y').value;
+  ovFromYM = fy*100+fm;
+  ovToYM   = ty*100+tm;
+  if (ovFromYM > ovToYM) ovToYM = ovFromYM;
+}
+['ov-from-m','ov-from-y','ov-to-m','ov-to-y'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => { _readOvSelects(); renderOverview(SUMMARY); });
 });
 document.getElementById('ov-reset-range').addEventListener('click', () => {
   ovFromYM = 0; ovToYM = 0;
