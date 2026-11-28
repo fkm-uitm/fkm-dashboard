@@ -327,6 +327,10 @@ function openStaffProfile(slug) {
   const careerOtherIdx = idxPubs.filter(p => !SWE.has(p.index_name));
   const careerNonIdx = staffPubs.filter(p => !p.indexed);
 
+  // Year options for pub filter
+  const spYears = [...new Set(staffPubs.map(p => p.date ? +p.date.slice(0,4) : 0).filter(y => y > 0))].sort((a,b)=>b-a);
+  const spYrOpts = spYears.map(y => `<option value="${y}">${y}</option>`).join('');
+
   const expertUrl = `https://expert.uitm.edu.my/expert/${slug}`;
   const links = [
     `<a class="profile-link" href="${expertUrl}" target="_blank" rel="noopener">Expert Portal</a>`,
@@ -433,17 +437,39 @@ function openStaffProfile(slug) {
 
         <!-- Publications tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="publications" hidden>
-          ${staffPubs.length ? `
-            <div id="pub-paged-list">
-              ${profilePagedTable(staffPubs, 1, 'pub', pubTableRows)}
-            </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No publications on record.</p>'}
+          <div class="prof-filter-bar">
+            <input type="search" class="prof-filter-input" id="prof-pub-search" placeholder="Search title…" data-proffilter aria-label="Search publications">
+            <select class="filter-select" id="prof-pub-cat" data-proffilter aria-label="Filter by category">
+              <option value="all">All</option>
+              <option value="indexed">Indexed</option>
+              <option value="nonindexed">Non-Indexed</option>
+            </select>
+            <select class="filter-select" id="prof-pub-year" data-proffilter aria-label="Filter by year">
+              <option value="">All years</option>
+              ${spYrOpts}
+            </select>
+          </div>
+          <div id="pub-paged-list">
+            ${staffPubs.length ? profilePagedTable(staffPubs, 1, 'pub', pubTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No publications on record.</p>'}
+          </div>
         </div>
         <!-- Grants tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="grants" hidden>
-          ${staffGrants.length ? `
-            <div id="grant-paged-list">
-              ${profilePagedTable(staffGrants, 1, 'grant', grantTableRows)}
-            </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No grants on record.</p>'}
+          <div class="prof-filter-bar">
+            <select class="filter-select" id="prof-grant-status" data-proffilter aria-label="Filter by status">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+            </select>
+            <select class="filter-select" id="prof-grant-level" data-proffilter aria-label="Filter by level">
+              <option value="all">All Levels</option>
+              <option value="intl">International</option>
+              <option value="natl">National</option>
+            </select>
+          </div>
+          <div id="grant-paged-list">
+            ${staffGrants.length ? profilePagedTable(staffGrants, 1, 'grant', grantTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No grants on record.</p>'}
+          </div>
         </div>
         <!-- Supervision tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="supervision" hidden>
@@ -453,10 +479,21 @@ function openStaffProfile(slug) {
             <div class="profile-kpi"><div class="label">Master Graduated</div><div class="val num">${s.master_graduated||0}</div></div>
             <div class="profile-kpi"><div class="label">Master Ongoing</div><div class="val num">${s.master_ongoing||0}</div></div>
           </div>
-          ${staffSv.length ? `
+          <div class="prof-filter-bar">
+            <select class="filter-select" id="prof-sv-level" data-proffilter aria-label="Filter by level">
+              <option value="all">All Levels</option>
+              <option value="phd">PhD</option>
+              <option value="msc">Master</option>
+            </select>
+            <select class="filter-select" id="prof-sv-status" data-proffilter aria-label="Filter by status">
+              <option value="all">All Status</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="graduated">Graduated</option>
+            </select>
+          </div>
           <div id="sv-paged-list">
-            ${profilePagedTable(staffSv, 1, 'sv', svTableRows)}
-          </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:12px">No supervision records yet — may appear after next scrape.</p>'}
+            ${staffSv.length ? profilePagedTable(staffSv, 1, 'sv', svTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No supervision records yet — may appear after next scrape.</p>'}
+          </div>
         </div>
         <!-- Consultancy tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="consultancy" hidden>
@@ -464,10 +501,16 @@ function openStaffProfile(slug) {
             <div class="profile-kpi"><div class="label">Appointed</div><div class="val num">${s.consultancy_appointed||0}</div></div>
             <div class="profile-kpi"><div class="label">Completed</div><div class="val num">${s.consultancy_completed||0}</div></div>
           </div>
-          ${staffCon.length ? `
+          <div class="prof-filter-bar">
+            <select class="filter-select" id="prof-con-status" data-proffilter aria-label="Filter by status">
+              <option value="all">All Status</option>
+              <option value="appointed">Appointed</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
           <div id="con-paged-list">
-            ${profilePagedTable(staffCon, 1, 'con', conTableRows)}
-          </div>` : '<p style="color:var(--text3);font-size:13px;margin-top:12px">No consultancy records yet — may appear after next scrape.</p>'}
+            ${staffCon.length ? profilePagedTable(staffCon, 1, 'con', conTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No consultancy records yet — may appear after next scrape.</p>'}
+          </div>
         </div>
       </div>
     </div>`;
@@ -489,11 +532,67 @@ function openStaffProfile(slug) {
     });
   });
 
-  // Wire profile-tab pagination
-  wireProfilePagination(panel, {
-    pub:   staffPubs,
-    grant: staffGrants,
-    sv:    staffSv,
-    con:   staffCon,
-  });
+  // Filter + pagination wiring
+  function _getProfileFiltered() {
+    const q   = panel.querySelector('#prof-pub-search')?.value.trim().toLowerCase() || '';
+    const cat = panel.querySelector('#prof-pub-cat')?.value || 'all';
+    const yr  = +(panel.querySelector('#prof-pub-year')?.value || 0);
+    const gs  = panel.querySelector('#prof-grant-status')?.value || 'all';
+    const gl  = panel.querySelector('#prof-grant-level')?.value || 'all';
+    const svl = panel.querySelector('#prof-sv-level')?.value || 'all';
+    const svs = panel.querySelector('#prof-sv-status')?.value || 'all';
+    const cs  = panel.querySelector('#prof-con-status')?.value || 'all';
+
+    let p = [...staffPubs];
+    if (cat === 'indexed')    p = p.filter(x => x.indexed);
+    if (cat === 'nonindexed') p = p.filter(x => !x.indexed);
+    if (yr) p = p.filter(x => x.date && +x.date.slice(0,4) === yr);
+    if (q)  p = p.filter(x => (x.title||'').toLowerCase().includes(q));
+
+    let g = [...staffGrants];
+    if (gs === 'active')    g = g.filter(x => (x.status||'').toUpperCase() === 'ACTIVE');
+    if (gs === 'completed') g = g.filter(x => (x.status||'').toUpperCase() !== 'ACTIVE');
+    if (gl === 'intl') g = g.filter(x => (x.level||'').toUpperCase().includes('INT'));
+    if (gl === 'natl') g = g.filter(x => !(x.level||'').toUpperCase().includes('INT'));
+
+    let sv = [...staffSv];
+    if (svl === 'phd') sv = sv.filter(x => x.category?.includes('phd'));
+    if (svl === 'msc') sv = sv.filter(x => x.category?.includes('master'));
+    if (svs === 'ongoing')   sv = sv.filter(x => x.category?.includes('ongoing'));
+    if (svs === 'graduated') sv = sv.filter(x => x.category?.includes('graduated'));
+
+    let co = [...staffCon];
+    if (cs === 'completed') co = co.filter(x => (x.status||'').toUpperCase() === 'COMPLETED');
+    if (cs === 'appointed') co = co.filter(x => (x.status||'').toUpperCase() !== 'COMPLETED');
+
+    return { pub: p, grant: g, sv, con: co };
+  }
+
+  function _applyProfileFilters() {
+    const ds = _getProfileFiltered();
+    const pubEl = panel.querySelector('#pub-paged-list');
+    if (pubEl) pubEl.innerHTML = ds.pub.length ? profilePagedTable(ds.pub, 1, 'pub', pubTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No results.</p>';
+    const gEl = panel.querySelector('#grant-paged-list');
+    if (gEl) gEl.innerHTML = ds.grant.length ? profilePagedTable(ds.grant, 1, 'grant', grantTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No results.</p>';
+    const svEl = panel.querySelector('#sv-paged-list');
+    if (svEl) svEl.innerHTML = ds.sv.length ? profilePagedTable(ds.sv, 1, 'sv', svTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No results.</p>';
+    const coEl = panel.querySelector('#con-paged-list');
+    if (coEl) coEl.innerHTML = ds.con.length ? profilePagedTable(ds.con, 1, 'con', conTableRows) : '<p style="color:var(--text3);font-size:13px;padding:8px 0">No results.</p>';
+    // update tab counts
+    panel.querySelector('[data-ptab="publications"] .profile-tab-count').textContent = ds.pub.length;
+    panel.querySelector('[data-ptab="grants"] .profile-tab-count').textContent = ds.grant.length;
+    panel.querySelector('[data-ptab="supervision"] .profile-tab-count').textContent = ds.sv.length;
+    panel.querySelector('[data-ptab="consultancy"] .profile-tab-count').textContent = ds.con.length;
+    wireProfilePagination(panel, ds);
+  }
+
+  // Store on panel so filter listener (added once) always calls the latest function
+  panel._applyProfileFilters = _applyProfileFilters;
+  if (!panel._filterListenerAdded) {
+    panel.addEventListener('change', e => { if (e.target.dataset.proffilter !== undefined) panel._applyProfileFilters?.(); });
+    panel.addEventListener('input',  e => { if (e.target.dataset.proffilter !== undefined) panel._applyProfileFilters?.(); });
+    panel._filterListenerAdded = true;
+  }
+
+  wireProfilePagination(panel, { pub: staffPubs, grant: staffGrants, sv: staffSv, con: staffCon });
 }
