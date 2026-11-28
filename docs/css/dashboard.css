@@ -106,7 +106,50 @@ button, input, select { font: inherit; color: inherit; }
   position: fixed;
   top: 0; left: 0; bottom: 0;
   z-index: 200;
-  transition: transform .25s ease;
+  transition: transform .25s ease, width .25s ease;
+}
+
+/* ── Desktop collapse toggle ──────────────────────────────────────── */
+.sidebar-collapse-btn {
+  display: none; /* shown only on desktop via media query */
+  position: absolute;
+  top: 50%;
+  right: -14px;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 201;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s, color .15s, transform .25s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+}
+.sidebar-collapse-btn:hover { background: var(--surface2); color: var(--text); }
+
+/* Rotates chevron when collapsed */
+body.sidebar-collapsed .sidebar-collapse-btn {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Collapsed state — slide sidebar off-screen */
+body.sidebar-collapsed .sidebar {
+  transform: translateX(calc(-1 * var(--sidebar-w)));
+}
+body.sidebar-collapsed .main {
+  margin-left: 0;
+}
+
+/* Keep the toggle button peeking out when collapsed */
+body.sidebar-collapsed .sidebar-collapse-btn {
+  right: -28px;
+  transform: translateY(-50%) rotate(180deg);
 }
 .sidebar-logo {
   padding: 20px 20px 16px;
@@ -1260,6 +1303,10 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
 }
 
 /* ── RESPONSIVE ────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .sidebar-collapse-btn { display: flex; }
+}
+
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
@@ -1270,6 +1317,8 @@ th.sortable[aria-sort="descending"] .sort-icon { opacity: 1; }
   .content { padding: 20px 16px; }
   .pub-drawer { width: 100%; max-width: 100%; }
   .year-range { flex-wrap: wrap; }
+  /* hide collapse btn on mobile — hamburger handles it */
+  .sidebar-collapse-btn { display: none !important; }
 }
 
 /* ── REPORT PAGE ─────────────────────────────────────────────────────────── */

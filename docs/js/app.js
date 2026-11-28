@@ -142,6 +142,27 @@ document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('overlay').classList.toggle('open', open);
   document.getElementById('hamburger').setAttribute('aria-expanded', open);
 });
+
+// ── DESKTOP SIDEBAR COLLAPSE ───────────────────────────────────────
+(function() {
+  const btn = document.getElementById('sidebar-collapse');
+  if (!btn) return;
+  const STORAGE_KEY = 'fkm-sidebar-collapsed';
+  // Restore saved state
+  if (localStorage.getItem(STORAGE_KEY) === '1') {
+    document.body.classList.add('sidebar-collapsed');
+    btn.setAttribute('aria-label', 'Expand sidebar');
+    btn.title = 'Expand sidebar';
+  }
+  btn.addEventListener('click', () => {
+    const collapsed = document.body.classList.toggle('sidebar-collapsed');
+    btn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    btn.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+    try { localStorage.setItem(STORAGE_KEY, collapsed ? '1' : '0'); } catch(e) {}
+    // Redraw any visible charts after transition
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 280);
+  });
+}());
 document.getElementById('overlay').addEventListener('click', closeSidebar);
 
 // ── GLOBAL DELEGATION ──────────────────────────────────────────────────────
