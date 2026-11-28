@@ -8706,5 +8706,61 @@
     "year_start": 2016,
     "year_end": 2016,
     "status": "COMPLETED"
+  },
+  {
+    "slug": "norhayatisaad",
+    "staff_name": "NOR HAYATI BINTI SAAD",
+    "category": "appointed",
+    "file_no": "20200211004",
+    "title": "AIR PASSENGER SURVEY PROPOSAL",
+    "client": "AIRASIA BERHAD",
+    "type": "PROFESSIONAL SERVICES",
+    "role": "MEMBER",
+    "cost_rm": 47520,
+    "year_start": 2019,
+    "year_end": 2020,
+    "status": "APPOINTED"
+  },
+  {
+    "slug": "norhayatisaad",
+    "staff_name": "NOR HAYATI BINTI SAAD",
+    "category": "completed",
+    "file_no": "20240814012",
+    "title": "LAB TESTING & SYSTEM ENHANCEMENT OF WHEEL LUBRICATION SYSTEM CHARACTERISTIC SERVICING REPORT",
+    "client": "AMANTRONIC SDN BHD",
+    "type": "PROFESSIONAL SERVICES",
+    "role": "MEMBER",
+    "cost_rm": 150000,
+    "year_start": 2024,
+    "year_end": 2025,
+    "status": "COMPLETED"
+  },
+  {
+    "slug": "norhayatisaad",
+    "staff_name": "NOR HAYATI BINTI SAAD",
+    "category": "completed",
+    "file_no": "20160909004",
+    "title": "CDIO (CONCEIVE - DESIGN - IMPLEMENT- OPERATE) TRAINING - CAPSTONE PROJECT",
+    "client": "UNIVERSITI TEKNIKAL MALAYSIA, UTEM",
+    "type": "TRAINING",
+    "role": "HEAD",
+    "cost_rm": 4000,
+    "year_start": 2016,
+    "year_end": 2016,
+    "status": "COMPLETED"
+  },
+  {
+    "slug": "norhayatisaad",
+    "staff_name": "NOR HAYATI BINTI SAAD",
+    "category": "completed",
+    "file_no": "20140828005",
+    "title": "ENGINE DEVELOPMENT AND TESTING",
+    "client": "PUSAT KEJURUTERAAN AUTOMOTIF",
+    "type": "PROFESSIONAL SERVICES",
+    "role": "MEMBER",
+    "cost_rm": 17810,
+    "year_start": 2014,
+    "year_end": 2014,
+    "status": "COMPLETED"
   }
 ]
