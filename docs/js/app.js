@@ -25,10 +25,77 @@ function showPage(id) {
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
   if (id === 'overview') setTimeout(drawCharts, 50);
   if (id === 'report')   initReportPage();
-  if (id === 'about')    showAboutStats();
+  if (id === 'about')  { showAboutStats(); showFlaggedStaff(); }
   if (id === 'pubs')   { renderPubsTable(); setTimeout(renderPubsOverview, 50); setTimeout(renderPubsQuality, 100); }
   if (id === 'grants') { renderGrantsTable(); setTimeout(renderGrantsOverview, 50); }
   closeSidebar();
+}
+
+const FLAGGED_STAFF = [
+  { name:'ABDUL GHALIB @ THAM HOCK KHAN', id:'242981', pos:'PENSYARAH KANAN (KONTRAK 29000)',       reason:'Contract — may have left' },
+  { name:'ABDUL RAHMAN BIN OMAR',          id:'373850', pos:'PROFESOR KHAS',                         reason:'Profesor Khas — no portal account' },
+  { name:'ADAM TAN BIN MOHD AMIN',         id:'277367', pos:'PENSYARAH',                             reason:'No Expert Portal profile found' },
+  { name:'AHMAD AZLAN BIN MAT ISA',        id:'98410',  pos:'PROFESOR',                              reason:'Old staff ID — likely retired' },
+  { name:'AHMAD YUSRI BIN ISMAIL',         id:'253598', pos:'PENSYARAH',                             reason:'No Expert Portal profile found' },
+  { name:'PROF IR DR HJ AHMED JAFFAR',     id:'90019593',pos:'PENSYARAH SAMBILAN',                   reason:'Part-time (Sambilan) — no portal' },
+  { name:'ARMANSYAH',                      id:'287425', pos:'PENSYARAH KANAN (KONTRAK B.W. NEGARA)', reason:'Foreign contract — no portal' },
+  { name:'CHE FARIDAH BINTI MAT TAIB',     id:'148085', pos:'PENSYARAH KANAN',                       reason:'Old staff ID — likely retired' },
+  { name:'HAMIDUN BIN MD ISA',             id:'134002', pos:'PENSYARAH',                             reason:'Old staff ID — likely retired' },
+  { name:'HAYDER M. A. ALI AL-ASSADI',     id:'254610', pos:'PROFESOR MADYA (KONTRAK B.W. NEGARA)',  reason:'Foreign contract — no portal' },
+  { name:'ISMAIL NASIRUDDIN BIN AHMAD',    id:'355043', pos:'PROFESOR MADYA KHAS',                   reason:'Profesor Madya Khas — no portal' },
+  { name:'JUNAIDAH BINTI RAHMAD',          id:'140054', pos:'PENSYARAH',                             reason:'Old staff ID — likely retired' },
+  { name:'LOO HUCK SOO',                   id:'119962', pos:'PROFESOR MADYA',                        reason:'Old staff ID — likely retired' },
+  { name:'LOW CHENG YEE',                  id:'190305', pos:'PROFESOR MADYA',                        reason:'No Expert Portal profile found' },
+  { name:'LUTHFFI IDZHAR BIN ISMAIL',      id:'309060', pos:'PENSYARAH (SEMENTARA)',                  reason:'Temporary post — no portal' },
+  { name:'MOHAMAD AKBAR NOOR MOHAMAD NOOR',id:'90047526',pos:'PENSYARAH SAMBILAN',                   reason:'Part-time (Sambilan) — no portal' },
+  { name:'MOHAMAD NOR BIN BERHAN',         id:'100230', pos:'PROFESOR',                              reason:'Old staff ID — likely retired' },
+  { name:'MOHD ADAM MOHD SAID',            id:'90044010',pos:'PENSYARAH SAMBILAN',                   reason:'Part-time (Sambilan) — no portal' },
+  { name:'MOHD KHALID BIN HASSAN',         id:'107550', pos:'PROFESOR MADYA',                        reason:'Old staff ID — likely retired' },
+  { name:'MOHD MANSOR BIN SALLEH',         id:'90027594',pos:'PENSYARAH SAMBILAN',                   reason:'Part-time (Sambilan) — no portal' },
+  { name:'MOHD YUSUFF BIN MOHD',           id:'32285',  pos:'PROFESOR MADYA',                        reason:'Very old staff ID — retired' },
+  { name:'NOR AMALINA BT NORDIN',          id:'177289', pos:'PENSYARAH KANAN',                       reason:'No Expert Portal profile found' },
+  { name:'NORHISYAM BIN JENAL',            id:'296979', pos:'PENSYARAH MUDA (SEMENTARA)',             reason:'Temporary post — no portal' },
+  { name:'NORIAH BINTI YUSOFF',            id:'247313', pos:'PROFESOR MADYA',                        reason:'No Expert Portal profile found' },
+  { name:'OW CHEE SHENG (DATUK PROF.)',    id:'194000', pos:'PROFESOR (KONTRAK 29000)',               reason:'Contract — may have left' },
+  { name:'RAHANI BINTI ABDUL RAHMAN',      id:'269566', pos:'PENSYARAH',                             reason:'No Expert Portal profile found' },
+  { name:'RAHIM BIN ATAN',                 id:'78689',  pos:'PROFESOR MADYA',                        reason:'Old staff ID — likely retired' },
+  { name:'RAZALI BIN HASSAN',              id:'270571', pos:'PENSYARAH KANAN',                       reason:'No Expert Portal profile found' },
+  { name:'ROSELEENA BINTE JAAFAR',         id:'189714', pos:'PROFESOR MADYA (KONTRAK B.W. NEGARA)',  reason:'Foreign contract — no portal' },
+  { name:'SUHAIME BIN SAPARI',             id:'142010', pos:'PENSYARAH',                             reason:'Old staff ID — likely retired' },
+  { name:'SUNHAJI B HAJI KIYAI ABAS',      id:'40824',  pos:'PROFESOR MADYA',                        reason:'Very old staff ID — retired' },
+  { name:'UMI KALSOM BINTI AHMAD',         id:'261784', pos:'PENSYARAH MUDA (SEMENTARA)',             reason:'Temporary post — no portal' },
+  { name:'WAN MAZLINA BINTI WAN MOHAMED',  id:'176840', pos:'PROFESOR MADYA',                        reason:'Confirmed retired (Selamat Bersara, 04.09.2026)' },
+  { name:"YA'KUB B MD TAIB",              id:'72685',  pos:'PROFESOR MADYA KHAS',                   reason:'Old staff ID — likely retired' },
+  { name:'ZAINUDDIN BIN MOHAMAD',          id:'77321',  pos:'PENSYARAH',                             reason:'Old staff ID — likely retired' },
+];
+
+function showFlaggedStaff() {
+  const tbody = document.getElementById('about-flagged-tbody');
+  if (!tbody) return;
+  const reasonColors = {
+    'Confirmed retired': '#dc2626',
+    'Very old': '#d97706',
+    'Old staff': '#d97706',
+    'Part-time': '#7c3aed',
+    'Foreign contract': '#0891b2',
+    'Profesor Khas': '#059669',
+    'Temporary': '#64748b',
+    'Contract': '#64748b',
+    'No Expert': '#94a3b8',
+  };
+  function reasonColor(r) {
+    for (const [k, c] of Object.entries(reasonColors)) {
+      if (r.startsWith(k)) return c;
+    }
+    return 'var(--text3)';
+  }
+  tbody.innerHTML = FLAGGED_STAFF.map((s, i) => `
+    <tr style="background:${i%2===0?'var(--surface)':'var(--surface2)'}">
+      <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text);font-weight:500">${esc(s.name)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2);font-variant-numeric:tabular-nums">${esc(s.id)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2)">${esc(s.pos)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:${reasonColor(s.reason)};font-size:11px;font-weight:600">${esc(s.reason)}</td>
+    </tr>`).join('');
 }
 
 function showAboutStats() {
@@ -132,7 +199,8 @@ document.querySelectorAll('.sub-tabs').forEach(tabs => {
       p.hidden = p.id !== targetId;
     });
     // render hooks for lazy sub-tabs
-    if (targetId === 'pubs-quality') setTimeout(renderPubsQuality, 50);
+    if (targetId === 'pubs-quality')   setTimeout(renderPubsQuality, 50);
+    if (targetId === 'about-extraction') showFlaggedStaff();
   });
 });
 

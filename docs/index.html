@@ -445,33 +445,126 @@
       <p>FKM Research Analytics — data sourced from the UiTM Expert Portal</p>
     </div>
 
-    <!-- FKM at a Glance -->
-    <div class="tbl-card" style="max-width:720px;margin-bottom:20px">
-      <div style="padding:22px 28px 24px">
-        <h3 style="color:var(--text);margin:0 0 4px;font-size:16px">FKM at a Glance</h3>
-        <p style="margin:0 0 18px;font-size:13px;color:var(--text2)">Key figures from the UiTM Expert Portal, updated automatically every week.</p>
-        <div id="about-stats"><p style="color:var(--text2);font-size:13px">Loading…</p></div>
-      </div>
+    <!-- Sub-tabs -->
+    <div class="sub-tabs" role="tablist" aria-label="About sections" style="margin-bottom:20px">
+      <button class="sub-tab active" role="tab" data-subtab="about-overview" aria-selected="true">Overview</button>
+      <button class="sub-tab" role="tab" data-subtab="about-extraction" aria-selected="false">Data Extraction</button>
     </div>
 
-    <div class="tbl-card" style="max-width:720px">
-      <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
-        <h3 style="color:var(--text);margin:0 0 12px">Data Source</h3>
-        <p>All data is scraped from <strong>expert.uitm.edu.my</strong> — the UiTM Expert Portal where academic staff self-report their publications, grants, supervision and consultancy records. The scraper runs weekly (Monday 3 AM MYT) and updates the JSON files in this repository automatically.</p>
-        <p><strong>Note:</strong> This dashboard reflects what staff have entered into the Expert Portal. Figures may differ from official university reporting systems due to different data sources, duplicate entries per co-author, or staff not having updated their Expert profile.</p>
-        <h3 style="color:var(--text);margin:16px 0 12px">Export Data</h3>
-        <p>Download the raw data as Excel files for offline analysis or reporting.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
-          <button class="btn-primary" id="about-dl-staff">Download Staff Data</button>
-          <button class="btn-primary" id="about-dl-pubs">Download Publications</button>
-          <button class="btn-primary" id="about-dl-grants">Download Grants</button>
-          <button class="btn-primary" id="about-dl-supervision">Download Supervision</button>
-          <button class="btn-primary" id="about-dl-consultancy">Download Consultancy</button>
+    <!-- ── OVERVIEW ────────────────────────────────────────────────────── -->
+    <div id="about-overview" role="tabpanel">
+
+      <!-- FKM at a Glance -->
+      <div class="tbl-card" style="max-width:720px;margin-bottom:20px">
+        <div style="padding:22px 28px 24px">
+          <h3 style="color:var(--text);margin:0 0 4px;font-size:16px">FKM at a Glance</h3>
+          <p style="margin:0 0 18px;font-size:13px;color:var(--text2)">Key figures from the UiTM Expert Portal, updated automatically every week.</p>
+          <div id="about-stats"><p style="color:var(--text2);font-size:13px">Loading…</p></div>
         </div>
-        <h3 style="color:var(--text);margin:24px 0 12px">Technology</h3>
-        <p>Built with vanilla HTML/CSS/JS, Chart.js, and GitHub Actions for automated scraping. Hosted on GitHub Pages.</p>
       </div>
-    </div>
+
+      <div class="tbl-card" style="max-width:720px">
+        <div style="padding:28px 32px;line-height:1.8;color:var(--text2)">
+          <h3 style="color:var(--text);margin:0 0 12px">Export Data</h3>
+          <p>Download the raw data as Excel files for offline analysis or reporting.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+            <button class="btn-primary" id="about-dl-staff">Download Staff Data</button>
+            <button class="btn-primary" id="about-dl-pubs">Download Publications</button>
+            <button class="btn-primary" id="about-dl-grants">Download Grants</button>
+            <button class="btn-primary" id="about-dl-supervision">Download Supervision</button>
+            <button class="btn-primary" id="about-dl-consultancy">Download Consultancy</button>
+          </div>
+          <h3 style="color:var(--text);margin:24px 0 12px">Technology</h3>
+          <p>Built with vanilla HTML/CSS/JS, Chart.js, and GitHub Actions for automated scraping. Hosted on GitHub Pages.</p>
+        </div>
+      </div>
+
+    </div><!-- /#about-overview -->
+
+    <!-- ── DATA EXTRACTION ───────────────────────────────────────────── -->
+    <div id="about-extraction" role="tabpanel" hidden>
+
+      <!-- Scope notice -->
+      <div class="tbl-card" style="max-width:860px;margin-bottom:16px;border-left:4px solid var(--brand)">
+        <div style="padding:20px 24px">
+          <h3 style="color:var(--text);margin:0 0 8px;font-size:15px">Scope &amp; Transparency</h3>
+          <p style="margin:0;font-size:13px;color:var(--text2);line-height:1.75">
+            This dashboard covers <strong>active academic staff</strong> who have a profile on the
+            <a href="https://expert.uitm.edu.my" target="_blank" rel="noopener" style="color:var(--brand)">UiTM Expert Portal</a>.
+            Publications, grants, supervision and consultancy records from <strong>retired, part-time (Sambilan),
+            foreign contract (B.W. Negara), or temporary staff</strong> who do not appear on the portal are
+            <strong>not included</strong> in any aggregate figures shown on this dashboard.
+            Figures should therefore be read as a lower-bound estimate of FKM's research output.
+          </p>
+        </div>
+      </div>
+
+      <!-- How data is collected -->
+      <div class="tbl-card" style="max-width:860px;margin-bottom:16px">
+        <div style="padding:24px 28px;line-height:1.8;color:var(--text2)">
+          <h3 style="color:var(--text);margin:0 0 12px">How Data Is Collected</h3>
+          <ol style="margin:0;padding-left:20px;font-size:13px">
+            <li style="margin-bottom:8px">
+              <strong>Staff roster</strong> — a curated list of FKM academic staff slugs is maintained in
+              <code>data/members.csv</code> (name, Expert Portal username, staff ID, designation).
+              This list was seeded from the FKM staff directory and is updated manually when staff join or leave.
+            </li>
+            <li style="margin-bottom:8px">
+              <strong>Scraper</strong> — a Python script (<code>scripts/scraper_expert.py</code>) fetches each
+              staff profile page from <code>expert.uitm.edu.my/expert/{slug}</code> and extracts the embedded
+              Inertia.js JSON payload containing publications, grants, supervision and consultancy records.
+            </li>
+            <li style="margin-bottom:8px">
+              <strong>Transform</strong> — a second script (<code>scripts/transform_expert.py</code>) normalises
+              the raw JSON into five flat datasets: staff, publications, grants, supervision, consultancy.
+              Publications are classified by index (Scopus, WoS, ERA, MyCite, Other Indexed, Non-Indexed).
+            </li>
+            <li style="margin-bottom:8px">
+              <strong>Auto-update</strong> — a GitHub Actions workflow runs every Monday at 3 AM MYT,
+              re-scrapes all profiles and commits the updated datasets to the repository.
+              The dashboard on GitHub Pages reflects the latest commit automatically.
+            </li>
+          </ol>
+          <p style="margin:12px 0 0;font-size:12px;color:var(--text3)">
+            <strong>Known limitations:</strong> publication records reflect what each staff member has entered into their Expert Portal profile.
+            The same paper may appear multiple times if co-authored by multiple FKM staff.
+            Unique title-based deduplication is used for counts but minor differences in title formatting may cause undercounting or overcounting.
+          </p>
+        </div>
+      </div>
+
+      <!-- Flagged staff table -->
+      <div class="tbl-card" style="max-width:860px">
+        <div style="padding:24px 28px">
+          <h3 style="color:var(--text);margin:0 0 4px;font-size:15px">Staff Flagged — Not Found on Expert Portal</h3>
+          <p style="margin:0 0 16px;font-size:13px;color:var(--text2)">
+            35 staff names in the roster returned no profile from the Expert Portal (HTTP 404).
+            Their data is <strong>not included</strong> in this dashboard.
+            Probable causes are listed below based on designation and staff ID pattern.
+          </p>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              <thead>
+                <tr style="background:var(--surface2);text-align:left">
+                  <th style="padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600">Name</th>
+                  <th style="padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600">Staff ID</th>
+                  <th style="padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600">Designation</th>
+                  <th style="padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600">Probable Reason</th>
+                </tr>
+              </thead>
+              <tbody id="about-flagged-tbody">
+                <tr><td colspan="4" style="padding:16px;color:var(--text3)">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin:12px 0 0;font-size:11px;color:var(--text3)">
+            Last verified: 2026-11-28. Wan Mazlina binti Wan Mohamed confirmed retired (Selamat Bersara, Tempoh Perkhidmatan 02.06.2003 – 04.09.2026).
+            Other retired/inactive staff are inferred from designation and staff ID patterns.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /#about-extraction -->
 
   </div>
 
