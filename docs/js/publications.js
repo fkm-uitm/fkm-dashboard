@@ -213,6 +213,194 @@ function renderPubsOverview() {
   if (resetBtn) resetBtn.addEventListener('click', () => { _pubsOvFromYM = minYM; _pubsOvToYM = maxYM; renderPubsOverview(); });
 }
 
+// ── PUBLICATIONS QUALITY ──────────────────────────────────────────────────
+let _pubsQCharts = {};
+let _pubsQFromY = 0, _pubsQToY = 0;
+
+function renderPubsQuality() {
+  const el = document.getElementById('pubs-q-content');
+  if (!el || !PUBS.length) return;
+
+  // Tier mapping
+  const TIERS = [
+    { key: 'scopus',   label: 'Scopus',          color: '#1d4ed8' },
+    { key: 'wos',      label: 'Web of Science',   color: '#0891b2' },
+    { key: 'era',      label: 'ERA',              color: '#059669' },
+    { key: 'mycite',   label: 'MyCite',           color: '#d97706' },
+    { key: 'other_idx',label: 'Other Indexed',    color: '#7c3aed' },
+    { key: 'nonidx',   label: 'Non-Indexed',      color: '#94a3b8' },
+  ];
+  function pubTier(p) {
+    const idx = (p.index_name||'').toUpperCase();
+    if (!p.indexed) return 'nonidx';
+    if (idx === 'SCOPUS') return 'scopus';
+    if (idx === 'WEB OF SCIENCE') return 'wos';
+    if (idx === 'ERA') return 'era';
+    if (idx === 'MYCITE') return 'mycite';
+    return 'other_idx';
+  }
+
+  const pubYears = [...new Set(PUBS.map(p => p.date ? +p.date.slice(0,4) : null).filter(y => y >= 2000))].sort((a,b)=>a-b);
+  const minY = pubYears[0] || new Date().getFullYear();
+  const maxY = pubYears[pubYears.length-1] || new Date().getFullYear();
+  if (!_pubsQFromY) _pubsQFromY = minY;
+  if (!_pubsQToY)   _pubsQToY   = maxY;
+
+  const inRange = p => { const y = p.date ? +p.date.slice(0,4) : 0; return y >= _pubsQFromY && y <= _pubsQToY; };
+  const pubs = PUBS.filter(inRange);
+  const total = pubs.length || 1;
+
+  // KPI counts per tier
+  const tierCounts = {};
+  TIERS.forEach(t => { tierCounts[t.key] = 0; });
+  for (const p of pubs) tierCounts[pubTier(p)]++;
+
+  // By year per tier
+  const byYear = {};
+  for (const p of pubs) {
+    const y = (p.date||'').slice(0,4); if (!y) continue;
+    if (!byYear[y]) { const o = {}; TIERS.forEach(t => { o[t.key]=0; }); byYear[y] = o; }
+    byYear[y][pubTier(p)]++;
+  }
+  const years = Object.keys(byYear).sort();
+
+  // Top 20 venues / journals
+  const venueCounts = {};
+  const venueTier = {};
+  for (const p of pubs) {
+    const v = (p.index_name||'Non-Indexed').trim();
+    if (!venueCounts[v]) { venueCounts[v] = 0; venueTier[v] = pubTier(p); }
+    venueCounts[v]++;
+  }
+  const topVenues = Object.entries(venueCounts).sort((a,b)=>b[1]-a[1]).slice(0,20);
+
+  // Staff leaderboard by Scopus + WoS count
+  const staffQ = {};
+  for (const p of pubs) {
+    if (!p.slug) continue;
+    if (!staffQ[p.slug]) { staffQ[p.slug] = { name: p.name||p.slug, scopus:0, wos:0, era:0, total:0 }; }
+    staffQ[p.slug].total++;
+    const t = pubTier(p);
+    if (t === 'scopus') staffQ[p.slug].scopus++;
+    else if (t === 'wos') staffQ[p.slug].wos++;
+    else if (t === 'era') staffQ[p.slug].era++;
+  }
+  const topStaff = Object.values(staffQ).sort((a,b) => (b.scopus+b.wos)-(a.scopus+a.wos) || b.era-a.era).slice(0,15);
+
+  // Per-dept breakdown
+  const deptQ = {};
+  for (const p of pubs) {
+    const s = STAFF_BY_SLUG.get(p.slug);
+    const dept = s?.department || 'Unknown';
+    if (!deptQ[dept]) { const o = {}; TIERS.forEach(t => { o[t.key]=0; }); deptQ[dept] = o; }
+    deptQ[dept][pubTier(p)]++;
+  }
+  const depts = Object.entries(deptQ).sort((a,b) => (b[1].scopus+b[1].wos+b[1].era) - (a[1].scopus+a[1].wos+a[1].era));
+
+  const yrOpts = sel => pubYears.map(y => `<option value="${y}"${y===sel?' selected':''}>${y}</option>`).join('');
+
+  el.innerHTML = `
+  <div class="pov-filter-bar">
+    <span class="pov-filter-label">Year range</span>
+    <select class="filter-select" id="pubs-q-fy" aria-label="From year">${yrOpts(_pubsQFromY)}</select>
+    <span class="pov-filter-sep">–</span>
+    <select class="filter-select" id="pubs-q-ty" aria-label="Until year">${yrOpts(_pubsQToY)}</select>
+    <button class="pov-reset-btn" id="pubs-q-reset">All time</button>
+    <span class="pov-filter-note">${num(pubs.length)} records</span>
+  </div>
+
+  <div class="pov-kpis" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+    ${TIERS.map(t => `<div class="pov-kpi" style="--kpi-color:${t.color}">
+      <div class="pk-v">${num(tierCounts[t.key])}</div>
+      <div class="pk-k">${esc(t.label)}</div>
+      <div class="pk-s">${((tierCounts[t.key]/total)*100).toFixed(1)}% of total</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="pov-charts">
+    <div class="pov-chart-card" style="grid-column:span 2">
+      <h4>Publications by Year — Index Tier</h4>
+      <p class="pov-sub">Stacked by tier, most prestigious at bottom</p>
+      <div class="pov-chart-wrap"><canvas id="pov-q-year"></canvas></div>
+    </div>
+  </div>
+  <div class="pov-charts">
+    <div class="pov-chart-card" style="grid-column:span 2">
+      <h4>Top 20 Index Databases / Venues</h4>
+      <p class="pov-sub">By number of entries in selected range</p>
+      <div class="pov-chart-wrap" style="height:${Math.max(260, topVenues.length*22)}px"><canvas id="pov-q-venue"></canvas></div>
+    </div>
+  </div>
+  <div class="pov-charts">
+    <div class="pov-chart-card" style="grid-column:span 2">
+      <h4>Department Breakdown by Index Tier</h4>
+      <p class="pov-sub">Sorted by Scopus + WoS + ERA output</p>
+      <div class="pov-chart-wrap" style="height:${Math.max(200, depts.length*32)}px"><canvas id="pov-q-dept"></canvas></div>
+    </div>
+  </div>
+
+  <div class="pov-table-card">
+    <h4>Top 15 Staff by Indexed Publications (Scopus / WoS / ERA)</h4>
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Scopus</th><th>WoS</th><th>ERA</th><th>Total (range)</th></tr></thead>
+      <tbody>${topStaff.map((a,i) => `<tr>
+        <td>${i+1}</td>
+        <td>${esc(a.name)}</td>
+        <td class="num">${num(a.scopus)}</td>
+        <td class="num">${num(a.wos)}</td>
+        <td class="num">${num(a.era)}</td>
+        <td class="num">${num(a.total)}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+
+  Object.values(_pubsQCharts).forEach(c => c.destroy());
+  _pubsQCharts = {};
+
+  const dark = document.documentElement.dataset.theme === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const gridColor = dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.07)';
+  const textColor = dark ? '#94a3b8' : '#64748b';
+
+  _pubsQCharts.year = new Chart(document.getElementById('pov-q-year'), {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: TIERS.map(t => ({
+        label: t.label,
+        data: years.map(y => byYear[y]?.[t.key] || 0),
+        backgroundColor: t.color,
+        stack: 's',
+      }))
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},color:textColor}}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}},stacked:true} } }
+  });
+
+  const venuePalette = topVenues.map(([v]) => TIERS.find(t=>t.key===venueTier[v])?.color || '#94a3b8');
+  _pubsQCharts.venue = new Chart(document.getElementById('pov-q-venue'), {
+    type: 'bar',
+    data: { labels: topVenues.map(([v])=>v), datasets: [{ data: topVenues.map(([,n])=>n), backgroundColor: venuePalette, borderRadius:3 }] },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}} } }
+  });
+
+  _pubsQCharts.dept = new Chart(document.getElementById('pov-q-dept'), {
+    type: 'bar',
+    data: {
+      labels: depts.map(([d])=>d),
+      datasets: TIERS.map(t => ({
+        label: t.label,
+        data: depts.map(([,v]) => v[t.key]||0),
+        backgroundColor: t.color,
+        stack: 's',
+      }))
+    },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},color:textColor}}, datalabels:{display:false} }, scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11}}}, y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}} } }
+  });
+
+  document.getElementById('pubs-q-fy').addEventListener('change', () => { _pubsQFromY=+document.getElementById('pubs-q-fy').value; renderPubsQuality(); });
+  document.getElementById('pubs-q-ty').addEventListener('change', () => { _pubsQToY=+document.getElementById('pubs-q-ty').value; renderPubsQuality(); });
+  document.getElementById('pubs-q-reset').addEventListener('click', () => { _pubsQFromY=minY; _pubsQToY=maxY; renderPubsQuality(); });
+}
+
 function renderPubsTable() {
   const rows  = getPubsList();
   const q     = document.getElementById('pubs-search').value.trim();

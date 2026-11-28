@@ -304,20 +304,28 @@ function openStaffProfile(slug) {
   const staffGrants = GRANTS.filter(g => g.slug === slug);
   const staffSv     = SUPERVISION.filter(e => e.slug === slug);
   const staffCon    = CONSULTANCY.filter(e => e.slug === slug);
-  const svPhdGrad   = staffSv.filter(e => e.category === 'phd_graduated');
-  const svPhdOn     = staffSv.filter(e => e.category === 'phd_ongoing');
-  const svMscGrad   = staffSv.filter(e => e.category === 'master_graduated');
-  const svMscOn     = staffSv.filter(e => e.category === 'master_ongoing');
-  const conDone     = staffCon.filter(e => e.category === 'completed');
-  const conAppt     = staffCon.filter(e => e.category === 'appointed');
   const idxPubs     = staffPubs.filter(p => p.indexed);
-  const otherPubs   = staffPubs.filter(p => !p.indexed);
 
-  const hStr = [
-    s.h_scopus != null ? `Scopus: <strong>${s.h_scopus}</strong>` : null,
-    s.h_wos    != null ? `WoS: <strong>${s.h_wos}</strong>` : null,
-    s.h_gs     != null ? `GS: <strong>${s.h_gs}</strong>` : null,
-  ].filter(Boolean).join(' &nbsp;&middot;&nbsp; ') || '--';
+  // Auto-detect current year from latest pub data
+  const allYears = PUBS.map(p => p.date ? +p.date.slice(0,4) : 0).filter(y => y > 2000);
+  const curYear  = allYears.length ? Math.max(...allYears) : new Date().getFullYear();
+
+  // Current year slices
+  const curPubs   = staffPubs.filter(p => p.date && +p.date.slice(0,4) === curYear);
+  const curIdxPubs = curPubs.filter(p => p.indexed);
+  const curGrants = staffGrants.filter(g => +(g.year_start||0) === curYear);
+  const activeSv  = staffSv.filter(e => e.category === 'phd_ongoing' || e.category === 'master_ongoing');
+  const curCon    = staffCon.filter(e => +(e.year_start||0) === curYear);
+
+  // Career totals
+  const svPhdGrad = staffSv.filter(e => e.category === 'phd_graduated');
+  const svMscGrad = staffSv.filter(e => e.category === 'master_graduated');
+
+  // Tier counts for career
+  const SWE = new Set(['SCOPUS','WEB OF SCIENCE','ERA']);
+  const careerSwe = idxPubs.filter(p => SWE.has(p.index_name));
+  const careerOtherIdx = idxPubs.filter(p => !SWE.has(p.index_name));
+  const careerNonIdx = staffPubs.filter(p => !p.indexed);
 
   const expertUrl = `https://expert.uitm.edu.my/expert/${slug}`;
   const links = [
@@ -333,30 +341,10 @@ function openStaffProfile(slug) {
          onerror="this.outerHTML='<div class=\\'profile-initials-avatar\\' aria-hidden=\\'true\\'>${ini}</div>'">`
     : `<div class="profile-initials-avatar" aria-hidden="true">${ini}</div>`;
 
-  const pubsHTML = idxPubs.slice(0,10).map((p,i) => `
-    <tr>
-      <td class="muted">${i+1}</td>
-      <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
-      <td>${esc(p.type||'')}</td>
-      <td>${esc(p.date||'')}</td>
-    </tr>`).join('');
-
-  const grantsHTML = staffGrants.slice(0,10).map((g,i) => {
-    const isIntl   = (g.level||'').toUpperCase().includes('INT');
-    const isActive = (g.status||'').toUpperCase() === 'ACTIVE';
-    return `<tr>
-      <td class="muted">${i+1}</td>
-      <td class="clip wide">${esc(g.title||'(no title)')}</td>
-      <td>${isIntl ? '<span class="badge badge-intl">Intl</span>' : '<span class="badge badge-natl">Natl</span>'}</td>
-      <td>${esc(String(g.year_start||''))}</td>
-      <td>${isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-done">Done</span>'}</td>
-    </tr>`;
-  }).join('');
-
   panel.hidden = false;
   panel.innerHTML = `
     <div class="profile-expert">
-      <!-- LEFT SIDEBAR — mirrors Expert Portal layout -->
+      <!-- LEFT SIDEBAR -->
       <div class="profile-expert-sidebar">
         ${avatarHTML}
         <h2 class="profile-expert-name">${esc(s.name||slug)}</h2>
@@ -384,33 +372,65 @@ function openStaffProfile(slug) {
           <button class="profile-expert-tab" role="tab" data-ptab="supervision" aria-selected="false">Supervision <span class="profile-tab-count">${staffSv.length}</span></button>
           <button class="profile-expert-tab" role="tab" data-ptab="consultancy" aria-selected="false">Consultancy <span class="profile-tab-count">${staffCon.length}</span></button>
         </div>
-        <!-- Overview tab -->
+
+        <!-- Overview tab: current year primary, career secondary -->
         <div class="profile-expert-tabpanel" data-ptabpanel="overview">
-          <div class="profile-kpi-row" style="margin-top:0">
-            <div class="profile-kpi"><div class="label">Indexed pubs</div><div class="val num">${s.pubs_indexed||0}</div></div>
-            <div class="profile-kpi"><div class="label">Other pubs</div><div class="val num">${s.pubs_other||0}</div></div>
-            <div class="profile-kpi"><div class="label">Total pubs</div><div class="val num">${s.pubs_total||0}</div></div>
-            <div class="profile-kpi"><div class="label">Active grants</div><div class="val num">${s.grants_active||0}</div></div>
-            <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${s.grants_total||0}</div></div>
-            <div class="profile-kpi"><div class="label">Intl grants</div><div class="val num">${(s.grants_intl_active||0)+(s.grants_intl_completed||0)}</div></div>
-            <div class="profile-kpi"><div class="label">PhD grad</div><div class="val num">${s.phd_graduated||0}</div><div class="sub">${s.phd_ongoing||0} ongoing</div></div>
-            <div class="profile-kpi"><div class="label">Master grad</div><div class="val num">${s.master_graduated||0}</div><div class="sub">${s.master_ongoing||0} ongoing</div></div>
-            <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${s.consultancy_completed||0}</div><div class="sub">${s.consultancy_appointed||0} appointed</div></div>
+          <div class="profile-section-title" style="margin-top:0;display:flex;align-items:center;gap:8px">
+            <span>${curYear} Performance</span>
+            <span style="font-size:11px;font-weight:400;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:2px 8px">current year</span>
           </div>
-          ${idxPubs.length ? `
-            <div class="profile-section-title">Recent Indexed Publications</div>
+          <div class="profile-kpi-row" style="margin-top:8px">
+            <div class="profile-kpi" style="--kpi-accent:#2563eb">
+              <div class="label">New pubs</div>
+              <div class="val num">${curPubs.length}</div>
+              <div class="sub">${curIdxPubs.length} indexed</div>
+            </div>
+            <div class="profile-kpi" style="--kpi-accent:#059669">
+              <div class="label">New grants</div>
+              <div class="val num">${curGrants.length}</div>
+              <div class="sub">started ${curYear}</div>
+            </div>
+            <div class="profile-kpi" style="--kpi-accent:#7c3aed">
+              <div class="label">Active supervision</div>
+              <div class="val num">${activeSv.length}</div>
+              <div class="sub">${activeSv.filter(e=>e.category==='phd_ongoing').length} PhD · ${activeSv.filter(e=>e.category==='master_ongoing').length} MSc</div>
+            </div>
+            <div class="profile-kpi" style="--kpi-accent:#d97706">
+              <div class="label">New consultancy</div>
+              <div class="val num">${curCon.length}</div>
+              <div class="sub">started ${curYear}</div>
+            </div>
+          </div>
+          ${curIdxPubs.length ? `
+            <div class="profile-section-title" style="margin-top:16px">${curYear} Indexed Publications</div>
             <div class="tbl-wrap"><table>
-              <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Date</th></tr></thead>
-              <tbody>${idxPubs.slice(0,5).map((p,i) => `<tr>
+              <thead><tr><th>#</th><th>Title</th><th>Index</th><th>Date</th></tr></thead>
+              <tbody>${curIdxPubs.slice(0,5).map((p,i) => `<tr>
                 <td class="muted">${i+1}</td>
                 <td class="clip wide"><button class="title-btn" data-pubidx="${PUBS.indexOf(p)}">${esc(p.title||'(no title)')}</button></td>
-                <td>${esc(p.type||'')}</td>
+                <td style="font-size:11px;color:var(--text2)">${esc(p.index_name||'—')}</td>
                 <td>${esc(p.date||'')}</td>
               </tr>`).join('')}</tbody>
             </table></div>
-            ${idxPubs.length > 5 ? `<p style="font-size:12px;color:var(--text3);margin-top:6px">Showing 5 of ${idxPubs.length} — see Publications tab for full list.</p>` : ''}
-            ` : '<p style="color:var(--text3);font-size:13px;margin-top:16px">No indexed publications on record.</p>'}
+            ${curIdxPubs.length > 5 ? `<p style="font-size:12px;color:var(--text3);margin-top:4px">Showing 5 of ${curIdxPubs.length} — see Publications tab for full list.</p>` : ''}
+          ` : (curPubs.length ? `<p style="font-size:12px;color:var(--text3);margin-top:8px">${curPubs.length} non-indexed publication(s) in ${curYear}. See Publications tab.</p>` : `<p style="font-size:12px;color:var(--text3);margin-top:8px">No publications recorded for ${curYear} yet.</p>`)}
+
+          <div class="profile-section-title" style="margin-top:20px;display:flex;align-items:center;gap:8px">
+            <span>Career Summary</span>
+            <span style="font-size:11px;font-weight:400;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:2px 8px">all time</span>
+          </div>
+          <div class="profile-kpi-row" style="margin-top:8px">
+            <div class="profile-kpi"><div class="label">Scopus/WoS/ERA</div><div class="val num">${careerSwe.length}</div></div>
+            <div class="profile-kpi"><div class="label">Other indexed</div><div class="val num">${careerOtherIdx.length}</div></div>
+            <div class="profile-kpi"><div class="label">Non-indexed</div><div class="val num">${careerNonIdx.length}</div></div>
+            <div class="profile-kpi"><div class="label">Total pubs</div><div class="val num">${staffPubs.length}</div></div>
+            <div class="profile-kpi"><div class="label">Total grants</div><div class="val num">${staffGrants.length}</div><div class="sub">${staffGrants.filter(g=>(g.status||'').toUpperCase()==='ACTIVE').length} active</div></div>
+            <div class="profile-kpi"><div class="label">PhD grads</div><div class="val num">${svPhdGrad.length}</div></div>
+            <div class="profile-kpi"><div class="label">MSc grads</div><div class="val num">${svMscGrad.length}</div></div>
+            <div class="profile-kpi"><div class="label">Consultancy</div><div class="val num">${staffCon.length}</div></div>
+          </div>
         </div>
+
         <!-- Publications tab -->
         <div class="profile-expert-tabpanel" data-ptabpanel="publications" hidden>
           ${staffPubs.length ? `

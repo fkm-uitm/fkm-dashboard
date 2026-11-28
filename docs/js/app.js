@@ -26,7 +26,7 @@ function showPage(id) {
   if (id === 'overview') setTimeout(drawCharts, 50);
   if (id === 'report')   initReportPage();
   if (id === 'about')    showAboutStats();
-  if (id === 'pubs')   { renderPubsTable(); setTimeout(renderPubsOverview, 50); }
+  if (id === 'pubs')   { renderPubsTable(); setTimeout(renderPubsOverview, 50); setTimeout(renderPubsQuality, 100); }
   if (id === 'grants') { renderGrantsTable(); setTimeout(renderGrantsOverview, 50); }
   closeSidebar();
 }
@@ -131,6 +131,8 @@ document.querySelectorAll('.sub-tabs').forEach(tabs => {
     page.querySelectorAll('[role="tabpanel"]').forEach(p => {
       p.hidden = p.id !== targetId;
     });
+    // render hooks for lazy sub-tabs
+    if (targetId === 'pubs-quality') setTimeout(renderPubsQuality, 50);
   });
 });
 

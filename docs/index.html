@@ -283,12 +283,18 @@
     </div>
     <div class="sub-tabs" role="tablist" aria-label="Publications view">
       <button class="sub-tab active" role="tab" data-subtab="pubs-overview" aria-selected="true">Overview</button>
+      <button class="sub-tab" role="tab" data-subtab="pubs-quality" aria-selected="false">Journal Quality</button>
       <button class="sub-tab" role="tab" data-subtab="pubs-list" aria-selected="false">List</button>
     </div>
 
     <!-- Overview sub-page -->
     <div id="pubs-overview" role="tabpanel">
       <div id="pubs-ov-content"><!-- filled by renderPubsOverview() --></div>
+    </div>
+
+    <!-- Journal Quality sub-page -->
+    <div id="pubs-quality" role="tabpanel" hidden>
+      <div id="pubs-q-content"><!-- filled by renderPubsQuality() --></div>
     </div>
 
     <!-- List sub-page -->
